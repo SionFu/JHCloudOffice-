@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Singleton.h"
+
 @interface JHModules : NSObject
-singleton_interface(JHModules)
+
 /**
  *  流程类别
  */
@@ -50,8 +50,5 @@ singleton_interface(JHModules)
  *  流程排序
  */
 @property (nonatomic, strong) NSString *ModulesIndex;
-/**
- *  储存流程表数组内容
- */
-@property (nonatomic, strong) NSMutableArray *modulesArray;
+
 @end

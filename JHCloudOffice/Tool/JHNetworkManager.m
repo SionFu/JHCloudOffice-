@@ -10,6 +10,7 @@
 #import "AFNetworking.h"
 #import "JHUserInfo.h"
 #import "JHModules.h"
+#import "JHModulesData.h"
 #define SITEURL @"http://188.1.100.165:8010/Portal/ForApp/"
 #define APPKEY @"cloudoffice"
 
@@ -55,23 +56,28 @@ singleton_implementation(JHNetworkManager)
     [JHUserInfo sharedJHUserInfo].name = dic[@"Name"];
     [JHUserInfo sharedJHUserInfo].mobile = dic[@"Mobile"];
     [JHUserInfo sharedJHUserInfo].company = dic[@"Company"];
+        [JHUserInfo sharedJHUserInfo].uid = dic[@"WeaverUser"][@"uid"];
         
     }
 }
 
-+ (void) getModules{
+- (void) getModules{
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/DefaultSheet.ashx?appKey=%@&token=%@&action=modules&create=1&userId=%@", SITEURL, APPKEY, [JHUserInfo sharedJHUserInfo].objectId, [JHUserInfo sharedJHUserInfo].uid];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
 # warning 有打印
         NSLog(@"%@",responseObject);
         NSArray *array = responseObject[@"datas"];
+        [JHModulesData sharedJHModulesData].count = responseObject[@"count"];
+        [JHModulesData sharedJHModulesData].errorCode = responseObject[@"ErrorCode"];
         for (NSDictionary *dic in array) {
             JHModules *modu = [JHModules new];
             [modu setValuesForKeysWithDictionary:dic];
-            [[JHModules sharedJHModules].modulesArray addObject:modu];
             NSLog(@"%@",modu);
+            [[JHModulesData sharedJHModulesData].modulesArray addObject:modu];
         }
+        //将流程数组分类保存
+        [JHModulesData getModulesArray];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
     }];

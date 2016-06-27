@@ -30,5 +30,5 @@ singleton_interface(JHNetworkManager)
 /**
  *  获取流程列表
  */
-+ (void) getModules;
+- (void) getModules;
 @end

@@ -9,10 +9,7 @@
 #import "JHModules.h"
 
 @implementation JHModules
-singleton_implementation(JHModules)
--(NSMutableArray *)modulesArray{
-    if (_modulesArray == nil) {
-        _modulesArray = [NSMutableArray array];
-    }return _modulesArray;
+-(NSString *)description{
+  return   [NSString stringWithFormat: @"%@====%@",self.ModuleType,self.Category];
 }
 @end

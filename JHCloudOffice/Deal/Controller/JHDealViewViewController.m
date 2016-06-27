@@ -30,7 +30,8 @@
     //显示用户登陆信息
     [self showUserInfo];
     //登陆成功就开始获取流程数据
-    [JHNetworkManager getModules];
+    [[[JHNetworkManager alloc]init] getModules];
+
 }
 - (void)showUserInfo {
     self.nameLabel.text = [JHUserInfo sharedJHUserInfo].name;
@@ -39,9 +40,7 @@
 - (void)setUpHomeHeadView {
     CGFloat screenWith = [UIScreen mainScreen].bounds.size.width;
     JHHoneHeadView *headView = [[JHHoneHeadView alloc]initWithFrame:CGRectMake(0, 0, screenWith, screenWith / 1.5)];
-    
     headView.delegate = self;
-
     [self.headView addSubview: headView];
 }
 -(void)clickHomeMenuButton:(long)sender{

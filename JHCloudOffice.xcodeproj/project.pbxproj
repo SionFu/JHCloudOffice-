@@ -21,6 +21,9 @@
 		3126A8BB1D190A7500ADC960 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3126A8B91D190A7500ADC960 /* LoginViewController.m */; };
 		3126A8BE1D191D1A00ADC960 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3126A8BD1D191D1A00ADC960 /* Assets.xcassets */; };
 		3179FBD81D1BBD900021E35E /* JHUIControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3179FBD71D1BBD900021E35E /* JHUIControl.xib */; };
+		31A358B21D20DD6C00D4C0DA /* JHModulesData.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A358B11D20DD6C00D4C0DA /* JHModulesData.m */; };
+		31A358B91D20F1B100D4C0DA /* NSObject+YYModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A358B51D20F1B100D4C0DA /* NSObject+YYModel.m */; };
+		31A358BA1D20F1B100D4C0DA /* YYClassInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A358B71D20F1B100D4C0DA /* YYClassInfo.m */; };
 		31B6F46B1D1FACDE00A2670B /* YSLContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31B6F4681D1FACDE00A2670B /* YSLContainerViewController.m */; };
 		31B6F46C1D1FACDE00A2670B /* YSLScrollMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 31B6F46A1D1FACDE00A2670B /* YSLScrollMenuView.m */; };
 		31B6F46F1D1FAECB00A2670B /* JHProcessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31B6F46E1D1FAECB00A2670B /* JHProcessViewController.m */; };
@@ -80,6 +83,13 @@
 		3126A8B91D190A7500ADC960 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		3126A8BD1D191D1A00ADC960 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3179FBD71D1BBD900021E35E /* JHUIControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHUIControl.xib; sourceTree = "<group>"; };
+		31A358B01D20DD6C00D4C0DA /* JHModulesData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHModulesData.h; sourceTree = "<group>"; };
+		31A358B11D20DD6C00D4C0DA /* JHModulesData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHModulesData.m; sourceTree = "<group>"; };
+		31A358B41D20F1B100D4C0DA /* NSObject+YYModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+YYModel.h"; sourceTree = "<group>"; };
+		31A358B51D20F1B100D4C0DA /* NSObject+YYModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+YYModel.m"; sourceTree = "<group>"; };
+		31A358B61D20F1B100D4C0DA /* YYClassInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYClassInfo.h; sourceTree = "<group>"; };
+		31A358B71D20F1B100D4C0DA /* YYClassInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYClassInfo.m; sourceTree = "<group>"; };
+		31A358B81D20F1B100D4C0DA /* YYModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYModel.h; sourceTree = "<group>"; };
 		31B6F4671D1FACDE00A2670B /* YSLContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSLContainerViewController.h; sourceTree = "<group>"; };
 		31B6F4681D1FACDE00A2670B /* YSLContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSLContainerViewController.m; sourceTree = "<group>"; };
 		31B6F4691D1FACDE00A2670B /* YSLScrollMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSLScrollMenuView.h; sourceTree = "<group>"; };
@@ -206,6 +216,7 @@
 		3126A8B01D19098400ADC960 /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				31A358B31D20F1B100D4C0DA /* YYModel */,
 				31B6F4661D1FACDE00A2670B /* YSLContainerViewController */,
 				31E2F52D1D1A2DB200FC212B /* MBProgessHUD */,
 				31E2F5101D1A2D9500FC212B /* AFNetworking */,
@@ -250,6 +261,18 @@
 				3126A8B91D190A7500ADC960 /* LoginViewController.m */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		31A358B31D20F1B100D4C0DA /* YYModel */ = {
+			isa = PBXGroup;
+			children = (
+				31A358B41D20F1B100D4C0DA /* NSObject+YYModel.h */,
+				31A358B51D20F1B100D4C0DA /* NSObject+YYModel.m */,
+				31A358B61D20F1B100D4C0DA /* YYClassInfo.h */,
+				31A358B71D20F1B100D4C0DA /* YYClassInfo.m */,
+				31A358B81D20F1B100D4C0DA /* YYModel.h */,
+			);
+			path = YYModel;
 			sourceTree = "<group>";
 		};
 		31B6F4661D1FACDE00A2670B /* YSLContainerViewController */ = {
@@ -342,6 +365,8 @@
 			children = (
 				3105D9F41D1BAE1A0098EA73 /* JHMenuData.h */,
 				3105D9F51D1BAE1A0098EA73 /* JHMenuData.m */,
+				31A358B01D20DD6C00D4C0DA /* JHModulesData.h */,
+				31A358B11D20DD6C00D4C0DA /* JHModulesData.m */,
 				3120B3A01D1CED7B00206F6B /* JHModules.h */,
 				3120B3A11D1CED7B00206F6B /* JHModules.m */,
 			);
@@ -563,6 +588,7 @@
 				31E2F5241D1A2D9500FC212B /* AFHTTPRequestOperation.m in Sources */,
 				31E2F5271D1A2D9500FC212B /* AFNetworkReachabilityManager.m in Sources */,
 				31B6F46B1D1FACDE00A2670B /* YSLContainerViewController.m in Sources */,
+				31A358B91D20F1B100D4C0DA /* NSObject+YYModel.m in Sources */,
 				31E2F52C1D1A2D9500FC212B /* AFURLSessionManager.m in Sources */,
 				3105D9F61D1BAE1A0098EA73 /* JHMenuData.m in Sources */,
 				31E2F52A1D1A2D9500FC212B /* AFURLRequestSerialization.m in Sources */,
@@ -576,6 +602,7 @@
 				31E2F5281D1A2D9500FC212B /* AFSecurityPolicy.m in Sources */,
 				31E2F5331D1A2DB200FC212B /* MBProgressHUD+KR.m in Sources */,
 				3126A88D1D1908DD00ADC960 /* main.m in Sources */,
+				31A358B21D20DD6C00D4C0DA /* JHModulesData.m in Sources */,
 				3120B3A21D1CED7B00206F6B /* JHModules.m in Sources */,
 				3105D9FB1D1BBB740098EA73 /* JHUIControl.m in Sources */,
 				3126A8BB1D190A7500ADC960 /* LoginViewController.m in Sources */,
@@ -583,6 +610,7 @@
 				31E2F5261D1A2D9500FC212B /* AFHTTPSessionManager.m in Sources */,
 				3120B3A61D1CFB4100206F6B /* UIView+WbyExtension.m in Sources */,
 				31B6F4761D1FB02000A2670B /* JHPortalTableViewController.m in Sources */,
+				31A358BA1D20F1B100D4C0DA /* YYClassInfo.m in Sources */,
 				31E2F5351D1A2DB200FC212B /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

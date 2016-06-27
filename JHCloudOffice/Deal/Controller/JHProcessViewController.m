@@ -9,14 +9,18 @@
 #import "JHProcessViewController.h"
 #import "YSLContainerViewController.h"
 #import "JHPortalTableViewController.h"
+#import "JHModulesData.h"
 @interface JHProcessViewController ()<YSLContainerViewControllerDelegate>
 @property (nonatomic, strong)NSArray *portalArray;
+@property (nonatomic, strong)NSMutableArray  *muPVC;
 @end
 
 @implementation JHProcessViewController
 - (NSArray *)portalArray{
     if (_portalArray == nil) {
-        _portalArray = [NSArray arrayWithObjects:@"行政流程",@"商贸流程",@"测试",@"个测试",@"再测试", nil];
+        //测试代码
+//        _portalArray = [NSArray arrayWithObjects:@"行政流程",@"商贸流程",@"测试",@"个测试",@"再测试", nil];
+        _portalArray = [NSArray arrayWithArray:[JHModulesData sharedJHModulesData].moduleArray];
     }return _portalArray;
 }
 - (void)viewDidLoad {
@@ -26,6 +30,7 @@
 }
 - (void)setupPortalTableViewController{
     NSMutableArray *muPVC = [NSMutableArray array];
+    self.muPVC = muPVC;
     for (NSString *poral in self.portalArray) {
         JHPortalTableViewController *pvc = [[JHPortalTableViewController alloc]initWithNibName:@"JHPortalTableViewController" bundle:nil];;
         pvc.title = poral;
@@ -39,8 +44,10 @@
     self.view.backgroundColor = [UIColor colorWithRed:0.7332 green:0.7332 blue:0.7332 alpha:1.0];
     
 }
+
 -(void)containerViewItemIndex:(NSInteger)index currentController:(UIViewController *)controller{
     NSLog(@"%ld",(long)index);
+
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
