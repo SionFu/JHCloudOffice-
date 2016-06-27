@@ -1,0 +1,136 @@
+//
+//  LoginViewController.m
+//  JHCloudOffice
+//
+//  Created by Fu_sion on 16/6/21.
+//  Copyright © 2016年 Fu_sion. All rights reserved.
+//
+
+#import "LoginViewController.h"
+#import "JHNetworkManager.h"
+#import "MBProgressHUD+KR.h"
+#import "JHUserInfo.h"
+@interface LoginViewController ()<JHLoginDelegate>
+/**
+ *  用户名文本输入框
+ */
+@property (weak, nonatomic) IBOutlet UITextField *userNameTextField;
+/**
+ *  密码输入框
+ */
+@property (weak, nonatomic) IBOutlet UITextField *userPwdTextFileField;
+/**
+ *  是否记住密码复选框
+ */
+- (IBAction)rembePwdCheckBox:(UIButton *)sender;
+/**
+ *  点击登录按钮
+ */
+- (IBAction)loginBtnClick:(id)sender;
+/**
+ *  密码输入框离底部的距离
+ */
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *userViewBottomConstraint;
+/**
+ *  用户名密码视图
+ */
+@property (weak, nonatomic) IBOutlet UIView *userImputView;
+@end
+
+@implementation LoginViewController
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    //关闭用户名的文本框的自动修正
+    self.userNameTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+    //添加输入框的左视图
+    [self addImageViewToTextField];
+}
+- (void)addImageViewToTextField {
+    UIImageView *userImageView = [[UIImageView alloc]initWithFrame:CGRectMake(5, 0, 46, 30)];
+    userImageView.image = [UIImage imageNamed:@"user"];
+    
+    UIImageView *lockImageView = [[UIImageView alloc]initWithFrame:CGRectMake(5, 0, 46, 30)];
+    lockImageView.image = [UIImage imageNamed:@"lock"];
+    self.userNameTextField.leftView = userImageView;
+    self.userPwdTextFileField.leftView = lockImageView;
+    self.userNameTextField.leftViewMode = UITextFieldViewModeAlways;
+    self.userPwdTextFileField.leftViewMode = UITextFieldViewModeAlways;
+}
+//当用户名输入框开始编辑
+- (IBAction)textFieldDidBeginEditing:(UITextField *)sender {
+        [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showKeyboard:) name:UIKeyboardWillShowNotification object:nil];
+//    self.userViewBottomConstraint.constant = 130;
+}
+- (void)showKeyboard:(NSNotification *)notification {
+    NSTimeInterval duration = [notification.userInfo[UIKeyboardDidHideNotification]doubleValue];
+    NSInteger option = [notification.userInfo[UIKeyboardAnimationCurveUserInfoKey]integerValue];
+    CGRect rect = [notification.userInfo[UIKeyboardFrameEndUserInfoKey]CGRectValue];
+    CGFloat height = rect.size.height;
+    self.userViewBottomConstraint.constant = height - 20;
+    [UIView animateWithDuration:duration delay:0 options:option animations:^{
+        //显示输入框向上移动动画
+        [self.view layoutIfNeeded];
+    } completion:nil];
+    
+   
+}
+- (void)closeKeyboard:(NSNotification *)notification{
+    //键盘弹起的持续时间
+    NSTimeInterval duration = [notification.userInfo[UIKeyboardAnimationDurationUserInfoKey]doubleValue];
+    //键盘弹起动画的类型
+    NSInteger option = [notification.userInfo[UIKeyboardAnimationCurveUserInfoKey]integerValue];
+    //将输入框view移动到初始位置
+    self.userViewBottomConstraint.constant = 0;
+    [UIView animateKeyframesWithDuration:duration delay:0 options:option animations:^{
+        //显示 输入框向下移动动画
+        [self.view layoutIfNeeded];
+        
+    } completion:nil];
+
+}
+- (IBAction)enterBtnClick:(id)sender {
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(closeKeyboard:) name:UIKeyboardWillHideNotification object:nil];
+    [JHNetworkManager vaidataUserWithUserName:self.userNameTextField.text andPassword:self.userPwdTextFileField.text];
+    [MBProgressHUD showMessage:@"正在登陆"];
+    [JHNetworkManager sharedJHNetworkManager].loginDelegate = self;
+    
+}
+
+//点击 next 光标 进入到密码输入框
+- (IBAction)endEdit:(id)sender {
+       [self.userPwdTextFileField becomeFirstResponder];
+}
+
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+//代理返回登陆成功
+-(void)loginSuccess{
+    [self performSegueWithIdentifier:@"Login" sender:nil];
+
+}
+-(void)loginfaild{
+    [MBProgressHUD showError:[JHUserInfo sharedJHUserInfo].errorCode];
+}
+-(void)loginNetError{
+    [MBProgressHUD showError:@"无法连接网络"];
+}
+//点击登陆按钮
+- (IBAction)loginBtnClick:(id)sender {
+    [self enterBtnClick:nil];
+    [self.view endEditing:YES];
+    
+    
+}
+- (IBAction)rembePwdCheckBox:(UIButton *)sender {
+    sender.selected = !sender.selected;
+}
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    // 移除通知
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+@end
