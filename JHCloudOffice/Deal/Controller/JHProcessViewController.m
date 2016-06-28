@@ -32,7 +32,7 @@
     NSMutableArray *muPVC = [NSMutableArray array];
     self.muPVC = muPVC;
     for (NSString *poral in self.portalArray) {
-        JHPortalTableViewController *pvc = [[JHPortalTableViewController alloc]initWithNibName:@"JHPortalTableViewController" bundle:nil];;
+        JHPortalTableViewController *pvc = [[JHPortalTableViewController alloc]init];//WithNibName:@"JHPortalTableViewController" bundle:nil];;
         pvc.title = poral;
         [muPVC addObject:pvc];
     }
@@ -42,11 +42,13 @@
     containerVC.delegate = self;
     [self.view addSubview:containerVC.view];
     self.view.backgroundColor = [UIColor colorWithRed:0.7332 green:0.7332 blue:0.7332 alpha:1.0];
-    
 }
 
 -(void)containerViewItemIndex:(NSInteger)index currentController:(UIViewController *)controller{
     NSLog(@"%ld",(long)index);
+    JHPortalTableViewController *tbVC = self.muPVC[index];
+    tbVC.indexVC = index;
+    
 
 }
 - (void)didReceiveMemoryWarning {

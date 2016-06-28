@@ -16,7 +16,11 @@ singleton_implementation(JHModulesData)
     }
     return _modulesArray;
 }
-
+-(NSMutableArray *)allModuleArray{
+    if (_allModuleArray == nil) {
+        _allModuleArray = [NSMutableArray array];
+    }return _allModuleArray;
+}
 
 + (void)getModulesArray{
     NSMutableArray *moduleArray = [NSMutableArray array];
@@ -37,9 +41,10 @@ singleton_implementation(JHModulesData)
         for (JHModules *modules in [JHModulesData sharedJHModulesData].modulesArray) {
             if ([modules.Category isEqualToString:str]) {
                 [mutaArray addObject:modules];
+                NSLog(@"显示添加类别%@",modules.Category);
             }
         }
-        [JHModulesData sharedJHModulesData].allModuleArray = [NSArray arrayWithArray:mutaArray];
+        [[JHModulesData sharedJHModulesData].allModuleArray addObject:mutaArray];
         
     }
 }

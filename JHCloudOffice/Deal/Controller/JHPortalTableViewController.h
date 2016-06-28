@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface JHPortalTableViewController : UITableViewController
-
+@property (nonatomic, assign)NSInteger indexVC;
 @end

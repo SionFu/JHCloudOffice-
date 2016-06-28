@@ -39,7 +39,7 @@ singleton_interface(JHModulesData)
 /**
  *  相同的流程数组包括所有数据
  */
-@property (nonatomic, strong) NSArray *allModuleArray;
+@property (nonatomic, strong) NSMutableArray *allModuleArray;
 
 /**
  *  将相同的数组存在一个数组中

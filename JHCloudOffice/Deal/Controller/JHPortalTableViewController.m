@@ -8,7 +8,13 @@
 
 #import "JHPortalTableViewController.h"
 #import "JHModulesData.h"
+#import "JHCategoryTableViewCell.h"
+#import "JHModules.h"
 @interface JHPortalTableViewController ()
+@property (nonatomic, strong)NSMutableArray *catrgoryArray;
+
+@property (nonatomic ,strong ) UINib *nib;
+
 
 @end
 
@@ -22,9 +28,15 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    NSLog(@"%d index",i);
+    self.catrgoryArray = [JHModulesData sharedJHModulesData].allModuleArray[i];
+    ++i;
+    
 }
 
-
+-(void)viewWillDisappear:(BOOL)animated{
+    i = 0;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -34,29 +46,36 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
+    NSLog(@"分类%d",i);
     return 1;
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    return [self getNumberOfRowsInSection];
+    return self.catrgoryArray.count;
 }
 static int i = 0;
 - (NSInteger)getNumberOfRowsInSection{
-    NSArray *array = [JHModulesData sharedJHModulesData].allModuleArray[i];
-    i++;
-    return array.count;
+    NSLog(@"行数%d",i);
+//    NSMutableArray *array = [JHModulesData sharedJHModulesData].allModuleArray[i];
+    return 0;
 }
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    static NSString * cellIdentifier = @"GameTableViewCell";
     
-    // Configure the cell...
-    
+    if (_nib == nil) {
+        _nib = [UINib nibWithNibName:@"JHCategoryTableViewCell" bundle:nil];
+        [tableView registerNib:_nib forCellReuseIdentifier:cellIdentifier];
+        NSLog(@"我是从nib过来的");
+    }
+    JHCategoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    JHModules *data = self.catrgoryArray[indexPath.row];
+    cell.textLabel.text = data.ModuleName;
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.
