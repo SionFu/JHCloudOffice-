@@ -29,9 +29,7 @@ singleton_implementation(JHModulesData)
     }
     NSMutableArray *categoryArray = [[NSMutableArray alloc] init];
     for (unsigned i = 0; i < [moduleArray count]; i++){
-        
         if ([categoryArray containsObject:[moduleArray objectAtIndex:i]] == NO){
-            
             [categoryArray addObject:[moduleArray objectAtIndex:i]];
         }
     }
@@ -41,10 +39,10 @@ singleton_implementation(JHModulesData)
         for (JHModules *modules in [JHModulesData sharedJHModulesData].modulesArray) {
             if ([modules.Category isEqualToString:str]) {
                 [mutaArray addObject:modules];
-                NSLog(@"显示添加类别%@",modules.Category);
             }
         }
         [[JHModulesData sharedJHModulesData].allModuleArray addObject:mutaArray];
+        
         
     }
 }

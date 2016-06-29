@@ -10,6 +10,7 @@
 #import "JHModulesData.h"
 #import "JHCategoryTableViewCell.h"
 #import "JHModules.h"
+#import "JHNetworkManager.h"
 @interface JHPortalTableViewController ()
 @property (nonatomic, strong)NSMutableArray *catrgoryArray;
 
@@ -28,7 +29,6 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    NSLog(@"%d index",i);
     self.catrgoryArray = [JHModulesData sharedJHModulesData].allModuleArray[i];
     ++i;
     
@@ -46,7 +46,6 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    NSLog(@"分类%d",i);
     return 1;
     
 }
@@ -57,18 +56,15 @@
 }
 static int i = 0;
 - (NSInteger)getNumberOfRowsInSection{
-    NSLog(@"行数%d",i);
-//    NSMutableArray *array = [JHModulesData sharedJHModulesData].allModuleArray[i];
     return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString * cellIdentifier = @"GameTableViewCell";
+    static NSString * cellIdentifier = @"CateGoryCell";
     
     if (_nib == nil) {
         _nib = [UINib nibWithNibName:@"JHCategoryTableViewCell" bundle:nil];
         [tableView registerNib:_nib forCellReuseIdentifier:cellIdentifier];
-        NSLog(@"我是从nib过来的");
     }
     JHCategoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     JHModules *data = self.catrgoryArray[indexPath.row];
@@ -76,7 +72,12 @@ static int i = 0;
     return cell;
 }
 
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    NSLog(@"%ld,%ld",(long)[JHModulesData sharedJHModulesData].curreatVCIndex,(long)indexPath.row);
+    [[[JHNetworkManager alloc]init] getPageSettingWithCurrentVC:[JHModulesData sharedJHModulesData].curreatVCIndex andRow:indexPath.row];
+    
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

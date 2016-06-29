@@ -10,6 +10,7 @@
 #import "JHNetworkManager.h"
 #import "MBProgressHUD+KR.h"
 #import "JHUserInfo.h"
+#import "JHUserDefault.h"
 @interface LoginViewController ()<JHLoginDelegate>
 /**
  *  用户名文本输入框
@@ -22,6 +23,7 @@
 /**
  *  是否记住密码复选框
  */
+@property (weak, nonatomic) IBOutlet UIButton *remberPwd;
 - (IBAction)rembePwdCheckBox:(UIButton *)sender;
 /**
  *  点击登录按钮
@@ -44,6 +46,13 @@
     self.userNameTextField.autocorrectionType = UITextAutocorrectionTypeNo;
     //添加输入框的左视图
     [self addImageViewToTextField];
+    
+    //判断是否自动登录
+    if ([JHUserDefault autoLogin]) {
+        self.userNameTextField.text = [JHUserDefault getUserName];
+        self.userPwdTextFileField.text = [JHUserDefault getPwd];
+        [self enterBtnClick:nil];
+    }
 }
 - (void)addImageViewToTextField {
     UIImageView *userImageView = [[UIImageView alloc]initWithFrame:CGRectMake(5, 0, 46, 30)];
@@ -66,7 +75,7 @@
     NSInteger option = [notification.userInfo[UIKeyboardAnimationCurveUserInfoKey]integerValue];
     CGRect rect = [notification.userInfo[UIKeyboardFrameEndUserInfoKey]CGRectValue];
     CGFloat height = rect.size.height;
-    self.userViewBottomConstraint.constant = height - 20;
+    self.userViewBottomConstraint.constant = height - 30;
     [UIView animateWithDuration:duration delay:0 options:option animations:^{
         //显示输入框向上移动动画
         [self.view layoutIfNeeded];
@@ -90,6 +99,7 @@
 }
 - (IBAction)enterBtnClick:(id)sender {
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(closeKeyboard:) name:UIKeyboardWillHideNotification object:nil];
+
     [JHNetworkManager vaidataUserWithUserName:self.userNameTextField.text andPassword:self.userPwdTextFileField.text];
     [MBProgressHUD showMessage:@"正在登陆"];
     [JHNetworkManager sharedJHNetworkManager].loginDelegate = self;
@@ -108,6 +118,12 @@
 }
 //代理返回登陆成功
 -(void)loginSuccess{
+    if (self.remberPwd.selected == YES) {
+        [JHUserDefault remberUserName:(self.userNameTextField.text) andUserPwd:(self.userPwdTextFileField.text)];
+    } else{
+        //清除账号密码
+        [JHUserDefault clearUser];
+    }
     [self performSegueWithIdentifier:@"Login" sender:nil];
 
 }

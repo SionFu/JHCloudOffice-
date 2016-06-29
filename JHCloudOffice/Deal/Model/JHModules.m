@@ -10,6 +10,6 @@
 
 @implementation JHModules
 -(NSString *)description{
-  return   [NSString stringWithFormat: @"%@====%@",self.ModuleType,self.Category];
+  return   [NSString stringWithFormat: @"%@====%@",self.ModuleName,self.Category];
 }
 @end

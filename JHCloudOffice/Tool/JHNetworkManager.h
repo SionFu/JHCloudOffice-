@@ -31,4 +31,8 @@ singleton_interface(JHNetworkManager)
  *  获取流程列表
  */
 - (void) getModules;
+/**
+ *  获取流程配置
+ */
+- (void)getPageSettingWithCurrentVC:(NSInteger)currentIndex andRow:(NSInteger)sectionRow;
 @end

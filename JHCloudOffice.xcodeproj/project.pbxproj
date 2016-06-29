@@ -18,11 +18,12 @@
 		3126A89B1D1908DD00ADC960 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3126A8991D1908DD00ADC960 /* LaunchScreen.storyboard */; };
 		3126A8A61D1908DD00ADC960 /* JHCloudOfficeUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3126A8A51D1908DD00ADC960 /* JHCloudOfficeUITests.m */; };
 		3126A8B51D19098400ADC960 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3126A8B41D19098400ADC960 /* AppDelegate.m */; };
-		3126A8BB1D190A7500ADC960 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3126A8B91D190A7500ADC960 /* LoginViewController.m */; };
 		3126A8BE1D191D1A00ADC960 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3126A8BD1D191D1A00ADC960 /* Assets.xcassets */; };
 		317249E11D221ED600B2E48A /* JHCategoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 317249DF1D221ED600B2E48A /* JHCategoryTableViewCell.m */; };
 		317249E21D221ED600B2E48A /* JHCategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 317249E01D221ED600B2E48A /* JHCategoryTableViewCell.xib */; };
 		317249E61D22283600B2E48A /* JHPortalTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 317249E51D22283600B2E48A /* JHPortalTableViewController.xib */; };
+		317249EA1D22543C00B2E48A /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 317249E91D22543C00B2E48A /* LoginViewController.m */; };
+		317249ED1D22548900B2E48A /* JHUserDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = 317249EC1D22548900B2E48A /* JHUserDefault.m */; };
 		3179FBD81D1BBD900021E35E /* JHUIControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3179FBD71D1BBD900021E35E /* JHUIControl.xib */; };
 		31A358B21D20DD6C00D4C0DA /* JHModulesData.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A358B11D20DD6C00D4C0DA /* JHModulesData.m */; };
 		31A358B91D20F1B100D4C0DA /* NSObject+YYModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A358B51D20F1B100D4C0DA /* NSObject+YYModel.m */; };
@@ -81,13 +82,15 @@
 		3126A8A71D1908DD00ADC960 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3126A8B31D19098400ADC960 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3126A8B41D19098400ADC960 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		3126A8B81D190A7500ADC960 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
-		3126A8B91D190A7500ADC960 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		3126A8BD1D191D1A00ADC960 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		317249DE1D221ED600B2E48A /* JHCategoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHCategoryTableViewCell.h; sourceTree = "<group>"; };
 		317249DF1D221ED600B2E48A /* JHCategoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHCategoryTableViewCell.m; sourceTree = "<group>"; };
 		317249E01D221ED600B2E48A /* JHCategoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHCategoryTableViewCell.xib; sourceTree = "<group>"; };
 		317249E51D22283600B2E48A /* JHPortalTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHPortalTableViewController.xib; sourceTree = "<group>"; };
+		317249E81D22543C00B2E48A /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		317249E91D22543C00B2E48A /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		317249EB1D22548900B2E48A /* JHUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHUserDefault.h; sourceTree = "<group>"; };
+		317249EC1D22548900B2E48A /* JHUserDefault.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHUserDefault.m; sourceTree = "<group>"; };
 		3179FBD71D1BBD900021E35E /* JHUIControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHUIControl.xib; sourceTree = "<group>"; };
 		31A358B01D20DD6C00D4C0DA /* JHModulesData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHModulesData.h; sourceTree = "<group>"; };
 		31A358B11D20DD6C00D4C0DA /* JHModulesData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHModulesData.m; sourceTree = "<group>"; };
@@ -232,6 +235,7 @@
 		3126A8B11D19098400ADC960 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				317249E71D22543C00B2E48A /* controller */,
 				3126A8B61D1909BA00ADC960 /* Model */,
 				3126A8B71D1909BA00ADC960 /* View */,
 			);
@@ -255,6 +259,8 @@
 		3126A8B61D1909BA00ADC960 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				317249EB1D22548900B2E48A /* JHUserDefault.h */,
+				317249EC1D22548900B2E48A /* JHUserDefault.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -262,10 +268,17 @@
 		3126A8B71D1909BA00ADC960 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				3126A8B81D190A7500ADC960 /* LoginViewController.h */,
-				3126A8B91D190A7500ADC960 /* LoginViewController.m */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		317249E71D22543C00B2E48A /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				317249E81D22543C00B2E48A /* LoginViewController.h */,
+				317249E91D22543C00B2E48A /* LoginViewController.m */,
+			);
+			path = controller;
 			sourceTree = "<group>";
 		};
 		31A358B31D20F1B100D4C0DA /* YYModel */ = {
@@ -591,6 +604,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				317249ED1D22548900B2E48A /* JHUserDefault.m in Sources */,
 				3105D9F31D1BA7690098EA73 /* JHHoneHeadView.m in Sources */,
 				31E2F5291D1A2D9500FC212B /* AFURLConnectionOperation.m in Sources */,
 				31B6F46F1D1FAECB00A2670B /* JHProcessViewController.m in Sources */,
@@ -599,6 +613,7 @@
 				31B6F46B1D1FACDE00A2670B /* YSLContainerViewController.m in Sources */,
 				317249E11D221ED600B2E48A /* JHCategoryTableViewCell.m in Sources */,
 				31A358B91D20F1B100D4C0DA /* NSObject+YYModel.m in Sources */,
+				317249EA1D22543C00B2E48A /* LoginViewController.m in Sources */,
 				31E2F52C1D1A2D9500FC212B /* AFURLSessionManager.m in Sources */,
 				3105D9F61D1BAE1A0098EA73 /* JHMenuData.m in Sources */,
 				31E2F52A1D1A2D9500FC212B /* AFURLRequestSerialization.m in Sources */,
@@ -615,7 +630,6 @@
 				31A358B21D20DD6C00D4C0DA /* JHModulesData.m in Sources */,
 				3120B3A21D1CED7B00206F6B /* JHModules.m in Sources */,
 				3105D9FB1D1BBB740098EA73 /* JHUIControl.m in Sources */,
-				3126A8BB1D190A7500ADC960 /* LoginViewController.m in Sources */,
 				31E2F54B1D1A83B300FC212B /* JHDealViewViewController.m in Sources */,
 				31E2F5261D1A2D9500FC212B /* AFHTTPSessionManager.m in Sources */,
 				3120B3A61D1CFB4100206F6B /* UIView+WbyExtension.m in Sources */,

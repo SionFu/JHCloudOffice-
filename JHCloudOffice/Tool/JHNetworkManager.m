@@ -61,7 +61,7 @@ singleton_implementation(JHNetworkManager)
     }
 }
 
-- (void) getModules{
+- (void)getModules {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/DefaultSheet.ashx?appKey=%@&token=%@&action=modules&create=1&userId=%@", SITEURL, APPKEY, [JHUserInfo sharedJHUserInfo].objectId, [JHUserInfo sharedJHUserInfo].uid];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -82,4 +82,30 @@ singleton_implementation(JHNetworkManager)
         
     }];
 }
+
+
+- (void)getPageSettingWithCurrentVC:(NSInteger)currentIndex andRow:(NSInteger)sectionRow{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    JHModules *module = [JHModulesData sharedJHModulesData].allModuleArray[currentIndex][sectionRow];
+    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&token=%@&action=page&code=%@&version=%@&activity=%@&userId=%@item=nil&instance=nil&item=nil&viewmode=false", SITEURL, module.StartSheetCode,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,module.ModuleCode,module.ModuleVersion,module.StartActivityCode,[JHUserInfo sharedJHUserInfo].uid];
+    NSString *filepath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)firstObject] stringByAppendingPathComponent:@"Setting.pilst"];
+    
+    [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSError *error = nil;
+        NSLog(@"%@",responseObject);
+        [responseObject writeToFile:filepath atomically:YES encoding:NSUTF8StringEncoding error:&error];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
+    NSLog(@"%@",urlStr);
+}
+
+
+
+
+
+
+
+
+
 @end

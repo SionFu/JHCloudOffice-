@@ -40,7 +40,10 @@ singleton_interface(JHModulesData)
  *  相同的流程数组包括所有数据
  */
 @property (nonatomic, strong) NSMutableArray *allModuleArray;
-
+/**
+ *  当前选择的表格视图
+ */
+@property (nonatomic, assign) NSInteger curreatVCIndex;
 /**
  *  将相同的数组存在一个数组中
  */

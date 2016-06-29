@@ -46,10 +46,7 @@
 
 -(void)containerViewItemIndex:(NSInteger)index currentController:(UIViewController *)controller{
     NSLog(@"%ld",(long)index);
-    JHPortalTableViewController *tbVC = self.muPVC[index];
-    tbVC.indexVC = index;
-    
-
+    [JHModulesData sharedJHModulesData].curreatVCIndex = index;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
