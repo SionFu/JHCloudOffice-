@@ -1,28 +1,26 @@
 //
-//  JHPortalTableViewController.m
+//  JHPageTableViewController.m
 //  JHCloudOffice
 //
-//  Created by Fu_sion on 16/6/26.
+//  Created by Fu_sion on 16/6/29.
 //  Copyright © 2016年 Fu_sion. All rights reserved.
 //
 
-#import "JHPortalTableViewController.h"
-#import "JHModulesData.h"
-#import "JHCategoryTableViewCell.h"
-#import "JHModules.h"
-#import "JHNetworkManager.h"
 #import "JHPageTableViewController.h"
-@interface JHPortalTableViewController ()
-@property (nonatomic, strong)NSMutableArray *catrgoryArray;
-
+#import "JHPageTableViewCell.h"
+@interface JHPageTableViewController ()
+/**
+ *  所有流程项目名称
+ */
+@property (nonatomic, strong)NSArray *pageCategory;
+/**
+ *  所有项目的控件
+ */
+@property (nonatomic, strong)NSArray *typeArray;
 @property (nonatomic ,strong ) UINib *nib;
-
-
-
-
 @end
-
-@implementation JHPortalTableViewController
+#define CONTROLFRME CGRectMake(5, 5, self.view.frame.size.width * 2.8 / 4 - 10, 25)
+@implementation JHPageTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -32,15 +30,18 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    self.catrgoryArray = [JHModulesData sharedJHModulesData].allModuleArray[i];
-    ++i;
     
 }
-
--(void)viewWillDisappear:(BOOL)animated{
-    i = 0;
+- (NSArray *)pageCategory{
+    if (_pageCategory == nil) {
+        _pageCategory = [NSArray arrayWithObjects:@"日期:",@"姓名:",@"单位:", nil];
+    }return _pageCategory;
 }
-
+-(NSArray *)typeArray{
+    if (_typeArray == nil) {
+        _typeArray = [NSArray arrayWithObjects:@"1",@"2",@"3", nil];
+    }return _typeArray;
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -49,40 +50,58 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+
     return 1;
-    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    return self.catrgoryArray.count;
-}
-static int i = 0;
-- (NSInteger)getNumberOfRowsInSection{
-    return 0;
+    return 3;
 }
 
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString * cellIdentifier = @"CateGoryCell";
+    static NSString * cellIdentifier = @"reuseIdentifier";
     
     if (_nib == nil) {
-        _nib = [UINib nibWithNibName:@"JHCategoryTableViewCell" bundle:nil];
+        _nib = [UINib nibWithNibName:@"JHPageTableViewCell" bundle:nil];
         [tableView registerNib:_nib forCellReuseIdentifier:cellIdentifier];
+        UILabel *headTitle = [[UILabel alloc]initWithFrame:CONTROLFRME];
+        headTitle.text = self.pageNage;
+        headTitle.textAlignment = NSTextAlignmentCenter;
+        headTitle.center = CGPointMake(self.view.frame.size.width / 2, 10);
+        tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
+        [tableView.tableHeaderView addSubview: headTitle];
+        
     }
-    JHCategoryTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    JHModules *data = self.catrgoryArray[indexPath.row];
-    cell.textLabel.text = data.ModuleName;
+    JHPageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    cell.itemDisplayNameLabelText.text = self.pageCategory[indexPath.row];
+    //将不同的控件添加到 cell 上
+    [self addControlTocontrolTypeView:cell inRow:indexPath.row];
     return cell;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    NSLog(@"%ld,%ld",(long)[JHModulesData sharedJHModulesData].curreatVCIndex,(long)indexPath.row);
-    [[[JHNetworkManager alloc]init] getPageSettingWithCurrentVC:[JHModulesData sharedJHModulesData].curreatVCIndex andRow:indexPath.row];
-    JHPageTableViewController *pageVC = [[JHPageTableViewController alloc]init];
-    JHModules *data = self.catrgoryArray[indexPath.row];
-    pageVC.pageNage = data.ModuleName;
-    [self.navigationController pushViewController:pageVC animated:YES];
+-(void)addControlTocontrolTypeView:(JHPageTableViewCell *)cell inRow:(NSInteger)index {
+    if ([self.typeArray[index] isEqualToString:@"1"]) {
+        UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width * 2.8 / 4 - 10, 25)];
+        textField.tag = index;
+        textField.backgroundColor = [UIColor whiteColor];
+        textField.text = @"我是一个测试的文字";
+        [cell.controlTypeView addSubview:textField];
+        
+    }
+    if ([self.typeArray[index] isEqualToString:@"2"]) {
+        UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
+        button.backgroundColor = [UIColor redColor];
+        [cell.controlTypeView addSubview:button];
+    }
+    if ([self.typeArray[index] isEqualToString:@"3"]) {
+        UIDatePicker *pick = [[UIDatePicker alloc]initWithFrame:CONTROLFRME];
+        UIPickerView *pickview = [[UIPickerView alloc]initWithFrame:CONTROLFRME];
+        [cell.controlTypeView addSubview:pickview];
+    }
+}
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section{
     
 }
 /*

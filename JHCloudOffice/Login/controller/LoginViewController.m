@@ -101,7 +101,7 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(closeKeyboard:) name:UIKeyboardWillHideNotification object:nil];
 
     [JHNetworkManager vaidataUserWithUserName:self.userNameTextField.text andPassword:self.userPwdTextFileField.text];
-    [MBProgressHUD showMessage:@"正在登陆"];
+    [MBProgressHUD showMessage:@"正在登陆" toView:self.view];
     [JHNetworkManager sharedJHNetworkManager].loginDelegate = self;
     
 }

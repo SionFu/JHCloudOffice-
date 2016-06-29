@@ -67,6 +67,10 @@ singleton_implementation(JHNetworkManager)
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
 # warning 有打印
         NSLog(@"%@",responseObject);
+        NSString *filepath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)firstObject] stringByAppendingPathComponent:@"Modules.plist"];
+#warning 本地化数据
+        [responseObject writeToFile:filepath atomically:YES];
+        
         NSArray *array = responseObject[@"datas"];
         [JHModulesData sharedJHModulesData].count = responseObject[@"count"];
         [JHModulesData sharedJHModulesData].errorCode = responseObject[@"ErrorCode"];
@@ -79,7 +83,7 @@ singleton_implementation(JHNetworkManager)
         //将流程数组分类保存
         [JHModulesData getModulesArray];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
+        NSLog(@"%@",error);
     }];
 }
 
@@ -88,12 +92,11 @@ singleton_implementation(JHNetworkManager)
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     JHModules *module = [JHModulesData sharedJHModulesData].allModuleArray[currentIndex][sectionRow];
     NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&token=%@&action=page&code=%@&version=%@&activity=%@&userId=%@item=nil&instance=nil&item=nil&viewmode=false", SITEURL, module.StartSheetCode,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,module.ModuleCode,module.ModuleVersion,module.StartActivityCode,[JHUserInfo sharedJHUserInfo].uid];
-    NSString *filepath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)firstObject] stringByAppendingPathComponent:@"Setting.pilst"];
-    
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSError *error = nil;
-        NSLog(@"%@",responseObject);
-        [responseObject writeToFile:filepath atomically:YES encoding:NSUTF8StringEncoding error:&error];
+#warning 本地化数据
+    NSString *filepath = [[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)firstObject]stringByAppendingPathComponent:responseObject[@"ModuleName"]]stringByAppendingPathExtension:@"plist"];
+//        NSLog(@"%@",responseObject);
+        [responseObject writeToFile:filepath atomically:YES];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
     }];
