@@ -20,8 +20,8 @@
                         <rect key="frame" x="5" y="5" width="80" height="36"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="日期:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="34z-d9-WlJ">
-                                <rect key="frame" x="8" y="4" width="60" height="27"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <rect key="frame" x="8" y="4" width="72" height="27"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -29,16 +29,10 @@
                         <color key="backgroundColor" red="0.76798878205128207" green="0.76798878205128207" blue="0.76798878205128207" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="34z-d9-WlJ" secondAttribute="bottom" constant="5" id="FGj-DC-o27"/>
-                            <constraint firstAttribute="trailing" secondItem="34z-d9-WlJ" secondAttribute="trailing" constant="12" id="Nnq-20-8Sk"/>
+                            <constraint firstAttribute="trailing" secondItem="34z-d9-WlJ" secondAttribute="trailing" id="Nnq-20-8Sk"/>
                             <constraint firstItem="34z-d9-WlJ" firstAttribute="leading" secondItem="U22-2M-Jvq" secondAttribute="leadingMargin" id="Ylc-Pc-XCe"/>
-                            <constraint firstAttribute="height" constant="40" id="uwC-oJ-ZSW"/>
                             <constraint firstItem="34z-d9-WlJ" firstAttribute="top" secondItem="U22-2M-Jvq" secondAttribute="top" constant="4" id="vRX-jW-Wvl"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="uwC-oJ-ZSW"/>
-                            </mask>
-                        </variation>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qmY-wn-7Rb">
                         <rect key="frame" x="90" y="5" width="224" height="36"/>

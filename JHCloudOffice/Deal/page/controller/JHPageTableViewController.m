@@ -18,8 +18,13 @@
  */
 @property (nonatomic, strong)NSArray *typeArray;
 @property (nonatomic ,strong ) UINib *nib;
+/**
+ *  格式化显示时间或者日期的方式
+ */
+@property (nonatomic, strong) NSString *dataFormart;
 @end
 #define CONTROLFRME CGRectMake(5, 5, self.view.frame.size.width * 2.8 / 4 - 10, 25)
+#define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
 @implementation JHPageTableViewController
 
 - (void)viewDidLoad {
@@ -29,17 +34,85 @@
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    //在导航栏上添加状态保存提交和取消按钮
+    [self addNavigationBtn];
+   
+}
+- (void)addNavigationBtn{
+    UIView *button = [[UIView alloc]initWithFrame:CGRectMake(SCREENWIDTH / 2 + 20, 25, SCREENWIDTH / 2 - 25, 30)];
+    NSArray *titleArray = [NSArray arrayWithObjects:@"状态",@"保存",@"提交", nil];
+    for (int i = 0; i < 3; i ++) {
+        UIButton *statusbutton = [[UIButton alloc]initWithFrame:CGRectMake(i * ((SCREENWIDTH / 2 - 25 ) / 3), 0, (SCREENWIDTH / 2 - 25 ) / 3, 30)];
+        [statusbutton setTitle:titleArray[i] forState:UIControlStateNormal];
+        [statusbutton setBackgroundImage:[UIImage imageNamed:@"tab_unselected_pressed.9"] forState:UIControlStateHighlighted];
+        [statusbutton addTarget:self action:@selector(rightBarButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        [statusbutton setTag:100 + i];
+        [button addSubview:statusbutton];
+    }
+    [self.navigationController.view addSubview:button];
+    UIBarButtonItem *leftBarButtonItem = [[UIBarButtonItem alloc]
+                                          initWithTitle:@"取消"
+                                          style:UIBarButtonItemStyleDone
+                                          target:self
+                                          action:@selector(doClickBackAction:)];
+    self.navigationItem.leftBarButtonItem = leftBarButtonItem;
+}
+//返回 (取消) 按钮
+- (void)doClickBackAction:(UIBarButtonItem *)send {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+- (void)rightBarButtonClick:(UIBarButtonItem *)send {
+    switch (send.tag) {
+        case 100:
+            NSLog(@"点击了状态");
+            [self statuesButtonClick];
+            break;
+        case 101:
+            NSLog(@"保存");
+            [self saveButtonClick];
+            break;
+        case 102:
+            NSLog(@"提交");
+            [self sendButtonClick];
+            break;
+        default:
+            NSLog(@"无效按钮");
+            break;
+    }
+}
+- (void)statuesButtonClick {
     
 }
-- (NSArray *)pageCategory{
+- (void)saveButtonClick {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"保存内容" message:@"确定保存草稿?" preferredStyle:UIAlertControllerStyleAlert];
+     UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+         
+     }];
+    UIAlertAction *actionNo = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:actionYes];
+    [alert addAction:actionNo];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+- (void)sendButtonClick {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提交内容" message:@"确定提交?" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+    }];
+    UIAlertAction *actionNo = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:actionYes];
+    [alert addAction:actionNo];
+    [self presentViewController:alert animated:YES completion:nil];
+    
+}
+#pragma mark 表单数据
+- (NSArray *)pageCategory {
     if (_pageCategory == nil) {
-        _pageCategory = [NSArray arrayWithObjects:@"日期:",@"姓名:",@"单位:", nil];
+        _pageCategory = [NSArray arrayWithObjects:@"日期:",@"姓名:",@"请假开始时间:",@"详细信息:",@"详细信息:",@"详细信息:",@"详细信息:",@"详细信息:",@"详细信息:",@"详细信息:",@"详细信息:",@"详细信息:", nil];
     }return _pageCategory;
 }
 -(NSArray *)typeArray{
     if (_typeArray == nil) {
-        _typeArray = [NSArray arrayWithObjects:@"1",@"2",@"3", nil];
+        _typeArray = [NSArray arrayWithObjects:@"3",@"2",@"4",@"1",@"1",@"1",@"1",@"3",@"1",@"3",@"1", nil];
     }return _typeArray;
 }
 - (void)didReceiveMemoryWarning {
@@ -56,7 +129,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    return 3;
+    return self.typeArray.count;
 }
 
 
@@ -68,6 +141,7 @@
         [tableView registerNib:_nib forCellReuseIdentifier:cellIdentifier];
         UILabel *headTitle = [[UILabel alloc]initWithFrame:CONTROLFRME];
         headTitle.text = self.pageNage;
+        headTitle.font = [UIFont systemFontOfSize:20];
         headTitle.textAlignment = NSTextAlignmentCenter;
         headTitle.center = CGPointMake(self.view.frame.size.width / 2, 10);
         tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
@@ -82,25 +156,70 @@
 }
 
 -(void)addControlTocontrolTypeView:(JHPageTableViewCell *)cell inRow:(NSInteger)index {
+    //控件为文本输入框
     if ([self.typeArray[index] isEqualToString:@"1"]) {
         UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width * 2.8 / 4 - 10, 25)];
-        textField.tag = index;
+        textField.tag = 100 + index;
         textField.backgroundColor = [UIColor whiteColor];
         textField.text = @"我是一个测试的文字";
+        textField.adjustsFontSizeToFitWidth = YES;
         [cell.controlTypeView addSubview:textField];
         
     }
+    //控件为文本框
     if ([self.typeArray[index] isEqualToString:@"2"]) {
+        UILabel *label = [[UILabel alloc]initWithFrame:CONTROLFRME];
+        label.text = @"何建强";
+        label.tag = 100 + index;
+        label.backgroundColor = [UIColor whiteColor];
+        [cell.controlTypeView addSubview:label];
+    }
+    //控件为时间日期选择器
+    if ([self.typeArray[index] isEqualToString:@"3"]||[self.typeArray[index] isEqualToString:@"4"]) {
+        if ([self.typeArray[index] isEqualToString:@"3"]) {
+          self.dataFormart = @"yyyy年MM月dd日";
+        }else if ([self.typeArray[index] isEqualToString:@"4"]){
+          self.dataFormart = @"yyyy年MM月dd日 HH点mm分";
+        }
         UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
-        button.backgroundColor = [UIColor redColor];
+        button.backgroundColor = [UIColor whiteColor];
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
+        [dateFormat setDateFormat:self.dataFormart];
+        NSString *dataStr = [dateFormat stringFromDate:[NSDate date]];
+        [button setTitle:dataStr forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+        button.tag = 100 + index;
+        [button addTarget:self action:@selector(setTimeButtonCick:) forControlEvents:UIControlEventTouchUpInside];
         [cell.controlTypeView addSubview:button];
     }
-    if ([self.typeArray[index] isEqualToString:@"3"]) {
-        UIDatePicker *pick = [[UIDatePicker alloc]initWithFrame:CONTROLFRME];
-        UIPickerView *pickview = [[UIPickerView alloc]initWithFrame:CONTROLFRME];
-        [cell.controlTypeView addSubview:pickview];
-    }
+    //控件为类别选择
 }
+- (void)setTimeButtonCick:(UIButton *)sender {
+    UIDatePicker *datePicker = [[UIDatePicker alloc] init];
+    datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+    NSDateFormatter *format = [[NSDateFormatter alloc]init];
+    [format setDateFormat:self.dataFormart];
+    NSLog(@"%@",sender.titleLabel.text);
+    NSDate *date = [format dateFromString:sender.titleLabel.text];
+//    [datePicker setDate:date animated:YES];
+    NSLog(@"%@",date);
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"\n\n\n\n\n\n\n\n\n\n\n" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [alert.view addSubview:datePicker];
+    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:self.dataFormart];
+        NSString *dateString = [dateFormat stringFromDate:datePicker.date];
+        sender.titleLabel.text = dateString;
+        [sender reloadInputViews];
+    }];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:ok];
+    [alert addAction:cancel];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section{
     
 }
