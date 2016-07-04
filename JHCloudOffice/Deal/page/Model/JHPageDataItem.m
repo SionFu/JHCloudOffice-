@@ -9,5 +9,7 @@
 #import "JHPageDataItem.h"
 
 @implementation JHPageDataItem
-
+-(NSString *)description{
+    return [NSString stringWithFormat:@"%@",self.ItemName];
+}
 @end

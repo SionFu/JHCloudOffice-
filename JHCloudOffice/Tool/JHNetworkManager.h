@@ -20,9 +20,22 @@
 - (void) loginfaild;
 - (void) loginNetError;
 @end
+/**
+ *  返回获取page数据的情况
+ */
+@protocol JHPageDelegate <NSObject>
+
+/**
+ *  获取数据成功
+ */
+- (void) getPageSuccess;
+- (void) getPagefaild;
+- (void) getPageNetError;
+@end
 @interface JHNetworkManager : NSObject
 singleton_interface(JHNetworkManager)
 @property (nonatomic, weak) id<JHLoginDelegate> loginDelegate;
+@property (nonatomic, weak) id<JHPageDelegate> getPageDelegate;
 /**
  *  用户名密码登陆
  */

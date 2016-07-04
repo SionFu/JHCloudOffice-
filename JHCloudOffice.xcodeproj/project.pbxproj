@@ -54,6 +54,8 @@
 		31E2F5351D1A2DB200FC212B /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 31E2F5321D1A2DB200FC212B /* MBProgressHUD.m */; };
 		31E2F5381D1A32BF00FC212B /* Foundation+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 31E2F5371D1A32BF00FC212B /* Foundation+Log.m */; };
 		31E2F54B1D1A83B300FC212B /* JHDealViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31E2F54A1D1A83B300FC212B /* JHDealViewViewController.m */; };
+		31F2E96C1D2641890079BDB9 /* JHDataItemPermissions.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F2E96B1D2641890079BDB9 /* JHDataItemPermissions.m */; };
+		31F2E96F1D264A8E0079BDB9 /* JHPageDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F2E96E1D264A8E0079BDB9 /* JHPageDataManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -154,6 +156,10 @@
 		31E2F5371D1A32BF00FC212B /* Foundation+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Foundation+Log.m"; sourceTree = "<group>"; };
 		31E2F5491D1A83B300FC212B /* JHDealViewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHDealViewViewController.h; sourceTree = "<group>"; };
 		31E2F54A1D1A83B300FC212B /* JHDealViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHDealViewViewController.m; sourceTree = "<group>"; };
+		31F2E96A1D2641890079BDB9 /* JHDataItemPermissions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHDataItemPermissions.h; sourceTree = "<group>"; };
+		31F2E96B1D2641890079BDB9 /* JHDataItemPermissions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHDataItemPermissions.m; sourceTree = "<group>"; };
+		31F2E96D1D264A8E0079BDB9 /* JHPageDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHPageDataManager.h; sourceTree = "<group>"; };
+		31F2E96E1D264A8E0079BDB9 /* JHPageDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHPageDataManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +206,8 @@
 			children = (
 				310D52D81D237146003C09E9 /* JHPageDataItem.h */,
 				310D52D91D237146003C09E9 /* JHPageDataItem.m */,
+				31F2E96A1D2641890079BDB9 /* JHDataItemPermissions.h */,
+				31F2E96B1D2641890079BDB9 /* JHDataItemPermissions.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -368,6 +376,8 @@
 				31E2F50D1D1A261400FC212B /* JHUserInfo.h */,
 				31E2F50E1D1A261400FC212B /* JHUserInfo.m */,
 				31E2F5361D1A2E0400FC212B /* Singleton.h */,
+				31F2E96D1D264A8E0079BDB9 /* JHPageDataManager.h */,
+				31F2E96E1D264A8E0079BDB9 /* JHPageDataManager.m */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -685,7 +695,9 @@
 				310D52D11D236F1F003C09E9 /* JHPageTableViewController.m in Sources */,
 				3126A8B51D19098400ADC960 /* AppDelegate.m in Sources */,
 				31E2F50F1D1A261400FC212B /* JHUserInfo.m in Sources */,
+				31F2E96F1D264A8E0079BDB9 /* JHPageDataManager.m in Sources */,
 				31E2F5251D1A2D9500FC212B /* AFHTTPRequestOperationManager.m in Sources */,
+				31F2E96C1D2641890079BDB9 /* JHDataItemPermissions.m in Sources */,
 				31E2F5281D1A2D9500FC212B /* AFSecurityPolicy.m in Sources */,
 				31E2F5331D1A2DB200FC212B /* MBProgressHUD+KR.m in Sources */,
 				3126A88D1D1908DD00ADC960 /* main.m in Sources */,

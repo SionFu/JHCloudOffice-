@@ -7,8 +7,13 @@
 //
 
 #import "JHPageTableViewController.h"
+#import "MBProgressHUD+KR.h"
 #import "JHPageTableViewCell.h"
-@interface JHPageTableViewController ()
+#import "JHPageDataManager.h"
+#import "JHNetworkManager.h"
+#import "JHPageDataItem.h"
+
+@interface JHPageTableViewController ()<JHPageDelegate>
 /**
  *  所有流程项目名称
  */
@@ -34,9 +39,19 @@
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    [MBProgressHUD showMessage:@"正在载入..." toView:self.view];
+    [JHNetworkManager sharedJHNetworkManager].getPageDelegate = self;
     //在导航栏上添加状态保存提交和取消按钮
     [self addNavigationBtn];
    
+}
+-(void)getPageSuccess{
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    NSLog(@"成功接收数据");
+    for (JHPageDataItem *item in [JHPageDataManager sharedJHPageDataManager].pageVisibleItemArray) {
+        NSLog(@"%@",item.ItemName);
+    }
+
 }
 - (void)addNavigationBtn{
     UIView *button = [[UIView alloc]initWithFrame:CGRectMake(SCREENWIDTH / 2 + 20, 25, SCREENWIDTH / 2 - 25, 30)];
@@ -107,12 +122,13 @@
 #pragma mark 表单数据
 - (NSArray *)pageCategory {
     if (_pageCategory == nil) {
-        _pageCategory = [NSArray arrayWithObjects:@"日期:",@"姓名:",@"请假开始时间:",@"详细信息:",@"详细信息:",@"详细信息:",@"详细信息:",@"详细信息:",@"详细信息:",@"详细信息:",@"详细信息:",@"详细信息:", nil];
+//        _pageCategory = [NSArray arrayWithArray:[JHPageDataManager sharedJHPageDataManager].pageVisibleItemArray];
+         _pageCategory = [NSArray arrayWithObjects:@"日期:",@"姓名:",@"请假开始时间:",@"详细信息:",@"详细信息:",@"详细信息:",@"详细信息:",@"详细信息:",@"详细信息:",@"日期:",@"详细信息:", nil];
     }return _pageCategory;
 }
 -(NSArray *)typeArray{
     if (_typeArray == nil) {
-        _typeArray = [NSArray arrayWithObjects:@"3",@"2",@"4",@"1",@"1",@"1",@"1",@"3",@"1",@"3",@"1", nil];
+        _typeArray = [NSArray arrayWithObjects:@"3",@"2",@"4",@"1",@"1",@"1",@"1",@"3",@"1",@"3",@"5", nil];
     }return _typeArray;
 }
 - (void)didReceiveMemoryWarning {
@@ -156,7 +172,7 @@
 }
 
 -(void)addControlTocontrolTypeView:(JHPageTableViewCell *)cell inRow:(NSInteger)index {
-    //控件为文本输入框
+    //控件为文本输入框1行
     if ([self.typeArray[index] isEqualToString:@"1"]) {
         UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width * 2.8 / 4 - 10, 25)];
         textField.tag = 100 + index;
@@ -193,16 +209,34 @@
         [button addTarget:self action:@selector(setTimeButtonCick:) forControlEvents:UIControlEventTouchUpInside];
         [cell.controlTypeView addSubview:button];
     }
-    //控件为类别选择
+    //控件为文本视图,多行
+    if ([self.typeArray[index] isEqualToString:@"5"]) {
+        UITextView *textView = [[UITextView alloc]initWithFrame:CONTROLFRME];
+        [cell.controlTypeView addSubview:textView];
+    }
+    //控件为类别选择,选择收件人
+    if ([self.typeArray[index] isEqualToString:@"6"]) {
+        
+    }
+    //控件为选择器true or
+    if ([self.typeArray[index] isEqualToString:@"7"]) {
+        
+    }
 }
 - (void)setTimeButtonCick:(UIButton *)sender {
     UIDatePicker *datePicker = [[UIDatePicker alloc] init];
     datePicker.datePickerMode = UIDatePickerModeDateAndTime;
     NSDateFormatter *format = [[NSDateFormatter alloc]init];
+    NSLog(@"%ld",sender.titleLabel.text.length);
+    if (sender.titleLabel.text.length == 11) {
+        self.dataFormart = @"yyyy年MM月dd日";
+    }else if (sender.titleLabel.text.length == 18){
+        self.dataFormart = @"yyyy年MM月dd日 HH点mm分";
+    }
     [format setDateFormat:self.dataFormart];
-    NSLog(@"%@",sender.titleLabel.text);
+    
     NSDate *date = [format dateFromString:sender.titleLabel.text];
-//    [datePicker setDate:date animated:YES];
+    [datePicker setDate:date animated:YES];
     NSLog(@"%@",date);
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"\n\n\n\n\n\n\n\n\n\n\n" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
@@ -212,7 +246,6 @@
         [dateFormat setDateFormat:self.dataFormart];
         NSString *dateString = [dateFormat stringFromDate:datePicker.date];
         sender.titleLabel.text = dateString;
-        [sender reloadInputViews];
     }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:ok];

@@ -11,6 +11,7 @@
 #import "JHUserInfo.h"
 #import "JHModules.h"
 #import "JHModulesData.h"
+#import "JHPageDataManager.h"
 #define SITEURL @"http://188.1.100.165:8010/Portal/ForApp/"
 #define APPKEY @"cloudoffice"
 
@@ -97,8 +98,12 @@ singleton_implementation(JHNetworkManager)
     NSString *filepath = [[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)firstObject]stringByAppendingPathComponent:responseObject[@"ModuleName"]]stringByAppendingPathExtension:@"plist"];
 //        NSLog(@"%@",responseObject);
         [responseObject writeToFile:filepath atomically:YES];
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSDictionary *dicAllPageData = [NSDictionary dictionaryWithContentsOfFile:filepath];
+        [JHPageDataManager sharedJHPageDataManager].pageVisibleItemArray = [NSArray arrayWithArray:dicAllPageData[@"Activitys"][2][@"DataItemPermissions"]];
+        [self.getPageDelegate getPageSuccess];
         
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self.getPageDelegate getPagefaild];
     }];
     NSLog(@"%@",urlStr);
 }

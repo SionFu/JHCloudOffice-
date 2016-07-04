@@ -101,8 +101,9 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(closeKeyboard:) name:UIKeyboardWillHideNotification object:nil];
 
     [JHNetworkManager vaidataUserWithUserName:self.userNameTextField.text andPassword:self.userPwdTextFileField.text];
-    [MBProgressHUD showMessage:@"正在登陆" toView:self.view];
     [JHNetworkManager sharedJHNetworkManager].loginDelegate = self;
+    [MBProgressHUD showMessage:@"正在登陆" toView:self.view];
+    
     
 }
 
@@ -131,6 +132,7 @@
     [MBProgressHUD showError:[JHUserInfo sharedJHUserInfo].errorCode];
 }
 -(void)loginNetError{
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [MBProgressHUD showError:@"无法连接网络"];
 }
 //点击登陆按钮

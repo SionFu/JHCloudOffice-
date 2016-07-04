@@ -77,6 +77,7 @@ static int i = 0;
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [[[JHNetworkManager alloc]init] getPageSettingWithCurrentVC:[JHModulesData sharedJHModulesData].curreatVCIndex andRow:indexPath.row];
+    
     JHPageTableViewController *pageVC = [[JHPageTableViewController alloc]init];
     UINavigationController *nvpageVC = [[UINavigationController alloc]initWithRootViewController:pageVC];
     JHModules *data = self.catrgoryArray[indexPath.row];

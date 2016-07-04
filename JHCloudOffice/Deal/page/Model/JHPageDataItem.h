@@ -9,12 +9,18 @@
 #import <Foundation/Foundation.h>
 
 @interface JHPageDataItem : NSObject
-/**
- *  <#Description#>
- */
-@property (nonatomic, strong) NSString *DisplayValueFormula;
-/**
- * 流程名称
- */
-@property (nonatomic, strong) NSString *ModuleName;
+@property (nonatomic, strong) NSDictionary *DisplayValueFormula;
+@property (nonatomic, strong) NSDictionary *Formula;
+@property (nonatomic, assign) BOOL Hidden;
+@property (nonatomic, assign) int Index;
+@property (nonatomic, assign) BOOL IsExtra;
+@property (nonatomic, strong) NSString *ItemDisplayName;
+@property (nonatomic, strong) NSString *ItemName;
+@property (nonatomic, strong) NSString *ItemType;
+@property (nonatomic, strong) NSString *ItemValue;
+@property (nonatomic, assign) int MaxLength;
+@property (nonatomic, assign) BOOL ReadOnly;
+@property (nonatomic, strong) NSDictionary *SourceType;
+@property (nonatomic, strong) NSDictionary *Trackable;
+
 @end
