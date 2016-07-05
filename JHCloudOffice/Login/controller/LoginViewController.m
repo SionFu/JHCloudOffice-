@@ -44,6 +44,7 @@
     [super viewDidLoad];
     //关闭用户名的文本框的自动修正
     self.userNameTextField.autocorrectionType = UITextAutocorrectionTypeNo;
+    
     //添加输入框的左视图
     [self addImageViewToTextField];
     
@@ -125,8 +126,14 @@
         //清除账号密码
         [JHUserDefault clearUser];
     }
-    [self performSegueWithIdentifier:@"Login" sender:nil];
+    
+    //登陆成功就开始获取流程数据
+    [[[JHNetworkManager alloc]init] getModules];
+    
 
+}
+-(void)beginGetModules{
+    [self performSegueWithIdentifier:@"Login" sender:nil];
 }
 -(void)loginfaild{
     [MBProgressHUD showError:[JHUserInfo sharedJHUserInfo].errorCode];

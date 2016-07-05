@@ -13,5 +13,14 @@
  *  储存流程项目显示名称
  */
 @property (nonatomic, strong) NSArray *pageVisibleItemArray;
+/**
+ *  显示字段内容
+ */
+@property (nonatomic, strong) NSMutableArray *pageDataItemsArray;
+/**
+ *  是否使用过数据
+ */
+@property (nonatomic, setter=isUsed:) BOOL Used;
+@property (nonatomic, setter=isUsed:) BOOL pageDataUsed;
 singleton_interface(JHPageDataManager)
 @end

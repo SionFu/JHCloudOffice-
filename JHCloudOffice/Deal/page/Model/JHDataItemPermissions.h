@@ -10,7 +10,7 @@
 
 @interface JHDataItemPermissions : NSObject
 /**
- *  是否可以编辑
+ *  是否可以编辑可以编辑 **就需要上传**
  */
 @property (nonatomic, strong) NSString *Editable;
 /**

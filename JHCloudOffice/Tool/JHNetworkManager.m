@@ -78,11 +78,12 @@ singleton_implementation(JHNetworkManager)
         for (NSDictionary *dic in array) {
             JHModules *modu = [JHModules new];
             [modu setValuesForKeysWithDictionary:dic];
-            NSLog(@"%@",modu);
+//            NSLog(@"%@",modu);
             [[JHModulesData sharedJHModulesData].modulesArray addObject:modu];
         }
         //将流程数组分类保存
         [JHModulesData getModulesArray];
+        [self.loginDelegate beginGetModules];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@",error);
     }];
@@ -100,6 +101,7 @@ singleton_implementation(JHNetworkManager)
         [responseObject writeToFile:filepath atomically:YES];
         NSDictionary *dicAllPageData = [NSDictionary dictionaryWithContentsOfFile:filepath];
         [JHPageDataManager sharedJHPageDataManager].pageVisibleItemArray = [NSArray arrayWithArray:dicAllPageData[@"Activitys"][2][@"DataItemPermissions"]];
+        [JHPageDataManager sharedJHPageDataManager].pageDataItemsArray = [NSMutableArray arrayWithArray:dicAllPageData[@"DataItems"]];
         [self.getPageDelegate getPageSuccess];
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {

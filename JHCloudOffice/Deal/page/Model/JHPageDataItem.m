@@ -12,4 +12,7 @@
 -(NSString *)description{
     return [NSString stringWithFormat:@"%@",self.ItemName];
 }
+-(void)setValue:(id)value forUndefinedKey:(NSString *)key{
+    
+}
 @end

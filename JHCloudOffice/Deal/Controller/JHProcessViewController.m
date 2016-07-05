@@ -26,13 +26,14 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    //添加选择导航器
     [self setupPortalTableViewController];
 }
 - (void)setupPortalTableViewController{
     NSMutableArray *muPVC = [NSMutableArray array];
     self.muPVC = muPVC;
     for (NSString *poral in self.portalArray) {
-        JHPortalTableViewController *pvc = [[JHPortalTableViewController alloc]init];//WithNibName:@"JHPortalTableViewController" bundle:nil];;
+        JHPortalTableViewController *pvc = [[JHPortalTableViewController alloc]init];
         pvc.title = poral;
         [muPVC addObject:pvc];
     }
@@ -45,7 +46,7 @@
 }
 
 -(void)containerViewItemIndex:(NSInteger)index currentController:(UIViewController *)controller{
-    NSLog(@"%ld",(long)index);
+    NSLog(@"选择了第%ld个导航",(long)index);
     [JHModulesData sharedJHModulesData].curreatVCIndex = index;
 }
 - (void)didReceiveMemoryWarning {

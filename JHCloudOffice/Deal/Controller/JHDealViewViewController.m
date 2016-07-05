@@ -29,8 +29,7 @@
     [self setUpHomeHeadView];
     //显示用户登陆信息
     [self showUserInfo];
-    //登陆成功就开始获取流程数据
-    [[[JHNetworkManager alloc]init] getModules];
+
 
 }
 - (void)showUserInfo {

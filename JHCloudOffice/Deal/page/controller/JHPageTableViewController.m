@@ -12,12 +12,13 @@
 #import "JHPageDataManager.h"
 #import "JHNetworkManager.h"
 #import "JHPageDataItem.h"
+#import "JHDataItemPermissions.h"
 
 @interface JHPageTableViewController ()<JHPageDelegate>
 /**
  *  所有流程项目名称
  */
-@property (nonatomic, strong)NSArray *pageCategory;
+@property (nonatomic, strong)NSMutableArray *pageCategory;
 /**
  *  所有项目的控件
  */
@@ -28,7 +29,7 @@
  */
 @property (nonatomic, strong) NSString *dataFormart;
 @end
-#define CONTROLFRME CGRectMake(5, 5, self.view.frame.size.width * 2.8 / 4 - 10, 25)
+#define CONTROLFRME CGRectMake(5, 5, self.view.frame.size.width * 2.8 / 4 - 10, 30)
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
 @implementation JHPageTableViewController
 
@@ -48,9 +49,19 @@
 -(void)getPageSuccess{
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     NSLog(@"成功接收数据");
-    for (JHPageDataItem *item in [JHPageDataManager sharedJHPageDataManager].pageVisibleItemArray) {
-        NSLog(@"%@",item.ItemName);
+    for (JHDataItemPermissions *per in [JHPageDataManager sharedJHPageDataManager].pageVisibleItemArray) {
+        [JHPageDataManager sharedJHPageDataManager].Used = false;
+        NSLog(@"%@",per.ItemName);
     }
+    NSMutableArray *muarray = [NSMutableArray array];
+    for (JHPageDataItem  *dataItem in [JHPageDataManager sharedJHPageDataManager].pageDataItemsArray) {
+        NSLog(@"%@",dataItem.ItemDisplayName);
+        [ JHPageDataManager sharedJHPageDataManager].pageDataUsed = false;
+        [muarray addObject:dataItem.ItemDisplayName];
+       
+    }
+    self.pageCategory = [NSMutableArray arrayWithArray:muarray];
+     [self.tableView reloadData];
 
 }
 - (void)addNavigationBtn{
@@ -120,15 +131,16 @@
     
 }
 #pragma mark 表单数据
-- (NSArray *)pageCategory {
+- (NSMutableArray *)pageCategory {
     if (_pageCategory == nil) {
 //        _pageCategory = [NSArray arrayWithArray:[JHPageDataManager sharedJHPageDataManager].pageVisibleItemArray];
-         _pageCategory = [NSArray arrayWithObjects:@"日期:",@"姓名:",@"请假开始时间:",@"详细信息:",@"详细信息:",@"详细信息:",@"详细信息:",@"详细信息:",@"详细信息:",@"日期:",@"详细信息:", nil];
+//         _pageCategory = [NSMutableArray arrayWithObjects:@"日期:",@"姓名:",@"请假开始时间:",@"详细信息:",@"详细信息:",@"详细信息:",@"详细信息:",@"详细信息:",@"详细信息:",@"日期:",@"详细信息:", nil];
+        _pageCategory = [NSMutableArray array];
     }return _pageCategory;
 }
 -(NSArray *)typeArray{
     if (_typeArray == nil) {
-        _typeArray = [NSArray arrayWithObjects:@"3",@"2",@"4",@"1",@"1",@"1",@"1",@"3",@"1",@"3",@"5", nil];
+        _typeArray = [NSArray arrayWithObjects:@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"1",@"2",@"2",@"1",@"1",@"1",@"3",@"1",@"3",@"5",@"5",@"5",@"5",@"5",@"5",@"5",@"5", nil];
     }return _typeArray;
 }
 - (void)didReceiveMemoryWarning {
@@ -145,7 +157,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 
-    return self.typeArray.count;
+    return self.pageCategory.count;
 }
 
 
@@ -160,12 +172,12 @@
         headTitle.font = [UIFont systemFontOfSize:20];
         headTitle.textAlignment = NSTextAlignmentCenter;
         headTitle.center = CGPointMake(self.view.frame.size.width / 2, 10);
-        tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
+        tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 10, 5, 20)];
         [tableView.tableHeaderView addSubview: headTitle];
         
     }
     JHPageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    cell.itemDisplayNameLabelText.text = self.pageCategory[indexPath.row];
+    cell.itemDisplayNameLabelText.text = [self.pageCategory[indexPath.row] stringByAppendingString:@":"];
     //将不同的控件添加到 cell 上
     [self addControlTocontrolTypeView:cell inRow:indexPath.row];
     return cell;
@@ -174,10 +186,10 @@
 -(void)addControlTocontrolTypeView:(JHPageTableViewCell *)cell inRow:(NSInteger)index {
     //控件为文本输入框1行
     if ([self.typeArray[index] isEqualToString:@"1"]) {
-        UITextField *textField = [[UITextField alloc]initWithFrame:CGRectMake(5, 5, self.view.frame.size.width * 2.8 / 4 - 10, 25)];
+        UITextField *textField = [[UITextField alloc]initWithFrame:CONTROLFRME];
         textField.tag = 100 + index;
         textField.backgroundColor = [UIColor whiteColor];
-        textField.text = @"我是一个测试的文字";
+        textField.text = @"何建强";
         textField.adjustsFontSizeToFitWidth = YES;
         [cell.controlTypeView addSubview:textField];
         
@@ -185,7 +197,7 @@
     //控件为文本框
     if ([self.typeArray[index] isEqualToString:@"2"]) {
         UILabel *label = [[UILabel alloc]initWithFrame:CONTROLFRME];
-        label.text = @"何建强";
+        label.text = @"信息公司";
         label.tag = 100 + index;
         label.backgroundColor = [UIColor whiteColor];
         [cell.controlTypeView addSubview:label];
@@ -253,8 +265,8 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section{
-    
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 50;
 }
 /*
 // Override to support conditional editing of the table view.

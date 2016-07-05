@@ -19,6 +19,10 @@
 - (void) loginSuccess;
 - (void) loginfaild;
 - (void) loginNetError;
+/**
+ *  开始获取流程数据
+ */
+- (void) beginGetModules;
 @end
 /**
  *  返回获取page数据的情况
@@ -31,6 +35,7 @@
 - (void) getPageSuccess;
 - (void) getPagefaild;
 - (void) getPageNetError;
+
 @end
 @interface JHNetworkManager : NSObject
 singleton_interface(JHNetworkManager)
