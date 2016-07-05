@@ -30,6 +30,7 @@
 @property (nonatomic, strong) NSString *dataFormart;
 @end
 #define CONTROLFRME CGRectMake(5, 5, self.view.frame.size.width * 2.8 / 4 - 10, 30)
+#define BUTTONCONTROLFRME CGRectMake(5, 5, 30, 30)
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
 @implementation JHPageTableViewController
 
@@ -54,13 +55,16 @@
         NSLog(@"%@",per.ItemName);
     }
     NSMutableArray *muarray = [NSMutableArray array];
+    NSMutableArray *itemTypeMuarray = [NSMutableArray array];
     for (JHPageDataItem  *dataItem in [JHPageDataManager sharedJHPageDataManager].pageDataItemsArray) {
         NSLog(@"%@",dataItem.ItemDisplayName);
+        NSLog(@"控件类型:%@",dataItem.ItemType[@"Value"]);
         [ JHPageDataManager sharedJHPageDataManager].pageDataUsed = false;
         [muarray addObject:dataItem.ItemDisplayName];
-       
+        [itemTypeMuarray addObject:dataItem.ItemType[@"Value"]];
     }
     self.pageCategory = [NSMutableArray arrayWithArray:muarray];
+    self.typeArray = [NSArray arrayWithArray:itemTypeMuarray];
      [self.tableView reloadData];
 
 }
@@ -140,7 +144,8 @@
 }
 -(NSArray *)typeArray{
     if (_typeArray == nil) {
-        _typeArray = [NSArray arrayWithObjects:@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"1",@"2",@"2",@"1",@"1",@"1",@"3",@"1",@"3",@"5",@"5",@"5",@"5",@"5",@"5",@"5",@"5", nil];
+//        _typeArray = [NSArray arrayWithObjects:@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"1",@"2",@"2",@"1",@"1",@"1",@"3",@"1",@"3",@"5",@"5",@"5",@"5",@"5",@"5",@"5",@"5", nil];
+        _typeArray = [NSArray array];
     }return _typeArray;
 }
 - (void)didReceiveMemoryWarning {
@@ -162,7 +167,8 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString * cellIdentifier = @"reuseIdentifier";
+    static NSString *cellIdentifier = @"reuseIdentifier";
+   
     
     if (_nib == nil) {
         _nib = [UINib nibWithNibName:@"JHPageTableViewCell" bundle:nil];
@@ -177,15 +183,25 @@
         
     }
     JHPageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+        if (cell == nil) {
+        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    }
+    else //防止表格重用
+    {
+        while ([cell.controlTypeView.subviews lastObject] != nil) {
+            [(UIView *)[cell.controlTypeView.subviews lastObject] removeFromSuperview];
+        }
+    }
     cell.itemDisplayNameLabelText.text = [self.pageCategory[indexPath.row] stringByAppendingString:@":"];
     //将不同的控件添加到 cell 上
     [self addControlTocontrolTypeView:cell inRow:indexPath.row];
+    
     return cell;
 }
 
 -(void)addControlTocontrolTypeView:(JHPageTableViewCell *)cell inRow:(NSInteger)index {
-    //控件为文本输入框1行
-    if ([self.typeArray[index] isEqualToString:@"1"]) {
+    //控件为文本输入框1行可以编辑 和链接文本!!
+    if ([self.typeArray[index] isEqualToString:@"ShortString"]||[self.typeArray[index] isEqualToString:@"HyperLink"]||[self.typeArray[index] isEqualToString:@"Html"]) {
         UITextField *textField = [[UITextField alloc]initWithFrame:CONTROLFRME];
         textField.tag = 100 + index;
         textField.backgroundColor = [UIColor whiteColor];
@@ -194,7 +210,18 @@
         [cell.controlTypeView addSubview:textField];
         
     }
-    //控件为文本框
+    //控件为文本选择天数Double 数字键盘
+    if ([self.typeArray[index] isEqualToString:@"Double"]) {
+        UITextField *textField = [[UITextField alloc]initWithFrame:CONTROLFRME];
+        textField.tag = 100 + index;
+        textField.backgroundColor = [UIColor whiteColor];
+        textField.text = @"0";
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+        textField.adjustsFontSizeToFitWidth = YES;
+        [cell.controlTypeView addSubview:textField];
+        
+    }
+    //控件为文本框不可编辑!!
     if ([self.typeArray[index] isEqualToString:@"2"]) {
         UILabel *label = [[UILabel alloc]initWithFrame:CONTROLFRME];
         label.text = @"信息公司";
@@ -203,10 +230,10 @@
         [cell.controlTypeView addSubview:label];
     }
     //控件为时间日期选择器
-    if ([self.typeArray[index] isEqualToString:@"3"]||[self.typeArray[index] isEqualToString:@"4"]) {
-        if ([self.typeArray[index] isEqualToString:@"3"]) {
+    if ([self.typeArray[index] isEqualToString:@"DateTime"]||[self.typeArray[index] isEqualToString:@"DateTime"]) {
+        if ([self.typeArray[index] isEqualToString:@"DateTime"]) {
           self.dataFormart = @"yyyy年MM月dd日";
-        }else if ([self.typeArray[index] isEqualToString:@"4"]){
+        }else if ([self.typeArray[index] isEqualToString:@"DateTime"]){
           self.dataFormart = @"yyyy年MM月dd日 HH点mm分";
         }
         UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
@@ -222,18 +249,75 @@
         [cell.controlTypeView addSubview:button];
     }
     //控件为文本视图,多行
-    if ([self.typeArray[index] isEqualToString:@"5"]) {
+    if ([self.typeArray[index] isEqualToString:@"String"]) {
         UITextView *textView = [[UITextView alloc]initWithFrame:CONTROLFRME];
+//        cell.textLabel.text = @"这是测试输入内容";
         [cell.controlTypeView addSubview:textView];
     }
     //控件为类别选择,选择收件人
     if ([self.typeArray[index] isEqualToString:@"6"]) {
         
     }
-    //控件为选择器true or
-    if ([self.typeArray[index] isEqualToString:@"7"]) {
+    //控件为选择器true or fause
+    if ([self.typeArray[index] isEqualToString:@"Bool"]) {
+        UIButton *button = [[UIButton alloc]initWithFrame:BUTTONCONTROLFRME];
+
+        [button setBackgroundImage:[UIImage imageNamed:@"checkBoxDefault"] forState:UIControlStateNormal];
+        [button setBackgroundImage:[UIImage imageNamed:@"checkboxChecked"] forState:UIControlStateSelected];
+        button.tag = 100 + index;
+        [button addTarget:self action:@selector(selectotBOOL:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.controlTypeView addSubview:button];
+    }
+    /**
+     *  需要重新推出一个视图选择
+     */
+    //控件为选择器选择部门人
+    if ([self.typeArray[index] isEqualToString:@"SingleParticipant"]) {
+        UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
+        button.backgroundColor = [UIColor whiteColor];
+        [button setTitle:@"轻触选择..." forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+        button.tag = 100 + index;
+        [button addTarget:self action:@selector(setSingleParticipant:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.controlTypeView addSubview:button];
+    }
+    //控件为附件
+    if ([self.typeArray[index] isEqualToString:@"Attachment"]) {
         
     }
+    //控件为采购明细表
+    if ([self.typeArray[index] isEqualToString:@"BizObjectArray"]) {
+        
+    }
+    //控件为通知人选择
+    if ([self.typeArray[index] isEqualToString:@"MultiParticipant"]) {
+        
+    }
+    //控件为选择器意见
+    if ([self.typeArray[index] isEqualToString:@"Comment"]) {
+        
+    }
+}
+- (void)selectotBOOL:(UIButton *)sender {
+    sender.selected = !sender.selected;
+}
+- (void)setSingleParticipant:(UIButton *)sender {
+    UIDatePicker *datePicker = [[UIDatePicker alloc] init];
+    datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"\n\n\n\n\n\n\n\n\n\n\n" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    [alert.view addSubview:datePicker];
+    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:self.dataFormart];
+        NSString *dateString = [dateFormat stringFromDate:datePicker.date];
+        sender.titleLabel.text = dateString;
+    }];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:ok];
+    [alert addAction:cancel];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 - (void)setTimeButtonCick:(UIButton *)sender {
     UIDatePicker *datePicker = [[UIDatePicker alloc] init];

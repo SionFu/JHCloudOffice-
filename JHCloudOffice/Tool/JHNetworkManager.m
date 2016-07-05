@@ -70,7 +70,7 @@ singleton_implementation(JHNetworkManager)
         NSLog(@"%@",responseObject);
         NSString *filepath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)firstObject] stringByAppendingPathComponent:@"Modules.plist"];
 #warning 本地化数据
-        [responseObject writeToFile:filepath atomically:YES];
+//        [responseObject writeToFile:filepath atomically:YES];
         
         NSArray *array = responseObject[@"datas"];
         [JHModulesData sharedJHModulesData].count = responseObject[@"count"];
@@ -100,8 +100,19 @@ singleton_implementation(JHNetworkManager)
 //        NSLog(@"%@",responseObject);
         [responseObject writeToFile:filepath atomically:YES];
         NSDictionary *dicAllPageData = [NSDictionary dictionaryWithContentsOfFile:filepath];
-        [JHPageDataManager sharedJHPageDataManager].pageVisibleItemArray = [NSArray arrayWithArray:dicAllPageData[@"Activitys"][2][@"DataItemPermissions"]];
+        
+        //获取流程里的	StartActivityCode : Activity?
+        int i = 0;
+            for (NSDictionary *activitys in dicAllPageData[@"Activitys"]) {
+                i ++;
+                if ( [module.StartActivityCode isEqualToString:activitys[@"ActivityCode"]]) {
+                   [JHPageDataManager sharedJHPageDataManager].pageVisibleItemArray = [NSArray arrayWithArray:dicAllPageData[@"Activitys"][i][@"DataItemPermissions"]];
+                }
+            }
+//        [JHPageDataManager sharedJHPageDataManager].pageVisibleItemArray = [NSArray arrayWithArray:dicAllPageData[@"Activitys"][2][@"DataItemPermissions"]];
+        
         [JHPageDataManager sharedJHPageDataManager].pageDataItemsArray = [NSMutableArray arrayWithArray:dicAllPageData[@"DataItems"]];
+        //反回获取流程菜单数据代理
         [self.getPageDelegate getPageSuccess];
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
