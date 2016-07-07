@@ -36,6 +36,10 @@
  *  初始化时控件的 tag 值
  */
 @property (nonatomic, assign)NSInteger senderControlTag;
+/**
+ *  准备上传的数据数组内容为字典 value
+ */
+@property (nonatomic, strong)NSMutableArray *datasDicArray;
 @end
 #define CONTROLFRME CGRectMake(5, 5, self.view.frame.size.width * 2.8 / 4 - 10, 30)
 #define BUTTONCONTROLFRME CGRectMake(5, 5, 30, 30)
@@ -46,7 +50,7 @@
     [super viewDidLoad];
     
     // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+//     self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     [MBProgressHUD showMessage:@"正在载入..." toView:self.view];
@@ -63,33 +67,9 @@
 }
 -(void)getPageSuccess {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
-    NSLog(@"成功接收数据");
-    for (JHDataItemPermissions *per in [JHPageDataManager sharedJHPageDataManager].pageVisibleItemArray) {
-        [JHPageDataManager sharedJHPageDataManager].Used = false;
-        NSLog(@"%@",per.ItemName);
-    }
-    NSMutableArray *muarray = [NSMutableArray array];
-    NSMutableArray *itemTypeMuarray = [NSMutableArray array];
-    NSMutableArray *sourceMuarray = [NSMutableArray array];
-    for (JHPageDataItem  *dataItem in [JHPageDataManager sharedJHPageDataManager].pageDataItemsArray) {
-        NSLog(@"%@",dataItem.ItemDisplayName);
-        NSLog(@"控件类型:%@,是否有子选项%@,数据源:%@",dataItem.ItemType[@"Value"],dataItem.Source,dataItem.SourceType[@"Value"]);
-        [ JHPageDataManager sharedJHPageDataManager].pageDataUsed = false;
-        [muarray addObject:dataItem.ItemDisplayName];
-        [itemTypeMuarray addObject:dataItem.ItemType[@"Value"]];
-        if (dataItem.Source == nil) {
-            NSDictionary *dic = [NSDictionary dictionaryWithObject:@"Button" forKey:@"Index"];
-            dataItem.Source = [NSArray arrayWithObject:dic];
-        }
-        if ([dataItem.SourceType[@"Value"] isEqualToString:@"Server"]) {
-            NSDictionary *dic = [NSDictionary dictionaryWithObject:@"Server" forKey:@"Index"];
-            dataItem.Source = [NSArray arrayWithObject:dic];
-        }
-        [sourceMuarray addObject:dataItem.Source];
-    }
-    self.pageCategory = [NSMutableArray arrayWithArray:muarray];
-    self.typeArray = [NSArray arrayWithArray:itemTypeMuarray];
-    self.sourceArray = [NSArray arrayWithArray:sourceMuarray];
+    self.pageCategory = [NSMutableArray arrayWithArray:[JHPageDataManager sharedJHPageDataManager].pageCategory];
+    self.typeArray = [NSArray arrayWithArray:[JHPageDataManager sharedJHPageDataManager].typeArray];
+    self.sourceArray = [NSArray arrayWithArray:[JHPageDataManager sharedJHPageDataManager].sourceArray];
      [self.tableView reloadData];
 
 }
@@ -141,7 +121,6 @@
 - (void)saveButtonClick {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"保存内容" message:@"确定保存草稿?" preferredStyle:UIAlertControllerStyleAlert];
      UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-         
      }];
     UIAlertAction *actionNo = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:actionYes];
@@ -158,6 +137,12 @@
     [alert addAction:actionNo];
     [self presentViewController:alert animated:YES completion:nil];
     
+}
+#pragma mark 表单内容
+-(NSMutableArray *)datasDicArray{
+    if (_datasDicArray == nil) {
+        _datasDicArray = [NSMutableArray arrayWithObjects:@"轻触选择0...",@"轻触选择1...",@"轻触选择2...",@"轻触选择3...",@"轻触选择4...",@"轻触选择5...",@"轻触选择6...",@"轻触选择7...",@"轻触选择8...",@"轻触选择...",@"轻触选择...",@"轻触选择...",@"轻触选择...",@"轻触选择...",@"轻触选择...",@"轻触选择...",@"轻触选择...",@"轻触选择...",@"轻触选择...",@"轻触选择...",@"轻触选择...", nil];
+    }return _datasDicArray;
 }
 #pragma mark 表单数据
 - (NSMutableArray *)pageCategory {
@@ -190,8 +175,6 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *cellIdentifier = @"reuseIdentifier";
-   
-    
     if (_nib == nil) {
         _nib = [UINib nibWithNibName:@"JHPageTableViewCell" bundle:nil];
         [tableView registerNib:_nib forCellReuseIdentifier:cellIdentifier];
@@ -202,18 +185,19 @@
         headTitle.center = CGPointMake(self.view.frame.size.width / 2, 10);
         tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 10, 5, 20)];
         [tableView.tableHeaderView addSubview: headTitle];
-        
     }
+
+
+
     JHPageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-        if (cell == nil) {
-        cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
-    }
-    else //防止表格重用
-    {
+    //防止表格重用
+    if (cell != nil) {
         while ([cell.controlTypeView.subviews lastObject] != nil) {
             [(UIView *)[cell.controlTypeView.subviews lastObject] removeFromSuperview];
         }
+        
     }
+    //添加列表左边标题
     cell.itemDisplayNameLabelText.text = [self.pageCategory[indexPath.row] stringByAppendingString:@":"];
     //将不同的控件添加到 cell 上
     [self addControlTocontrolTypeView:cell inRow:indexPath.row];
@@ -229,7 +213,9 @@
             UITextField *textField = [[UITextField alloc]initWithFrame:CONTROLFRME];
             textField.tag = 100 + index;
             textField.backgroundColor = [UIColor whiteColor];
-            textField.text = @"何建强";
+//            textField.text = @"何建强";
+            self.senderControlTag = index;
+            textField.text = self.datasDicArray[self.senderControlTag];
             textField.adjustsFontSizeToFitWidth = YES;
             [cell.controlTypeView addSubview:textField];
         }else if ([self.sourceArray[index][0][@"Index"]  isEqual: @"Server"]){
@@ -252,7 +238,7 @@
         
     }
     //控件为文本选择 天数Double 数字键盘
-    if ([self.typeArray[index] isEqualToString:@"Double"]) {
+    if ([self.typeArray[index] isEqualToString:@"Double"]||[self.typeArray[index] isEqualToString:@"Int"]) {
         UITextField *textField = [[UITextField alloc]initWithFrame:CONTROLFRME];
         textField.tag = 100 + index;
         textField.backgroundColor = [UIColor whiteColor];
@@ -271,11 +257,13 @@
         [cell.controlTypeView addSubview:label];
     }
     //控件为时间日期选择器
-    if ([self.typeArray[index] isEqualToString:@"DateTime"]||[self.typeArray[index] isEqualToString:@"DateTime"]) {
-        if ([self.typeArray[index] isEqualToString:@"DateTime"]) {
+    if ([self.typeArray[index] isEqualToString:@"DateTime"]) {
+        if ([self.sourceArray[index][0][@"Index"]  isEqual: @"Date"]) {
           self.dataFormart = @"yyyy年MM月dd日";
-        }else if ([self.typeArray[index] isEqualToString:@"DateTime"]){
-          self.dataFormart = @"yyyy年MM月dd日 HH点mm分";
+        }else if ([self.sourceArray[index][0][@"Index"]  isEqual: @"Time"]){
+          self.dataFormart = @"HH点mm分";
+        }else if ([self.sourceArray[index][0][@"Index"]  isEqual: @"DateTime"]){
+            self.dataFormart = @"yyyy年MM月dd日 HH点mm分";
         }
         UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
         button.backgroundColor = [UIColor whiteColor];
@@ -290,7 +278,7 @@
         [cell.controlTypeView addSubview:button];
     }
     //控件为文本视图,多行
-    if ([self.typeArray[index] isEqualToString:@"String"]||[self.typeArray[index] isEqualToString:@"Html"]) {
+    if ([self.typeArray[index] isEqualToString:@"String"]||[self.typeArray[index] isEqualToString:@"Html"]||[self.typeArray[index] isEqualToString:@"Comment"]) {
         UITextView *textView = [[UITextView alloc]initWithFrame:CONTROLFRME];
 //        cell.textLabel.text = @"这是测试输入内容";
         [cell.controlTypeView addSubview:textView];
@@ -336,21 +324,23 @@
 - (void)choseStringFromServerWith:(JHPageTableViewCell *)cell inRow:(NSInteger)index{
     UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
     button.backgroundColor = [UIColor whiteColor];
-    [button setTitle:@"轻触选择..." forState:UIControlStateNormal];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
-//    self.senderControlTag = index;
+    self.senderControlTag = index;
     button.tag = 100 + index;
+    NSLog(@"index=====%ld",(long)index);
+    [button setTitle:self.datasDicArray[self.senderControlTag] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(setSingleParticipant:) forControlEvents:UIControlEventTouchUpInside];
     [cell.controlTypeView addSubview:button];
 }
 - (void)choseStringWith:(JHPageTableViewCell *)cell inRow:(NSInteger)index{
     UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
     button.backgroundColor = [UIColor whiteColor];
-    [button setTitle:@"轻触选择..." forState:UIControlStateNormal];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     self.senderControlTag = index;
+    NSLog(@"index=====%ld",(long)index);
+    [button setTitle:self.datasDicArray[self.senderControlTag] forState:UIControlStateNormal];
     button.tag = 100 + index;
     [button addTarget:self action:@selector(setSingleParticipant:) forControlEvents:UIControlEventTouchUpInside];
     [cell.controlTypeView addSubview:button];
@@ -372,6 +362,7 @@
     UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSInteger row = [itemPicker selectedRowInComponent:1];
         NSString *selectedString = self.sourceArray[sender.tag - 100][row][@"DisplayValue"];
+        self.datasDicArray[sender.tag - 100] = selectedString;
         [sender setTitle:selectedString forState:UIControlStateNormal];
     }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
