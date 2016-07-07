@@ -109,6 +109,7 @@ singleton_implementation(JHNetworkManager)
                    [JHPageDataManager sharedJHPageDataManager].pageVisibleItemArray = [NSArray arrayWithArray:dicAllPageData[@"Activitys"][i][@"DataItemPermissions"]];
                 }
             }
+        //值获取其中的一个流程
 //        [JHPageDataManager sharedJHPageDataManager].pageVisibleItemArray = [NSArray arrayWithArray:dicAllPageData[@"Activitys"][2][@"DataItemPermissions"]];
         
         [JHPageDataManager sharedJHPageDataManager].pageDataItemsArray = [NSMutableArray arrayWithArray:dicAllPageData[@"DataItems"]];

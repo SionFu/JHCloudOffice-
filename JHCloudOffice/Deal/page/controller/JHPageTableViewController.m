@@ -14,7 +14,7 @@
 #import "JHPageDataItem.h"
 #import "JHDataItemPermissions.h"
 
-@interface JHPageTableViewController ()<JHPageDelegate>
+@interface JHPageTableViewController ()<JHPageDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
 /**
  *  所有流程项目名称
  */
@@ -23,11 +23,19 @@
  *  所有项目的控件
  */
 @property (nonatomic, strong)NSArray *typeArray;
+/**
+ *  所有二级选项菜单
+ */
+@property (nonatomic, strong)NSArray *sourceArray;
 @property (nonatomic ,strong ) UINib *nib;
 /**
  *  格式化显示时间或者日期的方式
  */
 @property (nonatomic, strong) NSString *dataFormart;
+/**
+ *  初始化时控件的 tag 值
+ */
+@property (nonatomic, assign)NSInteger senderControlTag;
 @end
 #define CONTROLFRME CGRectMake(5, 5, self.view.frame.size.width * 2.8 / 4 - 10, 30)
 #define BUTTONCONTROLFRME CGRectMake(5, 5, 30, 30)
@@ -47,7 +55,13 @@
     [self addNavigationBtn];
    
 }
--(void)getPageSuccess{
+-(void)getPagefaild {
+    
+}
+-(void)getPageNetError {
+    
+}
+-(void)getPageSuccess {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     NSLog(@"成功接收数据");
     for (JHDataItemPermissions *per in [JHPageDataManager sharedJHPageDataManager].pageVisibleItemArray) {
@@ -56,15 +70,26 @@
     }
     NSMutableArray *muarray = [NSMutableArray array];
     NSMutableArray *itemTypeMuarray = [NSMutableArray array];
+    NSMutableArray *sourceMuarray = [NSMutableArray array];
     for (JHPageDataItem  *dataItem in [JHPageDataManager sharedJHPageDataManager].pageDataItemsArray) {
         NSLog(@"%@",dataItem.ItemDisplayName);
-        NSLog(@"控件类型:%@",dataItem.ItemType[@"Value"]);
+        NSLog(@"控件类型:%@,是否有子选项%@,数据源:%@",dataItem.ItemType[@"Value"],dataItem.Source,dataItem.SourceType[@"Value"]);
         [ JHPageDataManager sharedJHPageDataManager].pageDataUsed = false;
         [muarray addObject:dataItem.ItemDisplayName];
         [itemTypeMuarray addObject:dataItem.ItemType[@"Value"]];
+        if (dataItem.Source == nil) {
+            NSDictionary *dic = [NSDictionary dictionaryWithObject:@"Button" forKey:@"Index"];
+            dataItem.Source = [NSArray arrayWithObject:dic];
+        }
+        if ([dataItem.SourceType[@"Value"] isEqualToString:@"Server"]) {
+            NSDictionary *dic = [NSDictionary dictionaryWithObject:@"Server" forKey:@"Index"];
+            dataItem.Source = [NSArray arrayWithObject:dic];
+        }
+        [sourceMuarray addObject:dataItem.Source];
     }
     self.pageCategory = [NSMutableArray arrayWithArray:muarray];
     self.typeArray = [NSArray arrayWithArray:itemTypeMuarray];
+    self.sourceArray = [NSArray arrayWithArray:sourceMuarray];
      [self.tableView reloadData];
 
 }
@@ -137,14 +162,11 @@
 #pragma mark 表单数据
 - (NSMutableArray *)pageCategory {
     if (_pageCategory == nil) {
-//        _pageCategory = [NSArray arrayWithArray:[JHPageDataManager sharedJHPageDataManager].pageVisibleItemArray];
-//         _pageCategory = [NSMutableArray arrayWithObjects:@"日期:",@"姓名:",@"请假开始时间:",@"详细信息:",@"详细信息:",@"详细信息:",@"详细信息:",@"详细信息:",@"详细信息:",@"日期:",@"详细信息:", nil];
         _pageCategory = [NSMutableArray array];
     }return _pageCategory;
 }
 -(NSArray *)typeArray{
     if (_typeArray == nil) {
-//        _typeArray = [NSArray arrayWithObjects:@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"3",@"1",@"2",@"2",@"1",@"1",@"1",@"3",@"1",@"3",@"5",@"5",@"5",@"5",@"5",@"5",@"5",@"5", nil];
         _typeArray = [NSArray array];
     }return _typeArray;
 }
@@ -198,19 +220,38 @@
     
     return cell;
 }
-
+#pragma mark 流程控件
 -(void)addControlTocontrolTypeView:(JHPageTableViewCell *)cell inRow:(NSInteger)index {
-    //控件为文本输入框1行可以编辑 和链接文本!!
-    if ([self.typeArray[index] isEqualToString:@"ShortString"]||[self.typeArray[index] isEqualToString:@"HyperLink"]||[self.typeArray[index] isEqualToString:@"Html"]) {
+    //控件为文本输入框1行可以编辑
+    if ([self.typeArray[index] isEqualToString:@"ShortString"]) {
+        NSLog(@"%@",self.sourceArray[index][0][@"Index"]);
+        if ([self.sourceArray[index][0][@"Index"]  isEqual: @"Button"]) {
+            UITextField *textField = [[UITextField alloc]initWithFrame:CONTROLFRME];
+            textField.tag = 100 + index;
+            textField.backgroundColor = [UIColor whiteColor];
+            textField.text = @"何建强";
+            textField.adjustsFontSizeToFitWidth = YES;
+            [cell.controlTypeView addSubview:textField];
+        }else if ([self.sourceArray[index][0][@"Index"]  isEqual: @"Server"]){
+            [self choseStringFromServerWith:cell inRow:index];
+        }else {
+            [self choseStringWith:cell inRow:index];
+        }
+       
+        
+    }
+    //控件为文本输入框1行可以编辑链接文本
+    if ([self.typeArray[index] isEqualToString:@"HyperLink"]) {
         UITextField *textField = [[UITextField alloc]initWithFrame:CONTROLFRME];
         textField.tag = 100 + index;
         textField.backgroundColor = [UIColor whiteColor];
-        textField.text = @"何建强";
+        textField.placeholder = @"http://";
+        textField.keyboardType = UIKeyboardTypeURL;
         textField.adjustsFontSizeToFitWidth = YES;
         [cell.controlTypeView addSubview:textField];
         
     }
-    //控件为文本选择天数Double 数字键盘
+    //控件为文本选择 天数Double 数字键盘
     if ([self.typeArray[index] isEqualToString:@"Double"]) {
         UITextField *textField = [[UITextField alloc]initWithFrame:CONTROLFRME];
         textField.tag = 100 + index;
@@ -249,7 +290,7 @@
         [cell.controlTypeView addSubview:button];
     }
     //控件为文本视图,多行
-    if ([self.typeArray[index] isEqualToString:@"String"]) {
+    if ([self.typeArray[index] isEqualToString:@"String"]||[self.typeArray[index] isEqualToString:@"Html"]) {
         UITextView *textView = [[UITextView alloc]initWithFrame:CONTROLFRME];
 //        cell.textLabel.text = @"这是测试输入内容";
         [cell.controlTypeView addSubview:textView];
@@ -273,14 +314,7 @@
      */
     //控件为选择器选择部门人
     if ([self.typeArray[index] isEqualToString:@"SingleParticipant"]) {
-        UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
-        button.backgroundColor = [UIColor whiteColor];
-        [button setTitle:@"轻触选择..." forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
-        button.tag = 100 + index;
-        [button addTarget:self action:@selector(setSingleParticipant:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.controlTypeView addSubview:button];
+        [self choseStringWith:cell inRow:index];
     }
     //控件为附件
     if ([self.typeArray[index] isEqualToString:@"Attachment"]) {
@@ -299,25 +333,70 @@
         
     }
 }
+- (void)choseStringFromServerWith:(JHPageTableViewCell *)cell inRow:(NSInteger)index{
+    UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
+    button.backgroundColor = [UIColor whiteColor];
+    [button setTitle:@"轻触选择..." forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+//    self.senderControlTag = index;
+    button.tag = 100 + index;
+    [button addTarget:self action:@selector(setSingleParticipant:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.controlTypeView addSubview:button];
+}
+- (void)choseStringWith:(JHPageTableViewCell *)cell inRow:(NSInteger)index{
+    UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
+    button.backgroundColor = [UIColor whiteColor];
+    [button setTitle:@"轻触选择..." forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    self.senderControlTag = index;
+    button.tag = 100 + index;
+    [button addTarget:self action:@selector(setSingleParticipant:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.controlTypeView addSubview:button];
+}
+- (void)sourceButtonClick:(UIButton *)sender {
+   //未使用
+}
 - (void)selectotBOOL:(UIButton *)sender {
     sender.selected = !sender.selected;
 }
 - (void)setSingleParticipant:(UIButton *)sender {
-    UIDatePicker *datePicker = [[UIDatePicker alloc] init];
-    datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+    self.senderControlTag = sender.tag - 100;
+    UIPickerView *itemPicker = [[UIPickerView alloc] init];
+    itemPicker.delegate = self;
+    itemPicker.showsSelectionIndicator = YES;
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"\n\n\n\n\n\n\n\n\n\n\n" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    
-    [alert.view addSubview:datePicker];
+
+    [alert.view addSubview:itemPicker];
     UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-        [dateFormat setDateFormat:self.dataFormart];
-        NSString *dateString = [dateFormat stringFromDate:datePicker.date];
-        sender.titleLabel.text = dateString;
+        NSInteger row = [itemPicker selectedRowInComponent:1];
+        NSString *selectedString = self.sourceArray[sender.tag - 100][row][@"DisplayValue"];
+        [sender setTitle:selectedString forState:UIControlStateNormal];
     }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:ok];
     [alert addAction:cancel];
     [self presentViewController:alert animated:YES completion:nil];
+}
+#pragma mark Picker Date Source Methods 
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 2;
+}
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    if (component == 0) {
+        return 1;
+    }else {
+    NSArray *array = [NSArray arrayWithArray:self.sourceArray[self.senderControlTag]];
+    return array.count;
+    }
+}
+-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+    if (component == 0) {
+        return self.pageCategory[self.senderControlTag];;
+    }else {
+    return self.sourceArray[self.senderControlTag][row][@"DisplayValue"];
+    }
 }
 - (void)setTimeButtonCick:(UIButton *)sender {
     UIDatePicker *datePicker = [[UIDatePicker alloc] init];
@@ -386,22 +465,24 @@
 }
 */
 
-/*
-#pragma mark - Table view delegate
 
+#pragma mark - Table view delegate
+/*
 // In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     // Navigation logic may go here, for example:
     // Create the next view controller.
+    
     <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:<#@"Nib name"#> bundle:nil];
     
     // Pass the selected object to the new view controller.
     
     // Push the view controller.
     [self.navigationController pushViewController:detailViewController animated:YES];
+ 
 }
-*/
 
+*/
 /*
 #pragma mark - Navigation
 
