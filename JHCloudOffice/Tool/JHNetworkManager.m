@@ -123,7 +123,11 @@ singleton_implementation(JHNetworkManager)
 }
 
 
-
+-(void)getPageSaveSettingWith{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+//    JHModules *module = [JHModulesData sharedJHModulesData].allModuleArray[currentIndex][sectionRow];
+//    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&token=%@&action=page&code=%@&version=%@&activity=%@&userId=%@item=nil&instance=nil&item=nil&viewmode=false", SITEURL, module.StartSheetCode,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,module.ModuleCode,module.ModuleVersion,module.StartActivityCode,[JHUserInfo sharedJHUserInfo].uid];
+}
 
 
 

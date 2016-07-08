@@ -53,4 +53,8 @@ singleton_interface(JHNetworkManager)
  *  获取流程配置
  */
 - (void)getPageSettingWithCurrentVC:(NSInteger)currentIndex andRow:(NSInteger)sectionRow;
+/**
+ *  获取流程选择菜单二级菜单内容save 内容
+ */
+- (void)getPageSaveSettingWith;
 @end

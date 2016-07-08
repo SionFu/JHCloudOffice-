@@ -267,10 +267,7 @@
         }
         UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
         button.backgroundColor = [UIColor whiteColor];
-        NSDateFormatter *dateFormat = [[NSDateFormatter alloc]init];
-        [dateFormat setDateFormat:self.dataFormart];
-        NSString *dataStr = [dateFormat stringFromDate:[NSDate date]];
-        [button setTitle:dataStr forState:UIControlStateNormal];
+        [button setTitle:self.datasDicArray[index] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
         button.tag = 100 + index;
@@ -280,7 +277,7 @@
     //控件为文本视图,多行
     if ([self.typeArray[index] isEqualToString:@"String"]||[self.typeArray[index] isEqualToString:@"Html"]||[self.typeArray[index] isEqualToString:@"Comment"]) {
         UITextView *textView = [[UITextView alloc]initWithFrame:CONTROLFRME];
-//        cell.textLabel.text = @"这是测试输入内容";
+        textView.text = @"这是测试输入内容\n 测试换行显示内容";
         [cell.controlTypeView addSubview:textView];
     }
     //控件为类别选择,选择收件人
@@ -321,18 +318,6 @@
         
     }
 }
-- (void)choseStringFromServerWith:(JHPageTableViewCell *)cell inRow:(NSInteger)index{
-    UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
-    button.backgroundColor = [UIColor whiteColor];
-    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
-    self.senderControlTag = index;
-    button.tag = 100 + index;
-    NSLog(@"index=====%ld",(long)index);
-    [button setTitle:self.datasDicArray[self.senderControlTag] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(setSingleParticipant:) forControlEvents:UIControlEventTouchUpInside];
-    [cell.controlTypeView addSubview:button];
-}
 - (void)choseStringWith:(JHPageTableViewCell *)cell inRow:(NSInteger)index{
     UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
     button.backgroundColor = [UIColor whiteColor];
@@ -345,15 +330,29 @@
     [button addTarget:self action:@selector(setSingleParticipant:) forControlEvents:UIControlEventTouchUpInside];
     [cell.controlTypeView addSubview:button];
 }
+- (void)choseStringFromServerWith:(JHPageTableViewCell *)cell inRow:(NSInteger)index{
+    UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
+    button.backgroundColor = [UIColor whiteColor];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    self.senderControlTag = index;
+    button.tag = 100 + index;
+    NSLog(@"index=====%ld",(long)index);
+    [button setTitle:self.datasDicArray[self.senderControlTag] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(setSingleParticipant:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.controlTypeView addSubview:button];
+}
 - (void)sourceButtonClick:(UIButton *)sender {
    //未使用
 }
+
 - (void)selectotBOOL:(UIButton *)sender {
     sender.selected = !sender.selected;
+    self.datasDicArray[sender.tag - 100] = [NSNumber numberWithBool:sender.selected];
 }
 - (void)setSingleParticipant:(UIButton *)sender {
     self.senderControlTag = sender.tag - 100;
-    UIPickerView *itemPicker = [[UIPickerView alloc] init];
+    UIPickerView *itemPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(-10, -35, SCREENWIDTH - 5 , 300)];
     itemPicker.delegate = self;
     itemPicker.showsSelectionIndicator = YES;
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"\n\n\n\n\n\n\n\n\n\n\n" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
@@ -363,7 +362,10 @@
         NSInteger row = [itemPicker selectedRowInComponent:1];
         NSString *selectedString = self.sourceArray[sender.tag - 100][row][@"DisplayValue"];
         self.datasDicArray[sender.tag - 100] = selectedString;
+        
         [sender setTitle:selectedString forState:UIControlStateNormal];
+        
+        
     }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:ok];
@@ -371,6 +373,16 @@
     [self presentViewController:alert animated:YES completion:nil];
 }
 #pragma mark Picker Date Source Methods 
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
+    if (component == 0) {
+       return SCREENWIDTH * 0.8 / 3;
+    }else {
+        return SCREENWIDTH * 2 / 3;
+    }
+    
+}
+
+
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
     return 2;
 }
@@ -382,28 +394,43 @@
     return array.count;
     }
 }
--(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
-    if (component == 0) {
-        return self.pageCategory[self.senderControlTag];;
-    }else {
-    return self.sourceArray[self.senderControlTag][row][@"DisplayValue"];
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
+{   if (component == 0) {
+    UILabel *label = [[UILabel alloc] init];
+    label.text = self.pageCategory[self.senderControlTag];
+    label.textColor = [UIColor blackColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.minimumScaleFactor = 10;
+    return label;
     }
+    UILabel *label = [[UILabel alloc] init];
+    label.text = self.sourceArray[self.senderControlTag][row][@"DisplayValue"];
+    label.textColor = [UIColor blackColor];
+    label.font = [UIFont systemFontOfSize:20];
+    label.minimumScaleFactor = 10;
+    label.textAlignment = NSTextAlignmentCenter;
+    return label;
 }
 - (void)setTimeButtonCick:(UIButton *)sender {
     UIDatePicker *datePicker = [[UIDatePicker alloc] init];
-    datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+    
     NSDateFormatter *format = [[NSDateFormatter alloc]init];
-    NSLog(@"%ld",sender.titleLabel.text.length);
-    if (sender.titleLabel.text.length == 11) {
+
+    if ([self.sourceArray[sender.tag - 100][0][@"Index"]  isEqual: @"Date"]) {
         self.dataFormart = @"yyyy年MM月dd日";
-    }else if (sender.titleLabel.text.length == 18){
+        datePicker.datePickerMode = UIDatePickerModeDate;
+    }else if ([self.sourceArray[sender.tag - 100][0][@"Index"]  isEqual: @"Time"]){
+        self.dataFormart = @"HH点mm分";
+        datePicker.datePickerMode = UIDatePickerModeTime;
+    }else if ([self.sourceArray[sender.tag - 100][0][@"Index"]  isEqual: @"DateTime"]){
         self.dataFormart = @"yyyy年MM月dd日 HH点mm分";
+        datePicker.datePickerMode = UIDatePickerModeDateAndTime;
     }
     [format setDateFormat:self.dataFormart];
     
     NSDate *date = [format dateFromString:sender.titleLabel.text];
-    [datePicker setDate:date animated:YES];
-    NSLog(@"%@",date);
+//    [datePicker setDate:date animated:YES];
+    NSLog(@"%f",date.timeIntervalSinceNow);
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"\n\n\n\n\n\n\n\n\n\n\n" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
     
     [alert.view addSubview:datePicker];
@@ -411,7 +438,11 @@
         NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
         [dateFormat setDateFormat:self.dataFormart];
         NSString *dateString = [dateFormat stringFromDate:datePicker.date];
+        NSLog(@"%@",dateString);
         sender.titleLabel.text = dateString;
+        self.datasDicArray[sender.tag - 100] = dateString;
+        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:sender.tag - 100 inSection:0];
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
     }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:ok];
