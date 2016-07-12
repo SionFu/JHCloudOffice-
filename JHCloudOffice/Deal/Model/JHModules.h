@@ -35,7 +35,7 @@
  */
 @property (nonatomic, strong) NSString *StartActivityCode;
 /**
- *  开始环节表单编码
+ *  开始环节表单编码(文件名)
  */
 @property (nonatomic, strong) NSString *StartSheetCode;
 /**

@@ -40,6 +40,10 @@
  *  准备上传的数据数组内容为字典 value
  */
 @property (nonatomic, strong)NSMutableArray *datasDicArray;
+/**
+ *  储存二级菜单从 server 获取的 parameters dic
+ */
+@property (nonatomic, strong)NSMutableDictionary *parametersDic;
 @end
 #define CONTROLFRME CGRectMake(5, 5, self.view.frame.size.width * 2.8 / 4 - 10, 30)
 #define BUTTONCONTROLFRME CGRectMake(5, 5, 30, 30)
@@ -58,6 +62,11 @@
     //在导航栏上添加状态保存提交和取消按钮
     [self addNavigationBtn];
    
+}
+-(NSMutableDictionary *)parametersDic{
+    if (_parametersDic == nil) {
+        _parametersDic = [NSMutableDictionary dictionaryWithObject:@"nil" forKey:@"nil"];
+    }return _parametersDic;
 }
 -(void)getPagefaild {
     
@@ -208,7 +217,7 @@
 -(void)addControlTocontrolTypeView:(JHPageTableViewCell *)cell inRow:(NSInteger)index {
     //控件为文本输入框1行可以编辑
     if ([self.typeArray[index] isEqualToString:@"ShortString"]) {
-        NSLog(@"%@",self.sourceArray[index][0][@"Index"]);
+//        NSLog(@"%@",self.sourceArray[index][0][@"Index"]);
         if ([self.sourceArray[index][0][@"Index"]  isEqual: @"Button"]) {
             UITextField *textField = [[UITextField alloc]initWithFrame:CONTROLFRME];
             textField.tag = 100 + index;
@@ -277,7 +286,7 @@
     //控件为文本视图,多行
     if ([self.typeArray[index] isEqualToString:@"String"]||[self.typeArray[index] isEqualToString:@"Html"]||[self.typeArray[index] isEqualToString:@"Comment"]) {
         UITextView *textView = [[UITextView alloc]initWithFrame:CONTROLFRME];
-        textView.text = @"这是测试输入内容\n 测试换行显示内容";
+        textView.text = @"这是测试输入内容 测试换行显示内容";
         [cell.controlTypeView addSubview:textView];
     }
     //控件为类别选择,选择收件人
@@ -323,10 +332,10 @@
     button.backgroundColor = [UIColor whiteColor];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    
     self.senderControlTag = index;
-    NSLog(@"index=====%ld",(long)index);
-    [button setTitle:self.datasDicArray[self.senderControlTag] forState:UIControlStateNormal];
     button.tag = 100 + index;
+    [button setTitle:self.datasDicArray[index] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(setSingleParticipant:) forControlEvents:UIControlEventTouchUpInside];
     [cell.controlTypeView addSubview:button];
 }
@@ -337,9 +346,8 @@
     [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     self.senderControlTag = index;
     button.tag = 100 + index;
-    NSLog(@"index=====%ld",(long)index);
-    [button setTitle:self.datasDicArray[self.senderControlTag] forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(setSingleParticipant:) forControlEvents:UIControlEventTouchUpInside];
+    [button setTitle:self.datasDicArray[index] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(setSingleParticipantFromServer:) forControlEvents:UIControlEventTouchUpInside];
     [cell.controlTypeView addSubview:button];
 }
 - (void)sourceButtonClick:(UIButton *)sender {
@@ -352,19 +360,35 @@
 }
 - (void)setSingleParticipant:(UIButton *)sender {
     self.senderControlTag = sender.tag - 100;
-    UIPickerView *itemPicker = [[UIPickerView alloc] initWithFrame:CGRectMake(-10, -35, SCREENWIDTH - 5 , 300)];
+    UIPickerView *itemPicker = [[UIPickerView alloc]init];
+
+    //    CALayer *viewLayer = itemPicker.layer;
+    //    [viewLayer setFrame:CGRectMake(-10, -35, SCREENWIDTH - 5 , 300)];
+    //    [viewLayer setBorderWidth:0];
+#warning  自定义
+    //    itemPicker.frame = CGRectMake(-10, -35, SCREENWIDTH - 5 , 300);
+    itemPicker.center = CGPointMake(SCREENWIDTH / 2 - 5, 100);
+//    NSLog(@"%f",itemPicker.frame.size.width);
+    //WithFrame:CGRectMake(-10, -35, SCREENWIDTH - 5 , 300)];
+    itemPicker.tag = sender.tag;
     itemPicker.delegate = self;
     itemPicker.showsSelectionIndicator = YES;
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"\n\n\n\n\n\n\n\n\n\n\n" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-
+    
     [alert.view addSubview:itemPicker];
     UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSInteger row = [itemPicker selectedRowInComponent:1];
-        NSString *selectedString = self.sourceArray[sender.tag - 100][row][@"DisplayValue"];
-        self.datasDicArray[sender.tag - 100] = selectedString;
+        NSString *selectedString = self.sourceArray[self.senderControlTag][row][@"DisplayValue"];
+        //只要在本地获取菜单的情况下才能获取以下值
         
+        self.parametersDic = [NSMutableDictionary dictionaryWithDictionary:self.sourceArray[self.senderControlTag][row]];
+        NSLog(@"%@",self.parametersDic);
+        [itemPicker selectRow:row inComponent:1 animated:NO];
+        self.datasDicArray[self.senderControlTag] = selectedString;
+        //设置表格选择时的动画
+        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:self.senderControlTag inSection:0];
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationBottom];
         [sender setTitle:selectedString forState:UIControlStateNormal];
-        
         
     }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
@@ -372,7 +396,42 @@
     [alert addAction:cancel];
     [self presentViewController:alert animated:YES completion:nil];
 }
-#pragma mark Picker Date Source Methods 
+- (void)setSingleParticipantFromServer:(UIButton *)sender {
+    self.senderControlTag = sender.tag - 100;
+    [self.parametersDic setObject:@"ShortString" forKey:@"type"];
+    [MBProgressHUD showMessage:@"正在加载..."];
+    //获取上一个选项获得的 dic
+    [[JHNetworkManager sharedJHNetworkManager] getPageSaverSettingWith:self.parametersDic];
+    
+    
+}
+- (void)getsetSingleParticipantFromServerSucceed {
+       [MBProgressHUD hideHUD];
+    UIPickerView *itemPicker = [[UIPickerView alloc]init];
+    itemPicker.center = CGPointMake(SCREENWIDTH / 2 - 5, 100);
+    itemPicker.tag = self.senderControlTag;
+    itemPicker.delegate = self;
+    itemPicker.showsSelectionIndicator = YES;
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"\n\n\n\n\n\n\n\n\n\n\n" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [alert.view addSubview:itemPicker];
+    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSInteger row = [itemPicker selectedRowInComponent:1];
+        NSString *selectedString = @"wcao====";//[JHPageDataManager sharedJHPageDataManager].sourceFromServerArray[row];
+        [itemPicker selectRow:row inComponent:1 animated:NO];
+        self.datasDicArray[self.senderControlTag] = selectedString;
+        //设置表格选择时的动画
+        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:self.senderControlTag inSection:0];
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationBottom];
+        UIButton *sender = [[UIButton alloc]init];
+        sender.tag = self.senderControlTag;
+        [sender setTitle:selectedString forState:UIControlStateNormal];
+    }];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:ok];
+    [alert addAction:cancel];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+#pragma mark Picker Date Source Methods
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
     if (component == 0) {
        return SCREENWIDTH * 0.8 / 3;
@@ -394,6 +453,15 @@
     return array.count;
     }
 }
+//-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
+//    if (component == 0) {
+//        return self.pageCategory[self.senderControlTag];
+//    }else {
+//        NSLog(@"%ld",row);
+//        return self.sourceArray[self.senderControlTag][row][@"DisplayValue"];
+//       
+//    }
+//}
 - (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
 {   if (component == 0) {
     UILabel *label = [[UILabel alloc] init];
@@ -402,7 +470,7 @@
     label.textAlignment = NSTextAlignmentCenter;
     label.minimumScaleFactor = 10;
     return label;
-    }
+}else {
     UILabel *label = [[UILabel alloc] init];
     label.text = self.sourceArray[self.senderControlTag][row][@"DisplayValue"];
     label.textColor = [UIColor blackColor];
@@ -410,12 +478,12 @@
     label.minimumScaleFactor = 10;
     label.textAlignment = NSTextAlignmentCenter;
     return label;
+    }
 }
 - (void)setTimeButtonCick:(UIButton *)sender {
     UIDatePicker *datePicker = [[UIDatePicker alloc] init];
-    
+    datePicker.center = CGPointMake(SCREENWIDTH / 2 - 5, 100);
     NSDateFormatter *format = [[NSDateFormatter alloc]init];
-
     if ([self.sourceArray[sender.tag - 100][0][@"Index"]  isEqual: @"Date"]) {
         self.dataFormart = @"yyyy年MM月dd日";
         datePicker.datePickerMode = UIDatePickerModeDate;
@@ -427,12 +495,10 @@
         datePicker.datePickerMode = UIDatePickerModeDateAndTime;
     }
     [format setDateFormat:self.dataFormart];
-    
     NSDate *date = [format dateFromString:sender.titleLabel.text];
 //    [datePicker setDate:date animated:YES];
     NSLog(@"%f",date.timeIntervalSinceNow);
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"\n\n\n\n\n\n\n\n\n\n\n" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    
     [alert.view addSubview:datePicker];
     UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
@@ -442,7 +508,7 @@
         sender.titleLabel.text = dateString;
         self.datasDicArray[sender.tag - 100] = dateString;
         NSIndexPath *indexPath=[NSIndexPath indexPathForRow:sender.tag - 100 inSection:0];
-        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationNone];
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationBottom];
     }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:ok];

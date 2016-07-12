@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Singleton.h"
+#import "JHModules.h"
 /**
  *  登陆返回的情况
  */
@@ -30,11 +31,11 @@
 @protocol JHPageDelegate <NSObject>
 
 /**
- *  获取数据成功
+ *  获取发起流程数据成功
  */
 - (void) getPageSuccess;
 - (void) getPagefaild;
-- (void) getPageNetError;
+- (void) getsetSingleParticipantFromServerSucceed;
 
 @end
 @interface JHNetworkManager : NSObject
@@ -56,5 +57,13 @@ singleton_interface(JHNetworkManager)
 /**
  *  获取流程选择菜单二级菜单内容save 内容
  */
-- (void)getPageSaveSettingWith;
+-(void)getPageSaverSettingWith:(NSDictionary *)parameters;
+/**
+ *  储存当面流程的SheetCode 接口文件名 流程编码等模型
+ */
+@property (nonatomic, strong) JHModules *modulesModel;
+/**
+ *  获取流程数据
+ */
+- (void)getPageDatas;
 @end

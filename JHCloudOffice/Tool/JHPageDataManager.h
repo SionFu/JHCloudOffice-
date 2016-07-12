@@ -39,6 +39,10 @@
 /**
  *  所有二级选项菜单
  */
-@property (nonatomic, strong)NSArray *sourceArray;
+@property (nonatomic, strong)NSMutableArray *sourceArray;
+/**
+ *  从服务器获取的二级菜单内容
+ */
+@property (nonatomic, strong)NSMutableArray *sourceFromServerArray;
 singleton_interface(JHPageDataManager)
 @end

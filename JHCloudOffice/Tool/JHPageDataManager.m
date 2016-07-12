@@ -61,14 +61,15 @@ singleton_implementation(JHPageDataManager)
 
     for (JHDataItemPermissions *per in self.pageVisibleItemArray) {
         self.Used = false;
-        NSLog(@"%@",per.ItemName);
+//        NSLog(@"%@",per.ItemName);
     }
     NSMutableArray *itemMuarray = [NSMutableArray array];
     NSMutableArray *itemTypeMuarray = [NSMutableArray array];
     NSMutableArray *sourceMuarray = [NSMutableArray array];
     for (JHPageDataItem  *dataItem in [JHPageDataManager sharedJHPageDataManager].pageDataItemsArray) {
-        NSLog(@"%@",dataItem.ItemDisplayName);
-        NSLog(@"控件类型:%@,是否有子选项%@,数据源:%@",dataItem.ItemType[@"Value"],dataItem.Source,dataItem.SourceType[@"Value"]);
+        NSLog(@"%@",dataItem.ItemName);
+#warning 暂时显示 之后添加控件 需要用到
+//        NSLog(@"控件类型:%@,是否有子选项%@,数据源:%@",dataItem.ItemType[@"Value"],dataItem.Source,dataItem.SourceType[@"Value"]);
         [ JHPageDataManager sharedJHPageDataManager].pageDataUsed = false;
         [itemMuarray addObject:dataItem.ItemDisplayName];
         [itemTypeMuarray addObject:dataItem.ItemType[@"Value"]];
@@ -95,11 +96,19 @@ singleton_implementation(JHPageDataManager)
         }
         [sourceMuarray addObject:dataItem.Source];
     }
-    
     _pageCategory = [NSMutableArray arrayWithArray:itemMuarray];
     self.typeArray = [NSArray arrayWithArray:itemTypeMuarray];
-    self.sourceArray = [NSArray arrayWithArray:sourceMuarray];
-
+    self.sourceArray = [NSMutableArray arrayWithArray:sourceMuarray];
     return _pageCategory;
 }
+
+-(NSMutableArray *)sourceFromServerArray{
+    if (_sourceFromServerArray == nil) {
+        _sourceFromServerArray = [NSMutableArray array];
+    }return _sourceFromServerArray;
+}
+
+
+
+
 @end

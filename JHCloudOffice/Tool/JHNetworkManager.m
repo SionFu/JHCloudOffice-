@@ -12,7 +12,8 @@
 #import "JHModules.h"
 #import "JHModulesData.h"
 #import "JHPageDataManager.h"
-#define SITEURL @"http://188.1.100.165:8010/Portal/ForApp/"
+#define SITEURL @"http://202.96.113.71:80/Portal/ForApp/"
+//#define SITEURL @"http://188.1.100.165:8010/Portal/ForApp/"
 #define APPKEY @"cloudoffice"
 
 @implementation JHNetworkManager
@@ -93,7 +94,8 @@ singleton_implementation(JHNetworkManager)
 - (void)getPageSettingWithCurrentVC:(NSInteger)currentIndex andRow:(NSInteger)sectionRow{
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     JHModules *module = [JHModulesData sharedJHModulesData].allModuleArray[currentIndex][sectionRow];
-    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&token=%@&action=page&code=%@&version=%@&activity=%@&userId=%@item=nil&instance=nil&item=nil&viewmode=false", SITEURL, module.StartSheetCode,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,module.ModuleCode,module.ModuleVersion,module.StartActivityCode,[JHUserInfo sharedJHUserInfo].uid];
+    self.modulesModel =  module;
+    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&token=%@&action=page&code=%@&version=%@&activity=%@&userId=%@&instance=nil&item=nil&viewmode=false", SITEURL,self.modulesModel.StartSheetCode,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,module.ModuleCode,module.ModuleVersion,module.StartActivityCode,[JHUserInfo sharedJHUserInfo].uid];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
 #warning 本地化数据
     NSString *filepath = [[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)firstObject]stringByAppendingPathComponent:responseObject[@"ModuleName"]]stringByAppendingPathExtension:@"plist"];
@@ -123,15 +125,41 @@ singleton_implementation(JHNetworkManager)
 }
 
 
--(void)getPageSaveSettingWith{
+-(void)getPageSaverSettingWith:(NSDictionary *)parameters{
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//    JHModules *module = [JHModulesData sharedJHModulesData].allModuleArray[currentIndex][sectionRow];
-//    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&token=%@&action=page&code=%@&version=%@&activity=%@&userId=%@item=nil&instance=nil&item=nil&viewmode=false", SITEURL, module.StartSheetCode,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,module.ModuleCode,module.ModuleVersion,module.StartActivityCode,[JHUserInfo sharedJHUserInfo].uid];
+    NSArray *datas = [NSArray arrayWithObject:parameters];
+    manager.requestSerializer = [AFJSONRequestSerializer serializer];
+//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&token=%@&action=source&code=%@&version=%@&activity=%@&userId=%@", SITEURL,self.modulesModel.StartSheetCode,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,self.modulesModel.ModuleCode,self.modulesModel.ModuleVersion,self.modulesModel.StartActivityCode,[JHUserInfo sharedJHUserInfo].uid];
+    [manager POST:urlStr parameters:datas success:^(NSURLSessionDataTask *task, id responseObject) {
+        [JHPageDataManager sharedJHPageDataManager].sourceFromServerArray = responseObject;
+        NSLog(@"测试获取服务器菜单数据:%@\nurl:%@ \n datas:%@",responseObject,urlStr,datas);
+        [self.getPageDelegate getsetSingleParticipantFromServerSucceed];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"获取数据失败%@",error);
+    }];
+    
+    
+    AFHTTPRequestOperationManager *managerr = [AFHTTPRequestOperationManager manager];
+    managerr.requestSerializer = [AFJSONRequestSerializer serializer];
+    managerr.responseSerializer = [AFJSONResponseSerializer serializer];
+    [managerr POST:urlStr parameters:datas success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"postpost%@",responseObject);
+    } failure:nil];
+        
+
 }
 
+-(void)getPageDatas{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&token=%@&action=data&code=%@&version=%@&instance=nil&activity=%@&item=nil&userId=%@&viewmode=false", SITEURL,self.modulesModel.StartSheetCode,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,self.modulesModel.ModuleCode,self.modulesModel.ModuleVersion,self.modulesModel.StartActivityCode,[JHUserInfo sharedJHUserInfo].uid];
+    NSLog(@"%@",urlStr);
+    [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"获取详细信息成功:%@",responseObject);
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"获取详细信息失败%@",error);
+    }];
 
-
-
-
+}
 
 @end

@@ -82,6 +82,8 @@ static int i = 0;
     UINavigationController *nvpageVC = [[UINavigationController alloc]initWithRootViewController:pageVC];
     JHModules *data = self.catrgoryArray[indexPath.row];
     pageVC.pageNage = data.ModuleName;
+    //获取当前选择流程的流程数据
+    [[JHNetworkManager sharedJHNetworkManager] getPageDatas];
     [self.navigationController presentViewController:nvpageVC animated:YES completion:nil];
     
 }

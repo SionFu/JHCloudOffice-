@@ -139,7 +139,7 @@
     [MBProgressHUD showError:[JHUserInfo sharedJHUserInfo].errorCode];
 }
 -(void)loginNetError{
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [MBProgressHUD  hideAllHUDsForView:self.view animated:YES];
     [MBProgressHUD showError:@"无法连接网络"];
 }
 //点击登陆按钮
