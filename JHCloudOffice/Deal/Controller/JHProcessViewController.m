@@ -46,7 +46,6 @@
 }
 
 -(void)containerViewItemIndex:(NSInteger)index currentController:(UIViewController *)controller{
-    NSLog(@"选择了第%ld个导航",(long)index);
     [JHModulesData sharedJHModulesData].curreatVCIndex = index;
 }
 - (void)didReceiveMemoryWarning {

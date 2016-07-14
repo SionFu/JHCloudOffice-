@@ -12,7 +12,8 @@
 #import "JHModules.h"
 #import "JHModulesData.h"
 #import "JHPageDataManager.h"
-#define SITEURL @"http://202.96.113.71:80/Portal/ForApp/"
+
+#define SITEURL @"http://h3.juhua.com.cn/Portal/ForApp/"
 //#define SITEURL @"http://188.1.100.165:8010/Portal/ForApp/"
 #define APPKEY @"cloudoffice"
 
@@ -22,11 +23,13 @@ singleton_implementation(JHNetworkManager)
 
 
 + (void)vaidataUserWithUserName:(NSString *)user andPassword:(NSString *)password{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/DefaultSheet.ashx?appKey=%@&action=validateuser&userCode=%@&password=%@",SITEURL,APPKEY,user,password];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
 #warning 有打印
         NSLog(@"%@",responseObject);
+        [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         NSDictionary *dic = responseObject;
             JHNetworkManager *loginManger = [JHNetworkManager sharedJHNetworkManager];
             [loginManger loginResults:dic];
@@ -71,7 +74,7 @@ singleton_implementation(JHNetworkManager)
         NSLog(@"%@",responseObject);
         NSString *filepath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)firstObject] stringByAppendingPathComponent:@"Modules.plist"];
 #warning 本地化数据
-//        [responseObject writeToFile:filepath atomically:YES];
+        [responseObject writeToFile:filepath atomically:YES];
         
         NSArray *array = responseObject[@"datas"];
         [JHModulesData sharedJHModulesData].count = responseObject[@"count"];
@@ -87,6 +90,7 @@ singleton_implementation(JHNetworkManager)
         [self.loginDelegate beginGetModules];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@",error);
+        [self.loginDelegate loginNetError];
     }];
 }
 
@@ -121,39 +125,34 @@ singleton_implementation(JHNetworkManager)
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [self.getPageDelegate getPagefaild];
     }];
-    NSLog(@"%@",urlStr);
 }
 
 
 -(void)getPageSaverSettingWith:(NSDictionary *)parameters{
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
     NSArray *datas = [NSArray arrayWithObject:parameters];
     manager.requestSerializer = [AFJSONRequestSerializer serializer];
-//    manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&token=%@&action=source&code=%@&version=%@&activity=%@&userId=%@", SITEURL,self.modulesModel.StartSheetCode,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,self.modulesModel.ModuleCode,self.modulesModel.ModuleVersion,self.modulesModel.StartActivityCode,[JHUserInfo sharedJHUserInfo].uid];
-    [manager POST:urlStr parameters:datas success:^(NSURLSessionDataTask *task, id responseObject) {
-        [JHPageDataManager sharedJHPageDataManager].sourceFromServerArray = responseObject;
-        NSLog(@"测试获取服务器菜单数据:%@\nurl:%@ \n datas:%@",responseObject,urlStr,datas);
-        [self.getPageDelegate getsetSingleParticipantFromServerSucceed];
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"获取数据失败%@",error);
-    }];
-    
-    
-    AFHTTPRequestOperationManager *managerr = [AFHTTPRequestOperationManager manager];
-    managerr.requestSerializer = [AFJSONRequestSerializer serializer];
-    managerr.responseSerializer = [AFJSONResponseSerializer serializer];
-    [managerr POST:urlStr parameters:datas success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"postpost%@",responseObject);
-    } failure:nil];
+    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&action=source&code=%@&version=%@&instance=null&item=null&field=wldl&activity=%@&user=%@", SITEURL,self.modulesModel.StartSheetCode,APPKEY,self.modulesModel.ModuleCode,self.modulesModel.ModuleVersion,self.modulesModel.StartActivityCode,[JHUserInfo sharedJHUserInfo].objectId];
+//    NSString *urlStr = @"http://h3.juhua.com.cn/Portal/ForApp/Sheets/ceshi.ashx?appKey=cloudoffice&action=source&code=ceshi&version=2&instance=null&item=null&field=wldl&key=&type=&activity=Activity2&user=f0bbd1cc-7727-449c-ba74-e63dca84f9f1";
+    NSData *dataJson = [NSJSONSerialization dataWithJSONObject:datas options:kNilOptions error:nil];
+    NSString *strJson = [[NSString alloc]initWithData:dataJson encoding:NSUTF8StringEncoding];
+     NSDictionary *dicc = [NSDictionary dictionaryWithObject:strJson forKey:@"datas"];
+    AFHTTPRequestOperationManager *mangerr = [AFHTTPRequestOperationManager manager];
+    [mangerr POST:urlStr parameters:dicc constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"接收成功%@",responseObject);
         
-
+        //给接收数组赋值
+        [JHPageDataManager sharedJHPageDataManager].sourceFromServerArray = [NSMutableArray arrayWithArray:responseObject[@"datas"]];
+        [self.getPageDelegate getsetSingleParticipantFromServerSucceed];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error.userInfo);
+    }];
 }
-
 -(void)getPageDatas{
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&token=%@&action=data&code=%@&version=%@&instance=nil&activity=%@&item=nil&userId=%@&viewmode=false", SITEURL,self.modulesModel.StartSheetCode,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,self.modulesModel.ModuleCode,self.modulesModel.ModuleVersion,self.modulesModel.StartActivityCode,[JHUserInfo sharedJHUserInfo].uid];
-    NSLog(@"%@",urlStr);
+//     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&token=%@&action=data&code=%@&version=%@&activity=%@&userId=%@&viewmode=false", SITEURL,self.modulesModel.StartSheetCode,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,self.modulesModel.ModuleCode,self.modulesModel.ModuleVersion,self.modulesModel.StartActivityCode,[JHUserInfo sharedJHUserInfo].objectId];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"获取详细信息成功:%@",responseObject);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -161,5 +160,13 @@ singleton_implementation(JHNetworkManager)
     }];
 
 }
-
+-(void)getUsers{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+     NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&token=%@&action=orguser&code=%@&version=%@&activity=%@&userId=%@&viewmode=false", SITEURL,self.modulesModel.StartSheetCode,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,self.modulesModel.ModuleCode,self.modulesModel.ModuleVersion,self.modulesModel.StartActivityCode,[JHUserInfo sharedJHUserInfo].objectId];
+    [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"%@",responseObject);
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        NSLog(@"%@",error.userInfo);
+    }];
+}
 @end

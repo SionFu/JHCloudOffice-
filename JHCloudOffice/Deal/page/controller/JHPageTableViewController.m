@@ -26,7 +26,7 @@
 /**
  *  所有二级选项菜单
  */
-@property (nonatomic, strong)NSArray *sourceArray;
+@property (nonatomic, strong)NSMutableArray *sourceArray;
 @property (nonatomic ,strong ) UINib *nib;
 /**
  *  格式化显示时间或者日期的方式
@@ -78,7 +78,7 @@
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     self.pageCategory = [NSMutableArray arrayWithArray:[JHPageDataManager sharedJHPageDataManager].pageCategory];
     self.typeArray = [NSArray arrayWithArray:[JHPageDataManager sharedJHPageDataManager].typeArray];
-    self.sourceArray = [NSArray arrayWithArray:[JHPageDataManager sharedJHPageDataManager].sourceArray];
+    self.sourceArray = [NSMutableArray arrayWithArray:[JHPageDataManager sharedJHPageDataManager].sourceArray];
      [self.tableView reloadData];
 
 }
@@ -308,7 +308,7 @@
      */
     //控件为选择器选择部门人
     if ([self.typeArray[index] isEqualToString:@"SingleParticipant"]) {
-        [self choseStringWith:cell inRow:index];
+        [self chosePeoeleStringWith:cell inRow:index];
     }
     //控件为附件
     if ([self.typeArray[index] isEqualToString:@"Attachment"]) {
@@ -326,6 +326,18 @@
     if ([self.typeArray[index] isEqualToString:@"Comment"]) {
         
     }
+}
+- (void)chosePeoeleStringWith:(JHPageTableViewCell *)cell inRow:(NSInteger)index{
+    UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
+    button.backgroundColor = [UIColor whiteColor];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    
+    self.senderControlTag = index;
+    button.tag = 100 + index;
+    [button setTitle:self.datasDicArray[index] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(setpeopleSingleParticipant:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.controlTypeView addSubview:button];
 }
 - (void)choseStringWith:(JHPageTableViewCell *)cell inRow:(NSInteger)index{
     UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
@@ -358,6 +370,10 @@
     sender.selected = !sender.selected;
     self.datasDicArray[sender.tag - 100] = [NSNumber numberWithBool:sender.selected];
 }
+-(void)setpeopleSingleParticipant:(UIButton*)sender {
+    [[JHNetworkManager sharedJHNetworkManager]getUsers];
+    NSLog(@"已经选择人");
+}
 - (void)setSingleParticipant:(UIButton *)sender {
     self.senderControlTag = sender.tag - 100;
     UIPickerView *itemPicker = [[UIPickerView alloc]init];
@@ -380,7 +396,7 @@
         NSInteger row = [itemPicker selectedRowInComponent:1];
         NSString *selectedString = self.sourceArray[self.senderControlTag][row][@"DisplayValue"];
         //只要在本地获取菜单的情况下才能获取以下值
-        
+
         self.parametersDic = [NSMutableDictionary dictionaryWithDictionary:self.sourceArray[self.senderControlTag][row]];
         NSLog(@"%@",self.parametersDic);
         [itemPicker selectRow:row inComponent:1 animated:NO];
@@ -406,7 +422,8 @@
     
 }
 - (void)getsetSingleParticipantFromServerSucceed {
-       [MBProgressHUD hideHUD];
+    [MBProgressHUD hideHUD];
+    self.sourceArray[self.senderControlTag] = [NSMutableArray arrayWithArray:[JHPageDataManager sharedJHPageDataManager].sourceFromServerArray];
     UIPickerView *itemPicker = [[UIPickerView alloc]init];
     itemPicker.center = CGPointMake(SCREENWIDTH / 2 - 5, 100);
     itemPicker.tag = self.senderControlTag;
@@ -416,7 +433,11 @@
     [alert.view addSubview:itemPicker];
     UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSInteger row = [itemPicker selectedRowInComponent:1];
-        NSString *selectedString = @"wcao====";//[JHPageDataManager sharedJHPageDataManager].sourceFromServerArray[row];
+
+        NSString *selectedString = [JHPageDataManager sharedJHPageDataManager].sourceFromServerArray[row][@"DisplayValue"];
+        //每次从二级菜单中获取数据后,将是否从服务器获取数据标示转成 server 使再次点击或者更换菜单时重新从服务器获取数据
+        NSDictionary *dic = [NSDictionary dictionaryWithObject:@"Server" forKey:@"Index"];
+        self.sourceArray[self.senderControlTag][0] = dic;
         [itemPicker selectRow:row inComponent:1 animated:NO];
         self.datasDicArray[self.senderControlTag] = selectedString;
         //设置表格选择时的动画

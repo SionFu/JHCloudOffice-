@@ -66,4 +66,12 @@ singleton_interface(JHNetworkManager)
  *  获取流程数据
  */
 - (void)getPageDatas;
+/**
+ *  保存流程数据
+ */
+- (void)savePage;
+/**
+ *  获取用户组织
+ */
+- (void)getUsers;
 @end

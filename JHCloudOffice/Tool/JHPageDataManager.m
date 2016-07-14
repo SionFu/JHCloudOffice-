@@ -69,7 +69,7 @@ singleton_implementation(JHPageDataManager)
     for (JHPageDataItem  *dataItem in [JHPageDataManager sharedJHPageDataManager].pageDataItemsArray) {
         NSLog(@"%@",dataItem.ItemName);
 #warning 暂时显示 之后添加控件 需要用到
-//        NSLog(@"控件类型:%@,是否有子选项%@,数据源:%@",dataItem.ItemType[@"Value"],dataItem.Source,dataItem.SourceType[@"Value"]);
+        NSLog(@"控件类型:%@,是否有子选项%@,数据源:%@",dataItem.ItemType[@"Value"],dataItem.Source,dataItem.SourceType[@"Value"]);
         [ JHPageDataManager sharedJHPageDataManager].pageDataUsed = false;
         [itemMuarray addObject:dataItem.ItemDisplayName];
         [itemTypeMuarray addObject:dataItem.ItemType[@"Value"]];
