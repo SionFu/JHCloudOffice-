@@ -25,6 +25,8 @@
 		3126A8A61D1908DD00ADC960 /* JHCloudOfficeUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3126A8A51D1908DD00ADC960 /* JHCloudOfficeUITests.m */; };
 		3126A8B51D19098400ADC960 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3126A8B41D19098400ADC960 /* AppDelegate.m */; };
 		3126A8BE1D191D1A00ADC960 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3126A8BD1D191D1A00ADC960 /* Assets.xcassets */; };
+		312F89EE1D38B3DD00CAAA9A /* JHPageData.m in Sources */ = {isa = PBXBuildFile; fileRef = 312F89ED1D38B3DD00CAAA9A /* JHPageData.m */; };
+		312F89F11D38C61100CAAA9A /* JHGetPageData.m in Sources */ = {isa = PBXBuildFile; fileRef = 312F89F01D38C61100CAAA9A /* JHGetPageData.m */; };
 		317249E11D221ED600B2E48A /* JHCategoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 317249DF1D221ED600B2E48A /* JHCategoryTableViewCell.m */; };
 		317249E21D221ED600B2E48A /* JHCategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 317249E01D221ED600B2E48A /* JHCategoryTableViewCell.xib */; };
 		317249E61D22283600B2E48A /* JHPortalTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 317249E51D22283600B2E48A /* JHPortalTableViewController.xib */; };
@@ -100,6 +102,10 @@
 		3126A8B31D19098400ADC960 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3126A8B41D19098400ADC960 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		3126A8BD1D191D1A00ADC960 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		312F89EC1D38B3DD00CAAA9A /* JHPageData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHPageData.h; sourceTree = "<group>"; };
+		312F89ED1D38B3DD00CAAA9A /* JHPageData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHPageData.m; sourceTree = "<group>"; };
+		312F89EF1D38C61100CAAA9A /* JHGetPageData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHGetPageData.h; sourceTree = "<group>"; };
+		312F89F01D38C61100CAAA9A /* JHGetPageData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHGetPageData.m; sourceTree = "<group>"; };
 		317249DE1D221ED600B2E48A /* JHCategoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHCategoryTableViewCell.h; sourceTree = "<group>"; };
 		317249DF1D221ED600B2E48A /* JHCategoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHCategoryTableViewCell.m; sourceTree = "<group>"; };
 		317249E01D221ED600B2E48A /* JHCategoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHCategoryTableViewCell.xib; sourceTree = "<group>"; };
@@ -208,6 +214,10 @@
 				310D52D91D237146003C09E9 /* JHPageDataItem.m */,
 				31F2E96A1D2641890079BDB9 /* JHDataItemPermissions.h */,
 				31F2E96B1D2641890079BDB9 /* JHDataItemPermissions.m */,
+				312F89EF1D38C61100CAAA9A /* JHGetPageData.h */,
+				312F89F01D38C61100CAAA9A /* JHGetPageData.m */,
+				312F89EC1D38B3DD00CAAA9A /* JHPageData.h */,
+				312F89ED1D38B3DD00CAAA9A /* JHPageData.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -684,6 +694,7 @@
 				31B6F46B1D1FACDE00A2670B /* YSLContainerViewController.m in Sources */,
 				317249E11D221ED600B2E48A /* JHCategoryTableViewCell.m in Sources */,
 				31A358B91D20F1B100D4C0DA /* NSObject+YYModel.m in Sources */,
+				312F89EE1D38B3DD00CAAA9A /* JHPageData.m in Sources */,
 				317249EA1D22543C00B2E48A /* LoginViewController.m in Sources */,
 				31E2F52C1D1A2D9500FC212B /* AFURLSessionManager.m in Sources */,
 				3105D9F61D1BAE1A0098EA73 /* JHMenuData.m in Sources */,
@@ -707,6 +718,7 @@
 				31E2F54B1D1A83B300FC212B /* JHDealViewViewController.m in Sources */,
 				31E2F5261D1A2D9500FC212B /* AFHTTPSessionManager.m in Sources */,
 				3120B3A61D1CFB4100206F6B /* UIView+WbyExtension.m in Sources */,
+				312F89F11D38C61100CAAA9A /* JHGetPageData.m in Sources */,
 				310D52D61D236F68003C09E9 /* JHPageTableViewCell.m in Sources */,
 				31B6F4761D1FB02000A2670B /* JHPortalTableViewController.m in Sources */,
 				31A358BA1D20F1B100D4C0DA /* YYClassInfo.m in Sources */,

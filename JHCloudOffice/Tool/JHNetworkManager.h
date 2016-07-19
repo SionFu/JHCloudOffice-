@@ -34,8 +34,10 @@
  *  获取发起流程数据成功
  */
 - (void) getPageSuccess;
+- (void) getPageDatasSuccess;
 - (void) getPagefaild;
 - (void) getsetSingleParticipantFromServerSucceed;
+- (void) getsetSingleParticipantFromServerfaild;
 
 @end
 @interface JHNetworkManager : NSObject

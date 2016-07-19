@@ -13,7 +13,8 @@
 #import "JHNetworkManager.h"
 #import "JHPageDataItem.h"
 #import "JHDataItemPermissions.h"
-
+#import "JHPageData.h"
+#import "JHGetPageData.h"
 @interface JHPageTableViewController ()<JHPageDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
 /**
  *  所有流程项目名称
@@ -23,6 +24,10 @@
  *  所有项目的控件
  */
 @property (nonatomic, strong)NSArray *typeArray;
+/**
+ *  所有项目的 itemName
+ */
+@property (nonatomic, strong)NSMutableArray *pageDataItemsArray;
 /**
  *  所有二级选项菜单
  */
@@ -37,13 +42,22 @@
  */
 @property (nonatomic, assign)NSInteger senderControlTag;
 /**
+ *  储存二级菜单从 server 获取的 parameters dic
+ */
+@property (nonatomic, strong)NSMutableDictionary *parametersDic;
+
+/**
  *  准备上传的数据数组内容为字典 value
  */
 @property (nonatomic, strong)NSMutableArray *datasDicArray;
 /**
- *  储存二级菜单从 server 获取的 parameters dic
+ *  暂储存上传数据
  */
-@property (nonatomic, strong)NSMutableDictionary *parametersDic;
+@property (nonatomic, strong)JHPageData *pageData;
+/**
+ *  整理从服务器接收的数据 数组位数上与本本地流程相同
+ */
+@property (nonatomic, strong)NSMutableArray *datasFromServerArray;
 @end
 #define CONTROLFRME CGRectMake(5, 5, self.view.frame.size.width * 2.8 / 4 - 10, 30)
 #define BUTTONCONTROLFRME CGRectMake(5, 5, 30, 30)
@@ -61,7 +75,13 @@
     [JHNetworkManager sharedJHNetworkManager].getPageDelegate = self;
     //在导航栏上添加状态保存提交和取消按钮
     [self addNavigationBtn];
+    
    
+}
+-(JHPageData *)pageData{
+    if (_pageData == nil) {
+        _pageData = [JHPageData new];
+    }return _pageData;
 }
 -(NSMutableDictionary *)parametersDic{
     if (_parametersDic == nil) {
@@ -76,11 +96,22 @@
 }
 -(void)getPageSuccess {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    //整理好需要显示的流程中的项目内容
+    [[JHPageDataManager sharedJHPageDataManager] getTrueItemInPage];
+    [[JHPageDataManager sharedJHPageDataManager] getTheSameItemInPageItemsArray];
+    [[JHPageDataManager sharedJHPageDataManager]  makeSourceFromServer];
     self.pageCategory = [NSMutableArray arrayWithArray:[JHPageDataManager sharedJHPageDataManager].pageCategory];
     self.typeArray = [NSArray arrayWithArray:[JHPageDataManager sharedJHPageDataManager].typeArray];
     self.sourceArray = [NSMutableArray arrayWithArray:[JHPageDataManager sharedJHPageDataManager].sourceArray];
-     [self.tableView reloadData];
-
+    self.pageDataItemsArray = [NSMutableArray arrayWithArray:[JHPageDataManager sharedJHPageDataManager].itemNameArray];
+    
+    [self makeTheDataFromServerLikeLocaPage];
+    [self getServerPageData];
+    [self.tableView reloadData];
+}
+-(void)getPageDatasSuccess{
+    //在获取了 服务器端的数据后再显示表格
+    [self.tableView reloadData];
 }
 - (void)addNavigationBtn{
     UIView *button = [[UIView alloc]initWithFrame:CGRectMake(SCREENWIDTH / 2 + 20, 25, SCREENWIDTH / 2 - 25, 30)];
@@ -114,6 +145,7 @@
         case 101:
             NSLog(@"保存");
             [self saveButtonClick];
+            NSLog(@"%@",self.pageData);
             break;
         case 102:
             NSLog(@"提交");
@@ -150,8 +182,45 @@
 #pragma mark 表单内容
 -(NSMutableArray *)datasDicArray{
     if (_datasDicArray == nil) {
-        _datasDicArray = [NSMutableArray arrayWithObjects:@"轻触选择0...",@"轻触选择1...",@"轻触选择2...",@"轻触选择3...",@"轻触选择4...",@"轻触选择5...",@"轻触选择6...",@"轻触选择7...",@"轻触选择8...",@"轻触选择...",@"轻触选择...",@"轻触选择...",@"轻触选择...",@"轻触选择...",@"轻触选择...",@"轻触选择...",@"轻触选择...",@"轻触选择...",@"轻触选择...",@"轻触选择...",@"轻触选择...", nil];
-    }return _datasDicArray;
+        _datasDicArray = [NSMutableArray array];
+    }
+    return _datasDicArray;
+}
+//使流程从服务器获取标题
+-(void)getServerPageData {
+//    for (int i = 0 ; i < 20 ; i++) {
+//        [self.datasDicArray addObject:[NSString stringWithFormat:@"test%d",i]];
+//    }
+    for (int i = 0 ; i < self.datasFromServerArray.count; i ++) {
+        NSLog(@"%d:%@",i + 1,self.datasFromServerArray[i]);
+    }
+    
+    for (int i = 0 ; i <self.datasFromServerArray.count; i++) {
+        if ([self.datasFromServerArray[i] isEqualToString:@""]) {
+            [self.datasDicArray addObject:[NSString stringWithFormat:@"轻触选择%d",i]];
+        }
+        else {
+            [self.datasDicArray addObject:self.datasFromServerArray[i]];
+        }
+    }
+}
+-(NSArray *)datasFromServerArray{
+    if (_datasFromServerArray == nil) {
+        _datasFromServerArray = [NSMutableArray array];
+    }return _datasFromServerArray;
+}
+-(void)makeTheDataFromServerLikeLocaPage {
+    for (int i = 0; i < self.pageDataItemsArray.count ; i++) {
+        self.datasFromServerArray[i] = @"";
+    }
+    for (NSDictionary *dic in [JHPageDataManager sharedJHPageDataManager].datasFromServerArray) {
+        for (int i = 0; i < self.pageDataItemsArray.count ; i++) {
+            if ([dic[@"Key"] isEqualToString:self.pageDataItemsArray[i]]) {
+                self.datasFromServerArray[i] =  dic[@"Value"];
+            }
+        }
+ }
+
 }
 #pragma mark 表单数据
 - (NSMutableArray *)pageCategory {
@@ -217,16 +286,16 @@
 -(void)addControlTocontrolTypeView:(JHPageTableViewCell *)cell inRow:(NSInteger)index {
     //控件为文本输入框1行可以编辑
     if ([self.typeArray[index] isEqualToString:@"ShortString"]) {
-//        NSLog(@"%@",self.sourceArray[index][0][@"Index"]);
         if ([self.sourceArray[index][0][@"Index"]  isEqual: @"Button"]) {
             UITextField *textField = [[UITextField alloc]initWithFrame:CONTROLFRME];
             textField.tag = 100 + index;
             textField.backgroundColor = [UIColor whiteColor];
-//            textField.text = @"何建强";
             self.senderControlTag = index;
             textField.text = self.datasDicArray[self.senderControlTag];
             textField.adjustsFontSizeToFitWidth = YES;
             [cell.controlTypeView addSubview:textField];
+            //将输入好的内容存入数组
+            [textField addTarget:self action:@selector(addDataToArray:) forControlEvents:UIControlEventEditingChanged];
         }else if ([self.sourceArray[index][0][@"Index"]  isEqual: @"Server"]){
             [self choseStringFromServerWith:cell inRow:index];
         }else {
@@ -267,11 +336,11 @@
     }
     //控件为时间日期选择器
     if ([self.typeArray[index] isEqualToString:@"DateTime"]) {
-        if ([self.sourceArray[index][0][@"Index"]  isEqual: @"Date"]) {
+        if ([self.sourceArray[index][0][@"Index"] isEqual: @"Date"]) {
           self.dataFormart = @"yyyy年MM月dd日";
-        }else if ([self.sourceArray[index][0][@"Index"]  isEqual: @"Time"]){
+        }else if ([self.sourceArray[index][0][@"Index"] isEqual: @"Time"]){
           self.dataFormart = @"HH点mm分";
-        }else if ([self.sourceArray[index][0][@"Index"]  isEqual: @"DateTime"]){
+        }else if ([self.sourceArray[index][0][@"Index"] isEqual: @"DateTime"]){
             self.dataFormart = @"yyyy年MM月dd日 HH点mm分";
         }
         UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
@@ -326,6 +395,14 @@
     if ([self.typeArray[index] isEqualToString:@"Comment"]) {
         
     }
+}
+#pragma 收集文本框中的数据
+- (void)addDataToArray:(UITextField *)sender {
+    self.pageData.key = [JHPageDataManager sharedJHPageDataManager].itemNameArray[self.senderControlTag];
+    self.pageData.value = sender.text;
+    self.pageData.displayValue = sender.text;
+    self.pageData.type = @"ShortString";
+
 }
 - (void)chosePeoeleStringWith:(JHPageTableViewCell *)cell inRow:(NSInteger)index{
     UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
@@ -398,6 +475,7 @@
         //只要在本地获取菜单的情况下才能获取以下值
 
         self.parametersDic = [NSMutableDictionary dictionaryWithDictionary:self.sourceArray[self.senderControlTag][row]];
+
         NSLog(@"%@",self.parametersDic);
         [itemPicker selectRow:row inComponent:1 animated:NO];
         self.datasDicArray[self.senderControlTag] = selectedString;
@@ -433,7 +511,9 @@
     [alert.view addSubview:itemPicker];
     UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSInteger row = [itemPicker selectedRowInComponent:1];
-
+        if (![JHPageDataManager sharedJHPageDataManager].sourceFromServerArray) {
+            return ;
+        }
         NSString *selectedString = [JHPageDataManager sharedJHPageDataManager].sourceFromServerArray[row][@"DisplayValue"];
         //每次从二级菜单中获取数据后,将是否从服务器获取数据标示转成 server 使再次点击或者更换菜单时重新从服务器获取数据
         NSDictionary *dic = [NSDictionary dictionaryWithObject:@"Server" forKey:@"Index"];
@@ -451,6 +531,10 @@
     [alert addAction:ok];
     [alert addAction:cancel];
     [self presentViewController:alert animated:YES completion:nil];
+}
+- (void)getsetSingleParticipantFromServerfaild {
+    [MBProgressHUD hideHUD];
+    [MBProgressHUD showError:@"网络连接失败!"];
 }
 #pragma mark Picker Date Source Methods
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
@@ -474,6 +558,7 @@
     return array.count;
     }
 }
+//原生显示在 component 深
 //-(NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component{
 //    if (component == 0) {
 //        return self.pageCategory[self.senderControlTag];

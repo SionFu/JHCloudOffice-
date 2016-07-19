@@ -12,7 +12,6 @@
 #import "JHModules.h"
 #import "JHModulesData.h"
 #import "JHPageDataManager.h"
-
 #define SITEURL @"http://h3.juhua.com.cn/Portal/ForApp/"
 //#define SITEURL @"http://188.1.100.165:8010/Portal/ForApp/"
 #define APPKEY @"cloudoffice"
@@ -56,10 +55,10 @@ singleton_implementation(JHNetworkManager)
     }
     if (dic[@"Name"] != nil) {
     [self.loginDelegate loginSuccess];
-    [JHUserInfo sharedJHUserInfo].objectId = dic[@"ObjectId"];
-    [JHUserInfo sharedJHUserInfo].code = dic[@"Code"];
-    [JHUserInfo sharedJHUserInfo].name = dic[@"Name"];
-    [JHUserInfo sharedJHUserInfo].mobile = dic[@"Mobile"];
+   [JHUserInfo sharedJHUserInfo].objectId = dic[@"ObjectId"];
+       [JHUserInfo sharedJHUserInfo].code = dic[@"Code"];
+       [JHUserInfo sharedJHUserInfo].name = dic[@"Name"];
+     [JHUserInfo sharedJHUserInfo].mobile = dic[@"Mobile"];
     [JHUserInfo sharedJHUserInfo].company = dic[@"Company"];
         [JHUserInfo sharedJHUserInfo].uid = dic[@"WeaverUser"][@"uid"];
         
@@ -71,7 +70,7 @@ singleton_implementation(JHNetworkManager)
     NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/DefaultSheet.ashx?appKey=%@&token=%@&action=modules&create=1&userId=%@", SITEURL, APPKEY, [JHUserInfo sharedJHUserInfo].objectId, [JHUserInfo sharedJHUserInfo].uid];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
 # warning 有打印
-        NSLog(@"%@",responseObject);
+//        NSLog(@"%@",responseObject);
         NSString *filepath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)firstObject] stringByAppendingPathComponent:@"Modules.plist"];
 #warning 本地化数据
         [responseObject writeToFile:filepath atomically:YES];
@@ -121,6 +120,8 @@ singleton_implementation(JHNetworkManager)
         [JHPageDataManager sharedJHPageDataManager].pageDataItemsArray = [NSMutableArray arrayWithArray:dicAllPageData[@"DataItems"]];
         //反回获取流程菜单数据代理
         [self.getPageDelegate getPageSuccess];
+         [self.getPageDelegate getPageDatasSuccess];
+        
         
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [self.getPageDelegate getPagefaild];
@@ -141,12 +142,16 @@ singleton_implementation(JHNetworkManager)
     [mangerr POST:urlStr parameters:dicc constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"接收成功%@",responseObject);
-        
+        NSArray *array = responseObject[@"datas"];
+        if (array.count == 0) {
+            return ;
+        }
         //给接收数组赋值
         [JHPageDataManager sharedJHPageDataManager].sourceFromServerArray = [NSMutableArray arrayWithArray:responseObject[@"datas"]];
         [self.getPageDelegate getsetSingleParticipantFromServerSucceed];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error.userInfo);
+        [self.getPageDelegate getsetSingleParticipantFromServerfaild];
     }];
 }
 -(void)getPageDatas{
@@ -154,9 +159,12 @@ singleton_implementation(JHNetworkManager)
 //     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&token=%@&action=data&code=%@&version=%@&activity=%@&userId=%@&viewmode=false", SITEURL,self.modulesModel.StartSheetCode,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,self.modulesModel.ModuleCode,self.modulesModel.ModuleVersion,self.modulesModel.StartActivityCode,[JHUserInfo sharedJHUserInfo].objectId];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"获取详细信息成功:%@",responseObject);
+        NSLog(@"从服务器上获取流程信息成功:%@",responseObject);
+        //将从服务器上获取的流程数据存入数组中
+        [JHPageDataManager sharedJHPageDataManager].datasFromServerArray = [responseObject[@"datas"]mutableCopy];
+        [self.getPageDelegate getPageDatasSuccess];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"获取详细信息失败%@",error);
+        NSLog(@"从服务器上获取流程信息失败%@",error);
     }];
 
 }

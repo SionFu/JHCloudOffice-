@@ -76,14 +76,14 @@ static int i = 0;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    [[[JHNetworkManager alloc]init] getPageSettingWithCurrentVC:[JHModulesData sharedJHModulesData].curreatVCIndex andRow:indexPath.row];
-    
+    //获取当前流程的控件数据
+    [[JHNetworkManager sharedJHNetworkManager] getPageSettingWithCurrentVC:[JHModulesData sharedJHModulesData].curreatVCIndex andRow:indexPath.row];
+    //获取当前选择流程的流程数据
+    [[JHNetworkManager sharedJHNetworkManager] getPageDatas];
     JHPageTableViewController *pageVC = [[JHPageTableViewController alloc]init];
     UINavigationController *nvpageVC = [[UINavigationController alloc]initWithRootViewController:pageVC];
     JHModules *data = self.catrgoryArray[indexPath.row];
     pageVC.pageNage = data.ModuleName;
-    //获取当前选择流程的流程数据
-    [[JHNetworkManager sharedJHNetworkManager] getPageDatas];
     [self.navigationController presentViewController:nvpageVC animated:YES completion:nil];
     
 }

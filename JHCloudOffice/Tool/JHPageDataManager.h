@@ -21,7 +21,7 @@
 /**
  *  是否使用过数据
  */
-@property (nonatomic, setter=isUsed:) BOOL Used;
+@property (nonatomic, setter=isUsed:) BOOL used;
 @property (nonatomic, setter=isUsed:) BOOL pageDataUsed;
 /**
  *  流程中所有的项目ItemName 上传字典中的 key
@@ -44,5 +44,25 @@
  *  从服务器获取的二级菜单内容
  */
 @property (nonatomic, strong)NSMutableArray *sourceFromServerArray;
+/**
+ *  从服务器获取的配置原始数据
+ */
+@property (nonatomic, strong) NSMutableArray *datasFromServerArray;
+/**
+ *  储存最终上传的数据
+ */
+@property (nonatomic, strong) NSMutableArray *datasDicArray;
+/**
+ *  获取菜单里需要显示的项目
+ */
+-(void)getTrueItemInPage;
+/**
+ *  获取两个服务器中相同的项目
+ */
+-(void)getTheSameItemInPageItemsArray;
+/**
+ *  获取二级菜单
+ */
+-(void)makeSourceFromServer;
 singleton_interface(JHPageDataManager)
 @end
