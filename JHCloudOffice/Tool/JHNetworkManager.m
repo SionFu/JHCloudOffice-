@@ -12,6 +12,8 @@
 #import "JHModules.h"
 #import "JHModulesData.h"
 #import "JHPageDataManager.h"
+#import "JHOrguserManger.h"
+#import "NSDictionary+JHChangeDicToJson.h"
 #define SITEURL @"http://h3.juhua.com.cn/Portal/ForApp/"
 //#define SITEURL @"http://188.1.100.165:8010/Portal/ForApp/"
 #define APPKEY @"cloudoffice"
@@ -61,6 +63,7 @@ singleton_implementation(JHNetworkManager)
      [JHUserInfo sharedJHUserInfo].mobile = dic[@"Mobile"];
     [JHUserInfo sharedJHUserInfo].company = dic[@"Company"];
         [JHUserInfo sharedJHUserInfo].uid = dic[@"WeaverUser"][@"uid"];
+        [JHUserInfo sharedJHUserInfo].companyObjectId = dic[@"CompanyObjectId"];
         
     }
 }
@@ -74,7 +77,7 @@ singleton_implementation(JHNetworkManager)
         NSString *filepath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)firstObject] stringByAppendingPathComponent:@"Modules.plist"];
 #warning 本地化数据
         [responseObject writeToFile:filepath atomically:YES];
-        
+
         NSArray *array = responseObject[@"datas"];
         [JHModulesData sharedJHModulesData].count = responseObject[@"count"];
         [JHModulesData sharedJHModulesData].errorCode = responseObject[@"ErrorCode"];
@@ -130,20 +133,19 @@ singleton_implementation(JHNetworkManager)
 
 
 -(void)getPageSaverSettingWith:(NSDictionary *)parameters{
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-    NSArray *datas = [NSArray arrayWithObject:parameters];
-    manager.requestSerializer = [AFJSONRequestSerializer serializer];
     NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&action=source&code=%@&version=%@&instance=null&item=null&field=wldl&activity=%@&user=%@", SITEURL,self.modulesModel.StartSheetCode,APPKEY,self.modulesModel.ModuleCode,self.modulesModel.ModuleVersion,self.modulesModel.StartActivityCode,[JHUserInfo sharedJHUserInfo].objectId];
-//    NSString *urlStr = @"http://h3.juhua.com.cn/Portal/ForApp/Sheets/ceshi.ashx?appKey=cloudoffice&action=source&code=ceshi&version=2&instance=null&item=null&field=wldl&key=&type=&activity=Activity2&user=f0bbd1cc-7727-449c-ba74-e63dca84f9f1";
-    NSData *dataJson = [NSJSONSerialization dataWithJSONObject:datas options:kNilOptions error:nil];
-    NSString *strJson = [[NSString alloc]initWithData:dataJson encoding:NSUTF8StringEncoding];
-     NSDictionary *dicc = [NSDictionary dictionaryWithObject:strJson forKey:@"datas"];
-    AFHTTPRequestOperationManager *mangerr = [AFHTTPRequestOperationManager manager];
-    [mangerr POST:urlStr parameters:dicc constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+//    NSArray *datas = [NSArray arrayWithObject:parameters];
+    [parameters changeDicToJsonWithDic:parameters];
+//    NSData *dataJson = [NSJSONSerialization dataWithJSONObject:datas options:kNilOptions error:nil];
+//    NSString *strJson = [[NSString alloc]initWithData:dataJson encoding:NSUTF8StringEncoding];
+     NSDictionary *dicc = [NSDictionary dictionaryWithObject:[parameters changeDicToJsonWithDic:parameters] forKey:@"datas"];
+    AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
+    [manger POST:urlStr parameters:dicc constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"接收成功%@",responseObject);
         NSArray *array = responseObject[@"datas"];
         if (array.count == 0) {
+            [self.getPageDelegate getsetSingleParticipantFromServerfaild];
             return ;
         }
         //给接收数组赋值
@@ -156,7 +158,6 @@ singleton_implementation(JHNetworkManager)
 }
 -(void)getPageDatas{
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-//     manager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
     NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&token=%@&action=data&code=%@&version=%@&activity=%@&userId=%@&viewmode=false", SITEURL,self.modulesModel.StartSheetCode,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,self.modulesModel.ModuleCode,self.modulesModel.ModuleVersion,self.modulesModel.StartActivityCode,[JHUserInfo sharedJHUserInfo].objectId];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"从服务器上获取流程信息成功:%@",responseObject);
@@ -168,11 +169,20 @@ singleton_implementation(JHNetworkManager)
     }];
 
 }
--(void)getUsers{
+-(void)getUsersWithDic:(NSDictionary *)dic{
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-     NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&token=%@&action=orguser&code=%@&version=%@&activity=%@&userId=%@&viewmode=false", SITEURL,self.modulesModel.StartSheetCode,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,self.modulesModel.ModuleCode,self.modulesModel.ModuleVersion,self.modulesModel.StartActivityCode,[JHUserInfo sharedJHUserInfo].objectId];
-    [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+//    NSDictionary *dic = @{
+//                          @"key":@"owercompany",
+//                          @"value":@"539e82c4-3415-4fd8-9db1-7485899efb7b",
+//                          @"displayValue":@"539e82c4-3415-4fd8-9db1-7485899efb7b",
+//                          @"type":@"ShortString"
+//                          };
+   NSString *str = [dic changeDicToJsonWithDic:dic];
+    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&token=%@&action=orguser&type=OrganizationUnit&code=%@&userId=%@&field=tzr&parentid=%@", SITEURL,self.modulesModel.StartSheetCode,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,self.modulesModel.ModuleCode,[JHUserInfo sharedJHUserInfo].objectId,str];
+     NSString * encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes( kCFAllocatorDefault, (CFStringRef)urlStr, NULL, NULL,  kCFStringEncodingUTF8 ));
+    [manager GET:encodedString parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"%@",responseObject);
+        [JHOrguserManger sharedJHOrguserManger].parentidsArray = responseObject[@"datas"];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@",error.userInfo);
     }];

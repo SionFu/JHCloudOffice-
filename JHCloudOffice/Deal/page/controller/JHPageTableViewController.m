@@ -15,6 +15,7 @@
 #import "JHDataItemPermissions.h"
 #import "JHPageData.h"
 #import "JHGetPageData.h"
+#import "JHChosePeopleViewController.h"
 @interface JHPageTableViewController ()<JHPageDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
 /**
  *  所有流程项目名称
@@ -38,7 +39,7 @@
  */
 @property (nonatomic, strong) NSString *dataFormart;
 /**
- *  初始化时控件的 tag 值
+ *  初始化时控件的 tag - 100 值 为数组中的下标 不需要100 即可使用
  */
 @property (nonatomic, assign)NSInteger senderControlTag;
 /**
@@ -121,7 +122,7 @@
         [statusbutton setTitle:titleArray[i] forState:UIControlStateNormal];
         [statusbutton setBackgroundImage:[UIImage imageNamed:@"tab_unselected_pressed.9"] forState:UIControlStateHighlighted];
         [statusbutton addTarget:self action:@selector(rightBarButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        [statusbutton setTag:100 + i];
+        [statusbutton setTag:10 + i];
         [button addSubview:statusbutton];
     }
     [self.navigationController.view addSubview:button];
@@ -138,16 +139,16 @@
 }
 - (void)rightBarButtonClick:(UIBarButtonItem *)send {
     switch (send.tag) {
-        case 100:
+        case 10:
             NSLog(@"点击了状态");
             [self statuesButtonClick];
             break;
-        case 101:
+        case 11:
             NSLog(@"保存");
             [self saveButtonClick];
             NSLog(@"%@",self.pageData);
             break;
-        case 102:
+        case 12:
             NSLog(@"提交");
             [self sendButtonClick];
             break;
@@ -358,10 +359,6 @@
         textView.text = @"这是测试输入内容 测试换行显示内容";
         [cell.controlTypeView addSubview:textView];
     }
-    //控件为类别选择,选择收件人
-    if ([self.typeArray[index] isEqualToString:@"6"]) {
-        
-    }
     //控件为选择器true or fause
     if ([self.typeArray[index] isEqualToString:@"Bool"]) {
         UIButton *button = [[UIButton alloc]initWithFrame:BUTTONCONTROLFRME];
@@ -379,6 +376,14 @@
     if ([self.typeArray[index] isEqualToString:@"SingleParticipant"]) {
         [self chosePeoeleStringWith:cell inRow:index];
     }
+    //控件为[通知人]选择(具体公司 需要取出[@"Parents"])
+    if ([self.typeArray[index] isEqualToString:@"MultiParticipant"]) {
+        [self chosePeoeleStringWith:cell inRow:index];
+    }
+    //控件为选择器意见
+    if ([self.typeArray[index] isEqualToString:@"Comment"]) {
+        
+    }
     //控件为附件
     if ([self.typeArray[index] isEqualToString:@"Attachment"]) {
         
@@ -387,14 +392,8 @@
     if ([self.typeArray[index] isEqualToString:@"BizObjectArray"]) {
         
     }
-    //控件为通知人选择
-    if ([self.typeArray[index] isEqualToString:@"MultiParticipant"]) {
-        
-    }
-    //控件为选择器意见
-    if ([self.typeArray[index] isEqualToString:@"Comment"]) {
-        
-    }
+
+    
 }
 #pragma 收集文本框中的数据
 - (void)addDataToArray:(UITextField *)sender {
@@ -439,17 +438,19 @@
     [button addTarget:self action:@selector(setSingleParticipantFromServer:) forControlEvents:UIControlEventTouchUpInside];
     [cell.controlTypeView addSubview:button];
 }
-- (void)sourceButtonClick:(UIButton *)sender {
-   //未使用
-}
 
 - (void)selectotBOOL:(UIButton *)sender {
     sender.selected = !sender.selected;
     self.datasDicArray[sender.tag - 100] = [NSNumber numberWithBool:sender.selected];
 }
+
 -(void)setpeopleSingleParticipant:(UIButton*)sender {
-    [[JHNetworkManager sharedJHNetworkManager]getUsers];
-    NSLog(@"已经选择人");
+    [[JHNetworkManager sharedJHNetworkManager]getUsersWithDic:[[JHPageDataManager sharedJHPageDataManager]findOwercompanyWithKey:self.senderControlTag]];
+    JHChosePeopleViewController *cVC = [JHChosePeopleViewController new];
+    UINavigationController *nvpageVC = [[UINavigationController alloc]initWithRootViewController:cVC];
+#warning UR Thinging
+//    [self.navigationController pushViewController:cVC animated:YES];
+    [self.navigationController presentViewController:nvpageVC animated:YES completion:nil];
 }
 - (void)setSingleParticipant:(UIButton *)sender {
     self.senderControlTag = sender.tag - 100;
@@ -458,7 +459,7 @@
     //    CALayer *viewLayer = itemPicker.layer;
     //    [viewLayer setFrame:CGRectMake(-10, -35, SCREENWIDTH - 5 , 300)];
     //    [viewLayer setBorderWidth:0];
-#warning  自定义
+#warning  UserEdit
     //    itemPicker.frame = CGRectMake(-10, -35, SCREENWIDTH - 5 , 300);
     itemPicker.center = CGPointMake(SCREENWIDTH / 2 - 5, 100);
 //    NSLog(@"%f",itemPicker.frame.size.width);
@@ -534,7 +535,8 @@
 }
 - (void)getsetSingleParticipantFromServerfaild {
     [MBProgressHUD hideHUD];
-    [MBProgressHUD showError:@"网络连接失败!"];
+#warning UE Notconfuse
+    [MBProgressHUD showError:@"获取失败"];
 }
 #pragma mark Picker Date Source Methods
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {

@@ -75,5 +75,5 @@ singleton_interface(JHNetworkManager)
 /**
  *  获取用户组织
  */
-- (void)getUsers;
+- (void)getUsersWithDic:(NSDictionary *)dic;
 @end

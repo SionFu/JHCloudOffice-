@@ -15,14 +15,14 @@
  */
 @property (nonatomic, strong) NSArray *pageVisibleItemArray;
 /**
- *  显示字段内容
+ * 显示字段内容
  */
 @property (nonatomic, strong) NSMutableArray *pageDataItemsArray;
 /**
- *  是否使用过数据
+ *   全部显示字段内容
  */
-@property (nonatomic, setter=isUsed:) BOOL used;
-@property (nonatomic, setter=isUsed:) BOOL pageDataUsed;
+@property (nonatomic, strong) NSMutableArray *pageAllDataItemsArray;
+
 /**
  *  流程中所有的项目ItemName 上传字典中的 key
  */
@@ -64,5 +64,15 @@
  *  获取二级菜单
  */
 -(void)makeSourceFromServer;
+/**
+ *  根据传入数组的下标查找出父字段中的公司名称 返回查找组织查找字段 like
+ *{
+ *"key": "owercompany",
+ *"value": "539e82c4-3415-4fd8-9db1-7485899efb7b",
+ *"displayValue": "539e82c4-3415-4fd8-9db1-7485899efb7b",
+ *"type": "ShortString"
+ *}
+ */
+-(NSDictionary *)findOwercompanyWithKey:(NSInteger)index;
 singleton_interface(JHPageDataManager)
 @end

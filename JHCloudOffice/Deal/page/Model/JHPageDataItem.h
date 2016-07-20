@@ -31,7 +31,10 @@
  *  字段最长的内容
  */
 @property (nonatomic, assign) NSNumber *MaxLength;
-@property (nonatomic, strong) NSDictionary *Parents;
+/**
+ *  用来去除获取人员名单的父级key Parents[0][@"Key"]
+ */
+@property (nonatomic, strong) NSArray *Parents;
 @property (nonatomic, assign) BOOL ReadOnly;
 @property (nonatomic, strong) NSArray *Source;
 @property (nonatomic, strong) NSDictionary *ShowOrHiddenAction;

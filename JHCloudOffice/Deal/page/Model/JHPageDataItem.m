@@ -10,7 +10,7 @@
 
 @implementation JHPageDataItem
 -(NSString *)description{
-    return [NSString stringWithFormat:@"%@%@",self.ItemName,self.ItemType[@"Value"]];
+    return [NSString stringWithFormat:@"ItemName:%@==Value:%@,Parents:%@",self.ItemName,self.ItemType[@"Value"],self.Parents];
 }
 -(void)setValue:(id)value forUndefinedKey:(NSString *)key{
     

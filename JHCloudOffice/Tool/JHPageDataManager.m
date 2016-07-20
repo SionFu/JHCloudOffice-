@@ -16,21 +16,14 @@ singleton_implementation(JHPageDataManager)
 -(NSArray *)pageVisibleItemArray{
     if (_pageVisibleItemArray == nil) {
         _pageVisibleItemArray = [NSArray array];
-//    }else{
-//        if (!self.used) {
-//            self.used = true;
-//        NSMutableArray *muArray = [NSMutableArray new];
-//        for (NSDictionary *dic in _pageVisibleItemArray) {
-//            JHDataItemPermissions *per = [JHDataItemPermissions new];
-//            [per setValuesForKeysWithDictionary:dic];
-//            if ([per.Visible isEqualToString:@"True"]) {
-//                [muArray addObject:per];
-//            }
-//        }
-//        _pageVisibleItemArray = [NSArray arrayWithArray:muArray];
-//        }
     }
+
     return _pageVisibleItemArray;
+}
+-(NSMutableArray *)pageAllDataItemsArray{
+    if (_pageAllDataItemsArray == nil) {
+        _datasDicArray = [NSMutableArray array];
+    }return _pageAllDataItemsArray;
 }
 -(void)getTrueItemInPage {
     
@@ -42,34 +35,13 @@ singleton_implementation(JHPageDataManager)
             [muArray addObject:per];
         }
     }
-    _pageVisibleItemArray = [NSArray arrayWithArray:muArray];
+    self.pageVisibleItemArray = [NSArray arrayWithArray:muArray];
 
 }
 -(NSMutableArray *)pageDataItemsArray{
     if (_pageDataItemsArray == nil) {
         _pageDataItemsArray = [NSMutableArray array];
     }
-//    else{
-//        if (!self.pageDataUsed) {
-//            self.pageDataUsed = true;
-//        NSMutableArray *muArray = [NSMutableArray array];
-//        NSMutableArray *itemArray = [NSMutableArray array];
-//        for (NSDictionary *dic in _pageDataItemsArray) {
-//            JHPageDataItem *dataItem = [JHPageDataItem new];
-//            [dataItem setValuesForKeysWithDictionary:dic];
-//            for (JHDataItemPermissions *per in self.pageVisibleItemArray) {
-//                if ([per.ItemName isEqualToString:dataItem.ItemName]) {
-//                    [muArray addObject:dataItem];
-//                    [itemArray addObject:per.ItemName];
-//                }
-//            }
-//        }
-//            if (self.itemNameArray == nil) {
-//                self.itemNameArray = [NSArray arrayWithArray:itemArray];
-//            }
-//        _pageDataItemsArray = [NSMutableArray arrayWithArray:muArray];
-//        }
-//    }
     return _pageDataItemsArray;
 }
 -(NSArray *)itemNameArray{
@@ -78,11 +50,13 @@ singleton_implementation(JHPageDataManager)
     }return _itemNameArray;
 }
 -(void)getTheSameItemInPageItemsArray {
-    NSMutableArray *muArray = [NSMutableArray array];
+      NSMutableArray *muArray = [NSMutableArray array];
     NSMutableArray *itemArray = [NSMutableArray array];
-    for (NSDictionary *dic in _pageDataItemsArray) {
+ NSMutableArray *allItemArray = [NSMutableArray array];
+    for (NSDictionary *dic in self.pageDataItemsArray) {
         JHPageDataItem *dataItem = [JHPageDataItem new];
         [dataItem setValuesForKeysWithDictionary:dic];
+        [allItemArray addObject:dataItem];
         for (JHDataItemPermissions *per in self.pageVisibleItemArray) {
             if ([per.ItemName isEqualToString:dataItem.ItemName]) {
                 [muArray addObject:dataItem];
@@ -90,9 +64,9 @@ singleton_implementation(JHPageDataManager)
             }
         }
     }
-
-         _itemNameArray = [NSArray arrayWithArray:itemArray];
-    _pageDataItemsArray = [NSMutableArray arrayWithArray:muArray];
+         self.itemNameArray = [NSArray arrayWithArray:itemArray];
+    self.pageDataItemsArray = [NSMutableArray arrayWithArray:muArray];
+ self.pageAllDataItemsArray = [NSMutableArray arrayWithArray:allItemArray];
 }
 -(NSMutableArray *)pageCategory{
     if (_pageCategory == nil) {
@@ -102,18 +76,17 @@ singleton_implementation(JHPageDataManager)
 }
 -(void)makeSourceFromServer {
     //打印流程中所流程表头名
-    for (JHDataItemPermissions *per in self.pageVisibleItemArray) {
-        self.used = false;
-        ////        NSLog(@"项目名称(内部名称)::==>>>%@",per.ItemName);
-    }
+//    for (JHDataItemPermissions *per in self.pageVisibleItemArray) {
+//
+//                NSLog(@"项目名称(内部名称)::==>>>%@",per.ItemName);
+//    }
     NSMutableArray *itemMuarray = [NSMutableArray array];
     NSMutableArray *itemTypeMuarray = [NSMutableArray array];
     NSMutableArray *sourceMuarray = [NSMutableArray array];
     for (JHPageDataItem  *dataItem in self.pageDataItemsArray) {
         //        NSLog(@"%@",dataItem.ItemName);
 #warning 暂时显示 之后添加控件 需要用到
-        //        NSLog(@"控件类型:%@,是否有子选项%@,数据源:%@",dataItem.ItemType[@"Value"],dataItem.Source,dataItem.SourceType[@"Value"]);
-        self.pageDataUsed = false;
+                NSLog(@"%@:%@,是否有子选项%@,数据源:%@",dataItem.ItemDisplayName,dataItem.ItemType[@"Value"],dataItem.Source,dataItem.SourceType[@"Value"]);
         [itemMuarray addObject:dataItem.ItemDisplayName];
         [itemTypeMuarray addObject:dataItem.ItemType[@"Value"]];
         if (dataItem.Source == nil) {
@@ -139,9 +112,30 @@ singleton_implementation(JHPageDataManager)
         }
         [sourceMuarray addObject:dataItem.Source];
     }
-    _pageCategory = [NSMutableArray arrayWithArray:itemMuarray];
+    self.pageCategory = [NSMutableArray arrayWithArray:itemMuarray];
     self.typeArray = [NSArray arrayWithArray:itemTypeMuarray];
     self.sourceArray = [NSMutableArray arrayWithArray:sourceMuarray];
+}
+
+-(NSDictionary *)findOwercompanyWithKey:(NSInteger)index {
+    JHPageDataItem *item = self.pageDataItemsArray[index];
+     NSString *parentskey = item.Parents[0][@"Key"];
+    NSDictionary *dic = [NSDictionary dictionary];
+    for (JHPageDataItem *per in self.pageAllDataItemsArray) {
+        if ([per.ItemName isEqualToString:parentskey]) {
+            NSString *value = per.InitialValue[@"Value"];
+            NSString *displayValue = per.InitialDisplayValue[@"Value"];
+            NSString *type = per.ItemType[@"Value"];
+            NSString *Key = per.InitialDisplayValue[@"Key"];
+            dic = @{
+                    @"value":value,
+                    @"displayValue":displayValue,
+                    @"type":type,
+                    @"Key":Key,
+                    };
+        }
+    }
+    return dic;
 }
 -(NSMutableArray *)sourceFromServerArray{
     if (_sourceFromServerArray == nil) {
