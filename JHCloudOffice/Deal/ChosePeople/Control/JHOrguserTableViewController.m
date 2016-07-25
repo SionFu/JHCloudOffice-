@@ -7,14 +7,37 @@
 //
 
 #import "JHOrguserTableViewController.h"
+#import "JHOrguserManger.h"
+#import "JHOrguserTableViewCell.h"
+#import "JHNetworkManager.h"
 @interface JHOrguserTableViewController ()
+@property (nonatomic, strong) NSArray *parentidsArray;
+@property (nonatomic ,strong ) UINib *nib;
 @end
-
+#define TABLEVIEWFRAMEL CGRectMake(0, 0, self.view.frame.size.width / 2, self.view.frame.size.height)
+#define TABLEVIEWFRAMER CGRectMake(self.view.frame.size.width / 2, 0, self.view.frame.size.width / 2, self.view.frame.size.height)
+/*
+ float statusHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
+ float navigationHeight = self.navigationController.navigationBar.frame.size.height;
+ */
 @implementation JHOrguserTableViewController
-
+-(NSArray *)parentidsArray {
+    if (_parentidsArray == nil) {
+        _parentidsArray = [NSArray arrayWithArray:[JHOrguserManger sharedJHOrguserManger].parentidsArray];
+    }return _parentidsArray;
+}
+//-(void)getOrguserSuccess{
+//    NSLog(@"刷新 tableView");
+////    NSIndexSet *nd = [[NSIndexSet alloc] initWithIndex:0]; //刷新第1个section
+////    [self.tableView reloadSections:nd withRowAnimation:UITableViewRowAnimationAutomatic];
+//    [self.view setNeedsDisplay];
+//    [self.view setNeedsLayout];
+////    NSIndexPath *te=[NSIndexPath indexPathForRow:2 inSection:0];//刷新第一个section的第二行
+////    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:te,nil] withRowAnimation:UITableViewRowAnimationMiddle];
+//}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+//    [JHNetworkManager sharedJHNetworkManager].getOrguserDelegate = self;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -30,25 +53,31 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+
+    return self.parentidsArray.count;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    static NSString * cellIdentifier = @"reuseIdentifier";
+    if (_nib == nil) {
+        _nib = [UINib nibWithNibName:@"JHOrguserTableViewCell" bundle:nil];
+        [tableView registerNib:_nib forCellReuseIdentifier:cellIdentifier];
+//        tableView.frame = TABLEVIEWFRAMEL;
+    }
     
-    // Configure the cell...
+    JHOrguserTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    cell.textLabel.text = self.parentidsArray[indexPath.row][@"DisplayValue"];
+    
     
     return cell;
-}
-*/
 
+}
 /*
 // Override to support conditional editing of the table view.
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {

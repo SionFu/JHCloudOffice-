@@ -20,9 +20,20 @@ singleton_implementation(JHOrguserManger)
         _parentidsArray = [NSArray array];
     }return _parentidsArray;
 }
+- (NSMutableArray *)superiorParentidsArray {
+    if (_superiorParentidsArray == nil) {
+        _superiorParentidsArray = [NSMutableArray array];
+    }return _superiorParentidsArray;
+}
 -(void)getDisplaysValue {
-    for (NSString *display in self.parentidsArray) {
-        [self.displaysArray addObject:display];
+    for (NSDictionary *display in self.parentidsArray) {
+        [self.displaysArray addObject:display[@"DisplayValue"]];
     }
+}
+- (void)addParentidsArray {
+    [self.superiorParentidsArray addObject:self.parentidsArray];
+}
+- (void)removerLastParentidsArray {
+    [self.superiorParentidsArray removeLastObject];
 }
 @end

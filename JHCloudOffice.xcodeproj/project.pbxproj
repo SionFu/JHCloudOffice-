@@ -38,6 +38,8 @@
 		317249EA1D22543C00B2E48A /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 317249E91D22543C00B2E48A /* LoginViewController.m */; };
 		317249ED1D22548900B2E48A /* JHUserDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = 317249EC1D22548900B2E48A /* JHUserDefault.m */; };
 		3179FBD81D1BBD900021E35E /* JHUIControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3179FBD71D1BBD900021E35E /* JHUIControl.xib */; };
+		319A8F551D41B1F00011EFD0 /* JHOrguserTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 319A8F541D41B1F00011EFD0 /* JHOrguserTableView.m */; };
+		319A8F581D41B22D0011EFD0 /* JHOrguserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 319A8F571D41B22D0011EFD0 /* JHOrguserViewController.m */; };
 		31A358B21D20DD6C00D4C0DA /* JHModulesData.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A358B11D20DD6C00D4C0DA /* JHModulesData.m */; };
 		31A358B91D20F1B100D4C0DA /* NSObject+YYModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A358B51D20F1B100D4C0DA /* NSObject+YYModel.m */; };
 		31A358BA1D20F1B100D4C0DA /* YYClassInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A358B71D20F1B100D4C0DA /* YYClassInfo.m */; };
@@ -131,6 +133,10 @@
 		317249EB1D22548900B2E48A /* JHUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHUserDefault.h; sourceTree = "<group>"; };
 		317249EC1D22548900B2E48A /* JHUserDefault.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHUserDefault.m; sourceTree = "<group>"; };
 		3179FBD71D1BBD900021E35E /* JHUIControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHUIControl.xib; sourceTree = "<group>"; };
+		319A8F531D41B1F00011EFD0 /* JHOrguserTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHOrguserTableView.h; sourceTree = "<group>"; };
+		319A8F541D41B1F00011EFD0 /* JHOrguserTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHOrguserTableView.m; sourceTree = "<group>"; };
+		319A8F561D41B22D0011EFD0 /* JHOrguserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHOrguserViewController.h; sourceTree = "<group>"; };
+		319A8F571D41B22D0011EFD0 /* JHOrguserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHOrguserViewController.m; sourceTree = "<group>"; };
 		31A358B01D20DD6C00D4C0DA /* JHModulesData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHModulesData.h; sourceTree = "<group>"; };
 		31A358B11D20DD6C00D4C0DA /* JHModulesData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHModulesData.m; sourceTree = "<group>"; };
 		31A358B41D20F1B100D4C0DA /* NSObject+YYModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+YYModel.h"; sourceTree = "<group>"; };
@@ -459,7 +465,7 @@
 		31E2F5391D1A830C00FC212B /* Deal */ = {
 			isa = PBXGroup;
 			children = (
-				31F875721D3DC2EB00BEE76D /* ChosePeople */,
+				31F875721D3DC2EB00BEE76D /* ChosePeople组织选择 */,
 				310D52CA1D236ED2003C09E9 /* page流程配置 */,
 				31E2F53A1D1A830C00FC212B /* Controller */,
 				31E2F53B1D1A830C00FC212B /* Model */,
@@ -603,13 +609,14 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		31F875721D3DC2EB00BEE76D /* ChosePeople */ = {
+		31F875721D3DC2EB00BEE76D /* ChosePeople组织选择 */ = {
 			isa = PBXGroup;
 			children = (
 				31F875731D3DC2EB00BEE76D /* Control */,
 				31F875741D3DC2EB00BEE76D /* Model */,
 				31F875751D3DC2EB00BEE76D /* View */,
 			);
+			name = "ChosePeople组织选择";
 			path = ChosePeople;
 			sourceTree = "<group>";
 		};
@@ -621,6 +628,10 @@
 				3142C6D71D3F4EF70043C293 /* JHOrguserTableViewController.h */,
 				3142C6D81D3F4EF70043C293 /* JHOrguserTableViewController.m */,
 				3142C6D91D3F4EF70043C293 /* JHOrguserTableViewController.xib */,
+				319A8F561D41B22D0011EFD0 /* JHOrguserViewController.h */,
+				319A8F571D41B22D0011EFD0 /* JHOrguserViewController.m */,
+				319A8F531D41B1F00011EFD0 /* JHOrguserTableView.h */,
+				319A8F541D41B1F00011EFD0 /* JHOrguserTableView.m */,
 			);
 			path = Control;
 			sourceTree = "<group>";
@@ -693,6 +704,7 @@
 				TargetAttributes = {
 					3126A8871D1908DD00ADC960 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = VVH9TMM2WH;
 					};
 					3126A8A01D1908DD00ADC960 = {
 						CreatedOnToolsVersion = 7.2;
@@ -765,10 +777,12 @@
 				317249E11D221ED600B2E48A /* JHCategoryTableViewCell.m in Sources */,
 				31A358B91D20F1B100D4C0DA /* NSObject+YYModel.m in Sources */,
 				312F89EE1D38B3DD00CAAA9A /* JHPageData.m in Sources */,
+				319A8F581D41B22D0011EFD0 /* JHOrguserViewController.m in Sources */,
 				317249EA1D22543C00B2E48A /* LoginViewController.m in Sources */,
 				31E2F52C1D1A2D9500FC212B /* AFURLSessionManager.m in Sources */,
 				3105D9F61D1BAE1A0098EA73 /* JHMenuData.m in Sources */,
 				31E2F52A1D1A2D9500FC212B /* AFURLRequestSerialization.m in Sources */,
+				319A8F551D41B1F00011EFD0 /* JHOrguserTableView.m in Sources */,
 				31E2F50C1D1A240200FC212B /* JHNetworkManager.m in Sources */,
 				31E2F5381D1A32BF00FC212B /* Foundation+Log.m in Sources */,
 				31E2F52B1D1A2D9500FC212B /* AFURLResponseSerialization.m in Sources */,
@@ -927,6 +941,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = JHCloudOffice/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -940,6 +955,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = JHCloudOffice/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

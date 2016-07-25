@@ -178,11 +178,17 @@ singleton_implementation(JHNetworkManager)
 //                          @"type":@"ShortString"
 //                          };
    NSString *str = [dic changeDicToJsonWithDic:dic];
-    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&token=%@&action=orguser&type=OrganizationUnit&code=%@&userId=%@&field=tzr&parentid=%@", SITEURL,self.modulesModel.StartSheetCode,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,self.modulesModel.ModuleCode,[JHUserInfo sharedJHUserInfo].objectId,str];
+    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&token=%@&action=orguser&type=OrganizationUnit&canSelType=&instance=null&code=%@&userId=%@&field=tzr&parentid=%@", SITEURL,self.modulesModel.StartSheetCode,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,self.modulesModel.ModuleCode,[JHUserInfo sharedJHUserInfo].objectId,str];
      NSString * encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes( kCFAllocatorDefault, (CFStringRef)urlStr, NULL, NULL,  kCFStringEncodingUTF8 ));
     [manager GET:encodedString parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"%@",responseObject);
-        [JHOrguserManger sharedJHOrguserManger].parentidsArray = responseObject[@"datas"];
+        NSLog(@"RESPONSE:%@,\nJSON:%@\nURL:%@",responseObject,str,encodedString);
+        NSArray *array = responseObject[@"datas"];
+        if (array.count == 0) {
+            return;
+        }
+        [JHOrguserManger sharedJHOrguserManger].parentidsArray = [responseObject[@"datas"] mutableCopy];
+        [[JHOrguserManger sharedJHOrguserManger] addParentidsArray];
+        [self.getOrguserDelegate getOrguserSuccess];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@",error.userInfo);
     }];

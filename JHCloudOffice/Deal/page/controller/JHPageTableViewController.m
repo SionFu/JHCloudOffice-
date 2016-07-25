@@ -136,6 +136,8 @@
 //返回 (取消) 按钮
 - (void)doClickBackAction:(UIBarButtonItem *)send {
     [self dismissViewControllerAnimated:YES completion:nil];
+#warning  Cancel or thing
+//    [self clickBackAction];
 }
 - (void)rightBarButtonClick:(UIBarButtonItem *)send {
     switch (send.tag) {
@@ -156,6 +158,16 @@
             NSLog(@"无效按钮");
             break;
     }
+}
+- (void)clickBackAction {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"返回选择流程" message:@"确定放弃流程?" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"确定放弃" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+    UIAlertAction *actionNo = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:actionYes];
+    [alert addAction:actionNo];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 - (void)statuesButtonClick {
     
@@ -408,8 +420,6 @@
     button.backgroundColor = [UIColor whiteColor];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
-    
-    self.senderControlTag = index;
     button.tag = 100 + index;
     [button setTitle:self.datasDicArray[index] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(setpeopleSingleParticipant:) forControlEvents:UIControlEventTouchUpInside];
@@ -445,10 +455,12 @@
 }
 
 -(void)setpeopleSingleParticipant:(UIButton*)sender {
+    self.senderControlTag = sender.tag - 100;
     [[JHNetworkManager sharedJHNetworkManager]getUsersWithDic:[[JHPageDataManager sharedJHPageDataManager]findOwercompanyWithKey:self.senderControlTag]];
     JHChosePeopleViewController *cVC = [JHChosePeopleViewController new];
     UINavigationController *nvpageVC = [[UINavigationController alloc]initWithRootViewController:cVC];
-#warning UR Thinging
+    cVC.navigationTitle = [NSString stringWithFormat:@"%@选择",self.pageCategory[self.senderControlTag]];
+#warning UR Thinging , I thing it is presentVC
 //    [self.navigationController pushViewController:cVC animated:YES];
     [self.navigationController presentViewController:nvpageVC animated:YES completion:nil];
 }
@@ -474,15 +486,23 @@
         NSInteger row = [itemPicker selectedRowInComponent:1];
         NSString *selectedString = self.sourceArray[self.senderControlTag][row][@"DisplayValue"];
         //只要在本地获取菜单的情况下才能获取以下值
-
         self.parametersDic = [NSMutableDictionary dictionaryWithDictionary:self.sourceArray[self.senderControlTag][row]];
 
-        NSLog(@"%@",self.parametersDic);
+        NSLog(@"二级菜单:%@",self.parametersDic);
         [itemPicker selectRow:row inComponent:1 animated:NO];
         self.datasDicArray[self.senderControlTag] = selectedString;
-        //设置表格选择时的动画
         NSIndexPath *indexPath=[NSIndexPath indexPathForRow:self.senderControlTag inSection:0];
-        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationBottom];
+        NSIndexPath *indexPath1=[NSIndexPath indexPathForRow:self.senderControlTag+1 inSection:0];
+          //设置表格选择时的动画 如果有子菜单,父菜单选择后 需要父子一起刷新
+        if ([self.sourceArray[self.senderControlTag + 1][0][@"Index"]  isEqual: @"Server"]) {
+           self.datasDicArray[self.senderControlTag + 1] = @"轻触选择...";
+            [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath1 ,indexPath , nil] withRowAnimation:UITableViewRowAnimationBottom];
+        }else {
+            //设置表格选择时的动画
+            [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath ,nil] withRowAnimation:UITableViewRowAnimationBottom];
+        }
+        
+        
         [sender setTitle:selectedString forState:UIControlStateNormal];
         
     }];

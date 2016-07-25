@@ -10,6 +10,16 @@
 #import "Singleton.h"
 #import "JHModules.h"
 /**
+ *  获取人员组织返回情况
+ */
+@protocol JHOrguser <NSObject>
+/**
+ *  成功获取组织人员结构
+ */
+- (void) getOrguserSuccess;
+
+@end
+/**
  *  登陆返回的情况
  */
 @protocol JHLoginDelegate <NSObject>
@@ -44,6 +54,7 @@
 singleton_interface(JHNetworkManager)
 @property (nonatomic, weak) id<JHLoginDelegate> loginDelegate;
 @property (nonatomic, weak) id<JHPageDelegate> getPageDelegate;
+@property (nonatomic, weak) id<JHOrguser> getOrguserDelegate;
 /**
  *  用户名密码登陆
  */

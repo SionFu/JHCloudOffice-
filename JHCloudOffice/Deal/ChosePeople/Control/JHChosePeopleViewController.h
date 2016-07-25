@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface JHChosePeopleViewController : UIViewController
-
+/**
+ * 当天视图的标题
+ */
+@property (nonatomic, strong) NSString *navigationTitle;
 @end

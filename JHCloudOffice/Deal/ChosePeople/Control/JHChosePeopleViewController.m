@@ -7,8 +7,9 @@
 //
 
 #import "JHChosePeopleViewController.h"
-#import "JHOrguserTableViewController.h"
 #import "YSLContainerViewController.h"
+#import "JHOrguserTableViewController.h"
+#import "JHOrguserViewController.h"
 @interface JHChosePeopleViewController ()<YSLContainerViewControllerDelegate>
 @property (nonatomic, strong)NSArray *portalArray;
 @property (nonatomic, strong)NSMutableArray  *muPVC;
@@ -23,6 +24,14 @@
         
     }return _portalArray;
 }
+- (NSMutableArray *)muPVC {
+    if (_muPVC == nil) {
+        JHOrguserViewController *vc = [JHOrguserViewController new];
+        JHOrguserTableViewController *tVC = [JHOrguserTableViewController new];
+        JHOrguserTableViewController *tVC1 = [JHOrguserTableViewController new];
+        _muPVC = [NSMutableArray arrayWithObjects:vc,tVC,tVC1, nil];
+    }return _muPVC;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
@@ -30,7 +39,7 @@
     [self setupPortalTableViewController];
     //在导航栏上添加状态保存提交和取消按钮
     [self addNavigationBtn];
-    self.title = @"测试很长的标题";
+    self.title = self.navigationTitle;
 
 }
 
@@ -79,16 +88,14 @@
     
 }
 - (void)setupPortalTableViewController{
-    NSMutableArray *muPVC = [NSMutableArray array];
-    self.muPVC = muPVC;
-    for (NSString *poral in self.portalArray) {
-        JHOrguserTableViewController *pvc = [[JHOrguserTableViewController alloc]init];
+    for (int i = 0; i < self.portalArray.count; i++) {
+        NSString *poral = self.portalArray[i];
+        UIViewController *pvc = self.muPVC[i];
         pvc.title = poral;
-        [muPVC addObject:pvc];
     }
     float statusHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     float navigationHeight = self.navigationController.navigationBar.frame.size.height;
-    YSLContainerViewController *containerVC = [[YSLContainerViewController alloc]initWithControllers:muPVC topBarHeight:statusHeight + navigationHeight parentViewController:self];
+    YSLContainerViewController *containerVC = [[YSLContainerViewController alloc]initWithControllers:self.muPVC topBarHeight:statusHeight + navigationHeight parentViewController:self];
     containerVC.delegate = self;
     [self.view addSubview:containerVC.view];
     self.view.backgroundColor = [UIColor colorWithRed:0.7332 green:0.7332 blue:0.7332 alpha:1.0];
