@@ -235,7 +235,7 @@
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user_bg.9" translatesAutoresizingMaskIntoConstraints="NO" id="uDl-JM-4JA">
                                                 <rect key="frame" x="0.0" y="0.0" width="90.5" height="90.5"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_head" translatesAutoresizingMaskIntoConstraints="NO" id="Pzm-LL-p6X">
+                                            <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="login_head" translatesAutoresizingMaskIntoConstraints="NO" id="Pzm-LL-p6X">
                                                 <rect key="frame" x="8" y="8" width="74.5" height="74.5"/>
                                             </imageView>
                                         </subviews>
@@ -503,6 +503,7 @@
                     <connections>
                         <outlet property="companyLabel" destination="5kN-3t-uMO" id="Vh9-aE-V7d"/>
                         <outlet property="headView" destination="bJH-qn-mPS" id="Agx-hl-dgp"/>
+                        <outlet property="heandImageView" destination="Pzm-LL-p6X" id="lnC-lP-XZN"/>
                         <outlet property="nameLabel" destination="Xa1-nc-yOg" id="O5W-mR-rjE"/>
                     </connections>
                 </viewController>

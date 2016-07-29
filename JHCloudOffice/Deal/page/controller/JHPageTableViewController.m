@@ -210,7 +210,8 @@
     }
     for (int i = 0 ; i <self.datasFromServerArray.count; i++) {
         if ([self.datasFromServerArray[i] isEqualToString:@""]) {
-            [self.datasDicArray addObject:[NSString stringWithFormat:@"轻触选择%d",i]];
+//            [self.datasDicArray addObject:[NSString stringWithFormat:@"轻触选择%d",i]];
+            [self.datasDicArray addObject:@""];
         }
         else {
             [self.datasDicArray addObject:self.datasFromServerArray[i]];
@@ -299,7 +300,7 @@
             textField.tag = 100 + index;
             textField.backgroundColor = [UIColor whiteColor];
             self.senderControlTag = index;
-            textField.text = self.datasDicArray[self.senderControlTag];
+            textField.text = self.datasDicArray[index];
             textField.adjustsFontSizeToFitWidth = YES;
             [cell.controlTypeView addSubview:textField];
             //将输入好的内容存入数组
@@ -360,6 +361,9 @@
         }
         UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
         button.backgroundColor = [UIColor whiteColor];
+        if ([self.datasDicArray[index] isEqualToString:@""]) {
+            self.datasDicArray[index] = @"轻触选择...";
+        }
         [button setTitle:self.datasDicArray[index] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
@@ -435,6 +439,9 @@
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     button.tag = 100 + index;
+    if ([self.datasDicArray[index] isEqualToString:@""]) {
+        self.datasDicArray[index] = @"轻触选择...";
+    }
     [button setTitle:self.datasDicArray[index] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(setpeopleSingleParticipant:) forControlEvents:UIControlEventTouchUpInside];
     [cell.controlTypeView addSubview:button];
@@ -445,6 +452,9 @@
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     button.tag = 100 + index;
+    if ([self.datasDicArray[index] isEqualToString:@""]) {
+        self.datasDicArray[index] = @"轻触选择...";
+    }
     [button setTitle:self.datasDicArray[index] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(headImageViewTep) forControlEvents:UIControlEventTouchUpInside];
     [cell.controlTypeView addSubview:button];
@@ -476,9 +486,11 @@
     button.backgroundColor = [UIColor whiteColor];
     [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
-    
     self.senderControlTag = index;
     button.tag = 100 + index;
+    if ([self.datasDicArray[index] isEqualToString:@""]) {
+        self.datasDicArray[index] = @"轻触选择..";
+    }
     [button setTitle:self.datasDicArray[index] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(setSingleParticipant:) forControlEvents:UIControlEventTouchUpInside];
     [cell.controlTypeView addSubview:button];
@@ -490,6 +502,9 @@
     [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
     self.senderControlTag = index;
     button.tag = 100 + index;
+    if ([self.datasDicArray[index] isEqualToString:@""]) {
+        self.datasDicArray[index] = @"轻触选择...";
+    }
     [button setTitle:self.datasDicArray[index] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(setSingleParticipantFromServer:) forControlEvents:UIControlEventTouchUpInside];
     [cell.controlTypeView addSubview:button];
