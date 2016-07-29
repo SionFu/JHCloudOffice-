@@ -17,7 +17,6 @@
  *  成功获取组织人员结构
  */
 - (void) getOrguserSuccess;
-
 @end
 /**
  *  登陆返回的情况

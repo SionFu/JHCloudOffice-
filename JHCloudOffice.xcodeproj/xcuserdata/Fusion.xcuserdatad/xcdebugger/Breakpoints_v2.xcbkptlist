@@ -51,22 +51,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JHCloudOffice/Deal/page/controller/JHPageTableViewController.m"
-            timestampString = "490781422.376399"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "525"
-            endingLineNumber = "525"
-            landmarkName = "-getsetSingleParticipantFromServerSucceed"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/Tool/JHNetworkManager.m"
             timestampString = "490694012.282908"
             startingColumnNumber = "9223372036854775807"
@@ -90,38 +74,6 @@
             startingLineNumber = "77"
             endingLineNumber = "77"
             landmarkName = "-getModules"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JHCloudOffice/Deal/page/controller/JHPageTableViewController.m"
-            timestampString = "490757929.173075"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "415"
-            endingLineNumber = "415"
-            landmarkName = "-addDataToArray:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JHCloudOffice/Deal/page/controller/JHPageTableViewController.m"
-            timestampString = "490781422.376399"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "536"
-            endingLineNumber = "536"
-            landmarkName = "-getsetSingleParticipantFromServerSucceed"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -160,80 +112,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JHCloudOffice/Deal/page/controller/JHPageTableViewController.m"
-            timestampString = "490757929.173075"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "231"
-            endingLineNumber = "231"
-            landmarkName = "-makeTheDataFromServerLikeLocaPage"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/Deal/page/controller/JHPageTableViewController.m"
-            timestampString = "490689385.277506"
+            timestampString = "491361255.85552"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
+            startingLineNumber = "111"
+            endingLineNumber = "111"
             landmarkName = "-getPageSuccess"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JHCloudOffice/Deal/page/controller/JHPageTableViewController.m"
-            timestampString = "490757929.173075"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "207"
-            endingLineNumber = "207"
-            landmarkName = "-getServerPageData"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JHCloudOffice/Deal/page/controller/JHPageTableViewController.m"
-            timestampString = "490757929.173075"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "215"
-            endingLineNumber = "215"
-            landmarkName = "-getServerPageData"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JHCloudOffice/Deal/page/controller/JHPageTableViewController.m"
-            timestampString = "490757929.173075"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "211"
-            endingLineNumber = "211"
-            landmarkName = "-getServerPageData"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -292,12 +180,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/Deal/page/controller/JHPageTableViewController.m"
-            timestampString = "490781422.376399"
+            timestampString = "491466096.428263"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "526"
-            endingLineNumber = "526"
-            landmarkName = "-getsetSingleParticipantFromServerSucceed"
+            startingLineNumber = "422"
+            endingLineNumber = "422"
+            landmarkName = "-addDataToArray:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -307,13 +195,45 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JHCloudOffice/Deal/ChosePeople/Control/JHOrguserViewController.m"
-            timestampString = "490868590.155713"
+            filePath = "JHCloudOffice/Deal/page/controller/JHPageTableViewController.m"
+            timestampString = "491468454.250837"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "-getOrguserSuccess"
+            startingLineNumber = "501"
+            endingLineNumber = "501"
+            landmarkName = "-selectotBOOL:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JHCloudOffice/Deal/page/controller/JHPageTableViewController.m"
+            timestampString = "491466096.428263"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "391"
+            endingLineNumber = "391"
+            landmarkName = "-addControlTocontrolTypeView:inRow:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JHCloudOffice/Deal/page/controller/JHPageTableViewController.m"
+            timestampString = "491466096.428263"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "386"
+            endingLineNumber = "386"
+            landmarkName = "-addControlTocontrolTypeView:inRow:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

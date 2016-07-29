@@ -7,10 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
-
+typedef void(^BLOCk)();
 @interface JHPageTableViewController : UITableViewController
+
 /**
  *  流程标题
  */
 @property (nonatomic, strong) NSString *pageNage;
+@property (nonatomic, strong)BLOCk goToblock;
 @end

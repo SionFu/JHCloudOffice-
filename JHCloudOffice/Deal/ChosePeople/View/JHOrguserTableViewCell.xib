@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -13,7 +14,49 @@
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_menu_deal_on" translatesAutoresizingMaskIntoConstraints="NO" id="nAH-5Z-mYk">
+                        <rect key="frame" x="6" y="4" width="36" height="36"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="36" id="Cot-MI-2Gm"/>
+                            <constraint firstAttribute="height" constant="36" id="X8E-k9-0cW"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="信息中心" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="toa-ce-6xU">
+                        <rect key="frame" x="52" y="11" width="68" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="TyI-zV-h3C"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arraw_ic" translatesAutoresizingMaskIntoConstraints="NO" id="WOH-JY-Uik">
+                        <rect key="frame" x="285" y="12" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="20" id="MNX-fJ-6f6"/>
+                            <constraint firstAttribute="height" constant="20" id="uDY-Uf-fZR"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="WOH-JY-Uik" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="4DO-Cw-l6w"/>
+                    <constraint firstItem="nAH-5Z-mYk" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="76K-Su-5AY"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="WOH-JY-Uik" secondAttribute="trailing" constant="7" id="CVs-AB-mFh"/>
+                    <constraint firstItem="nAH-5Z-mYk" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="6" id="MdY-jQ-WoX"/>
+                    <constraint firstItem="toa-ce-6xU" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="TMh-dX-ob4"/>
+                    <constraint firstItem="toa-ce-6xU" firstAttribute="leading" secondItem="nAH-5Z-mYk" secondAttribute="trailing" constant="10" id="hzV-pr-Puc"/>
+                </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="footImage" destination="WOH-JY-Uik" id="Yg6-90-KlY"/>
+                <outlet property="headImage" destination="nAH-5Z-mYk" id="iZN-5V-SIs"/>
+                <outlet property="nameLabel" destination="toa-ce-6xU" id="YOP-Ko-zBQ"/>
+            </connections>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="arraw_ic" width="12" height="20"/>
+        <image name="ic_menu_deal_on" width="46" height="44"/>
+    </resources>
 </document>

@@ -10,11 +10,13 @@
 #import "JHOrguserManger.h"
 #import "JHOrguserTableViewCell.h"
 #import "JHNetworkManager.h"
-@interface JHOrguserTableViewController ()
+#import "JHPageTableViewController.h"
+@interface JHOrguserTableViewController ()<JHOrguser>
+//声明表视图子类用这个表格初始化
 @property (nonatomic, strong) NSArray *parentidsArray;
 @property (nonatomic ,strong ) UINib *nib;
 @end
-#define TABLEVIEWFRAMEL CGRectMake(0, 0, self.view.frame.size.width / 2, self.view.frame.size.height)
+#define TABLEVIEWFRAMEL CGRectMake(0, 0, self.view.frame.size.width /2, self.view.frame.size.height)
 #define TABLEVIEWFRAMER CGRectMake(self.view.frame.size.width / 2, 0, self.view.frame.size.width / 2, self.view.frame.size.height)
 /*
  float statusHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
@@ -22,28 +24,29 @@
  */
 @implementation JHOrguserTableViewController
 -(NSArray *)parentidsArray {
-    if (_parentidsArray == nil) {
-        _parentidsArray = [NSArray arrayWithArray:[JHOrguserManger sharedJHOrguserManger].parentidsArray];
-    }return _parentidsArray;
+//    if (_parentidsArray == nil) {
+        _parentidsArray = [NSArray arrayWithArray:[JHOrguserManger sharedJHOrguserManger].superiorParentidsArray.lastObject];
+//    }
+    return _parentidsArray;
 }
-//-(void)getOrguserSuccess{
-//    NSLog(@"刷新 tableView");
-////    NSIndexSet *nd = [[NSIndexSet alloc] initWithIndex:0]; //刷新第1个section
-////    [self.tableView reloadSections:nd withRowAnimation:UITableViewRowAnimationAutomatic];
-//    [self.view setNeedsDisplay];
-//    [self.view setNeedsLayout];
-////    NSIndexPath *te=[NSIndexPath indexPathForRow:2 inSection:0];//刷新第一个section的第二行
-////    [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:te,nil] withRowAnimation:UITableViewRowAnimationMiddle];
-//}
+
+-(void)getOrguserSuccess{
+    JHOrguserTableViewController *ovc = [[JHOrguserTableViewController alloc]init];
+     [self.navigationController pushViewController:ovc animated:YES];
+}
+-(void)dealloc {
+   //视图消失时  自动删除 最后一个数组
+    [[JHOrguserManger sharedJHOrguserManger]removerLastParentidsArray];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+
 //    [JHNetworkManager sharedJHNetworkManager].getOrguserDelegate = self;
     // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+//     self.clearsSelectionOnViewWillAppear = YES;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-
+//     self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -67,16 +70,22 @@
     static NSString * cellIdentifier = @"reuseIdentifier";
     if (_nib == nil) {
         _nib = [UINib nibWithNibName:@"JHOrguserTableViewCell" bundle:nil];
-        [tableView registerNib:_nib forCellReuseIdentifier:cellIdentifier];
+        [tableView registerNib:_nib forCellReuseIdentifier: cellIdentifier];
 //        tableView.frame = TABLEVIEWFRAMEL;
     }
-    
     JHOrguserTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    cell.textLabel.text = self.parentidsArray[indexPath.row][@"DisplayValue"];
-    
+    cell.nameLabel.text = self.parentidsArray[indexPath.row][@"DisplayValue"];
     
     return cell;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [[JHNetworkManager sharedJHNetworkManager]getUsersWithDic:self.parentidsArray[indexPath.row]];
+    NSLog(@"%@",self.parentidsArray[indexPath.row]);
 
+    self.title = self.parentidsArray[indexPath.row][@"DisplayValue"];
+    JHNetworkManager *net = [JHNetworkManager new];
+    net.getOrguserDelegate = self;
+    
 }
 /*
 // Override to support conditional editing of the table view.

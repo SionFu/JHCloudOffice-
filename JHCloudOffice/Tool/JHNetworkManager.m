@@ -160,7 +160,7 @@ singleton_implementation(JHNetworkManager)
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&token=%@&action=data&code=%@&version=%@&activity=%@&userId=%@&viewmode=false", SITEURL,self.modulesModel.StartSheetCode,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,self.modulesModel.ModuleCode,self.modulesModel.ModuleVersion,self.modulesModel.StartActivityCode,[JHUserInfo sharedJHUserInfo].objectId];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"从服务器上获取流程信息成功:%@",responseObject);
+        NSLog(@"从服务器上获取流程信息成功:%@\nURL:\n%@",responseObject,urlStr);
         //将从服务器上获取的流程数据存入数组中
         [JHPageDataManager sharedJHPageDataManager].datasFromServerArray = [responseObject[@"datas"]mutableCopy];
         [self.getPageDelegate getPageDatasSuccess];
@@ -182,10 +182,10 @@ singleton_implementation(JHNetworkManager)
      NSString * encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes( kCFAllocatorDefault, (CFStringRef)urlStr, NULL, NULL,  kCFStringEncodingUTF8 ));
     [manager GET:encodedString parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"RESPONSE:%@,\nJSON:%@\nURL:%@",responseObject,str,encodedString);
-        NSArray *array = responseObject[@"datas"];
-        if (array.count == 0) {
-            return;
-        }
+//        NSArray *array = responseObject[@"datas"];
+//        if (array.count == 0) {
+//            return;
+//        }
         [JHOrguserManger sharedJHOrguserManger].parentidsArray = [responseObject[@"datas"] mutableCopy];
         [[JHOrguserManger sharedJHOrguserManger] addParentidsArray];
         [self.getOrguserDelegate getOrguserSuccess];

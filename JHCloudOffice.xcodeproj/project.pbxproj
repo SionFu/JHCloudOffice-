@@ -17,6 +17,7 @@
 		310D52D61D236F68003C09E9 /* JHPageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 310D52D41D236F68003C09E9 /* JHPageTableViewCell.m */; };
 		310D52D71D236F68003C09E9 /* JHPageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 310D52D51D236F68003C09E9 /* JHPageTableViewCell.xib */; };
 		310D52DA1D237146003C09E9 /* JHPageDataItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 310D52D91D237146003C09E9 /* JHPageDataItem.m */; };
+		311650AE1D45F31F00724B90 /* JHOrguserBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 311650AD1D45F31F00724B90 /* JHOrguserBaseViewController.m */; };
 		3120B3A21D1CED7B00206F6B /* JHModules.m in Sources */ = {isa = PBXBuildFile; fileRef = 3120B3A11D1CED7B00206F6B /* JHModules.m */; };
 		3120B3A61D1CFB4100206F6B /* UIView+WbyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 3120B3A51D1CFB4100206F6B /* UIView+WbyExtension.m */; };
 		3126A88D1D1908DD00ADC960 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3126A88C1D1908DD00ADC960 /* main.m */; };
@@ -32,13 +33,13 @@
 		3142C6DF1D3F4F170043C293 /* JHOrguserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3142C6DD1D3F4F170043C293 /* JHOrguserTableViewCell.m */; };
 		3142C6E01D3F4F170043C293 /* JHOrguserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3142C6DE1D3F4F170043C293 /* JHOrguserTableViewCell.xib */; };
 		3142C6E31D3F50E40043C293 /* JHChosePeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3142C6E21D3F50E40043C293 /* JHChosePeopleViewController.m */; };
+		31679D321D474DCF004B1FF2 /* JHOrguserTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 31679D311D474DCF004B1FF2 /* JHOrguserTableView.m */; };
 		317249E11D221ED600B2E48A /* JHCategoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 317249DF1D221ED600B2E48A /* JHCategoryTableViewCell.m */; };
 		317249E21D221ED600B2E48A /* JHCategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 317249E01D221ED600B2E48A /* JHCategoryTableViewCell.xib */; };
 		317249E61D22283600B2E48A /* JHPortalTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 317249E51D22283600B2E48A /* JHPortalTableViewController.xib */; };
 		317249EA1D22543C00B2E48A /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 317249E91D22543C00B2E48A /* LoginViewController.m */; };
 		317249ED1D22548900B2E48A /* JHUserDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = 317249EC1D22548900B2E48A /* JHUserDefault.m */; };
 		3179FBD81D1BBD900021E35E /* JHUIControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3179FBD71D1BBD900021E35E /* JHUIControl.xib */; };
-		319A8F551D41B1F00011EFD0 /* JHOrguserTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 319A8F541D41B1F00011EFD0 /* JHOrguserTableView.m */; };
 		319A8F581D41B22D0011EFD0 /* JHOrguserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 319A8F571D41B22D0011EFD0 /* JHOrguserViewController.m */; };
 		31A358B21D20DD6C00D4C0DA /* JHModulesData.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A358B11D20DD6C00D4C0DA /* JHModulesData.m */; };
 		31A358B91D20F1B100D4C0DA /* NSObject+YYModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A358B51D20F1B100D4C0DA /* NSObject+YYModel.m */; };
@@ -97,6 +98,8 @@
 		310D52D51D236F68003C09E9 /* JHPageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHPageTableViewCell.xib; sourceTree = "<group>"; };
 		310D52D81D237146003C09E9 /* JHPageDataItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHPageDataItem.h; sourceTree = "<group>"; };
 		310D52D91D237146003C09E9 /* JHPageDataItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHPageDataItem.m; sourceTree = "<group>"; };
+		311650AC1D45F31F00724B90 /* JHOrguserBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHOrguserBaseViewController.h; sourceTree = "<group>"; };
+		311650AD1D45F31F00724B90 /* JHOrguserBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHOrguserBaseViewController.m; sourceTree = "<group>"; };
 		3120B3A01D1CED7B00206F6B /* JHModules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHModules.h; sourceTree = "<group>"; };
 		3120B3A11D1CED7B00206F6B /* JHModules.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHModules.m; sourceTree = "<group>"; };
 		3120B3A41D1CFB4100206F6B /* UIView+WbyExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WbyExtension.h"; sourceTree = "<group>"; };
@@ -124,6 +127,8 @@
 		3142C6DE1D3F4F170043C293 /* JHOrguserTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHOrguserTableViewCell.xib; sourceTree = "<group>"; };
 		3142C6E11D3F50E40043C293 /* JHChosePeopleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHChosePeopleViewController.h; sourceTree = "<group>"; };
 		3142C6E21D3F50E40043C293 /* JHChosePeopleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHChosePeopleViewController.m; sourceTree = "<group>"; };
+		31679D301D474DCF004B1FF2 /* JHOrguserTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHOrguserTableView.h; sourceTree = "<group>"; };
+		31679D311D474DCF004B1FF2 /* JHOrguserTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHOrguserTableView.m; sourceTree = "<group>"; };
 		317249DE1D221ED600B2E48A /* JHCategoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHCategoryTableViewCell.h; sourceTree = "<group>"; };
 		317249DF1D221ED600B2E48A /* JHCategoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHCategoryTableViewCell.m; sourceTree = "<group>"; };
 		317249E01D221ED600B2E48A /* JHCategoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHCategoryTableViewCell.xib; sourceTree = "<group>"; };
@@ -133,8 +138,6 @@
 		317249EB1D22548900B2E48A /* JHUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHUserDefault.h; sourceTree = "<group>"; };
 		317249EC1D22548900B2E48A /* JHUserDefault.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHUserDefault.m; sourceTree = "<group>"; };
 		3179FBD71D1BBD900021E35E /* JHUIControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHUIControl.xib; sourceTree = "<group>"; };
-		319A8F531D41B1F00011EFD0 /* JHOrguserTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHOrguserTableView.h; sourceTree = "<group>"; };
-		319A8F541D41B1F00011EFD0 /* JHOrguserTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHOrguserTableView.m; sourceTree = "<group>"; };
 		319A8F561D41B22D0011EFD0 /* JHOrguserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHOrguserViewController.h; sourceTree = "<group>"; };
 		319A8F571D41B22D0011EFD0 /* JHOrguserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHOrguserViewController.m; sourceTree = "<group>"; };
 		31A358B01D20DD6C00D4C0DA /* JHModulesData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHModulesData.h; sourceTree = "<group>"; };
@@ -372,6 +375,18 @@
 			children = (
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		315A81E31D47A98C00D8EF62 /* cehsi  */ = {
+			isa = PBXGroup;
+			children = (
+				311650AC1D45F31F00724B90 /* JHOrguserBaseViewController.h */,
+				311650AD1D45F31F00724B90 /* JHOrguserBaseViewController.m */,
+				3142C6D71D3F4EF70043C293 /* JHOrguserTableViewController.h */,
+				3142C6D81D3F4EF70043C293 /* JHOrguserTableViewController.m */,
+				3142C6D91D3F4EF70043C293 /* JHOrguserTableViewController.xib */,
+			);
+			name = "cehsi ";
 			sourceTree = "<group>";
 		};
 		317249E71D22543C00B2E48A /* controller */ = {
@@ -623,15 +638,13 @@
 		31F875731D3DC2EB00BEE76D /* Control */ = {
 			isa = PBXGroup;
 			children = (
+				315A81E31D47A98C00D8EF62 /* cehsi  */,
 				3142C6E11D3F50E40043C293 /* JHChosePeopleViewController.h */,
 				3142C6E21D3F50E40043C293 /* JHChosePeopleViewController.m */,
-				3142C6D71D3F4EF70043C293 /* JHOrguserTableViewController.h */,
-				3142C6D81D3F4EF70043C293 /* JHOrguserTableViewController.m */,
-				3142C6D91D3F4EF70043C293 /* JHOrguserTableViewController.xib */,
 				319A8F561D41B22D0011EFD0 /* JHOrguserViewController.h */,
 				319A8F571D41B22D0011EFD0 /* JHOrguserViewController.m */,
-				319A8F531D41B1F00011EFD0 /* JHOrguserTableView.h */,
-				319A8F541D41B1F00011EFD0 /* JHOrguserTableView.m */,
+				31679D301D474DCF004B1FF2 /* JHOrguserTableView.h */,
+				31679D311D474DCF004B1FF2 /* JHOrguserTableView.m */,
 			);
 			path = Control;
 			sourceTree = "<group>";
@@ -782,7 +795,6 @@
 				31E2F52C1D1A2D9500FC212B /* AFURLSessionManager.m in Sources */,
 				3105D9F61D1BAE1A0098EA73 /* JHMenuData.m in Sources */,
 				31E2F52A1D1A2D9500FC212B /* AFURLRequestSerialization.m in Sources */,
-				319A8F551D41B1F00011EFD0 /* JHOrguserTableView.m in Sources */,
 				31E2F50C1D1A240200FC212B /* JHNetworkManager.m in Sources */,
 				31E2F5381D1A32BF00FC212B /* Foundation+Log.m in Sources */,
 				31E2F52B1D1A2D9500FC212B /* AFURLResponseSerialization.m in Sources */,
@@ -793,6 +805,7 @@
 				31E2F50F1D1A261400FC212B /* JHUserInfo.m in Sources */,
 				3142C6E31D3F50E40043C293 /* JHChosePeopleViewController.m in Sources */,
 				31F2E96F1D264A8E0079BDB9 /* JHPageDataManager.m in Sources */,
+				311650AE1D45F31F00724B90 /* JHOrguserBaseViewController.m in Sources */,
 				31E2F5251D1A2D9500FC212B /* AFHTTPRequestOperationManager.m in Sources */,
 				31F2E96C1D2641890079BDB9 /* JHDataItemPermissions.m in Sources */,
 				31E2F5281D1A2D9500FC212B /* AFSecurityPolicy.m in Sources */,
@@ -800,6 +813,7 @@
 				31F8757C1D3DCBDF00BEE76D /* JHOrguser.m in Sources */,
 				3126A88D1D1908DD00ADC960 /* main.m in Sources */,
 				31A358B21D20DD6C00D4C0DA /* JHModulesData.m in Sources */,
+				31679D321D474DCF004B1FF2 /* JHOrguserTableView.m in Sources */,
 				31F8757F1D3E010000BEE76D /* JHOrguserManger.m in Sources */,
 				3120B3A21D1CED7B00206F6B /* JHModules.m in Sources */,
 				3105D9FB1D1BBB740098EA73 /* JHUIControl.m in Sources */,

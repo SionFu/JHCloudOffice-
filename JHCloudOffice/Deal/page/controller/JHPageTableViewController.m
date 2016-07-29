@@ -16,7 +16,8 @@
 #import "JHPageData.h"
 #import "JHGetPageData.h"
 #import "JHChosePeopleViewController.h"
-@interface JHPageTableViewController ()<JHPageDelegate,UIPickerViewDataSource,UIPickerViewDelegate>
+#import "JHOrguserManger.h"
+@interface JHPageTableViewController ()<JHPageDelegate,UIPickerViewDataSource,UIPickerViewDelegate,JHOrguser,UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 /**
  *  所有流程项目名称
  */
@@ -207,7 +208,6 @@
     for (int i = 0 ; i < self.datasFromServerArray.count; i ++) {
         NSLog(@"%d:%@",i + 1,self.datasFromServerArray[i]);
     }
-    
     for (int i = 0 ; i <self.datasFromServerArray.count; i++) {
         if ([self.datasFromServerArray[i] isEqualToString:@""]) {
             [self.datasDicArray addObject:[NSString stringWithFormat:@"轻触选择%d",i]];
@@ -277,22 +277,17 @@
         tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 10, 5, 20)];
         [tableView.tableHeaderView addSubview: headTitle];
     }
-
-
-
     JHPageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
     //防止表格重用
     if (cell != nil) {
         while ([cell.controlTypeView.subviews lastObject] != nil) {
             [(UIView *)[cell.controlTypeView.subviews lastObject] removeFromSuperview];
         }
-        
     }
     //添加列表左边标题
     cell.itemDisplayNameLabelText.text = [self.pageCategory[indexPath.row] stringByAppendingString:@":"];
     //将不同的控件添加到 cell 上
     [self addControlTocontrolTypeView:cell inRow:indexPath.row];
-    
     return cell;
 }
 #pragma mark 流程控件
@@ -314,8 +309,6 @@
         }else {
             [self choseStringWith:cell inRow:index];
         }
-       
-        
     }
     //控件为文本输入框1行可以编辑链接文本
     if ([self.typeArray[index] isEqualToString:@"HyperLink"]) {
@@ -325,6 +318,11 @@
         textField.placeholder = @"http://";
         textField.keyboardType = UIKeyboardTypeURL;
         textField.adjustsFontSizeToFitWidth = YES;
+        self.senderControlTag = index;
+        textField.text = self.datasDicArray[index];
+        //将输入好的内容存入数组
+        [textField addTarget:self action:@selector(addDataToArray:) forControlEvents:UIControlEventEditingChanged];
+        
         [cell.controlTypeView addSubview:textField];
         
     }
@@ -333,19 +331,23 @@
         UITextField *textField = [[UITextField alloc]initWithFrame:CONTROLFRME];
         textField.tag = 100 + index;
         textField.backgroundColor = [UIColor whiteColor];
-        textField.text = @"0";
         textField.keyboardType = UIKeyboardTypeNumberPad;
         textField.adjustsFontSizeToFitWidth = YES;
         [cell.controlTypeView addSubview:textField];
-        
+        self.senderControlTag = index;
+        textField.text = self.datasDicArray[index];
+        //将输入好的内容存入数组
+        [textField addTarget:self action:@selector(addDataToArray:) forControlEvents:UIControlEventEditingChanged];
     }
     //控件为文本框不可编辑!!
     if ([self.typeArray[index] isEqualToString:@"2"]) {
-        UILabel *label = [[UILabel alloc]initWithFrame:CONTROLFRME];
-        label.text = @"信息公司";
-        label.tag = 100 + index;
-        label.backgroundColor = [UIColor whiteColor];
-        [cell.controlTypeView addSubview:label];
+        UITextField *textField = [[UITextField alloc]initWithFrame:CONTROLFRME];
+        textField.text = @"信息公司";
+        textField.tag = 100 + index;
+        textField.backgroundColor = [UIColor whiteColor];
+        [cell.controlTypeView addSubview:textField];
+        //将输入好的内容存入数组
+        [textField addTarget:self action:@selector(addDataToArray:) forControlEvents:UIControlEventEditingChanged];
     }
     //控件为时间日期选择器
     if ([self.typeArray[index] isEqualToString:@"DateTime"]) {
@@ -368,7 +370,9 @@
     //控件为文本视图,多行
     if ([self.typeArray[index] isEqualToString:@"String"]||[self.typeArray[index] isEqualToString:@"Html"]||[self.typeArray[index] isEqualToString:@"Comment"]) {
         UITextView *textView = [[UITextView alloc]initWithFrame:CONTROLFRME];
-        textView.text = @"这是测试输入内容 测试换行显示内容";
+        textView.text = self.datasDicArray[index];
+        textView.delegate = self;
+        textView.tag = 100 + index;
         [cell.controlTypeView addSubview:textView];
     }
     //控件为选择器true or fause
@@ -378,6 +382,12 @@
         [button setBackgroundImage:[UIImage imageNamed:@"checkBoxDefault"] forState:UIControlStateNormal];
         [button setBackgroundImage:[UIImage imageNamed:@"checkboxChecked"] forState:UIControlStateSelected];
         button.tag = 100 + index;
+        if ([self.datasDicArray[index] isEqualToString:@""]) {
+            button.selected = NO;
+        }
+       else if ([self.datasDicArray[index] isEqualToString:@"1"]) {
+            button.selected = YES;
+       }
         [button addTarget:self action:@selector(selectotBOOL:) forControlEvents:UIControlEventTouchUpInside];
         [cell.controlTypeView addSubview:button];
     }
@@ -398,7 +408,7 @@
     }
     //控件为附件
     if ([self.typeArray[index] isEqualToString:@"Attachment"]) {
-        
+        [self choseFileStringWith:cell inRow:index];
     }
     //控件为采购明细表
     if ([self.typeArray[index] isEqualToString:@"BizObjectArray"]) {
@@ -413,7 +423,11 @@
     self.pageData.value = sender.text;
     self.pageData.displayValue = sender.text;
     self.pageData.type = @"ShortString";
-
+    self.datasDicArray[sender.tag - 100] = sender.text;
+}
+//收集 textView 中的内容
+-(void)textViewDidChange:(UITextView *)textView{
+    self.datasDicArray[textView.tag - 100] = textView.text;
 }
 - (void)chosePeoeleStringWith:(JHPageTableViewCell *)cell inRow:(NSInteger)index{
     UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
@@ -424,6 +438,38 @@
     [button setTitle:self.datasDicArray[index] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(setpeopleSingleParticipant:) forControlEvents:UIControlEventTouchUpInside];
     [cell.controlTypeView addSubview:button];
+}
+- (void)choseFileStringWith:(JHPageTableViewCell *)cell inRow:(NSInteger)index{
+    UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
+    button.backgroundColor = [UIColor whiteColor];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    button.tag = 100 + index;
+    [button setTitle:self.datasDicArray[index] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(headImageViewTep) forControlEvents:UIControlEventTouchUpInside];
+    [cell.controlTypeView addSubview:button];
+}
+#pragma 图片\文件选择器
+-(void)headImageViewTep{
+        [self choolImage:UIImagePickerControllerSourceTypePhotoLibrary];
+    // 打开相册 或者相机 选取图片
+//    UIActionSheet *sht1 = [[UIActionSheet alloc]initWithTitle:@"请选择" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"相机" otherButtonTitles:@"相册", nil];
+//    [sht1 showInView:self.view];
+    
+}
+-(void)choolImage:(UIImagePickerControllerSourceType)type{
+    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+    picker.sourceType =type;
+    picker.allowsEditing = YES;
+    //设置代理
+    picker.delegate = self;
+    [self presentViewController:picker animated:YES completion:nil];
+}
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    NSLog(@"%@",info);
+    UIImage *image = info[UIImagePickerControllerEditedImage];//取原图还是编辑过的图片
+//    self.headImageView.image = image;选择的图片
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (void)choseStringWith:(JHPageTableViewCell *)cell inRow:(NSInteger)index{
     UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
@@ -451,17 +497,27 @@
 
 - (void)selectotBOOL:(UIButton *)sender {
     sender.selected = !sender.selected;
-    self.datasDicArray[sender.tag - 100] = [NSNumber numberWithBool:sender.selected];
+    if (sender.selected == YES) {
+//        self.datasDicArray[sender.tag - 100] = [NSNumber numberWithBool:sender.selected];
+        self.datasDicArray[sender.tag - 100] = @"1";
+    }else {
+    self.datasDicArray[sender.tag - 100] = @"";
+    }
 }
 
 -(void)setpeopleSingleParticipant:(UIButton*)sender {
     self.senderControlTag = sender.tag - 100;
     [[JHNetworkManager sharedJHNetworkManager]getUsersWithDic:[[JHPageDataManager sharedJHPageDataManager]findOwercompanyWithKey:self.senderControlTag]];
+    JHNetworkManager *net = [JHNetworkManager new];
+    net.getOrguserDelegate = self;
+    [MBProgressHUD showMessage:@"正在加载..."];
+}
+
+-(void)getOrguserSuccess {
+    [MBProgressHUD hideHUD];
     JHChosePeopleViewController *cVC = [JHChosePeopleViewController new];
-    UINavigationController *nvpageVC = [[UINavigationController alloc]initWithRootViewController:cVC];
     cVC.navigationTitle = [NSString stringWithFormat:@"%@选择",self.pageCategory[self.senderControlTag]];
-#warning UR Thinging , I thing it is presentVC
-//    [self.navigationController pushViewController:cVC animated:YES];
+    UINavigationController *nvpageVC = [[UINavigationController alloc]initWithRootViewController:cVC];
     [self.navigationController presentViewController:nvpageVC animated:YES completion:nil];
 }
 - (void)setSingleParticipant:(UIButton *)sender {
@@ -480,7 +536,6 @@
     itemPicker.delegate = self;
     itemPicker.showsSelectionIndicator = YES;
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"\n\n\n\n\n\n\n\n\n\n\n" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
-    
     [alert.view addSubview:itemPicker];
     UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
         NSInteger row = [itemPicker selectedRowInComponent:1];

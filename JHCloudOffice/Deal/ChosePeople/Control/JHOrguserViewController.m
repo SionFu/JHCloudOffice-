@@ -8,86 +8,73 @@
 
 #import "JHOrguserViewController.h"
 #import "JHOrguserTableView.h"
-#import "JHOrguserTableViewCell.h"
-#import "JHOrguserManger.h"
 #import "JHNetworkManager.h"
-@interface JHOrguserViewController ()<UITableViewDataSource,UITableViewDelegate,JHOrguser>
-@property (nonatomic ,strong ) UINib *nib;
+#import "JHOrguserManger.h"
+#import "JHOrguserTableViewCell.h"
+@interface JHOrguserViewController ()<UITableViewDelegate,UITableViewDataSource>
 /**
  *  放置选择组织人员的左右滑动选择视图
  */
-@property (nonatomic, strong) UIScrollView *scroller;
+@property (nonatomic, strong) JHOrguserTableView *ortableView;
+//声明表视图子类用这个表格初始化
 @property (nonatomic, strong) NSArray *parentidsArray;
-@property (nonatomic, strong) JHOrguserTableView *tVC;
+@property (nonatomic ,strong ) UINib *nib;
 @end
-#define TABLEVIEWFRAMEL CGRectMake(0, 0, self.view.frame.size.width / 2, self.view.frame.size.height - 104)
+#define TABLEVIEWFRAMEL CGRectMake(0, 0, self.view.frame.size.width , self.view.frame.size.height - 104)
 #define TABLEVIEWFRAMER CGRectMake(self.view.frame.size.width / 2, 0, self.view.frame.size.width / 2, self.view.frame.size.height - 104)
 /*
  float statusHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
  float navigationHeight = self.navigationController.navigationBar.frame.size.height;
  */
 @implementation JHOrguserViewController
--(void)getOrguserSuccess {
-    [self.tVC reloadData];
-    
-    NSLog(@"新表格刷新");
-}
--(UIScrollView *)scroller {
-    if (_scroller == nil) {
-        _scroller = [[UIScrollView alloc]initWithFrame:TABLEVIEWFRAMEL];
-    }return _scroller;
-}
+
 -(NSArray *)parentidsArray {
     if (_parentidsArray == nil) {
         _parentidsArray = [NSArray arrayWithArray:[JHOrguserManger sharedJHOrguserManger].parentidsArray];
     }return _parentidsArray;
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [JHNetworkManager sharedJHNetworkManager].getOrguserDelegate = self;
     // Do any additional setup after loading the view.
-    [self addScrollView];
-    [self addTableViewToScrollView];
+//    [JHNetworkManager sharedJHNetworkManager].getOrguserDelegate = self;
+    
+    self.ortableView.delegate = self;
+    self.ortableView.dataSource = self;
+    [self addTableViewToScrollViewController];
+}
 
+- (void)addTableViewToScrollViewController {
+    self.ortableView = [[JHOrguserTableView alloc]initWithFrame:TABLEVIEWFRAMEL];
+    [self.view addSubview:self.ortableView];
 }
-- (void)addScrollView {
-    self.scroller.backgroundColor = [UIColor brownColor];
-    self.scroller.showsVerticalScrollIndicator = YES;
-    CGRect rect = CGRectMake(0, 0, self.view.frame.size.width / 2 * 3, self.view.frame.size.height);
-    self.scroller.frame = rect;
-    [self.view addSubview:self.scroller];
-}
-- (void)addTableViewToScrollView {
-    self.tVC = [[JHOrguserTableView alloc]initWithFrame:TABLEVIEWFRAMEL];
-    self.tVC.dataSource = self;
-    self.tVC.delegate = self;
-    [self.scroller addSubview:self.tVC];
-}
-#pragma UItableViewDelegate
+#pragma mark - Table view data source
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    
     return 1;
 }
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    
     return self.parentidsArray.count;
 }
+
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString * cellIdentifier = @"reuseIdentifier";
+    static NSString *cellIdentifier = @"reuseIdentifier";
     if (_nib == nil) {
         _nib = [UINib nibWithNibName:@"JHOrguserTableViewCell" bundle:nil];
-        [tableView registerNib:_nib forCellReuseIdentifier:cellIdentifier];
+        [tableView registerNib:_nib forCellReuseIdentifier: cellIdentifier];
     }
-    
     JHOrguserTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    cell.textLabel.text = self.parentidsArray[indexPath.row][@"DisplayValue"];
-    
-    
+    cell.nameLabel.text = self.parentidsArray[indexPath.row][@"DisplayValue"];
+    cell.headImage.image = [UIImage imageNamed:@"ic_menu_deal_on"];
+    cell.footImage.image = [UIImage imageNamed:@"arraw_ic"];
     return cell;
     
 }
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [[JHNetworkManager sharedJHNetworkManager]getUsersWithDic:[JHOrguserManger sharedJHOrguserManger].parentidsArray[indexPath.row]];
-    NSLog(@"%@",[JHOrguserManger sharedJHOrguserManger].parentidsArray[indexPath.row]);
-}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

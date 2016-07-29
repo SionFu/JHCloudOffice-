@@ -9,5 +9,17 @@
 #import <UIKit/UIKit.h>
 
 @interface JHOrguserTableViewCell : UITableViewCell
+/**
+ *  cell 中左边视图
+ */
+@property (weak, nonatomic) IBOutlet UIImageView *headImage;
+/**
+ *  cell 中中间文本组织名字
+ */
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+/**
+ *  cell 中右边视图
+ */
+@property (weak, nonatomic) IBOutlet UIImageView *footImage;
 
 @end

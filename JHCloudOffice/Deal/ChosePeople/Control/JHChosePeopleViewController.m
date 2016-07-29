@@ -10,9 +10,12 @@
 #import "YSLContainerViewController.h"
 #import "JHOrguserTableViewController.h"
 #import "JHOrguserViewController.h"
-@interface JHChosePeopleViewController ()<YSLContainerViewControllerDelegate>
+#import "JHNetworkManager.h"
+#import "JHOrguserManger.h"
+@interface JHChosePeopleViewController ()<YSLContainerViewControllerDelegate,JHOrguser>
 @property (nonatomic, strong)NSArray *portalArray;
 @property (nonatomic, strong)NSMutableArray  *muPVC;
+@property (nonatomic, strong)YSLContainerViewController *containerVC;
 @end
 #define CONTROLFRME CGRectMake(5, 5, self.view.frame.size.width * 2.8 / 4 - 10, 30)
 #define BUTTONCONTROLFRME CGRectMake(5, 5, 30, 30)
@@ -21,20 +24,25 @@
 - (NSArray *)portalArray{
     if (_portalArray == nil) {
         _portalArray = [NSArray arrayWithObjects:@"选择列表",@"已选择",@"搜索", nil];
-        
     }return _portalArray;
 }
 - (NSMutableArray *)muPVC {
     if (_muPVC == nil) {
         JHOrguserViewController *vc = [JHOrguserViewController new];
         JHOrguserTableViewController *tVC = [JHOrguserTableViewController new];
-        JHOrguserTableViewController *tVC1 = [JHOrguserTableViewController new];
-        _muPVC = [NSMutableArray arrayWithObjects:vc,tVC,tVC1, nil];
+        UIViewController *tVC1 = [UIViewController new];
+        _muPVC = [NSMutableArray arrayWithObjects:tVC,vc,tVC1, nil];
     }return _muPVC;
+}
+-(void)getOrguserSuccess {
+//    [self.view setNeedsDisplay];
+    [self viewDidLoad];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    [JHNetworkManager sharedJHNetworkManager].getOrguserDelegate = self;
     // Do any additional setup after loading the view.
+    
     //添加选择导航器
     [self setupPortalTableViewController];
     //在导航栏上添加状态保存提交和取消按钮
@@ -64,6 +72,7 @@
 }
 //返回 (取消) 按钮
 - (void)doClickBackAction:(UIBarButtonItem *)send {
+    [[JHOrguserManger sharedJHOrguserManger].superiorParentidsArray removeAllObjects];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (void)rightBarButtonClick:(UIBarButtonItem *)send {
@@ -85,6 +94,9 @@
     
 }
 - (void)saveButtonClick {
+    //清除 组织层级数组中的个数  是跳转为 跳转到子视图
+    [[JHOrguserManger sharedJHOrguserManger].superiorParentidsArray removeAllObjects];
+    [self dismissViewControllerAnimated:YES completion:nil];
     
 }
 - (void)setupPortalTableViewController{
@@ -95,9 +107,9 @@
     }
     float statusHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     float navigationHeight = self.navigationController.navigationBar.frame.size.height;
-    YSLContainerViewController *containerVC = [[YSLContainerViewController alloc]initWithControllers:self.muPVC topBarHeight:statusHeight + navigationHeight parentViewController:self];
-    containerVC.delegate = self;
-    [self.view addSubview:containerVC.view];
+    self.containerVC = [[YSLContainerViewController alloc]initWithControllers:self.muPVC topBarHeight:statusHeight + navigationHeight parentViewController:self];
+    self.containerVC.delegate = self;
+    [self.view addSubview:self.containerVC.view];
     self.view.backgroundColor = [UIColor colorWithRed:0.7332 green:0.7332 blue:0.7332 alpha:1.0];
 }
 -(void)containerViewItemIndex:(NSInteger)index currentController:(UIViewController *)controller{
