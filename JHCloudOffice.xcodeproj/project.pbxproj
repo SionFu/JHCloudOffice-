@@ -33,6 +33,8 @@
 		3142C6DF1D3F4F170043C293 /* JHOrguserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3142C6DD1D3F4F170043C293 /* JHOrguserTableViewCell.m */; };
 		3142C6E01D3F4F170043C293 /* JHOrguserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3142C6DE1D3F4F170043C293 /* JHOrguserTableViewCell.xib */; };
 		3142C6E31D3F50E40043C293 /* JHChosePeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3142C6E21D3F50E40043C293 /* JHChosePeopleViewController.m */; };
+		315A81E91D4B95DE00D8EF62 /* JHScanCRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 315A81E71D4B95DE00D8EF62 /* JHScanCRCodeViewController.m */; };
+		315A81EA1D4B95DE00D8EF62 /* JHScanCRCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 315A81E81D4B95DE00D8EF62 /* JHScanCRCodeViewController.xib */; };
 		31679D321D474DCF004B1FF2 /* JHOrguserTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 31679D311D474DCF004B1FF2 /* JHOrguserTableView.m */; };
 		317249E11D221ED600B2E48A /* JHCategoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 317249DF1D221ED600B2E48A /* JHCategoryTableViewCell.m */; };
 		317249E21D221ED600B2E48A /* JHCategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 317249E01D221ED600B2E48A /* JHCategoryTableViewCell.xib */; };
@@ -127,6 +129,9 @@
 		3142C6DE1D3F4F170043C293 /* JHOrguserTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHOrguserTableViewCell.xib; sourceTree = "<group>"; };
 		3142C6E11D3F50E40043C293 /* JHChosePeopleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHChosePeopleViewController.h; sourceTree = "<group>"; };
 		3142C6E21D3F50E40043C293 /* JHChosePeopleViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHChosePeopleViewController.m; sourceTree = "<group>"; };
+		315A81E61D4B95DE00D8EF62 /* JHScanCRCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHScanCRCodeViewController.h; sourceTree = "<group>"; };
+		315A81E71D4B95DE00D8EF62 /* JHScanCRCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHScanCRCodeViewController.m; sourceTree = "<group>"; };
+		315A81E81D4B95DE00D8EF62 /* JHScanCRCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHScanCRCodeViewController.xib; sourceTree = "<group>"; };
 		31679D301D474DCF004B1FF2 /* JHOrguserTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHOrguserTableView.h; sourceTree = "<group>"; };
 		31679D311D474DCF004B1FF2 /* JHOrguserTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHOrguserTableView.m; sourceTree = "<group>"; };
 		317249DE1D221ED600B2E48A /* JHCategoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHCategoryTableViewCell.h; sourceTree = "<group>"; };
@@ -389,6 +394,28 @@
 			name = "cehsi ";
 			sourceTree = "<group>";
 		};
+		315A81E41D4B925500D8EF62 /* 发起流程 */ = {
+			isa = PBXGroup;
+			children = (
+				31B6F46D1D1FAECB00A2670B /* JHProcessViewController.h */,
+				31B6F46E1D1FAECB00A2670B /* JHProcessViewController.m */,
+				31B6F4731D1FB02000A2670B /* JHPortalTableViewController.h */,
+				31B6F4741D1FB02000A2670B /* JHPortalTableViewController.m */,
+				317249E51D22283600B2E48A /* JHPortalTableViewController.xib */,
+			);
+			name = "发起流程";
+			sourceTree = "<group>";
+		};
+		315A81E51D4B926700D8EF62 /* 扫描二维码 */ = {
+			isa = PBXGroup;
+			children = (
+				315A81E61D4B95DE00D8EF62 /* JHScanCRCodeViewController.h */,
+				315A81E71D4B95DE00D8EF62 /* JHScanCRCodeViewController.m */,
+				315A81E81D4B95DE00D8EF62 /* JHScanCRCodeViewController.xib */,
+			);
+			name = "扫描二维码";
+			sourceTree = "<group>";
+		};
 		317249E71D22543C00B2E48A /* controller */ = {
 			isa = PBXGroup;
 			children = (
@@ -492,13 +519,10 @@
 		31E2F53A1D1A830C00FC212B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				315A81E41D4B925500D8EF62 /* 发起流程 */,
+				315A81E51D4B926700D8EF62 /* 扫描二维码 */,
 				31E2F5491D1A83B300FC212B /* JHDealViewViewController.h */,
 				31E2F54A1D1A83B300FC212B /* JHDealViewViewController.m */,
-				31B6F46D1D1FAECB00A2670B /* JHProcessViewController.h */,
-				31B6F46E1D1FAECB00A2670B /* JHProcessViewController.m */,
-				31B6F4731D1FB02000A2670B /* JHPortalTableViewController.h */,
-				31B6F4741D1FB02000A2670B /* JHPortalTableViewController.m */,
-				317249E51D22283600B2E48A /* JHPortalTableViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -752,6 +776,7 @@
 				3179FBD81D1BBD900021E35E /* JHUIControl.xib in Resources */,
 				3126A89B1D1908DD00ADC960 /* LaunchScreen.storyboard in Resources */,
 				31E2F5341D1A2DB200FC212B /* MBProgressHUD.bundle in Resources */,
+				315A81EA1D4B95DE00D8EF62 /* JHScanCRCodeViewController.xib in Resources */,
 				317249E61D22283600B2E48A /* JHPortalTableViewController.xib in Resources */,
 				3126A8BE1D191D1A00ADC960 /* Assets.xcassets in Resources */,
 				317249E21D221ED600B2E48A /* JHCategoryTableViewCell.xib in Resources */,
@@ -789,6 +814,7 @@
 				31B6F46B1D1FACDE00A2670B /* YSLContainerViewController.m in Sources */,
 				317249E11D221ED600B2E48A /* JHCategoryTableViewCell.m in Sources */,
 				31A358B91D20F1B100D4C0DA /* NSObject+YYModel.m in Sources */,
+				315A81E91D4B95DE00D8EF62 /* JHScanCRCodeViewController.m in Sources */,
 				312F89EE1D38B3DD00CAAA9A /* JHPageData.m in Sources */,
 				319A8F581D41B22D0011EFD0 /* JHOrguserViewController.m in Sources */,
 				317249EA1D22543C00B2E48A /* LoginViewController.m in Sources */,

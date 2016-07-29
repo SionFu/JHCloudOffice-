@@ -276,6 +276,9 @@
                                             <constraint firstAttribute="height" constant="35" id="uiS-hc-0UD"/>
                                         </constraints>
                                         <state key="normal" image="qrcode_entry_normal"/>
+                                        <connections>
+                                            <action selector="cIQRCodeButton:" destination="Oay-1r-6FZ" eventType="touchUpInside" id="Ul5-Nv-9MX"/>
+                                        </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="untask" translatesAutoresizingMaskIntoConstraints="NO" id="qsO-gK-7vc">
                                         <rect key="frame" x="43" y="178" width="59" height="59"/>
@@ -592,7 +595,9 @@
             <objects>
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="OWl-Yl-zzc" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="巨化云办公" id="V89-9D-F0p"/>
+                    <navigationItem key="navigationItem" title="巨化云办公" id="V89-9D-F0p">
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="amk-ou-myH"/>
+                    </navigationItem>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="GGO-6b-dl9">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

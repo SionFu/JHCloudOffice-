@@ -63,6 +63,7 @@ singleton_implementation(JHNetworkManager)
      [JHUserInfo sharedJHUserInfo].mobile = dic[@"Mobile"];
     [JHUserInfo sharedJHUserInfo].company = dic[@"Company"];
         [JHUserInfo sharedJHUserInfo].uid = dic[@"WeaverUser"][@"uid"];
+        [JHUserInfo sharedJHUserInfo].loginid = dic[@"WeaverUser"][@"loginid"];
         [JHUserInfo sharedJHUserInfo].companyObjectId = dic[@"CompanyObjectId"];
         
     }
