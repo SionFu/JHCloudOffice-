@@ -10,6 +10,16 @@
 
 @implementation JHOrguserManger
 singleton_implementation(JHOrguserManger)
+- (NSDictionary *)saveUserDic {
+    if (_saveUserDic == nil) {
+        _saveUserDic = [NSDictionary dictionary];
+    }return _saveUserDic;
+}
+- (NSMutableArray *)orguserTableViewArray {
+    if (_orguserTableViewArray == nil) {
+        _orguserTableViewArray = [NSMutableArray array];
+    }return _orguserTableViewArray;
+}
 -(NSMutableArray *)displaysArray{
     if (_displaysArray == nil) {
         _displaysArray = [NSMutableArray array];
@@ -35,5 +45,6 @@ singleton_implementation(JHOrguserManger)
 }
 - (void)removerLastParentidsArray {
     [self.superiorParentidsArray removeLastObject];
+    [self.orguserTableViewArray removeLastObject];
 }
 @end

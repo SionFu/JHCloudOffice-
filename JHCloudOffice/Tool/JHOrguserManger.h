@@ -43,5 +43,24 @@
  *  当用户点击的行数小于当前的最多行数时 = superiorParentidsArray.count
  */
 - (void)removerLastParentidsArray;
+/**
+ * 保存当前推出的视图JHOrguserTableViewController
+ */
+@property (nonatomic, strong) NSMutableArray *orguserTableViewArray;
+/**
+ *  储存选中人员的信息
+ like:
+ {
+	Other1 : 孙树江,
+	Key : tzr,
+	Index : 10000,
+	DisplayValue : 孙树江,
+	Type : User,
+	ExtType : User,
+	Value : 056f4f9f-7070-4c20-83f2-3d1d50d4869c
+ }
+ */
+@property (nonatomic, strong) NSDictionary *saveUserDic;
+
 singleton_interface(JHOrguserManger)
 @end

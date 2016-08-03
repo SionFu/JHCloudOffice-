@@ -31,7 +31,7 @@
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arraw_ic" translatesAutoresizingMaskIntoConstraints="NO" id="WOH-JY-Uik">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WOH-JY-Uik">
                         <rect key="frame" x="285" y="12" width="20" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="20" id="MNX-fJ-6f6"/>
@@ -56,7 +56,6 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="arraw_ic" width="12" height="20"/>
         <image name="ic_menu_deal_on" width="46" height="44"/>
     </resources>
 </document>

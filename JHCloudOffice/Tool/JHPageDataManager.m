@@ -13,6 +13,8 @@
 #import "JHPageData.h"
 @implementation JHPageDataManager
 singleton_implementation(JHPageDataManager)
+
+
 -(NSArray *)pageVisibleItemArray{
     if (_pageVisibleItemArray == nil) {
         _pageVisibleItemArray = [NSArray array];
