@@ -9,13 +9,14 @@
 #import "JHChosePeopleViewController.h"
 #import "YSLContainerViewController.h"
 #import "JHOrguserTableViewController.h"
-#import "JHOrguserViewController.h"
+#import "JHChoseTableViewController.h"
 #import "JHNetworkManager.h"
 #import "JHOrguserManger.h"
 @interface JHChosePeopleViewController ()<YSLContainerViewControllerDelegate,JHOrguser>
 @property (nonatomic, strong)NSArray *portalArray;
 @property (nonatomic, strong)NSMutableArray  *muPVC;
 @property (nonatomic, strong)YSLContainerViewController *containerVC;
+@property (nonatomic ,strong)JHChoseTableViewController *choseUserVC;
 @end
 #define CONTROLFRME CGRectMake(5, 5, self.view.frame.size.width * 2.8 / 4 - 10, 30)
 #define BUTTONCONTROLFRME CGRectMake(5, 5, 30, 30)
@@ -28,12 +29,13 @@
 }
 - (NSMutableArray *)muPVC {
     if (_muPVC == nil) {
-        JHOrguserViewController *vc = [JHOrguserViewController new];
         JHOrguserTableViewController *tVC = [JHOrguserTableViewController new];
+        self.choseUserVC = [JHChoseTableViewController new];
         UIViewController *tVC1 = [UIViewController new];
-        _muPVC = [NSMutableArray arrayWithObjects:tVC,vc,tVC1, nil];
+        _muPVC = [NSMutableArray arrayWithObjects:tVC,self.choseUserVC,tVC1, nil];
     }return _muPVC;
 }
+
 -(void)getOrguserSuccess {
 //    [self.view setNeedsDisplay];
     [self viewDidLoad];
@@ -98,13 +100,11 @@
     }];
 }
 - (void)saveButtonClick {
-    //清除 组织层级数组中的个数  是跳转为 跳转到子视图
-//    [[JHOrguserManger sharedJHOrguserManger].superiorParentidsArray removeAllObjects];
     [self dismissViewControllerAnimated:YES completion:^{
         [self sendDataToPageTableView];
     }];
 }
-     //将组织选出的名字 传输给 配置页面
+//将组织选出的名字 传输给 配置页面
 -(void)sendDataToPageTableView {
     self.datasDicArray[self.indexPathTag] = [JHOrguserManger sharedJHOrguserManger].saveUserDic[@"DisplayValue"];
     NSIndexPath *indexPath=[NSIndexPath indexPathForRow:self.indexPathTag inSection:0];
@@ -124,7 +124,9 @@
     self.view.backgroundColor = [UIColor colorWithRed:0.7332 green:0.7332 blue:0.7332 alpha:1.0];
 }
 -(void)containerViewItemIndex:(NSInteger)index currentController:(UIViewController *)controller{
-//    [JHModulesData sharedJHModulesData].curreatVCIndex = index;
+    if (index == 1) {
+        [self.choseUserVC reloadTableViewData];
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

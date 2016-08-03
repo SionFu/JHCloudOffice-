@@ -17,7 +17,6 @@
 		310D52D61D236F68003C09E9 /* JHPageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 310D52D41D236F68003C09E9 /* JHPageTableViewCell.m */; };
 		310D52D71D236F68003C09E9 /* JHPageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 310D52D51D236F68003C09E9 /* JHPageTableViewCell.xib */; };
 		310D52DA1D237146003C09E9 /* JHPageDataItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 310D52D91D237146003C09E9 /* JHPageDataItem.m */; };
-		311650AE1D45F31F00724B90 /* JHOrguserBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 311650AD1D45F31F00724B90 /* JHOrguserBaseViewController.m */; };
 		3120B3A21D1CED7B00206F6B /* JHModules.m in Sources */ = {isa = PBXBuildFile; fileRef = 3120B3A11D1CED7B00206F6B /* JHModules.m */; };
 		3120B3A61D1CFB4100206F6B /* UIView+WbyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 3120B3A51D1CFB4100206F6B /* UIView+WbyExtension.m */; };
 		3126A88D1D1908DD00ADC960 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3126A88C1D1908DD00ADC960 /* main.m */; };
@@ -35,17 +34,16 @@
 		3142C6E31D3F50E40043C293 /* JHChosePeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3142C6E21D3F50E40043C293 /* JHChosePeopleViewController.m */; };
 		315A81E91D4B95DE00D8EF62 /* JHScanCRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 315A81E71D4B95DE00D8EF62 /* JHScanCRCodeViewController.m */; };
 		315A81EA1D4B95DE00D8EF62 /* JHScanCRCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 315A81E81D4B95DE00D8EF62 /* JHScanCRCodeViewController.xib */; };
-		31679D321D474DCF004B1FF2 /* JHOrguserTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 31679D311D474DCF004B1FF2 /* JHOrguserTableView.m */; };
 		317249E11D221ED600B2E48A /* JHCategoryTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 317249DF1D221ED600B2E48A /* JHCategoryTableViewCell.m */; };
 		317249E21D221ED600B2E48A /* JHCategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 317249E01D221ED600B2E48A /* JHCategoryTableViewCell.xib */; };
 		317249E61D22283600B2E48A /* JHPortalTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 317249E51D22283600B2E48A /* JHPortalTableViewController.xib */; };
 		317249EA1D22543C00B2E48A /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 317249E91D22543C00B2E48A /* LoginViewController.m */; };
 		317249ED1D22548900B2E48A /* JHUserDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = 317249EC1D22548900B2E48A /* JHUserDefault.m */; };
 		3179FBD81D1BBD900021E35E /* JHUIControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3179FBD71D1BBD900021E35E /* JHUIControl.xib */; };
-		319A8F581D41B22D0011EFD0 /* JHOrguserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 319A8F571D41B22D0011EFD0 /* JHOrguserViewController.m */; };
 		31A358B21D20DD6C00D4C0DA /* JHModulesData.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A358B11D20DD6C00D4C0DA /* JHModulesData.m */; };
 		31A358B91D20F1B100D4C0DA /* NSObject+YYModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A358B51D20F1B100D4C0DA /* NSObject+YYModel.m */; };
 		31A358BA1D20F1B100D4C0DA /* YYClassInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A358B71D20F1B100D4C0DA /* YYClassInfo.m */; };
+		31B69D9D1D51C3B900EA2250 /* JHChoseTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31B69D9C1D51C3B900EA2250 /* JHChoseTableViewController.m */; };
 		31B6F46B1D1FACDE00A2670B /* YSLContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31B6F4681D1FACDE00A2670B /* YSLContainerViewController.m */; };
 		31B6F46C1D1FACDE00A2670B /* YSLScrollMenuView.m in Sources */ = {isa = PBXBuildFile; fileRef = 31B6F46A1D1FACDE00A2670B /* YSLScrollMenuView.m */; };
 		31B6F46F1D1FAECB00A2670B /* JHProcessViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31B6F46E1D1FAECB00A2670B /* JHProcessViewController.m */; };
@@ -100,8 +98,6 @@
 		310D52D51D236F68003C09E9 /* JHPageTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHPageTableViewCell.xib; sourceTree = "<group>"; };
 		310D52D81D237146003C09E9 /* JHPageDataItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHPageDataItem.h; sourceTree = "<group>"; };
 		310D52D91D237146003C09E9 /* JHPageDataItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHPageDataItem.m; sourceTree = "<group>"; };
-		311650AC1D45F31F00724B90 /* JHOrguserBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHOrguserBaseViewController.h; sourceTree = "<group>"; };
-		311650AD1D45F31F00724B90 /* JHOrguserBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHOrguserBaseViewController.m; sourceTree = "<group>"; };
 		3120B3A01D1CED7B00206F6B /* JHModules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHModules.h; sourceTree = "<group>"; };
 		3120B3A11D1CED7B00206F6B /* JHModules.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHModules.m; sourceTree = "<group>"; };
 		3120B3A41D1CFB4100206F6B /* UIView+WbyExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WbyExtension.h"; sourceTree = "<group>"; };
@@ -132,8 +128,6 @@
 		315A81E61D4B95DE00D8EF62 /* JHScanCRCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHScanCRCodeViewController.h; sourceTree = "<group>"; };
 		315A81E71D4B95DE00D8EF62 /* JHScanCRCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHScanCRCodeViewController.m; sourceTree = "<group>"; };
 		315A81E81D4B95DE00D8EF62 /* JHScanCRCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHScanCRCodeViewController.xib; sourceTree = "<group>"; };
-		31679D301D474DCF004B1FF2 /* JHOrguserTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHOrguserTableView.h; sourceTree = "<group>"; };
-		31679D311D474DCF004B1FF2 /* JHOrguserTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHOrguserTableView.m; sourceTree = "<group>"; };
 		317249DE1D221ED600B2E48A /* JHCategoryTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHCategoryTableViewCell.h; sourceTree = "<group>"; };
 		317249DF1D221ED600B2E48A /* JHCategoryTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHCategoryTableViewCell.m; sourceTree = "<group>"; };
 		317249E01D221ED600B2E48A /* JHCategoryTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHCategoryTableViewCell.xib; sourceTree = "<group>"; };
@@ -143,8 +137,6 @@
 		317249EB1D22548900B2E48A /* JHUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHUserDefault.h; sourceTree = "<group>"; };
 		317249EC1D22548900B2E48A /* JHUserDefault.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHUserDefault.m; sourceTree = "<group>"; };
 		3179FBD71D1BBD900021E35E /* JHUIControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHUIControl.xib; sourceTree = "<group>"; };
-		319A8F561D41B22D0011EFD0 /* JHOrguserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHOrguserViewController.h; sourceTree = "<group>"; };
-		319A8F571D41B22D0011EFD0 /* JHOrguserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHOrguserViewController.m; sourceTree = "<group>"; };
 		31A358B01D20DD6C00D4C0DA /* JHModulesData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHModulesData.h; sourceTree = "<group>"; };
 		31A358B11D20DD6C00D4C0DA /* JHModulesData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHModulesData.m; sourceTree = "<group>"; };
 		31A358B41D20F1B100D4C0DA /* NSObject+YYModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+YYModel.h"; sourceTree = "<group>"; };
@@ -152,6 +144,8 @@
 		31A358B61D20F1B100D4C0DA /* YYClassInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYClassInfo.h; sourceTree = "<group>"; };
 		31A358B71D20F1B100D4C0DA /* YYClassInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYClassInfo.m; sourceTree = "<group>"; };
 		31A358B81D20F1B100D4C0DA /* YYModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYModel.h; sourceTree = "<group>"; };
+		31B69D9B1D51C3B900EA2250 /* JHChoseTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHChoseTableViewController.h; sourceTree = "<group>"; };
+		31B69D9C1D51C3B900EA2250 /* JHChoseTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHChoseTableViewController.m; sourceTree = "<group>"; };
 		31B6F4671D1FACDE00A2670B /* YSLContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSLContainerViewController.h; sourceTree = "<group>"; };
 		31B6F4681D1FACDE00A2670B /* YSLContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSLContainerViewController.m; sourceTree = "<group>"; };
 		31B6F4691D1FACDE00A2670B /* YSLScrollMenuView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSLScrollMenuView.h; sourceTree = "<group>"; };
@@ -380,18 +374,6 @@
 			children = (
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		315A81E31D47A98C00D8EF62 /* cehsi  */ = {
-			isa = PBXGroup;
-			children = (
-				311650AC1D45F31F00724B90 /* JHOrguserBaseViewController.h */,
-				311650AD1D45F31F00724B90 /* JHOrguserBaseViewController.m */,
-				3142C6D71D3F4EF70043C293 /* JHOrguserTableViewController.h */,
-				3142C6D81D3F4EF70043C293 /* JHOrguserTableViewController.m */,
-				3142C6D91D3F4EF70043C293 /* JHOrguserTableViewController.xib */,
-			);
-			name = "cehsi ";
 			sourceTree = "<group>";
 		};
 		315A81E41D4B925500D8EF62 /* 发起流程 */ = {
@@ -662,13 +644,13 @@
 		31F875731D3DC2EB00BEE76D /* Control */ = {
 			isa = PBXGroup;
 			children = (
-				315A81E31D47A98C00D8EF62 /* cehsi  */,
 				3142C6E11D3F50E40043C293 /* JHChosePeopleViewController.h */,
 				3142C6E21D3F50E40043C293 /* JHChosePeopleViewController.m */,
-				319A8F561D41B22D0011EFD0 /* JHOrguserViewController.h */,
-				319A8F571D41B22D0011EFD0 /* JHOrguserViewController.m */,
-				31679D301D474DCF004B1FF2 /* JHOrguserTableView.h */,
-				31679D311D474DCF004B1FF2 /* JHOrguserTableView.m */,
+				3142C6D71D3F4EF70043C293 /* JHOrguserTableViewController.h */,
+				3142C6D81D3F4EF70043C293 /* JHOrguserTableViewController.m */,
+				3142C6D91D3F4EF70043C293 /* JHOrguserTableViewController.xib */,
+				31B69D9B1D51C3B900EA2250 /* JHChoseTableViewController.h */,
+				31B69D9C1D51C3B900EA2250 /* JHChoseTableViewController.m */,
 			);
 			path = Control;
 			sourceTree = "<group>";
@@ -805,6 +787,7 @@
 			files = (
 				317249ED1D22548900B2E48A /* JHUserDefault.m in Sources */,
 				3105D9F31D1BA7690098EA73 /* JHHoneHeadView.m in Sources */,
+				31B69D9D1D51C3B900EA2250 /* JHChoseTableViewController.m in Sources */,
 				31E2F5291D1A2D9500FC212B /* AFURLConnectionOperation.m in Sources */,
 				31B6F46F1D1FAECB00A2670B /* JHProcessViewController.m in Sources */,
 				31E2F5241D1A2D9500FC212B /* AFHTTPRequestOperation.m in Sources */,
@@ -816,7 +799,6 @@
 				31A358B91D20F1B100D4C0DA /* NSObject+YYModel.m in Sources */,
 				315A81E91D4B95DE00D8EF62 /* JHScanCRCodeViewController.m in Sources */,
 				312F89EE1D38B3DD00CAAA9A /* JHPageData.m in Sources */,
-				319A8F581D41B22D0011EFD0 /* JHOrguserViewController.m in Sources */,
 				317249EA1D22543C00B2E48A /* LoginViewController.m in Sources */,
 				31E2F52C1D1A2D9500FC212B /* AFURLSessionManager.m in Sources */,
 				3105D9F61D1BAE1A0098EA73 /* JHMenuData.m in Sources */,
@@ -831,7 +813,6 @@
 				31E2F50F1D1A261400FC212B /* JHUserInfo.m in Sources */,
 				3142C6E31D3F50E40043C293 /* JHChosePeopleViewController.m in Sources */,
 				31F2E96F1D264A8E0079BDB9 /* JHPageDataManager.m in Sources */,
-				311650AE1D45F31F00724B90 /* JHOrguserBaseViewController.m in Sources */,
 				31E2F5251D1A2D9500FC212B /* AFHTTPRequestOperationManager.m in Sources */,
 				31F2E96C1D2641890079BDB9 /* JHDataItemPermissions.m in Sources */,
 				31E2F5281D1A2D9500FC212B /* AFSecurityPolicy.m in Sources */,
@@ -839,7 +820,6 @@
 				31F8757C1D3DCBDF00BEE76D /* JHOrguser.m in Sources */,
 				3126A88D1D1908DD00ADC960 /* main.m in Sources */,
 				31A358B21D20DD6C00D4C0DA /* JHModulesData.m in Sources */,
-				31679D321D474DCF004B1FF2 /* JHOrguserTableView.m in Sources */,
 				31F8757F1D3E010000BEE76D /* JHOrguserManger.m in Sources */,
 				3120B3A21D1CED7B00206F6B /* JHModules.m in Sources */,
 				3105D9FB1D1BBB740098EA73 /* JHUIControl.m in Sources */,
