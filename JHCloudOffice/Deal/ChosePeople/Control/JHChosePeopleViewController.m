@@ -50,7 +50,10 @@
     //在导航栏上添加状态保存提交和取消按钮
     [self addNavigationBtn];
     self.title = self.navigationTitle;
-
+    
+    //将当前组织赋值给 saveUserDic
+    NSDictionary *saveUserDic = [NSDictionary dictionaryWithDictionary:[[JHOrguserManger sharedJHOrguserManger].saveAllListDic objectForKey:[NSString stringWithFormat:@"%ld",self.indexPathTag]]];
+    [JHOrguserManger sharedJHOrguserManger].saveUserDic = [NSDictionary dictionaryWithDictionary:saveUserDic];
 }
 
 - (void)addNavigationBtn{
@@ -94,19 +97,22 @@
 }
 - (void)clearButtonClick {
     NSDictionary *dic = [NSDictionary dictionaryWithObject:@"轻触选择..." forKey:@"DisplayValue"];
-    [JHOrguserManger sharedJHOrguserManger].saveUserDic = [NSDictionary dictionaryWithDictionary:dic];
+    [JHOrguserManger sharedJHOrguserManger].saveUserDic = [NSMutableDictionary dictionaryWithDictionary:dic];
     [self dismissViewControllerAnimated:YES completion:^{
         [self sendDataToPageTableView];
     }];
 }
 - (void)saveButtonClick {
     [self dismissViewControllerAnimated:YES completion:^{
+        //将组织选出的名字 传输给 配置页面
         [self sendDataToPageTableView];
     }];
 }
-//将组织选出的名字 传输给 配置页面
 -(void)sendDataToPageTableView {
     self.datasDicArray[self.indexPathTag] = [JHOrguserManger sharedJHOrguserManger].saveUserDic[@"DisplayValue"];
+//存储选中人员的信息
+    NSDictionary *userDic = [[NSDictionary dictionaryWithDictionary:[JHOrguserManger sharedJHOrguserManger].saveUserDic]mutableCopy];
+    [[JHOrguserManger sharedJHOrguserManger].saveAllListDic setObject:userDic forKey:[NSString stringWithFormat:@"%ld",(long)self.indexPathTag]];
     NSIndexPath *indexPath=[NSIndexPath indexPathForRow:self.indexPathTag inSection:0];
     [self.indexView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath ,nil] withRowAnimation:UITableViewRowAnimationBottom];
 }

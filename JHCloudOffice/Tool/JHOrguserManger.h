@@ -61,6 +61,11 @@
  }
  */
 @property (nonatomic, strong) NSDictionary *saveUserDic;
-
+/**
+ *  将流程中所有的选择组织人员的信息存在这个字典中 
+ *  key: 流程的 tag
+ *  value: 组织中的人员信息内容
+ */
+@property (nonatomic, strong) NSMutableDictionary *saveAllListDic;
 singleton_interface(JHOrguserManger)
 @end

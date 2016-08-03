@@ -10,6 +10,11 @@
 
 @implementation JHOrguserManger
 singleton_implementation(JHOrguserManger)
+- (NSMutableDictionary *)saveAllListDic {
+    if (_saveAllListDic == nil) {
+        _saveAllListDic = [NSMutableDictionary dictionary];
+    }return _saveAllListDic;
+}
 - (NSDictionary *)saveUserDic {
     if (_saveUserDic == nil) {
         _saveUserDic = [NSDictionary dictionary];

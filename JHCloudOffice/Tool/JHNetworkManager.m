@@ -73,12 +73,8 @@ singleton_implementation(JHNetworkManager)
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/DefaultSheet.ashx?appKey=%@&token=%@&action=modules&create=1&userId=%@", SITEURL, APPKEY, [JHUserInfo sharedJHUserInfo].objectId, [JHUserInfo sharedJHUserInfo].uid];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-# warning 有打印
-//        NSLog(@"%@",responseObject);
         NSString *filepath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)firstObject] stringByAppendingPathComponent:@"Modules.plist"];
-#warning 本地化数据
         [responseObject writeToFile:filepath atomically:YES];
-
         NSArray *array = responseObject[@"datas"];
         [JHModulesData sharedJHModulesData].count = responseObject[@"count"];
         [JHModulesData sharedJHModulesData].errorCode = responseObject[@"ErrorCode"];

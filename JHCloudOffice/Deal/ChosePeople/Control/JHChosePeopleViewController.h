@@ -14,7 +14,7 @@
  */
 @property (nonatomic, strong) NSString *navigationTitle;
 /**
- *  当前视图的按钮 tag 值
+ *  当前视图的按钮 tag 值 也是人员信息字典中的 key
  */
 @property (nonatomic, assign)  NSInteger indexPathTag;
 /**
@@ -22,7 +22,7 @@
  */
 @property (nonatomic, strong) UITableView *indexView;
 /**
- *  此为上传数据的原指针数据(DisplayValue)
+ *  此为流程上传数据的原指针数据指针地址(DisplayValue)
  */
 @property (nonatomic, strong) NSMutableArray *datasDicArray;
 @end

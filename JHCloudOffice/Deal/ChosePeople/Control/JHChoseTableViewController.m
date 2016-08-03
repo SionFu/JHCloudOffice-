@@ -14,7 +14,6 @@
 @end
 
 @implementation JHChoseTableViewController
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     

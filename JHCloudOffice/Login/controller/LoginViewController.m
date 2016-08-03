@@ -103,7 +103,7 @@
 
     [JHNetworkManager vaidataUserWithUserName:self.userNameTextField.text andPassword:self.userPwdTextFileField.text];
     [JHNetworkManager sharedJHNetworkManager].loginDelegate = self;
-    [MBProgressHUD showMessage:@"正在登陆" toView:self.view];
+    [MBProgressHUD showMessage:@"正在登陆..." toView:self.view];
     
     
 }
@@ -128,6 +128,8 @@
     }
     
     //登陆成功就开始获取流程数据
+    [MBProgressHUD showSuccess:@"登陆成功"];
+    [MBProgressHUD showMessage:@"正在加载配置.." toView:self.view];
     [[[JHNetworkManager alloc]init] getModules];
     
 
