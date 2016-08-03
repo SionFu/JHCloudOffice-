@@ -41,9 +41,8 @@
  */
 @implementation JHOrguserTableViewController
 - (NSDictionary *)saveUserDic {
-    if (_saveUserDic == nil) {
         _saveUserDic = [NSDictionary dictionaryWithDictionary:[JHOrguserManger sharedJHOrguserManger].saveUserDic];
-    }return _saveUserDic;
+    return _saveUserDic;
 }
 -(NSArray *)parentidsArray {
         _parentidsArray = [NSArray arrayWithArray:[JHOrguserManger sharedJHOrguserManger].superiorParentidsArray.lastObject];
@@ -52,21 +51,17 @@
 
 -(void)getOrguserSuccess{
     JHOrguserTableViewController *ovc = [[JHOrguserTableViewController alloc]init];
-    //将当前视图的 tableView 保存在数组中
-    [[JHOrguserManger sharedJHOrguserManger].orguserTableViewArray addObject:self.tableView];
-    NSLog(@"存入视图的个数:===>%lu",(unsigned long)[JHOrguserManger sharedJHOrguserManger].orguserTableViewArray.count);
     [self.navigationController pushViewController:ovc animated:YES];
 }
 -(void)dealloc {
    //视图消失时  自动删除 最后一个数组
     [[JHOrguserManger sharedJHOrguserManger]removerLastParentidsArray];
-    NSLog(@"%lu%lu",(unsigned long)[JHOrguserManger sharedJHOrguserManger].superiorParentidsArray.count,(unsigned long)[JHOrguserManger sharedJHOrguserManger].orguserTableViewArray.count);
-    NSLog(@"%@",[JHOrguserManger sharedJHOrguserManger].orguserTableViewArray.lastObject);
     [[JHOrguserManger sharedJHOrguserManger].orguserTableViewArray.lastObject reloadData];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"%@",self.view);
+    //将当前视图的 tableView 保存在数组中
+    [[JHOrguserManger sharedJHOrguserManger].orguserTableViewArray addObject:self.tableView];
 //    [JHNetworkManager sharedJHNetworkManager].getOrguserDelegate = self;
     // Uncomment the following line to preserve selection between presentations.
 //     self.clearsSelectionOnViewWillAppear = YES;
@@ -97,7 +92,6 @@
     if (_nib == nil) {
         _nib = [UINib nibWithNibName:@"JHOrguserTableViewCell" bundle:nil];
         [tableView registerNib:_nib forCellReuseIdentifier: cellIdentifier];
-//        tableView.frame = TABLEVIEWFRAMEL;
     }
     JHOrguserTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     cell.nameLabel.text = self.parentidsArray[indexPath.row][@"DisplayValue"];
@@ -123,12 +117,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSLog(@"组织参数:==>%@",self.parentidsArray[indexPath.row][@"Type"]);
-    
-    
     if ([self.parentidsArray[indexPath.row][@"Type"] isEqualToString:@"User"]) {
-        NSLog(@"选中人员");
-        NSLog(@"%@",self.parentidsArray[indexPath.row]);
         [JHOrguserManger sharedJHOrguserManger].saveUserDic = self.parentidsArray[indexPath.row];
         if (self.oldIndexPath == nil) {
             self.oldIndexPath = indexPath;
@@ -143,18 +132,6 @@
                 self.oldIndexPath = indexPath;
             }
         }
-//        for (int i = 0; i <= self.parentidsArray.count; i++) {
-//            if ([self.parentidsArray[indexPath.row][@"Type"] isEqualToString:@"User"]) {
-//                [[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:UITableViewCellAccessoryNone];
-//            }
-//            if (self.saveUserDic != nil&&[self.saveUserDic[@"Value"] isEqualToString: self.parentidsArray[indexPath.row][@"Value"]]){
-//                [[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:UITableViewCellAccessoryCheckmark];
-//            }
-//        }
-//        [tableView reloadData];
-//        [[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:UITableViewCellAccessoryCheckmark];
-//        [JHPageDataManager sharedJHPageDataManager].saveUserDic = self.parentidsArray[indexPath.row];
-//        
     }else {
         [[JHNetworkManager sharedJHNetworkManager]getUsersWithDic:self.parentidsArray[indexPath.row]];
         NSLog(@"%@",self.parentidsArray[indexPath.row]);

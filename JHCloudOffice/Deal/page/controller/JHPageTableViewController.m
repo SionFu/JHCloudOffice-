@@ -533,6 +533,10 @@
     JHChosePeopleViewController *cVC = [JHChosePeopleViewController new];
     cVC.navigationTitle = [NSString stringWithFormat:@"%@选择",self.pageCategory[self.senderControlTag]];
     UINavigationController *nvpageVC = [[UINavigationController alloc]initWithRootViewController:cVC];
+    cVC.indexPathTag = self.senderControlTag;
+    cVC.datasDicArray = self.datasDicArray;
+    cVC.indexView = self.tableView;
+    
     [self.navigationController presentViewController:nvpageVC animated:YES completion:nil];
 }
 - (void)setSingleParticipant:(UIButton *)sender {

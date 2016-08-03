@@ -91,13 +91,24 @@
     }
 }
 - (void)clearButtonClick {
-    
+    NSDictionary *dic = [NSDictionary dictionaryWithObject:@"轻触选择..." forKey:@"DisplayValue"];
+    [JHOrguserManger sharedJHOrguserManger].saveUserDic = [NSDictionary dictionaryWithDictionary:dic];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self sendDataToPageTableView];
+    }];
 }
 - (void)saveButtonClick {
     //清除 组织层级数组中的个数  是跳转为 跳转到子视图
-    [[JHOrguserManger sharedJHOrguserManger].superiorParentidsArray removeAllObjects];
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
+//    [[JHOrguserManger sharedJHOrguserManger].superiorParentidsArray removeAllObjects];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self sendDataToPageTableView];
+    }];
+}
+     //将组织选出的名字 传输给 配置页面
+-(void)sendDataToPageTableView {
+    self.datasDicArray[self.indexPathTag] = [JHOrguserManger sharedJHOrguserManger].saveUserDic[@"DisplayValue"];
+    NSIndexPath *indexPath=[NSIndexPath indexPathForRow:self.indexPathTag inSection:0];
+    [self.indexView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath ,nil] withRowAnimation:UITableViewRowAnimationBottom];
 }
 - (void)setupPortalTableViewController{
     for (int i = 0; i < self.portalArray.count; i++) {

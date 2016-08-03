@@ -28,7 +28,7 @@
  */
 @property (nonatomic, strong) NSArray *parentidsArray;
 /**
- *  储存多有父级数组的数组
+ *  储存所有父级数组的数组
  */
 @property (nonatomic, strong) NSMutableArray *superiorParentidsArray;
 /**
