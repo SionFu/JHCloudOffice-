@@ -42,6 +42,10 @@
 @property (nonatomic, strong) NSDictionary *Trackable;
 @property (nonatomic, strong) NSDictionary *Validate;
 /**
+ *  采购明细表数据源
+ */
+@property (nonatomic, strong) NSArray *SubTableColumns;
+/**
  *  防止未添加相应的值导致应用崩溃
  */
 -(void)setValue:(id)value forUndefinedKey:(NSString *)key;

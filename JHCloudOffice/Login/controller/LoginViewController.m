@@ -129,6 +129,7 @@
     
     //登陆成功就开始获取流程数据
     [MBProgressHUD showSuccess:@"登陆成功"];
+    [MBProgressHUD hideHUDForView:self.view animated:YES];
     [MBProgressHUD showMessage:@"正在加载配置.." toView:self.view];
     [[[JHNetworkManager alloc]init] getModules];
     

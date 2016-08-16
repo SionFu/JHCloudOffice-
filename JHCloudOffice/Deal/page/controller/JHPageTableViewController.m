@@ -17,6 +17,7 @@
 #import "JHGetPageData.h"
 #import "JHChosePeopleViewController.h"
 #import "JHOrguserManger.h"
+#import "JHBizViewController.h"
 @interface JHPageTableViewController ()<JHPageDelegate,UIPickerViewDataSource,UIPickerViewDelegate,JHOrguser,UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 /**
  *  所有流程项目名称
@@ -137,6 +138,8 @@
 //返回 (取消) 按钮
 - (void)doClickBackAction:(UIBarButtonItem *)send {
     [self dismissViewControllerAnimated:YES completion:nil];
+    //删除储存组织人员中的已选人员内容
+    [JHOrguserManger sharedJHOrguserManger].saveAllListDic = [NSMutableDictionary dictionary];
 #warning  Cancel or thing
 //    [self clickBackAction];
 }
@@ -305,8 +308,10 @@
             [cell.controlTypeView addSubview:textField];
             //将输入好的内容存入数组
             [textField addTarget:self action:@selector(addDataToArray:) forControlEvents:UIControlEventEditingChanged];
-        }else if ([self.sourceArray[index][0][@"Index"]  isEqual: @"Server"]){
+            //控件为 文本选择器,从服务器获取数据
+        }else if ([self.sourceArray[index][0][@"Key"]  isEqual: @"Server"]){
             [self choseStringFromServerWith:cell inRow:index];
+            //控件为 文本选择器, 从本地获取目录, 获取数据为 服务器的 parents
         }else {
             [self choseStringWith:cell inRow:index];
         }
@@ -371,7 +376,7 @@
         [button addTarget:self action:@selector(setTimeButtonCick:) forControlEvents:UIControlEventTouchUpInside];
         [cell.controlTypeView addSubview:button];
     }
-    //控件为文本视图,多行
+    //控件为文本视图,多行 Html 需要添加 html 标记语言 like:"<a href='aaa.aspx?xx=33'>测试内容</a>"
     if ([self.typeArray[index] isEqualToString:@"String"]||[self.typeArray[index] isEqualToString:@"Html"]||[self.typeArray[index] isEqualToString:@"Comment"]) {
         UITextView *textView = [[UITextView alloc]initWithFrame:CONTROLFRME];
         textView.text = self.datasDicArray[index];
@@ -416,7 +421,7 @@
     }
     //控件为采购明细表
     if ([self.typeArray[index] isEqualToString:@"BizObjectArray"]) {
-        
+        [self editBizDataStringWith:cell inRow:index];
     }
 
     
@@ -445,6 +450,28 @@
     [button setTitle:self.datasDicArray[index] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(setpeopleSingleParticipant:) forControlEvents:UIControlEventTouchUpInside];
     [cell.controlTypeView addSubview:button];
+}
+
+- (void)editBizDataStringWith:(JHPageTableViewCell *)cell inRow:(NSInteger)index{
+    UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
+    button.backgroundColor = [UIColor whiteColor];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    button.tag = 100 + index;
+    if ([self.datasDicArray[index] isEqualToString:@""]) {
+        self.datasDicArray[index] = @"轻触选择...";
+    }
+    [button setTitle:self.datasDicArray[index] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(presentBizViewController:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.controlTypeView addSubview:button];
+}
+#pragma 推出编辑采购明细表视图
+- (void)presentBizViewController:(UIButton*)sender {
+    JHBizViewController *bVC = [[JHBizViewController alloc]init];
+    UINavigationController *nVC = [[UINavigationController alloc]initWithRootViewController:bVC];
+     bVC.title = self.pageCategory[sender.tag - 100];
+        [self.navigationController presentViewController:nVC animated:YES completion:^{
+    }];
 }
 - (void)choseFileStringWith:(JHPageTableViewCell *)cell inRow:(NSInteger)index{
     UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
@@ -477,8 +504,8 @@
 }
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
     NSLog(@"%@",info);
-    UIImage *image = info[UIImagePickerControllerEditedImage];//取原图还是编辑过的图片
-//    self.headImageView.image = image;选择的图片
+//    UIImage *image = info[UIImagePickerControllerEditedImage];//取原图还是编辑过的图片
+    //此处选择上传文件
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (void)choseStringWith:(JHPageTableViewCell *)cell inRow:(NSInteger)index{
@@ -561,24 +588,25 @@
         NSString *selectedString = self.sourceArray[self.senderControlTag][row][@"DisplayValue"];
         //只要在本地获取菜单的情况下才能获取以下值
         self.parametersDic = [NSMutableDictionary dictionaryWithDictionary:self.sourceArray[self.senderControlTag][row]];
-
         NSLog(@"二级菜单:%@",self.parametersDic);
         [itemPicker selectRow:row inComponent:1 animated:NO];
         self.datasDicArray[self.senderControlTag] = selectedString;
         NSIndexPath *indexPath=[NSIndexPath indexPathForRow:self.senderControlTag inSection:0];
-        NSIndexPath *indexPath1=[NSIndexPath indexPathForRow:self.senderControlTag+1 inSection:0];
-          //设置表格选择时的动画 如果有子菜单,父菜单选择后 需要父子一起刷新
-        if ([self.sourceArray[self.senderControlTag + 1][0][@"Index"]  isEqual: @"Server"]) {
-           self.datasDicArray[self.senderControlTag + 1] = @"轻触选择...";
-            [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath1 ,indexPath , nil] withRowAnimation:UITableViewRowAnimationBottom];
-        }else {
-            //设置表格选择时的动画
-            [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath ,nil] withRowAnimation:UITableViewRowAnimationBottom];
+        //任何情况下当前 挑个都要刷新
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath ,nil] withRowAnimation:UITableViewRowAnimationBottom];
+        //设置表格选择时的动画 如果有子菜单,父菜单选择后 需要子与父一起刷新
+        NSLog(@"%@",self.sourceArray);
+        for (int i = 0; i < self.sourceArray.count; i ++ ) {
+            NSArray *array = self.sourceArray[i];
+            NSLog(@"%@",array);
+            if ([array[0][@"Key"] isEqualToString:@"Server"]) {
+               self.datasDicArray[i] = @"轻触选择...";
+                NSIndexPath *indexPath1=[NSIndexPath indexPathForRow:i inSection:0];
+        
+                [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath1 , nil]withRowAnimation:UITableViewRowAnimationBottom];
+            }
         }
-        
-        
         [sender setTitle:selectedString forState:UIControlStateNormal];
-        
     }];
     UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:ok];
@@ -587,6 +615,7 @@
 }
 - (void)setSingleParticipantFromServer:(UIButton *)sender {
     self.senderControlTag = sender.tag - 100;
+    //添加一个键值对
     [self.parametersDic setObject:@"ShortString" forKey:@"type"];
     [MBProgressHUD showMessage:@"正在加载..."];
     //获取上一个选项获得的 dic
@@ -611,7 +640,7 @@
         }
         NSString *selectedString = [JHPageDataManager sharedJHPageDataManager].sourceFromServerArray[row][@"DisplayValue"];
         //每次从二级菜单中获取数据后,将是否从服务器获取数据标示转成 server 使再次点击或者更换菜单时重新从服务器获取数据
-        NSDictionary *dic = [NSDictionary dictionaryWithObject:@"Server" forKey:@"Index"];
+        NSDictionary *dic = [NSDictionary dictionaryWithObject:@"Server" forKey:@"Key"];
         self.sourceArray[self.senderControlTag][0] = dic;
         [itemPicker selectRow:row inComponent:1 animated:NO];
         self.datasDicArray[self.senderControlTag] = selectedString;
@@ -721,66 +750,5 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     return 50;
 }
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-
-#pragma mark - Table view delegate
-/*
-// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here, for example:
-    // Create the next view controller.
-    
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:<#@"Nib name"#> bundle:nil];
-    
-    // Pass the selected object to the new view controller.
-    
-    // Push the view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
- 
-}
-
-*/
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

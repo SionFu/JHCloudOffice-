@@ -103,7 +103,6 @@
 //    [self presentViewController:picker animated:YES completion:nil];
 //}
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
-    NSLog(@"%@",info);
     UIImage *image = info[UIImagePickerControllerEditedImage];//取原图还是编辑过的图片
         self.heandImageView.image = image;//选择的图片
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -124,6 +123,7 @@
     switch (sender - 100) {
         case 0:{
             JHProcessViewController *evc = [JHProcessViewController new];
+            evc.title = @"发起流程";
             [self.navigationController pushViewController:evc animated:YES];
                 }
             break;

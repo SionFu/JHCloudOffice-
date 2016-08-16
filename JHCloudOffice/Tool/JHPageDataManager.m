@@ -13,7 +13,11 @@
 #import "JHPageData.h"
 @implementation JHPageDataManager
 singleton_implementation(JHPageDataManager)
-
+- (NSMutableArray *)bizObjectArray {
+    if (_bizObjectArray == nil) {
+        _bizObjectArray = [NSMutableArray array];
+    }return _bizObjectArray;
+}
 
 -(NSArray *)pageVisibleItemArray{
     if (_pageVisibleItemArray == nil) {
@@ -85,19 +89,25 @@ singleton_implementation(JHPageDataManager)
     NSMutableArray *itemMuarray = [NSMutableArray array];
     NSMutableArray *itemTypeMuarray = [NSMutableArray array];
     NSMutableArray *sourceMuarray = [NSMutableArray array];
+    NSMutableArray *bizObjectArray = [NSMutableArray array];
+    //防止有多个采购明细列表 将数据存在数组中
     for (JHPageDataItem  *dataItem in self.pageDataItemsArray) {
         //        NSLog(@"%@",dataItem.ItemName);
 #warning 暂时显示 之后添加控件 需要用到
-                NSLog(@"%@:%@,是否有子选项%@,数据源:%@",dataItem.ItemDisplayName,dataItem.ItemType[@"Value"],dataItem.Source,dataItem.SourceType[@"Value"]);
+        NSLog(@"%@:%@,是否有子选项%@,数据源:%@,采购明细表:%@",dataItem.ItemDisplayName,dataItem.ItemType[@"Value"],dataItem.Source,dataItem.SourceType[@"Value"],dataItem.SubTableColumns);
         [itemMuarray addObject:dataItem.ItemDisplayName];
         [itemTypeMuarray addObject:dataItem.ItemType[@"Value"]];
         if (dataItem.Source == nil) {
-            NSDictionary *dic = [NSDictionary dictionaryWithObject:@"Button" forKey:@"Index"];
+            NSDictionary *dic = [NSDictionary dictionaryWithObject:@"Button" forKey:@"Key"];
             dataItem.Source = [NSArray arrayWithObject:dic];
         }
         if ([dataItem.SourceType[@"Value"] isEqualToString:@"Server"]) {
-            NSDictionary *dic = [NSDictionary dictionaryWithObject:@"Server" forKey:@"Index"];
+            NSDictionary *dic = [NSDictionary dictionaryWithObject:@"Server" forKey:@"Key"];
             dataItem.Source = [NSArray arrayWithObject:dic];
+        }
+        //将采购明细表中的数据源存储
+        if ([dataItem.ItemType[@"Value"] isEqualToString:@"BizObjectArray"]) {
+            bizObjectArray = [NSMutableArray arrayWithArray:dataItem.SubTableColumns];
         }
         //以下为时间 pick 里的不同日期,时间和 日期时间的不同区别
         if ([dataItem.Format[@"Key"] isEqualToString:@"Date"]) {
@@ -117,6 +127,7 @@ singleton_implementation(JHPageDataManager)
     self.pageCategory = [NSMutableArray arrayWithArray:itemMuarray];
     self.typeArray = [NSArray arrayWithArray:itemTypeMuarray];
     self.sourceArray = [NSMutableArray arrayWithArray:sourceMuarray];
+    self.bizObjectArray = [NSMutableArray arrayWithArray:bizObjectArray];
 }
 
 -(NSDictionary *)findOwercompanyWithKey:(NSInteger)index {

@@ -72,12 +72,15 @@
                                           initWithTitle:@"取消"
                                           style:UIBarButtonItemStyleDone
                                           target:self
-                                          action:@selector(doClickBackAction:)];
+                                          action:@selector(todoClickBackAction:)];
     self.navigationItem.leftBarButtonItem = leftBarButtonItem;
 }
 //返回 (取消) 按钮
-- (void)doClickBackAction:(UIBarButtonItem *)send {
+- (void)todoClickBackAction:(UIBarButtonItem *)send {
+    //删除所有父级数据
     [[JHOrguserManger sharedJHOrguserManger].superiorParentidsArray removeAllObjects];
+    [JHOrguserManger sharedJHOrguserManger].saveUserDic = [NSDictionary dictionary];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 - (void)rightBarButtonClick:(UIBarButtonItem *)send {

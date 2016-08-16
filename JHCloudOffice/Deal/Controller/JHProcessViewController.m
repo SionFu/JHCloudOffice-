@@ -52,7 +52,10 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+//每次关闭流程时将页码的置为第一个位,置置为0
+-(void)dealloc {
+    [JHModulesData sharedJHModulesData].curreatVCIndex = 0;
+}
 /*
 #pragma mark - Navigation
 

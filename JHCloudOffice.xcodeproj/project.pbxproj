@@ -40,6 +40,21 @@
 		317249EA1D22543C00B2E48A /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 317249E91D22543C00B2E48A /* LoginViewController.m */; };
 		317249ED1D22548900B2E48A /* JHUserDefault.m in Sources */ = {isa = PBXBuildFile; fileRef = 317249EC1D22548900B2E48A /* JHUserDefault.m */; };
 		3179FBD81D1BBD900021E35E /* JHUIControl.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3179FBD71D1BBD900021E35E /* JHUIControl.xib */; };
+		318A0D091D585ECC00032F6D /* TSUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 318A0CED1D585ECC00032F6D /* TSUtils.m */; };
+		318A0D0A1D585ECC00032F6D /* TSTableViewContentHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 318A0CF11D585ECC00032F6D /* TSTableViewContentHolder.m */; };
+		318A0D0B1D585ECC00032F6D /* TSTableViewExpandControlPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 318A0CF31D585ECC00032F6D /* TSTableViewExpandControlPanel.m */; };
+		318A0D0C1D585ECC00032F6D /* TSTableViewExpandSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 318A0CF51D585ECC00032F6D /* TSTableViewExpandSection.m */; };
+		318A0D0D1D585ECC00032F6D /* TSTableViewHeaderPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 318A0CF71D585ECC00032F6D /* TSTableViewHeaderPanel.m */; };
+		318A0D0E1D585ECC00032F6D /* TSTableViewHeaderSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 318A0CF91D585ECC00032F6D /* TSTableViewHeaderSection.m */; };
+		318A0D0F1D585ECC00032F6D /* TSTableViewRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 318A0CFB1D585ECC00032F6D /* TSTableViewRow.m */; };
+		318A0D101D585ECC00032F6D /* TSTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 318A0CFE1D585ECC00032F6D /* TSTableView.m */; };
+		318A0D111D585ECC00032F6D /* TSTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 318A0D001D585ECC00032F6D /* TSTableViewCell.m */; };
+		318A0D121D585ECC00032F6D /* TSTableViewHeaderSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 318A0D041D585ECC00032F6D /* TSTableViewHeaderSectionView.m */; };
+		318A0D131D585ECC00032F6D /* TSTableViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 318A0D061D585ECC00032F6D /* TSTableViewModel.m */; };
+		318A0D2B1D587EB500032F6D /* JHBizViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 318A0D231D587EB500032F6D /* JHBizViewController.m */; };
+		318A0D2C1D587EB500032F6D /* JHBizViewController+BizDataDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 318A0D261D587EB500032F6D /* JHBizViewController+BizDataDefinition.m */; };
+		318A0D2D1D587EB500032F6D /* JHBizDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 318A0D291D587EB500032F6D /* JHBizDataManager.m */; };
+		31A0891E1D5DBC9200A24CA0 /* JHitemEditTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A0891D1D5DBC9200A24CA0 /* JHitemEditTableViewController.m */; };
 		31A358B21D20DD6C00D4C0DA /* JHModulesData.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A358B11D20DD6C00D4C0DA /* JHModulesData.m */; };
 		31A358B91D20F1B100D4C0DA /* NSObject+YYModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A358B51D20F1B100D4C0DA /* NSObject+YYModel.m */; };
 		31A358BA1D20F1B100D4C0DA /* YYClassInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A358B71D20F1B100D4C0DA /* YYClassInfo.m */; };
@@ -137,6 +152,40 @@
 		317249EB1D22548900B2E48A /* JHUserDefault.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHUserDefault.h; sourceTree = "<group>"; };
 		317249EC1D22548900B2E48A /* JHUserDefault.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHUserDefault.m; sourceTree = "<group>"; };
 		3179FBD71D1BBD900021E35E /* JHUIControl.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHUIControl.xib; sourceTree = "<group>"; };
+		318A0CEB1D585ECC00032F6D /* TSDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSDefines.h; sourceTree = "<group>"; };
+		318A0CEC1D585ECC00032F6D /* TSUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSUtils.h; sourceTree = "<group>"; };
+		318A0CED1D585ECC00032F6D /* TSUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSUtils.m; sourceTree = "<group>"; };
+		318A0CEF1D585ECC00032F6D /* TSTableViewAppearanceCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSTableViewAppearanceCoordinator.h; sourceTree = "<group>"; };
+		318A0CF01D585ECC00032F6D /* TSTableViewContentHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSTableViewContentHolder.h; sourceTree = "<group>"; };
+		318A0CF11D585ECC00032F6D /* TSTableViewContentHolder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSTableViewContentHolder.m; sourceTree = "<group>"; };
+		318A0CF21D585ECC00032F6D /* TSTableViewExpandControlPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSTableViewExpandControlPanel.h; sourceTree = "<group>"; };
+		318A0CF31D585ECC00032F6D /* TSTableViewExpandControlPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSTableViewExpandControlPanel.m; sourceTree = "<group>"; };
+		318A0CF41D585ECC00032F6D /* TSTableViewExpandSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSTableViewExpandSection.h; sourceTree = "<group>"; };
+		318A0CF51D585ECC00032F6D /* TSTableViewExpandSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSTableViewExpandSection.m; sourceTree = "<group>"; };
+		318A0CF61D585ECC00032F6D /* TSTableViewHeaderPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSTableViewHeaderPanel.h; sourceTree = "<group>"; };
+		318A0CF71D585ECC00032F6D /* TSTableViewHeaderPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSTableViewHeaderPanel.m; sourceTree = "<group>"; };
+		318A0CF81D585ECC00032F6D /* TSTableViewHeaderSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSTableViewHeaderSection.h; sourceTree = "<group>"; };
+		318A0CF91D585ECC00032F6D /* TSTableViewHeaderSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSTableViewHeaderSection.m; sourceTree = "<group>"; };
+		318A0CFA1D585ECC00032F6D /* TSTableViewRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSTableViewRow.h; sourceTree = "<group>"; };
+		318A0CFB1D585ECC00032F6D /* TSTableViewRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSTableViewRow.m; sourceTree = "<group>"; };
+		318A0CFD1D585ECC00032F6D /* TSTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSTableView.h; sourceTree = "<group>"; };
+		318A0CFE1D585ECC00032F6D /* TSTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSTableView.m; sourceTree = "<group>"; };
+		318A0CFF1D585ECC00032F6D /* TSTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSTableViewCell.h; sourceTree = "<group>"; };
+		318A0D001D585ECC00032F6D /* TSTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSTableViewCell.m; sourceTree = "<group>"; };
+		318A0D011D585ECC00032F6D /* TSTableViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSTableViewDataSource.h; sourceTree = "<group>"; };
+		318A0D021D585ECC00032F6D /* TSTableViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSTableViewDelegate.h; sourceTree = "<group>"; };
+		318A0D031D585ECC00032F6D /* TSTableViewHeaderSectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSTableViewHeaderSectionView.h; sourceTree = "<group>"; };
+		318A0D041D585ECC00032F6D /* TSTableViewHeaderSectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSTableViewHeaderSectionView.m; sourceTree = "<group>"; };
+		318A0D051D585ECC00032F6D /* TSTableViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSTableViewModel.h; sourceTree = "<group>"; };
+		318A0D061D585ECC00032F6D /* TSTableViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSTableViewModel.m; sourceTree = "<group>"; };
+		318A0D221D587EB500032F6D /* JHBizViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHBizViewController.h; sourceTree = "<group>"; };
+		318A0D231D587EB500032F6D /* JHBizViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHBizViewController.m; sourceTree = "<group>"; };
+		318A0D251D587EB500032F6D /* JHBizViewController+BizDataDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "JHBizViewController+BizDataDefinition.h"; sourceTree = "<group>"; };
+		318A0D261D587EB500032F6D /* JHBizViewController+BizDataDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "JHBizViewController+BizDataDefinition.m"; sourceTree = "<group>"; };
+		318A0D281D587EB500032F6D /* JHBizDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHBizDataManager.h; sourceTree = "<group>"; };
+		318A0D291D587EB500032F6D /* JHBizDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHBizDataManager.m; sourceTree = "<group>"; };
+		31A0891C1D5DBC9200A24CA0 /* JHitemEditTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHitemEditTableViewController.h; sourceTree = "<group>"; };
+		31A0891D1D5DBC9200A24CA0 /* JHitemEditTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHitemEditTableViewController.m; sourceTree = "<group>"; };
 		31A358B01D20DD6C00D4C0DA /* JHModulesData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHModulesData.h; sourceTree = "<group>"; };
 		31A358B11D20DD6C00D4C0DA /* JHModulesData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHModulesData.m; sourceTree = "<group>"; };
 		31A358B41D20F1B100D4C0DA /* NSObject+YYModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+YYModel.h"; sourceTree = "<group>"; };
@@ -292,6 +341,7 @@
 		3126A88A1D1908DD00ADC960 /* JHCloudOffice */ = {
 			isa = PBXGroup;
 			children = (
+				318A0D081D585ECC00032F6D /* TSUIKit */,
 				3126A8B01D19098400ADC960 /* Lib */,
 				31E2F5091D1A211C00FC212B /* Tool */,
 				31E2F5391D1A830C00FC212B /* Deal */,
@@ -407,6 +457,112 @@
 			path = controller;
 			sourceTree = "<group>";
 		};
+		318A0CEE1D585ECC00032F6D /* TSMisc */ = {
+			isa = PBXGroup;
+			children = (
+				318A0CEB1D585ECC00032F6D /* TSDefines.h */,
+				318A0CEC1D585ECC00032F6D /* TSUtils.h */,
+				318A0CED1D585ECC00032F6D /* TSUtils.m */,
+			);
+			path = TSMisc;
+			sourceTree = "<group>";
+		};
+		318A0CFC1D585ECC00032F6D /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				318A0CEF1D585ECC00032F6D /* TSTableViewAppearanceCoordinator.h */,
+				318A0CF01D585ECC00032F6D /* TSTableViewContentHolder.h */,
+				318A0CF11D585ECC00032F6D /* TSTableViewContentHolder.m */,
+				318A0CF21D585ECC00032F6D /* TSTableViewExpandControlPanel.h */,
+				318A0CF31D585ECC00032F6D /* TSTableViewExpandControlPanel.m */,
+				318A0CF41D585ECC00032F6D /* TSTableViewExpandSection.h */,
+				318A0CF51D585ECC00032F6D /* TSTableViewExpandSection.m */,
+				318A0CF61D585ECC00032F6D /* TSTableViewHeaderPanel.h */,
+				318A0CF71D585ECC00032F6D /* TSTableViewHeaderPanel.m */,
+				318A0CF81D585ECC00032F6D /* TSTableViewHeaderSection.h */,
+				318A0CF91D585ECC00032F6D /* TSTableViewHeaderSection.m */,
+				318A0CFA1D585ECC00032F6D /* TSTableViewRow.h */,
+				318A0CFB1D585ECC00032F6D /* TSTableViewRow.m */,
+			);
+			path = Private;
+			sourceTree = "<group>";
+		};
+		318A0D071D585ECC00032F6D /* TSTableView */ = {
+			isa = PBXGroup;
+			children = (
+				318A0CFC1D585ECC00032F6D /* Private */,
+				318A0CFD1D585ECC00032F6D /* TSTableView.h */,
+				318A0CFE1D585ECC00032F6D /* TSTableView.m */,
+				318A0CFF1D585ECC00032F6D /* TSTableViewCell.h */,
+				318A0D001D585ECC00032F6D /* TSTableViewCell.m */,
+				318A0D011D585ECC00032F6D /* TSTableViewDataSource.h */,
+				318A0D021D585ECC00032F6D /* TSTableViewDelegate.h */,
+				318A0D031D585ECC00032F6D /* TSTableViewHeaderSectionView.h */,
+				318A0D041D585ECC00032F6D /* TSTableViewHeaderSectionView.m */,
+				318A0D051D585ECC00032F6D /* TSTableViewModel.h */,
+				318A0D061D585ECC00032F6D /* TSTableViewModel.m */,
+			);
+			path = TSTableView;
+			sourceTree = "<group>";
+		};
+		318A0D081D585ECC00032F6D /* TSUIKit */ = {
+			isa = PBXGroup;
+			children = (
+				318A0CEE1D585ECC00032F6D /* TSMisc */,
+				318A0D071D585ECC00032F6D /* TSTableView */,
+			);
+			name = TSUIKit;
+			path = "/Users/Fusion/Downloads/TSTableView-master/TSTableView/TSTableView/../../Classes/TSUIKit";
+			sourceTree = "<absolute>";
+		};
+		318A0D201D587EB500032F6D /* BizObject采购明细表 */ = {
+			isa = PBXGroup;
+			children = (
+				318A0D271D587EB500032F6D /* Tool */,
+				318A0D211D587EB500032F6D /* Control */,
+				318A0D241D587EB500032F6D /* Model */,
+				318A0D2A1D587EB500032F6D /* View */,
+			);
+			name = "BizObject采购明细表";
+			path = ChosePeople/BizObject;
+			sourceTree = "<group>";
+		};
+		318A0D211D587EB500032F6D /* Control */ = {
+			isa = PBXGroup;
+			children = (
+				318A0D221D587EB500032F6D /* JHBizViewController.h */,
+				318A0D231D587EB500032F6D /* JHBizViewController.m */,
+				31A0891C1D5DBC9200A24CA0 /* JHitemEditTableViewController.h */,
+				31A0891D1D5DBC9200A24CA0 /* JHitemEditTableViewController.m */,
+			);
+			path = Control;
+			sourceTree = "<group>";
+		};
+		318A0D241D587EB500032F6D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				318A0D251D587EB500032F6D /* JHBizViewController+BizDataDefinition.h */,
+				318A0D261D587EB500032F6D /* JHBizViewController+BizDataDefinition.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		318A0D271D587EB500032F6D /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				318A0D281D587EB500032F6D /* JHBizDataManager.h */,
+				318A0D291D587EB500032F6D /* JHBizDataManager.m */,
+			);
+			path = Tool;
+			sourceTree = "<group>";
+		};
+		318A0D2A1D587EB500032F6D /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		31A358B31D20F1B100D4C0DA /* YYModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -489,6 +645,7 @@
 		31E2F5391D1A830C00FC212B /* Deal */ = {
 			isa = PBXGroup;
 			children = (
+				318A0D201D587EB500032F6D /* BizObject采购明细表 */,
 				31F875721D3DC2EB00BEE76D /* ChosePeople组织选择 */,
 				310D52CA1D236ED2003C09E9 /* page流程配置 */,
 				31E2F53A1D1A830C00FC212B /* Controller */,
@@ -786,6 +943,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				317249ED1D22548900B2E48A /* JHUserDefault.m in Sources */,
+				318A0D0E1D585ECC00032F6D /* TSTableViewHeaderSection.m in Sources */,
 				3105D9F31D1BA7690098EA73 /* JHHoneHeadView.m in Sources */,
 				31B69D9D1D51C3B900EA2250 /* JHChoseTableViewController.m in Sources */,
 				31E2F5291D1A2D9500FC212B /* AFURLConnectionOperation.m in Sources */,
@@ -796,8 +954,12 @@
 				310D52DA1D237146003C09E9 /* JHPageDataItem.m in Sources */,
 				31B6F46B1D1FACDE00A2670B /* YSLContainerViewController.m in Sources */,
 				317249E11D221ED600B2E48A /* JHCategoryTableViewCell.m in Sources */,
+				318A0D121D585ECC00032F6D /* TSTableViewHeaderSectionView.m in Sources */,
+				31A0891E1D5DBC9200A24CA0 /* JHitemEditTableViewController.m in Sources */,
 				31A358B91D20F1B100D4C0DA /* NSObject+YYModel.m in Sources */,
+				318A0D0C1D585ECC00032F6D /* TSTableViewExpandSection.m in Sources */,
 				315A81E91D4B95DE00D8EF62 /* JHScanCRCodeViewController.m in Sources */,
+				318A0D0A1D585ECC00032F6D /* TSTableViewContentHolder.m in Sources */,
 				312F89EE1D38B3DD00CAAA9A /* JHPageData.m in Sources */,
 				317249EA1D22543C00B2E48A /* LoginViewController.m in Sources */,
 				31E2F52C1D1A2D9500FC212B /* AFURLSessionManager.m in Sources */,
@@ -809,13 +971,19 @@
 				31B6F46C1D1FACDE00A2670B /* YSLScrollMenuView.m in Sources */,
 				310D52D11D236F1F003C09E9 /* JHPageTableViewController.m in Sources */,
 				31F875791D3DC6E800BEE76D /* NSDictionary+JHChangeDicToJson.m in Sources */,
+				318A0D0B1D585ECC00032F6D /* TSTableViewExpandControlPanel.m in Sources */,
 				3126A8B51D19098400ADC960 /* AppDelegate.m in Sources */,
+				318A0D2C1D587EB500032F6D /* JHBizViewController+BizDataDefinition.m in Sources */,
 				31E2F50F1D1A261400FC212B /* JHUserInfo.m in Sources */,
 				3142C6E31D3F50E40043C293 /* JHChosePeopleViewController.m in Sources */,
+				318A0D2D1D587EB500032F6D /* JHBizDataManager.m in Sources */,
+				318A0D131D585ECC00032F6D /* TSTableViewModel.m in Sources */,
 				31F2E96F1D264A8E0079BDB9 /* JHPageDataManager.m in Sources */,
+				318A0D111D585ECC00032F6D /* TSTableViewCell.m in Sources */,
 				31E2F5251D1A2D9500FC212B /* AFHTTPRequestOperationManager.m in Sources */,
 				31F2E96C1D2641890079BDB9 /* JHDataItemPermissions.m in Sources */,
 				31E2F5281D1A2D9500FC212B /* AFSecurityPolicy.m in Sources */,
+				318A0D0D1D585ECC00032F6D /* TSTableViewHeaderPanel.m in Sources */,
 				31E2F5331D1A2DB200FC212B /* MBProgressHUD+KR.m in Sources */,
 				31F8757C1D3DCBDF00BEE76D /* JHOrguser.m in Sources */,
 				3126A88D1D1908DD00ADC960 /* main.m in Sources */,
@@ -824,11 +992,15 @@
 				3120B3A21D1CED7B00206F6B /* JHModules.m in Sources */,
 				3105D9FB1D1BBB740098EA73 /* JHUIControl.m in Sources */,
 				31E2F54B1D1A83B300FC212B /* JHDealViewViewController.m in Sources */,
+				318A0D0F1D585ECC00032F6D /* TSTableViewRow.m in Sources */,
 				31E2F5261D1A2D9500FC212B /* AFHTTPSessionManager.m in Sources */,
 				3120B3A61D1CFB4100206F6B /* UIView+WbyExtension.m in Sources */,
+				318A0D2B1D587EB500032F6D /* JHBizViewController.m in Sources */,
+				318A0D091D585ECC00032F6D /* TSUtils.m in Sources */,
 				312F89F11D38C61100CAAA9A /* JHGetPageData.m in Sources */,
 				310D52D61D236F68003C09E9 /* JHPageTableViewCell.m in Sources */,
 				31B6F4761D1FB02000A2670B /* JHPortalTableViewController.m in Sources */,
+				318A0D101D585ECC00032F6D /* TSTableView.m in Sources */,
 				3142C6DA1D3F4EF70043C293 /* JHOrguserTableViewController.m in Sources */,
 				3142C6DF1D3F4F170043C293 /* JHOrguserTableViewCell.m in Sources */,
 				31A358BA1D20F1B100D4C0DA /* YYClassInfo.m in Sources */,

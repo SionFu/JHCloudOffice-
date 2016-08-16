@@ -52,6 +52,10 @@
  *  储存最终上传的数据
  */
 @property (nonatomic, strong) NSMutableArray *datasDicArray;
+/**
+ *  储存采购明细表是流程数据
+ */
+@property (nonatomic, strong) NSMutableArray *bizObjectArray;
 
 /**
  *  获取菜单里需要显示的项目

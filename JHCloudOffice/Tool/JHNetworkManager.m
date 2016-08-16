@@ -159,7 +159,7 @@ singleton_implementation(JHNetworkManager)
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"从服务器上获取流程信息成功:%@\nURL:\n%@",responseObject,urlStr);
         //将从服务器上获取的流程数据存入数组中
-        [JHPageDataManager sharedJHPageDataManager].datasFromServerArray = [responseObject[@"datas"]mutableCopy];
+        [JHPageDataManager sharedJHPageDataManager].datasFromServerArray = responseObject[@"datas"];
         [self.getPageDelegate getPageDatasSuccess];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"从服务器上获取流程信息失败%@",error);
@@ -183,7 +183,7 @@ singleton_implementation(JHNetworkManager)
 //        if (array.count == 0) {
 //            return;
 //        }
-        [JHOrguserManger sharedJHOrguserManger].parentidsArray = [responseObject[@"datas"] mutableCopy];
+        [JHOrguserManger sharedJHOrguserManger].parentidsArray = responseObject[@"datas"];
         [[JHOrguserManger sharedJHOrguserManger] addParentidsArray];
         [self.getOrguserDelegate getOrguserSuccess];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
