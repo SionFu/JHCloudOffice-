@@ -11,8 +11,11 @@
 #import "TSDefines.h"
 #import "JHBizViewController+BizDataDefinition.h"
 #import "TSTableViewHeaderSection.h"
-#import "JHitemEditTableViewController.h"
+#import "JHBizEiditTableViewController.h"
 #import "JHBizDataManager.h"
+#import "JHPageDataManager.h"
+
+#import "JHEditTableViewController.h"
 @interface JHBizViewController ()<TSTableViewDelegate> {
     TSTableView *_tableView;
     TSTableViewModel *_model;
@@ -28,6 +31,8 @@
     [super viewDidLoad];
     [self addNavigationBtn];
      [[JHBizDataManager sharedJHBizDataManager] getItemDisplayName];
+    [[JHBizDataManager sharedJHBizDataManager]makeSourceFromServer];
+    [[JHPageDataManager sharedJHPageDataManager]makeSourceFromServerWithArray:[JHBizDataManager sharedJHBizDataManager].bizObjectObjArray];
     _tableView = [[TSTableView alloc]initWithFrame:CGRectMake(0, 64, self.view.frame.size.width, self.view.frame.size.height)];
     _tableView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     _tableView.delegate = self;
@@ -35,6 +40,10 @@
     _model = [[TSTableViewModel alloc]initWithTableView:_tableView andStyle:kTSTableViewStyleLight];
     [_model setColumns:[self columnsInfo] andRows:[self rowsInfo]];
     // Do any additional setup after loading the view.
+}
+-(void)dealloc {
+    //视图消失时  自动删除 最后一个数组
+    [[JHBizDataManager sharedJHBizDataManager]removerLastParentidsArray];
 }
 #pragma TSTableViewDelegate
 - (void)tableView:(TSTableView *)tableView didSelectRowAtPath:(NSIndexPath *)rowPath selectedCell:(NSInteger)cellIndex {
@@ -45,7 +54,7 @@
     if (columnPath.section == 0) {
         return;
     }
-    JHitemEditTableViewController *itemView = [JHitemEditTableViewController new];
+    JHBizEiditTableViewController *itemView = [JHBizEiditTableViewController new];
     UINavigationController *nVC = [[UINavigationController alloc]initWithRootViewController:itemView];
     itemView.title = @"编辑采购明细表";
     [self presentViewController:nVC animated:YES completion:^{
@@ -90,7 +99,7 @@
     }
 }
 - (void)AddItemButtonClick {
-    JHitemEditTableViewController *itemView = [JHitemEditTableViewController new];
+    JHEditTableViewController *itemView = [JHEditTableViewController new];
     UINavigationController *nVC = [[UINavigationController alloc]initWithRootViewController:itemView];
     itemView.title = @"添加采购项目";
     [[JHBizDataManager sharedJHBizDataManager]makeSourceFromServer];

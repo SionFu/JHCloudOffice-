@@ -102,7 +102,7 @@
     //整理好需要显示的流程中的项目内容
     [[JHPageDataManager sharedJHPageDataManager] getTrueItemInPage];
     [[JHPageDataManager sharedJHPageDataManager] getTheSameItemInPageItemsArray];
-    [[JHPageDataManager sharedJHPageDataManager]  makeSourceFromServer];
+    [[JHPageDataManager sharedJHPageDataManager]  makeSourceFromServerWithArray:[JHPageDataManager sharedJHPageDataManager].pageDataItemsArray];
     self.pageCategory = [NSMutableArray arrayWithArray:[JHPageDataManager sharedJHPageDataManager].pageCategory];
     self.typeArray = [NSArray arrayWithArray:[JHPageDataManager sharedJHPageDataManager].typeArray];
     self.sourceArray = [NSMutableArray arrayWithArray:[JHPageDataManager sharedJHPageDataManager].sourceArray];
@@ -298,7 +298,7 @@
 -(void)addControlTocontrolTypeView:(JHPageTableViewCell *)cell inRow:(NSInteger)index {
     //控件为文本输入框1行可以编辑
     if ([self.typeArray[index] isEqualToString:@"ShortString"]) {
-        if ([self.sourceArray[index][0][@"Index"]  isEqual: @"Button"]) {
+        if ([self.sourceArray[index][0][@"Key"]  isEqual: @"Button"]) {
             UITextField *textField = [[UITextField alloc]initWithFrame:CONTROLFRME];
             textField.tag = 100 + index;
             textField.backgroundColor = [UIColor whiteColor];
@@ -357,11 +357,11 @@
     }
     //控件为时间日期选择器
     if ([self.typeArray[index] isEqualToString:@"DateTime"]) {
-        if ([self.sourceArray[index][0][@"Index"] isEqual: @"Date"]) {
+        if ([self.sourceArray[index][0][@"key"] isEqual: @"Date"]) {
           self.dataFormart = @"yyyy年MM月dd日";
-        }else if ([self.sourceArray[index][0][@"Index"] isEqual: @"Time"]){
+        }else if ([self.sourceArray[index][0][@"key"] isEqual: @"Time"]){
           self.dataFormart = @"HH点mm分";
-        }else if ([self.sourceArray[index][0][@"Index"] isEqual: @"DateTime"]){
+        }else if ([self.sourceArray[index][0][@"key"] isEqual: @"DateTime"]){
             self.dataFormart = @"yyyy年MM月dd日 HH点mm分";
         }
         UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];

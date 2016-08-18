@@ -13,7 +13,5 @@
  *  接收流程中的数量
  */
 @property (nonatomic, assign) NSInteger itemTime;
-/**
- *  传入添加 或者 编辑的数组数据
- */
+
 @end

@@ -11,8 +11,9 @@
 #import "JHPageDataItem.h"
 @implementation JHBizDataManager
 - (NSMutableArray *)bizObjectArray {
-    
-    _bizObjectArray = [JHPageDataManager sharedJHPageDataManager].bizObjectArray;
+    //直接读取 从流程中获取的数据内容  (次数传输的为地址, 提高运算效率)
+//    _bizObjectArray = [JHPageDataManager sharedJHPageDataManager].bizObjectArray;
+    _bizObjectArray = [self.superiorParentidsArray lastObject];
     return _bizObjectArray;
 }
 -(NSMutableArray *)itemDisplayNameArray {
@@ -21,7 +22,21 @@
     }
     return _itemDisplayNameArray;
 }
-
+//- (NSMutableArray *)orguserTableViewArray {
+//    if (_orguserTableViewArray == nil) {
+//        _orguserTableViewArray = [NSMutableArray array];
+//    }return _orguserTableViewArray;
+//}
+- (NSMutableArray *)superiorParentidsArray {
+    if (_superiorParentidsArray == nil) {
+        _superiorParentidsArray = [NSMutableArray array];
+    }return _superiorParentidsArray;
+}
+-(NSMutableArray *)bizObjectObjArray{
+    if (_bizObjectObjArray == nil) {
+        _bizObjectObjArray = [NSMutableArray array];
+    }return _bizObjectObjArray;
+}
 - (void)getItemDisplayName {
     NSMutableArray *cellsArray = [NSMutableArray array];
     for (int i = 1; i < self.bizObjectArray.count; i ++) {
@@ -39,8 +54,15 @@
          JHPageDataItem *dataItem = [JHPageDataItem new];
          [dataItem setValuesForKeysWithDictionary:dic];
          [allItemArray addObject:dataItem];
-         NSLog(@"%@:%@,是否有子选项%@,数据源:%@,采购明细表:%@",dataItem.ItemDisplayName,dataItem.ItemType[@"Value"],dataItem.Source,dataItem.SourceType[@"Value"],dataItem.SubTableColumns);
      }
+    self.bizObjectObjArray = [NSMutableArray arrayWithArray:allItemArray];
+}
+- (void)addParentidsArray {
+    [self.superiorParentidsArray addObject:self.parentidsArray];
+}
+- (void)removerLastParentidsArray {
+    [self.superiorParentidsArray removeLastObject];
+//    [self.orguserTableViewArray removeLastObject];
 }
 singleton_implementation(JHBizDataManager)
 @end

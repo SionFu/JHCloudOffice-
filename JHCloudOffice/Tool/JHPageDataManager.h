@@ -49,10 +49,6 @@
  */
 @property (nonatomic, strong) NSMutableArray *datasFromServerArray;
 /**
- *  储存最终上传的数据
- */
-@property (nonatomic, strong) NSMutableArray *datasDicArray;
-/**
  *  储存采购明细表是流程数据
  */
 @property (nonatomic, strong) NSMutableArray *bizObjectArray;
@@ -68,7 +64,7 @@
 /**
  *  获取二级菜单
  */
--(void)makeSourceFromServer;
+-(void)makeSourceFromServerWithArray:(NSMutableArray *)array;
 /**
  *  根据传入数组的下标查找出父字段中的公司名称 返回查找组织查找字段 like
  *{

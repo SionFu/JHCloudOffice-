@@ -1,28 +1,31 @@
 //
-//  JHitemEditTableViewController.m
+//  JHEditTableViewController.m
 //  JHCloudOffice
 //
-//  Created by Fu_sion on 16/8/12.
+//  Created by Fu_sion on 16/8/18.
 //  Copyright © 2016年 Fu_sion. All rights reserved.
 //
 
-#import "JHitemEditTableViewController.h"
-#import "JHPageTableViewCell.h"
+#import "JHEditTableViewController.h"
+#import "JHBizEditTableViewCell.h"
 #import "JHBizDataManager.h"
-@interface JHitemEditTableViewController ()
-@property (nonatomic, strong) UINib *nib;
+@interface JHEditTableViewController ()
+@property (nonatomic ,strong ) UINib *nib;
 @property (nonatomic, strong) NSArray *typeArray;
 @end
 #define CONTROLFRME CGRectMake(5, 5, self.view.frame.size.width * 2.8 / 4 - 10, 30)
 #define BUTTONCONTROLFRME CGRectMake(5, 5, 30, 30)
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
-@implementation JHitemEditTableViewController
+
+@implementation JHEditTableViewController
 -(NSArray *)typeArray{
     _typeArray = [JHBizDataManager sharedJHBizDataManager].typeArray;
     return _typeArray;
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.pageNage = @"测试页面";
     [self addNavigationBtn];
 }
 #pragma AddNavigationButton
@@ -67,6 +70,9 @@
 - (void)todoClickBackAction:(UIBarButtonItem *)send {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -75,21 +81,19 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-
     return [JHBizDataManager sharedJHBizDataManager].itemDisplayNameArray.count;
 }
 
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    static NSString *cellIdentifier = @"reuseIdentifier";
+    static NSString * cellIdentifier = @"bizEditCell";
     if (_nib == nil) {
-        _nib = [UINib nibWithNibName:@"JHPageTableViewCell" bundle:nil];
-        [tableView registerNib:_nib forCellReuseIdentifier:cellIdentifier];
+        _nib = [UINib nibWithNibName:@"JHBizEditTableViewCell" bundle:nil];
+        [tableView registerNib:_nib forCellReuseIdentifier: cellIdentifier];
         UILabel *headTitle = [[UILabel alloc]initWithFrame:CONTROLFRME];
         headTitle.text = self.pageNage;
         headTitle.font = [UIFont systemFontOfSize:20];
@@ -98,7 +102,7 @@
         tableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0, 10, 5, 20)];
         [tableView.tableHeaderView addSubview: headTitle];
     }
-    JHPageTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    JHBizEditTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     //防止表格重用
     if (cell != nil) {
         while ([cell.controlTypeView.subviews lastObject] != nil) {
@@ -106,16 +110,78 @@
         }
     }
     //添加列表左边标题
-    cell.itemDisplayNameLabelText.text = [[JHBizDataManager sharedJHBizDataManager].itemDisplayNameArray[indexPath.row] stringByAppendingString:@":"];
+    NSArray *array = [JHBizDataManager sharedJHBizDataManager].itemDisplayNameArray[indexPath.row];
+    NSString *str = array[0];
+    cell.itemDisplayNameLabelText.text = [str stringByAppendingString:@":"];
     //将不同的控件添加到 cell 上
-    [self addControlTocontrolTypeView:cell inRow:indexPath.row];
+//    [self addControlTocontrolTypeView:cell inRow:indexPath.row];
     return cell;
 }
 
--(void)addControlTocontrolTypeView:(JHPageTableViewCell *)cell inRow:(NSInteger)index {
-     if ([self.typeArray[index] isEqualToString:@"ShortString"]) {
-         
-     }
+-(void)addControlTocontrolTypeView:(JHBizEditTableViewCell *)cell inRow:(NSInteger)index {
+    if ([self.typeArray[index] isEqualToString:@"ShortString"]) {
+        
+    }
 }
+
+/*
+// Override to support conditional editing of the table view.
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return NO if you do not want the specified item to be editable.
+    return YES;
+}
+*/
+
+/*
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        // Delete the row from the data source
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
+        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }   
+}
+*/
+
+/*
+// Override to support rearranging the table view.
+- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
+}
+*/
+
+/*
+// Override to support conditional rearranging of the table view.
+- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Return NO if you do not want the item to be re-orderable.
+    return YES;
+}
+*/
+
+/*
+#pragma mark - Table view delegate
+
+// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    // Navigation logic may go here, for example:
+    // Create the next view controller.
+    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:<#@"Nib name"#> bundle:nil];
+    
+    // Pass the selected object to the new view controller.
+    
+    // Push the view controller.
+    [self.navigationController pushViewController:detailViewController animated:YES];
+}
+*/
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
 
 @end

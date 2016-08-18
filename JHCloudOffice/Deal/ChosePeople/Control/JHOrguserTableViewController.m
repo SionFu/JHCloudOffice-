@@ -134,9 +134,10 @@
         }
     }else {
         [[JHNetworkManager sharedJHNetworkManager]getUsersWithDic:self.parentidsArray[indexPath.row]];
-        NSLog(@"%@",self.parentidsArray[indexPath.row]);
         self.title = self.parentidsArray[indexPath.row][@"DisplayValue"];
         JHNetworkManager *net = [JHNetworkManager new];
+//        JHOrguserTableViewController *ovc = [[JHOrguserTableViewController alloc]init];
+//        [self.navigationController pushViewController:ovc animated:YES];
         net.getOrguserDelegate = self;
     }
     

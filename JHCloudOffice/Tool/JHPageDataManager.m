@@ -11,6 +11,7 @@
 #import "JHPageDataItem.h"
 #import "JHGetPageData.h"
 #import "JHPageData.h"
+#import "JHBizDataManager.h"
 @implementation JHPageDataManager
 singleton_implementation(JHPageDataManager)
 - (NSMutableArray *)bizObjectArray {
@@ -28,7 +29,7 @@ singleton_implementation(JHPageDataManager)
 }
 -(NSMutableArray *)pageAllDataItemsArray{
     if (_pageAllDataItemsArray == nil) {
-        _datasDicArray = [NSMutableArray array];
+        _pageAllDataItemsArray = [NSMutableArray array];
     }return _pageAllDataItemsArray;
 }
 -(void)getTrueItemInPage {
@@ -80,8 +81,8 @@ singleton_implementation(JHPageDataManager)
     }
     return _pageCategory;
 }
--(void)makeSourceFromServer {
-    //打印流程中所流程表头名
+-(void)makeSourceFromServerWithArray:(NSMutableArray *)array {
+    //打印流程中所流程表头名  self.pageDataItemsArray
 //    for (JHDataItemPermissions *per in self.pageVisibleItemArray) {
 //
 //                NSLog(@"项目名称(内部名称)::==>>>%@",per.ItemName);
@@ -91,7 +92,7 @@ singleton_implementation(JHPageDataManager)
     NSMutableArray *sourceMuarray = [NSMutableArray array];
     NSMutableArray *bizObjectArray = [NSMutableArray array];
     //防止有多个采购明细列表 将数据存在数组中
-    for (JHPageDataItem  *dataItem in self.pageDataItemsArray) {
+    for (JHPageDataItem  *dataItem in array) {
         //        NSLog(@"%@",dataItem.ItemName);
 #warning 暂时显示 之后添加控件 需要用到
         NSLog(@"%@:%@,是否有子选项%@,数据源:%@,采购明细表:%@",dataItem.ItemDisplayName,dataItem.ItemType[@"Value"],dataItem.Source,dataItem.SourceType[@"Value"],dataItem.SubTableColumns);
@@ -127,7 +128,10 @@ singleton_implementation(JHPageDataManager)
     self.pageCategory = [NSMutableArray arrayWithArray:itemMuarray];
     self.typeArray = [NSArray arrayWithArray:itemTypeMuarray];
     self.sourceArray = [NSMutableArray arrayWithArray:sourceMuarray];
-    self.bizObjectArray = [NSMutableArray arrayWithArray:bizObjectArray];
+//    self.bizObjectArray = [NSMutableArray arrayWithArray:bizObjectArray];
+    
+    [JHBizDataManager sharedJHBizDataManager].parentidsArray = bizObjectArray;
+    [[JHBizDataManager sharedJHBizDataManager] addParentidsArray];
 }
 
 -(NSDictionary *)findOwercompanyWithKey:(NSInteger)index {

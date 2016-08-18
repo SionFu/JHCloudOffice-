@@ -16,6 +16,11 @@ singleton_interface(JHBizDataManager)
  */
 @property (nonatomic, strong) NSMutableArray *bizObjectArray;
 /**
+ *  储存采购明细表  是流程数据转换成模型
+ */
+@property (nonatomic, strong) NSMutableArray *bizObjectObjArray;
+
+/**
  *  采购列表显示名称
  */
 @property (nonatomic, strong) NSMutableArray *itemDisplayNameArray;
@@ -32,7 +37,28 @@ singleton_interface(JHBizDataManager)
  */
 - (void)getItemDisplayName;
 /**
- *  获取二级菜单内容
+ *  获取二级菜单内容 将JSON数据内容转换成对象
  */
 -(void)makeSourceFromServer;
+
+/**
+ * 保存当前推出的视图JHBizViewController
+ */
+//@property (nonatomic, strong) NSMutableArray *orguserTableViewArray;
+/**
+ *  从服务器上获取的 采购明细表数据
+ */
+@property (nonatomic, strong) NSArray *parentidsArray;
+/**
+ *  储存所有父级数组的数组
+ */
+@property (nonatomic, strong) NSMutableArray *superiorParentidsArray;
+/**
+ *  当用户点击的为最多行的时候 > superiorParentidsArray.count
+ */
+- (void)addParentidsArray;
+/**
+ *  当用户点击的行数小于当前的最多行数时 = superiorParentidsArray.count
+ */
+- (void)removerLastParentidsArray;
 @end
