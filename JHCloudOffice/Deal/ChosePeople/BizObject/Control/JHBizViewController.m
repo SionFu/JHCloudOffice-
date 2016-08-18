@@ -11,7 +11,6 @@
 #import "TSDefines.h"
 #import "JHBizViewController+BizDataDefinition.h"
 #import "TSTableViewHeaderSection.h"
-#import "JHBizEiditTableViewController.h"
 #import "JHBizDataManager.h"
 #import "JHPageDataManager.h"
 
@@ -54,7 +53,7 @@
     if (columnPath.section == 0) {
         return;
     }
-    JHBizEiditTableViewController *itemView = [JHBizEiditTableViewController new];
+    JHEditTableViewController *itemView = [JHEditTableViewController new];
     UINavigationController *nVC = [[UINavigationController alloc]initWithRootViewController:itemView];
     itemView.title = @"编辑采购明细表";
     [self presentViewController:nVC animated:YES completion:^{

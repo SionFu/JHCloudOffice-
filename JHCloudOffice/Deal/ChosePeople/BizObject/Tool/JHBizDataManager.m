@@ -22,6 +22,10 @@
     }
     return _itemDisplayNameArray;
 }
+-(NSArray *)typeArray {
+    _typeArray = [NSArray arrayWithArray:[JHPageDataManager sharedJHPageDataManager].typeArray];
+    return _typeArray;
+}
 //- (NSMutableArray *)orguserTableViewArray {
 //    if (_orguserTableViewArray == nil) {
 //        _orguserTableViewArray = [NSMutableArray array];

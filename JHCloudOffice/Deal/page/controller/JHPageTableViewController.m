@@ -236,8 +236,7 @@
                 self.datasFromServerArray[i] =  dic[@"Value"];
             }
         }
- }
-
+    }
 }
 #pragma mark 表单数据
 - (NSMutableArray *)pageCategory {

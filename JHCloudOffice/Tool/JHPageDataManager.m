@@ -130,7 +130,7 @@ singleton_implementation(JHPageDataManager)
     self.sourceArray = [NSMutableArray arrayWithArray:sourceMuarray];
 //    self.bizObjectArray = [NSMutableArray arrayWithArray:bizObjectArray];
     
-    [JHBizDataManager sharedJHBizDataManager].parentidsArray = bizObjectArray;
+    [JHBizDataManager sharedJHBizDataManager].parentidsArray = [bizObjectArray mutableCopy];
     [[JHBizDataManager sharedJHBizDataManager] addParentidsArray];
 }
 
