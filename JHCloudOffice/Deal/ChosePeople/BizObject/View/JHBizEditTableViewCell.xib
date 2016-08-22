@@ -17,14 +17,14 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8on-gR-brm">
-                        <rect key="frame" x="80" y="5" width="232" height="44.5"/>
+                        <rect key="frame" x="91" y="5" width="220.5" height="44.5"/>
                         <color key="backgroundColor" red="0.71764705880000002" green="0.71764705880000002" blue="0.71764705880000002" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UHl-gg-Jxh">
-                        <rect key="frame" x="5" y="5" width="71" height="44.5"/>
+                        <rect key="frame" x="5" y="5" width="82.5" height="44.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="日期:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Jvc-Pb-cme">
-                                <rect key="frame" x="0.0" y="4" width="71" height="40.5"/>
+                                <rect key="frame" x="5" y="4" width="77.5" height="40.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12.5"/>
                                 <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -33,7 +33,7 @@
                         <color key="backgroundColor" red="0.76798878209999999" green="0.76798878209999999" blue="0.76798878209999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="Jvc-Pb-cme" secondAttribute="bottom" id="CP3-ep-QIp"/>
-                            <constraint firstItem="Jvc-Pb-cme" firstAttribute="leading" secondItem="UHl-gg-Jxh" secondAttribute="leading" id="N0i-9D-01b"/>
+                            <constraint firstItem="Jvc-Pb-cme" firstAttribute="leading" secondItem="UHl-gg-Jxh" secondAttribute="leading" constant="5" id="N0i-9D-01b"/>
                             <constraint firstItem="Jvc-Pb-cme" firstAttribute="top" secondItem="UHl-gg-Jxh" secondAttribute="top" constant="4" id="gdq-r8-Pn4"/>
                             <constraint firstAttribute="trailing" secondItem="Jvc-Pb-cme" secondAttribute="trailing" id="hiS-rW-OW0"/>
                         </constraints>
@@ -43,10 +43,10 @@
                     <constraint firstItem="8on-gR-brm" firstAttribute="leading" secondItem="UHl-gg-Jxh" secondAttribute="trailing" constant="5" id="6hK-4l-kvJ"/>
                     <constraint firstItem="UHl-gg-Jxh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="BEy-uS-VaX"/>
                     <constraint firstItem="8on-gR-brm" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="LjI-48-m33"/>
-                    <constraint firstItem="8on-gR-brm" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="80" id="MQ1-2N-oH9"/>
                     <constraint firstAttribute="bottom" secondItem="8on-gR-brm" secondAttribute="bottom" id="PJ2-UX-aIz"/>
                     <constraint firstItem="UHl-gg-Jxh" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" id="Qyj-KG-N1B"/>
                     <constraint firstItem="UHl-gg-Jxh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="U2i-z1-GXe"/>
+                    <constraint firstItem="8on-gR-brm" firstAttribute="width" secondItem="UHl-gg-Jxh" secondAttribute="width" multiplier="4:1.5" id="UGi-wt-B5n"/>
                     <constraint firstItem="8on-gR-brm" firstAttribute="leading" secondItem="UHl-gg-Jxh" secondAttribute="trailing" constant="4" id="USt-aL-Csy"/>
                     <constraint firstItem="8on-gR-brm" firstAttribute="width" secondItem="UHl-gg-Jxh" secondAttribute="width" multiplier="2.8:4" id="VCS-0a-fJr"/>
                     <constraint firstItem="UHl-gg-Jxh" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="Ywn-OX-Bdh"/>

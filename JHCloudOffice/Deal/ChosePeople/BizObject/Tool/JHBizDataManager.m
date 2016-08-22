@@ -43,7 +43,7 @@
 }
 - (void)getItemDisplayName {
     NSMutableArray *cellsArray = [NSMutableArray array];
-    for (int i = 1; i < self.bizObjectArray.count; i ++) {
+    for (int i = 0; i < self.bizObjectArray.count; i ++) {
         NSMutableArray *valueArray = [NSMutableArray array];
         NSDictionary *dic = self.bizObjectArray[i];
         NSString *itemDisplayName = dic[@"ItemDisplayName"];

@@ -11,7 +11,9 @@
 #import "JHBizDataManager.h"
 #import "JHPageDataManager.h"
 #import "JHPageData.h"
-@interface JHEditTableViewController ()
+#import "MBProgressHUD+KR.h"
+#import "JHNetworkManager.h"
+@interface JHEditTableViewController ()<UIPickerViewDataSource,UIPickerViewDelegate,UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 @property (nonatomic ,strong ) UINib *nib;
 /**
  *  所有项目的控件
@@ -41,12 +43,25 @@
  *  暂储存上传数据
  */
 @property (nonatomic, strong)JHPageData *pageData;
+/**
+ *  格式化显示时间或者日期的方式
+ */
+@property (nonatomic, strong) NSString *dataFormart;
+/**
+ *  储存二级菜单从 server 获取的 parameters dic
+ */
+@property (nonatomic, strong)NSMutableDictionary *parametersDic;
 @end
 #define CONTROLFRME CGRectMake(5, 5, self.view.frame.size.width * 2.8 / 4 - 10, 30)
 #define BUTTONCONTROLFRME CGRectMake(5, 5, 30, 30)
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
 
 @implementation JHEditTableViewController
+-(NSMutableDictionary *)parametersDic{
+    if (_parametersDic == nil) {
+        _parametersDic = [NSMutableDictionary dictionaryWithObject:@"nil" forKey:@"nil"];
+    }return _parametersDic;
+}
 -(JHPageData *)pageData{
     if (_pageData == nil) {
         _pageData = [JHPageData new];
@@ -221,6 +236,56 @@
             [self choseStringWith:cell inRow:index];
         }
     }
+    //控件为文本输入框1行可以编辑链接文本
+    if ([self.typeArray[index] isEqualToString:@"HyperLink"]) {
+        UITextField *textField = [[UITextField alloc]initWithFrame:CONTROLFRME];
+        textField.tag = 100 + index;
+        textField.backgroundColor = [UIColor whiteColor];
+        textField.placeholder = @"http://";
+        textField.keyboardType = UIKeyboardTypeURL;
+        textField.adjustsFontSizeToFitWidth = YES;
+        self.senderControlTag = index;
+        textField.text = self.datasDicArray[index];
+        //将输入好的内容存入数组
+        [textField addTarget:self action:@selector(addDataToArray:) forControlEvents:UIControlEventEditingChanged];
+        
+        [cell.controlTypeView addSubview:textField];
+        
+    }
+    //控件为文本选择 天数Double 数字键盘
+    if ([self.typeArray[index] isEqualToString:@"Double"]||[self.typeArray[index] isEqualToString:@"Int"]) {
+        UITextField *textField = [[UITextField alloc]initWithFrame:CONTROLFRME];
+        textField.tag = 100 + index;
+        textField.backgroundColor = [UIColor whiteColor];
+        textField.keyboardType = UIKeyboardTypeNumberPad;
+        textField.adjustsFontSizeToFitWidth = YES;
+        [cell.controlTypeView addSubview:textField];
+        self.senderControlTag = index;
+        textField.text = self.datasDicArray[index];
+        //将输入好的内容存入数组
+        [textField addTarget:self action:@selector(addDataToArray:) forControlEvents:UIControlEventEditingChanged];
+    }
+    //控件为时间日期选择器
+    if ([self.typeArray[index] isEqualToString:@"DateTime"]) {
+        if ([self.sourceArray[index][0][@"key"] isEqual: @"Date"]) {
+            self.dataFormart = @"yyyy年MM月dd日";
+        }else if ([self.sourceArray[index][0][@"key"] isEqual: @"Time"]){
+            self.dataFormart = @"HH点mm分";
+        }else if ([self.sourceArray[index][0][@"key"] isEqual: @"DateTime"]){
+            self.dataFormart = @"yyyy年MM月dd日 HH点mm分";
+        }
+        UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
+        button.backgroundColor = [UIColor whiteColor];
+        if ([self.datasDicArray[index] isEqualToString:@""]) {
+            self.datasDicArray[index] = @"轻触选择...";
+        }
+        [button setTitle:self.datasDicArray[index] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+        button.tag = 100 + index;
+        [button addTarget:self action:@selector(setTimeButtonCick:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.controlTypeView addSubview:button];
+    }
 
 }
 - (void)choseStringWith:(JHBizEditTableViewCell *)cell inRow:(NSInteger)index{
@@ -251,5 +316,54 @@
     [button addTarget:self action:@selector(setSingleParticipantFromServer:) forControlEvents:UIControlEventTouchUpInside];
     [cell.controlTypeView addSubview:button];
 }
-
+- (void)setSingleParticipant:(UIButton *)sender
+{
+    self.senderControlTag = sender.tag - 100;
+    UIPickerView *itemPicker = [[UIPickerView alloc]init];
+    itemPicker.center = CGPointMake(SCREENWIDTH / 2 - 5, 100);
+    itemPicker.tag = sender.tag;
+    itemPicker.delegate = self;
+    itemPicker.showsSelectionIndicator = YES;
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"\n\n\n\n\n\n\n\n\n\n\n" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [alert.view addSubview:itemPicker];
+    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSInteger row = [itemPicker selectedRowInComponent:1];
+        NSString *selectedString = self.sourceArray[self.senderControlTag][row][@"DisplayValue"];
+        //只要在本地获取菜单的情况下才能获取以下值
+        self.parametersDic = [NSMutableDictionary dictionaryWithDictionary:self.sourceArray[self.senderControlTag][row]];
+        NSLog(@"二级菜单:%@",self.parametersDic);
+        [itemPicker selectRow:row inComponent:1 animated:NO];
+        self.datasDicArray[self.senderControlTag] = selectedString;
+        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:self.senderControlTag inSection:0];
+        //任何情况下当前 挑个都要刷新
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath ,nil] withRowAnimation:UITableViewRowAnimationBottom];
+        //设置表格选择时的动画 如果有子菜单,父菜单选择后 需要子与父一起刷新
+        NSLog(@"%@",self.sourceArray);
+        for (int i = 0; i < self.sourceArray.count; i ++ ) {
+            NSArray *array = self.sourceArray[i];
+            NSLog(@"%@",array);
+            if ([array[0][@"Key"] isEqualToString:@"Server"]) {
+                self.datasDicArray[i] = @"轻触选择...";
+                NSIndexPath *indexPath1=[NSIndexPath indexPathForRow:i inSection:0];
+                
+                [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath1 , nil]withRowAnimation:UITableViewRowAnimationBottom];
+            }
+        }
+        [sender setTitle:selectedString forState:UIControlStateNormal];
+    }];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:ok];
+    [alert addAction:cancel];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+- (void)setSingleParticipantFromServer:(UIButton *)sender {
+    self.senderControlTag = sender.tag - 100;
+    //添加一个键值对
+    [self.parametersDic setObject:@"ShortString" forKey:@"type"];
+    [MBProgressHUD showMessage:@"正在加载..."];
+    //获取上一个选项获得的 dic
+    [[JHNetworkManager sharedJHNetworkManager] getPageSaverSettingWith:self.parametersDic];
+    
+    
+}
 @end
