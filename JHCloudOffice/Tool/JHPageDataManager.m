@@ -10,8 +10,8 @@
 #import "JHDataItemPermissions.h"
 #import "JHPageDataItem.h"
 #import "JHGetPageData.h"
-#import "JHPageData.h"
 #import "JHBizDataManager.h"
+#import "JHOrguserManger.h"
 @implementation JHPageDataManager
 singleton_implementation(JHPageDataManager)
 - (NSMutableArray *)bizObjectArray {
@@ -153,6 +153,52 @@ singleton_implementation(JHPageDataManager)
         }
     }
     return dic;
+}
+- (NSArray*)readyToUploadDataWith:(NSArray *)dataArray {
+    NSMutableArray *uploadDataArray = [NSMutableArray array];
+    for (int i = 1; i < dataArray.count ; i++) {
+        NSDictionary *dic = [NSDictionary dictionary];
+       NSString *key = self.itemNameArray[i];
+      NSString *type = self.typeArray[i];
+        if ([type isEqualToString:@"MultiParticipant"]) {
+            NSDictionary *saveUserDic = [NSDictionary dictionaryWithDictionary:[[JHOrguserManger sharedJHOrguserManger].saveAllListDic objectForKey:[NSString stringWithFormat:@"%d",i]]];
+            dic = @{
+                    @"key":key,
+                    @"value":saveUserDic[@"Value"],
+                    @"displayValue":saveUserDic[@"DisplayValue"],
+                    @"type":type,
+                    };
+            
+        }else if ([type isEqualToString:@"Bool"]) {
+            NSString *str;
+            if ([dataArray[i] isEqualToString:@"0"]) {
+                str = @"false";
+            }else {
+                str = @"true";
+            }
+            dic = @{
+                    @"key":key,
+                    @"value":str,
+                    @"displayValue":str,
+                    @"type":type,
+                    };
+            
+        }
+        else {
+            NSString *value = dataArray[i];
+        
+        dic = @{
+                @"key":key,
+                @"value":value,
+                @"displayValue":dataArray[i],
+                @"type":type,
+                };
+        }
+        [uploadDataArray addObject:dic];
+    }
+    NSLog(@"%@",uploadDataArray);
+    
+    return 0;
 }
 -(NSMutableArray *)sourceFromServerArray{
     if (_sourceFromServerArray == nil) {

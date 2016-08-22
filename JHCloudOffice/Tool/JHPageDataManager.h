@@ -75,5 +75,14 @@
  *}
  */
 -(NSDictionary *)findOwercompanyWithKey:(NSInteger)index;
+/**
+ *  在流程中点击确定后准备上传数据, 传入从编辑控件中收取的数据
+ *  检测是否有关键字未写, 并返回
+ */
+- (NSArray*)readyToUploadDataWith:(NSArray *)dataArray;
+/**
+ *  准备好的上传数据
+ */
+@property (nonatomic, strong) NSString *uploadData;
 singleton_interface(JHPageDataManager)
 @end

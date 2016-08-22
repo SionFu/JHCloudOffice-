@@ -13,7 +13,6 @@
 #import "JHNetworkManager.h"
 #import "JHPageDataItem.h"
 #import "JHDataItemPermissions.h"
-#import "JHPageData.h"
 #import "JHGetPageData.h"
 #import "JHChosePeopleViewController.h"
 #import "JHOrguserManger.h"
@@ -53,10 +52,7 @@
  *  准备上传的数据数组内容为字典 value
  */
 @property (nonatomic, strong)NSMutableArray *datasDicArray;
-/**
- *  暂储存上传数据
- */
-@property (nonatomic, strong)JHPageData *pageData;
+
 /**
  *  整理从服务器接收的数据 数组位数上与本本地流程相同
  */
@@ -80,11 +76,6 @@
     [self addNavigationBtn];
     
    
-}
--(JHPageData *)pageData{
-    if (_pageData == nil) {
-        _pageData = [JHPageData new];
-    }return _pageData;
 }
 -(NSMutableDictionary *)parametersDic{
     if (_parametersDic == nil) {
@@ -152,17 +143,24 @@
         case 11:
             NSLog(@"保存");
             [self saveButtonClick];
-            NSLog(@"%@",self.pageData);
             break;
         case 12:
             NSLog(@"提交");
             [self sendButtonClick];
+            [self readyToUploadData];
             break;
         default:
             NSLog(@"无效按钮");
             break;
     }
 }
+//准备上传数据===
+-(void)readyToUploadData {
+    NSLog(@"%@",self.datasDicArray);
+    [[JHPageDataManager sharedJHPageDataManager]readyToUploadDataWith:self.datasDicArray];
+    
+}
+//====
 - (void)clickBackAction {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"返回选择流程" message:@"确定放弃流程?" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"确定放弃" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -410,10 +408,6 @@
     if ([self.typeArray[index] isEqualToString:@"MultiParticipant"]) {
         [self chosePeoeleStringWith:cell inRow:index];
     }
-    //控件为选择器意见
-    if ([self.typeArray[index] isEqualToString:@"Comment"]) {
-        
-    }
     //控件为附件
     if ([self.typeArray[index] isEqualToString:@"Attachment"]) {
         [self choseFileStringWith:cell inRow:index];
@@ -427,10 +421,6 @@
 }
 #pragma 收集文本框中的数据
 - (void)addDataToArray:(UITextField *)sender {
-    self.pageData.key = [JHPageDataManager sharedJHPageDataManager].itemNameArray[self.senderControlTag];
-    self.pageData.value = sender.text;
-    self.pageData.displayValue = sender.text;
-    self.pageData.type = @"ShortString";
     self.datasDicArray[sender.tag - 100] = sender.text;
 }
 //收集 textView 中的内容
@@ -450,7 +440,7 @@
     [button addTarget:self action:@selector(setpeopleSingleParticipant:) forControlEvents:UIControlEventTouchUpInside];
     [cell.controlTypeView addSubview:button];
 }
-
+//========明细标逻辑
 - (void)editBizDataStringWith:(JHPageTableViewCell *)cell inRow:(NSInteger)index{
     UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
     button.backgroundColor = [UIColor whiteColor];
@@ -472,6 +462,7 @@
         [self.navigationController presentViewController:nVC animated:YES completion:^{
     }];
 }
+//=======
 - (void)choseFileStringWith:(JHPageTableViewCell *)cell inRow:(NSInteger)index{
     UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
     button.backgroundColor = [UIColor whiteColor];

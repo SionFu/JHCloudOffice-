@@ -29,13 +29,12 @@ singleton_implementation(JHNetworkManager)
     NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/DefaultSheet.ashx?appKey=%@&action=validateuser&userCode=%@&password=%@",SITEURL,APPKEY,user,password];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
 #warning 有打印
-        NSLog(@"%@",responseObject);
+//        NSLog(@"%@",responseObject);
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         NSDictionary *dic = responseObject;
             JHNetworkManager *loginManger = [JHNetworkManager sharedJHNetworkManager];
             [loginManger loginResults:dic];
            } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        NSLog(@"登陆失败%@",error.userInfo);
             JHNetworkManager *loginManger = [JHNetworkManager sharedJHNetworkManager];
             [loginManger loginResults:error.userInfo];
     }];
@@ -132,7 +131,7 @@ singleton_implementation(JHNetworkManager)
 -(void)getPageSaverSettingWith:(NSDictionary *)parameters{
     NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&action=source&code=%@&version=%@&instance=null&item=null&field=wldl&activity=%@&user=%@", SITEURL,self.modulesModel.StartSheetCode,APPKEY,self.modulesModel.ModuleCode,self.modulesModel.ModuleVersion,self.modulesModel.StartActivityCode,[JHUserInfo sharedJHUserInfo].objectId];
 //    NSArray *datas = [NSArray arrayWithObject:parameters];
-    [parameters changeDicToJsonWithDic:parameters];
+//    [parameters changeDicToJsonWithDic:parameters];
 //    NSData *dataJson = [NSJSONSerialization dataWithJSONObject:datas options:kNilOptions error:nil];
 //    NSString *strJson = [[NSString alloc]initWithData:dataJson encoding:NSUTF8StringEncoding];
      NSDictionary *dicc = [NSDictionary dictionaryWithObject:[parameters changeDicToJsonWithDic:parameters] forKey:@"datas"];

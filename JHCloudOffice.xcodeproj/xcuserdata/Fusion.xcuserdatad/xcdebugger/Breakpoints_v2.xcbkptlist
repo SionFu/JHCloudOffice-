@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/Tool/JHNetworkManager.m"
-            timestampString = "491930435.549932"
+            timestampString = "493550240.90104"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "101"
-            endingLineNumber = "101"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
             landmarkName = "-getPageSettingWithCurrentVC:andRow:"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/Tool/JHNetworkManager.m"
-            timestampString = "491930435.549932"
+            timestampString = "493550240.90104"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
             landmarkName = "-getPageSettingWithCurrentVC:andRow:"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/Tool/JHNetworkManager.m"
-            timestampString = "491930435.549932"
+            timestampString = "493550240.90104"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
+            startingLineNumber = "148"
+            endingLineNumber = "148"
             landmarkName = "-getPageSaverSettingWith:"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/Tool/JHNetworkManager.m"
-            timestampString = "491930435.549932"
+            timestampString = "493550240.90104"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "76"
-            endingLineNumber = "76"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
             landmarkName = "-getModules"
             landmarkType = "5">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/Tool/JHNetworkManager.m"
-            timestampString = "491930435.549932"
+            timestampString = "493550240.90104"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "163"
-            endingLineNumber = "163"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
             landmarkName = "-getPageDatas"
             landmarkType = "5">
          </BreakpointContent>
@@ -122,27 +122,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/Deal/page/controller/JHPageTableViewController.m"
-            timestampString = "493199611.763403"
+            timestampString = "493550882.343118"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "428"
-            endingLineNumber = "428"
-            landmarkName = "-addDataToArray:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JHCloudOffice/Deal/page/controller/JHPageTableViewController.m"
-            timestampString = "493199611.763403"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "540"
-            endingLineNumber = "540"
+            startingLineNumber = "531"
+            endingLineNumber = "531"
             landmarkName = "-selectotBOOL:"
             landmarkType = "5">
          </BreakpointContent>
@@ -256,11 +240,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/Deal/page/controller/JHPageTableViewController.m"
-            timestampString = "493262545.166463"
+            timestampString = "493550882.343118"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "568"
-            endingLineNumber = "568"
+            startingLineNumber = "559"
+            endingLineNumber = "559"
             landmarkName = "-setSingleParticipant:"
             landmarkType = "5">
          </BreakpointContent>
@@ -272,11 +256,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/Deal/ChosePeople/BizObject/Control/JHEditTableViewController.m"
-            timestampString = "493262784.963189"
+            timestampString = "493550240.90104"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "301"
-            endingLineNumber = "301"
+            startingLineNumber = "431"
+            endingLineNumber = "431"
             landmarkName = "-choseStringWith:inRow:"
             landmarkType = "5">
          </BreakpointContent>
@@ -288,11 +272,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/Deal/ChosePeople/BizObject/Control/JHEditTableViewController.m"
-            timestampString = "493262793.939453"
+            timestampString = "493550240.90104"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "291"
-            endingLineNumber = "291"
+            startingLineNumber = "421"
+            endingLineNumber = "421"
             landmarkName = "-choseStringWith:inRow:"
             landmarkType = "5">
          </BreakpointContent>
@@ -304,11 +288,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/Deal/ChosePeople/BizObject/Control/JHEditTableViewController.m"
-            timestampString = "493262804.953055"
+            timestampString = "493550240.90104"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "236"
-            endingLineNumber = "236"
+            startingLineNumber = "223"
+            endingLineNumber = "223"
             landmarkName = "-addControlTocontrolTypeView:inRow:"
             landmarkType = "5">
          </BreakpointContent>
@@ -320,11 +304,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/Deal/ChosePeople/BizObject/Control/JHEditTableViewController.m"
-            timestampString = "493262866.873351"
+            timestampString = "493550240.90104"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "305"
-            endingLineNumber = "305"
+            startingLineNumber = "435"
+            endingLineNumber = "435"
             landmarkName = "-choseStringFromServerWith:inRow:"
             landmarkType = "5">
          </BreakpointContent>
@@ -336,43 +320,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/Deal/ChosePeople/BizObject/Control/JHEditTableViewController.m"
-            timestampString = "493263102.22434"
+            timestampString = "493550240.90104"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "319"
-            endingLineNumber = "319"
-            landmarkName = "-setSingleParticipant:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JHCloudOffice/Deal/ChosePeople/BizObject/Control/JHEditTableViewController.m"
-            timestampString = "493263170.332801"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "333"
-            endingLineNumber = "333"
-            landmarkName = "-setSingleParticipant:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JHCloudOffice/Deal/ChosePeople/BizObject/Control/JHEditTableViewController.m"
-            timestampString = "493279494.433966"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
+            startingLineNumber = "93"
+            endingLineNumber = "93"
             landmarkName = "-getData"
             landmarkType = "5">
          </BreakpointContent>
@@ -384,12 +336,28 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/Deal/ChosePeople/BizObject/Control/JHEditTableViewController.m"
-            timestampString = "493279858.568932"
+            timestampString = "493550240.90104"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "331"
-            endingLineNumber = "331"
-            landmarkName = "-setSingleParticipant:"
+            startingLineNumber = "495"
+            endingLineNumber = "495"
+            landmarkName = "-setSingleParticipantFromServer:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JHCloudOffice/Tool/JHNetworkManager.m"
+            timestampString = "493550240.90104"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "134"
+            endingLineNumber = "134"
+            landmarkName = "-getPageSaverSettingWith:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

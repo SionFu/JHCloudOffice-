@@ -86,4 +86,9 @@ singleton_interface(JHNetworkManager)
  *  获取用户组织
  */
 - (void)getUsersWithDic:(NSDictionary *)dic;
+
+/**
+ *  上传数据!!!未实现
+ */
+- (void)uploadDatas;
 @end

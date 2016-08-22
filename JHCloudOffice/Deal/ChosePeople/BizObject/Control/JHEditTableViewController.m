@@ -10,10 +10,11 @@
 #import "JHBizEditTableViewCell.h"
 #import "JHBizDataManager.h"
 #import "JHPageDataManager.h"
-#import "JHPageData.h"
 #import "MBProgressHUD+KR.h"
 #import "JHNetworkManager.h"
-@interface JHEditTableViewController ()<UIPickerViewDataSource,UIPickerViewDelegate,UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+#import "JHChosePeopleViewController.h"
+#import "JHBizViewController.h"
+@interface JHEditTableViewController ()<JHOrguser,UIPickerViewDataSource,UIPickerViewDelegate,UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
 @property (nonatomic ,strong ) UINib *nib;
 /**
  *  所有项目的控件
@@ -39,10 +40,7 @@
  *  所有项目的 itemName
  */
 @property (nonatomic, strong)NSMutableArray *pageDataItemsArray;
-/**
- *  暂储存上传数据
- */
-@property (nonatomic, strong)JHPageData *pageData;
+
 /**
  *  格式化显示时间或者日期的方式
  */
@@ -62,11 +60,7 @@
         _parametersDic = [NSMutableDictionary dictionaryWithObject:@"nil" forKey:@"nil"];
     }return _parametersDic;
 }
--(JHPageData *)pageData{
-    if (_pageData == nil) {
-        _pageData = [JHPageData new];
-    }return _pageData;
-}
+
 -(NSArray *)datasFromServerArray{
     if (_datasFromServerArray == nil) {
         _datasFromServerArray = [NSMutableArray array];
@@ -169,14 +163,7 @@
     }
     return _datasDicArray;
 }
-#pragma 收集文本框中的数据
-- (void)addDataToArray:(UITextField *)sender {
-    self.pageData.key = [JHPageDataManager sharedJHPageDataManager].itemNameArray[self.senderControlTag];
-    self.pageData.value = sender.text;
-    self.pageData.displayValue = sender.text;
-    self.pageData.type = @"ShortString";
-    self.datasDicArray[sender.tag - 100] = sender.text;
-}
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -214,7 +201,7 @@
     [self addControlTocontrolTypeView:cell inRow:indexPath.row];
     return cell;
 }
-
+#pragma mark 流程控件
 -(void)addControlTocontrolTypeView:(JHBizEditTableViewCell *)cell inRow:(NSInteger)index {
     //控件为文本输入框1行可以编辑
     if ([self.typeArray[index] isEqualToString:@"ShortString"]) {
@@ -286,7 +273,150 @@
         [button addTarget:self action:@selector(setTimeButtonCick:) forControlEvents:UIControlEventTouchUpInside];
         [cell.controlTypeView addSubview:button];
     }
+    //控件为选择器true or fause
+    if ([self.typeArray[index] isEqualToString:@"Bool"]) {
+        UIButton *button = [[UIButton alloc]initWithFrame:BUTTONCONTROLFRME];
+        
+        [button setBackgroundImage:[UIImage imageNamed:@"checkBoxDefault"] forState:UIControlStateNormal];
+        [button setBackgroundImage:[UIImage imageNamed:@"checkboxChecked"] forState:UIControlStateSelected];
+        button.tag = 100 + index;
+        if ([self.datasDicArray[index] isEqualToString:@""]) {
+            button.selected = NO;
+        }
+        else if ([self.datasDicArray[index] isEqualToString:@"1"]) {
+            button.selected = YES;
+        }
+        [button addTarget:self action:@selector(selectotBOOL:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.controlTypeView addSubview:button];
+    }
+    /**
+     *  需要重新推出一个视图选择
+     */
+    //控件为选择器选择部门人
+    if ([self.typeArray[index] isEqualToString:@"SingleParticipant"]) {
+        [self chosePeoeleStringWith:cell inRow:index];
+    }
+    //控件为[通知人]选择(具体公司 需要取出[@"Parents"])
+    if ([self.typeArray[index] isEqualToString:@"MultiParticipant"]) {
+        [self chosePeoeleStringWith:cell inRow:index];
+    }
+    //控件为附件
+    if ([self.typeArray[index] isEqualToString:@"Attachment"]) {
+        [self choseFileStringWith:cell inRow:index];
+    }
+    //控件为采购明细表
+    if ([self.typeArray[index] isEqualToString:@"BizObjectArray"]) {
+        [self editBizDataStringWith:cell inRow:index];
+    }
 
+}
+#pragma 收集文本框中的数据
+- (void)addDataToArray:(UITextField *)sender {
+
+    self.datasDicArray[sender.tag - 100] = sender.text;
+}
+//收集 textView 中的内容
+-(void)textViewDidChange:(UITextView *)textView{
+    self.datasDicArray[textView.tag - 100] = textView.text;
+}
+//========明细标逻辑
+- (void)editBizDataStringWith:(JHBizEditTableViewCell *)cell inRow:(NSInteger)index{
+    UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
+    button.backgroundColor = [UIColor whiteColor];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    button.tag = 100 + index;
+    if ([self.datasDicArray[index] isEqualToString:@""]) {
+        self.datasDicArray[index] = @"轻触选择...";
+    }
+    [button setTitle:self.datasDicArray[index] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(presentBizViewController:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.controlTypeView addSubview:button];
+}
+#pragma 推出编辑采购明细表视图
+- (void)presentBizViewController:(UIButton*)sender {
+    JHBizViewController *bVC = [[JHBizViewController alloc]init];
+    UINavigationController *nVC = [[UINavigationController alloc]initWithRootViewController:bVC];
+    bVC.title = [JHBizDataManager sharedJHBizDataManager].itemDisplayNameArray[self.senderControlTag][0];
+    [self.navigationController presentViewController:nVC animated:YES completion:^{
+    }];
+}
+//=======
+- (void)choseFileStringWith:(JHBizEditTableViewCell *)cell inRow:(NSInteger)index{
+    UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
+    button.backgroundColor = [UIColor whiteColor];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    button.tag = 100 + index;
+    if ([self.datasDicArray[index] isEqualToString:@""]) {
+        self.datasDicArray[index] = @"轻触选择...";
+    }
+    [button setTitle:self.datasDicArray[index] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(headImageViewTep) forControlEvents:UIControlEventTouchUpInside];
+    [cell.controlTypeView addSubview:button];
+}
+#pragma 图片\文件选择器
+-(void)headImageViewTep{
+    [self choolImage:UIImagePickerControllerSourceTypePhotoLibrary];
+    // 打开相册 或者相机 选取图片
+    //    UIActionSheet *sht1 = [[UIActionSheet alloc]initWithTitle:@"请选择" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"相机" otherButtonTitles:@"相册", nil];
+    //    [sht1 showInView:self.view];
+    
+}
+-(void)choolImage:(UIImagePickerControllerSourceType)type{
+    UIImagePickerController *picker = [[UIImagePickerController alloc]init];
+    picker.sourceType =type;
+    picker.allowsEditing = YES;
+    //设置代理
+    picker.delegate = self;
+    [self presentViewController:picker animated:YES completion:nil];
+}
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info{
+    NSLog(@"%@",info);
+    //    UIImage *image = info[UIImagePickerControllerEditedImage];//取原图还是编辑过的图片
+    //此处选择上传文件
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)chosePeoeleStringWith:(JHBizEditTableViewCell *)cell inRow:(NSInteger)index{
+    UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
+    button.backgroundColor = [UIColor whiteColor];
+    [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
+    button.tag = 100 + index;
+    if ([self.datasDicArray[index] isEqualToString:@""]) {
+        self.datasDicArray[index] = @"轻触选择...";
+    }
+    [button setTitle:self.datasDicArray[index] forState:UIControlStateNormal];
+    [button addTarget:self action:@selector(setpeopleSingleParticipant:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.controlTypeView addSubview:button];
+}
+
+- (void)selectotBOOL:(UIButton *)sender {
+    sender.selected = !sender.selected;
+    if (sender.selected == YES) {
+        self.datasDicArray[sender.tag - 100] = @"1";
+    }else {
+        self.datasDicArray[sender.tag - 100] = @"";
+    }
+}
+-(void)getOrguserSuccess {
+    [MBProgressHUD hideHUD];
+    JHChosePeopleViewController *cVC = [JHChosePeopleViewController new];
+    cVC.navigationTitle = [NSString stringWithFormat:@"%@选择",[JHBizDataManager sharedJHBizDataManager].itemDisplayNameArray[self.senderControlTag][0]];
+    UINavigationController *nvpageVC = [[UINavigationController alloc]initWithRootViewController:cVC];
+    cVC.indexPathTag = self.senderControlTag;
+    cVC.datasDicArray = self.datasDicArray;
+    cVC.indexView = self.tableView;
+    
+    [self.navigationController presentViewController:nvpageVC animated:YES completion:nil];
+}
+-(void)setpeopleSingleParticipant:(UIButton*)sender {
+    self.senderControlTag = sender.tag - 100;
+    [[JHNetworkManager sharedJHNetworkManager]getUsersWithDic:[[JHPageDataManager sharedJHPageDataManager]findOwercompanyWithKey:self.senderControlTag]];
+    JHNetworkManager *net = [JHNetworkManager new];
+    net.getOrguserDelegate = self;
+    [MBProgressHUD showMessage:@"正在加载..."];
 }
 - (void)choseStringWith:(JHBizEditTableViewCell *)cell inRow:(NSInteger)index{
     UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
@@ -366,4 +496,86 @@
     
     
 }
+
+#pragma mark Picker Date Source Methods
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
+    if (component == 0) {
+        return SCREENWIDTH * 0.8 / 3;
+    }else {
+        return SCREENWIDTH * 2 / 3;
+    }
+    
+}
+
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView{
+    return 2;
+}
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
+    if (component == 0) {
+        return 1;
+    }else {
+        NSArray *array = [NSArray arrayWithArray:self.sourceArray[self.senderControlTag]];
+        return array.count;
+    }
+}
+
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view
+{   if (component == 0) {
+    UILabel *label = [[UILabel alloc] init];
+    label.text = [JHBizDataManager sharedJHBizDataManager].itemDisplayNameArray[self.senderControlTag][0];
+    label.textColor = [UIColor blackColor];
+    label.textAlignment = NSTextAlignmentCenter;
+    label.minimumScaleFactor = 10;
+    return label;
+}else {
+    UILabel *label = [[UILabel alloc] init];
+    label.text = self.sourceArray[self.senderControlTag][row][@"DisplayValue"];
+    label.textColor = [UIColor blackColor];
+    label.font = [UIFont systemFontOfSize:20];
+    label.minimumScaleFactor = 10;
+    label.textAlignment = NSTextAlignmentCenter;
+    return label;
+}
+}
+
+- (void)setTimeButtonCick:(UIButton *)sender {
+    UIDatePicker *datePicker = [[UIDatePicker alloc] init];
+    datePicker.center = CGPointMake(SCREENWIDTH / 2 - 5, 100);
+    NSDateFormatter *format = [[NSDateFormatter alloc]init];
+    if ([self.sourceArray[sender.tag - 100][0][@"Index"]  isEqual: @"Date"]) {
+        self.dataFormart = @"yyyy年MM月dd日";
+        datePicker.datePickerMode = UIDatePickerModeDate;
+    }else if ([self.sourceArray[sender.tag - 100][0][@"Index"]  isEqual: @"Time"]){
+        self.dataFormart = @"HH点mm分";
+        datePicker.datePickerMode = UIDatePickerModeTime;
+    }else if ([self.sourceArray[sender.tag - 100][0][@"Index"]  isEqual: @"DateTime"]){
+        self.dataFormart = @"yyyy年MM月dd日 HH点mm分";
+        datePicker.datePickerMode = UIDatePickerModeDateAndTime;
+    }
+    [format setDateFormat:self.dataFormart];
+    NSDate *date = [format dateFromString:sender.titleLabel.text];
+    //    [datePicker setDate:date animated:YES];
+    NSLog(@"%f",date.timeIntervalSinceNow);
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"\n\n\n\n\n\n\n\n\n\n\n" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+    [alert.view addSubview:datePicker];
+    UIAlertAction *ok = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+        NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+        [dateFormat setDateFormat:self.dataFormart];
+        NSString *dateString = [dateFormat stringFromDate:datePicker.date];
+        NSLog(@"%@",dateString);
+        sender.titleLabel.text = dateString;
+        self.datasDicArray[sender.tag - 100] = dateString;
+        NSIndexPath *indexPath=[NSIndexPath indexPathForRow:sender.tag - 100 inSection:0];
+        [self.tableView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath,nil] withRowAnimation:UITableViewRowAnimationBottom];
+    }];
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:ok];
+    [alert addAction:cancel];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+//-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    return 50;
+//}
 @end
