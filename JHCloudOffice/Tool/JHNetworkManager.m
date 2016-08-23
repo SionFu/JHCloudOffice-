@@ -134,7 +134,7 @@ singleton_implementation(JHNetworkManager)
 //    [parameters changeDicToJsonWithDic:parameters];
 //    NSData *dataJson = [NSJSONSerialization dataWithJSONObject:datas options:kNilOptions error:nil];
 //    NSString *strJson = [[NSString alloc]initWithData:dataJson encoding:NSUTF8StringEncoding];
-     NSDictionary *dicc = [NSDictionary dictionaryWithObject:[parameters changeDicToJsonWithDic:parameters] forKey:@"datas"];
+     NSDictionary *dicc = [NSDictionary dictionaryWithObject:[parameters changeDicToJsonWithArrDic:parameters] forKey:@"datas"];
     AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
     [manger POST:urlStr parameters:dicc constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -173,7 +173,7 @@ singleton_implementation(JHNetworkManager)
 //                          @"displayValue":@"539e82c4-3415-4fd8-9db1-7485899efb7b",
 //                          @"type":@"ShortString"
 //                          };
-   NSString *str = [dic changeDicToJsonWithDic:dic];
+   NSString *str = [dic changeDicToJsonWithArrDic:dic];
     NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&token=%@&action=orguser&canSelType=&instance=null&code=%@&userId=%@&field=tzr&parentid=%@", SITEURL,self.modulesModel.StartSheetCode,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,self.modulesModel.ModuleCode,[JHUserInfo sharedJHUserInfo].objectId,str];
      NSString * encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes( kCFAllocatorDefault, (CFStringRef)urlStr, NULL, NULL,  kCFStringEncodingUTF8 ));
     [manager GET:encodedString parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
@@ -188,5 +188,30 @@ singleton_implementation(JHNetworkManager)
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         NSLog(@"%@",error.userInfo);
     }];
+}
+- (void)uploadDatasWithData:(NSArray *)uploadData andInstanceName:(NSString *)pageName {
+    /*
+     http://h3.juhua.com.cn/Portal/ForApp/Sheets/ceshi.ashx?appKey=cloudoffice&userid=f0bbd1cc-7727-449c-ba74-e63dca84f9f1&action=create&code=ceshi&instancename=%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B
+     */
+    NSString *instancename = [pageName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&action=create&code=%@&userid=%@&instancename=%@", SITEURL,self.modulesModel.StartSheetCode,APPKEY,self.modulesModel.ModuleCode,[JHUserInfo sharedJHUserInfo].objectId,instancename];
+    AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
+    
+    NSString *strJson = [NSString stringWithFormat:@"[%@]",[uploadData componentsJoinedByString:@","]];
+    NSLog(@"uer:%@\nJson:%@",urlStr,strJson);
+    
+    [manger POST:urlStr parameters:strJson constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSLog(@"接收成功%@",responseObject);
+//        NSArray *array = responseObject[@"datas"];
+//        if (array.count == 0) {
+//            NSLog(@"上传失败");
+//            return ;
+//        }
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"%@",error.userInfo);
+    }];
+    
 }
 @end

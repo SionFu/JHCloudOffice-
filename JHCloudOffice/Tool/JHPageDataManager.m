@@ -12,6 +12,7 @@
 #import "JHGetPageData.h"
 #import "JHBizDataManager.h"
 #import "JHOrguserManger.h"
+#import "NSDictionary+JHChangeDicToJson.h"
 @implementation JHPageDataManager
 singleton_implementation(JHPageDataManager)
 - (NSMutableArray *)bizObjectArray {
@@ -95,7 +96,7 @@ singleton_implementation(JHPageDataManager)
     for (JHPageDataItem  *dataItem in array) {
         //        NSLog(@"%@",dataItem.ItemName);
 #warning 暂时显示 之后添加控件 需要用到
-        NSLog(@"%@:%@,是否有子选项%@,数据源:%@,采购明细表:%@",dataItem.ItemDisplayName,dataItem.ItemType[@"Value"],dataItem.Source,dataItem.SourceType[@"Value"],dataItem.SubTableColumns);
+//        NSLog(@"%@:%@,是否有子选项%@,数据源:%@,采购明细表:%@",dataItem.ItemDisplayName,dataItem.ItemType[@"Value"],dataItem.Source,dataItem.SourceType[@"Value"],dataItem.SubTableColumns);
         [itemMuarray addObject:dataItem.ItemDisplayName];
         [itemTypeMuarray addObject:dataItem.ItemType[@"Value"]];
         if (dataItem.Source == nil) {
@@ -156,7 +157,7 @@ singleton_implementation(JHPageDataManager)
 }
 - (NSArray*)readyToUploadDataWith:(NSArray *)dataArray {
     NSMutableArray *uploadDataArray = [NSMutableArray array];
-    for (int i = 1; i < dataArray.count ; i++) {
+    for (int i = 0; i < dataArray.count ; i++) {
         NSDictionary *dic = [NSDictionary dictionary];
        NSString *key = self.itemNameArray[i];
       NSString *type = self.typeArray[i];
@@ -168,7 +169,6 @@ singleton_implementation(JHPageDataManager)
                     @"displayValue":saveUserDic[@"DisplayValue"],
                     @"type":type,
                     };
-            
         }else if ([type isEqualToString:@"Bool"]) {
             NSString *str;
             if ([dataArray[i] isEqualToString:@"0"]) {
@@ -183,6 +183,31 @@ singleton_implementation(JHPageDataManager)
                     @"type":type,
                     };
             
+        }else if ([type isEqualToString:@"DateTime"]) {
+            NSString *dataStr = dataArray[i];
+            NSDateFormatter *format = [[NSDateFormatter alloc]init];
+            NSString *strYear;
+            NSDate *dateStr;
+            if (dataStr.length == 11) {
+                [format setDateFormat:@"yyyy年MM月dd日"];
+                dateStr = [format dateFromString:dataArray[i]];
+            }else if (dataStr.length == 6){
+                [format setDateFormat:@"yyyy年MM月dd日 HH点mm分"];
+                strYear = [NSString stringWithFormat:@"2000年12月19日 %@",dataArray[i]];
+                dateStr = [format dateFromString:strYear];
+            } else {
+                [format setDateFormat:@"yyyy年MM月dd日 HH点mm分"];
+                dateStr = [format dateFromString:dataArray[i]];
+            }
+            [format setDateFormat:@"yyyy/MM/dd HH:mm:ss"];
+            NSString *newstr = [format stringFromDate:dateStr];
+            dic = @{
+                    @"key":key,
+                    @"value":newstr,
+                    @"displayValue":dataStr,
+                    @"type":type,
+                    };
+            
         }
         else {
             NSString *value = dataArray[i];
@@ -194,11 +219,11 @@ singleton_implementation(JHPageDataManager)
                 @"type":type,
                 };
         }
-        [uploadDataArray addObject:dic];
+        [uploadDataArray addObject:[dic changeDicToJsonWithDic:dic]];
     }
     NSLog(@"%@",uploadDataArray);
     
-    return 0;
+    return uploadDataArray;
 }
 -(NSMutableArray *)sourceFromServerArray{
     if (_sourceFromServerArray == nil) {

@@ -12,5 +12,5 @@
 /**
  *  流程标题
  */
-@property (nonatomic, strong) NSString *pageNage;
+@property (nonatomic, strong) NSString *pageName;
 @end

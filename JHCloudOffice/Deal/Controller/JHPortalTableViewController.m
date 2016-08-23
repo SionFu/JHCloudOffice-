@@ -83,7 +83,7 @@ static int i = 0;
     JHPageTableViewController *pageVC = [[JHPageTableViewController alloc]init];
     UINavigationController *nvpageVC = [[UINavigationController alloc]initWithRootViewController:pageVC];
     JHModules *data = self.catrgoryArray[indexPath.row];
-    pageVC.pageNage = data.ModuleName;
+    pageVC.pageName = data.ModuleName;
     [self.navigationController presentViewController:nvpageVC animated:YES completion:nil];
     
 }

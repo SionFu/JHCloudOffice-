@@ -49,7 +49,7 @@
 @property (nonatomic, strong)NSMutableDictionary *parametersDic;
 
 /**
- *  准备上传的数据数组内容为字典 value
+ *  准备上传的数据数组内容为收集流程控件里的内容 value
  */
 @property (nonatomic, strong)NSMutableArray *datasDicArray;
 
@@ -57,6 +57,10 @@
  *  整理从服务器接收的数据 数组位数上与本本地流程相同
  */
 @property (nonatomic, strong)NSMutableArray *datasFromServerArray;
+/**
+ *  从整理上传数据中返回的上传数据 json 数组
+ */
+@property (nonatomic, strong)NSArray *uploadData;
 @end
 #define CONTROLFRME CGRectMake(5, 5, self.view.frame.size.width * 2.8 / 4 - 10, 30)
 #define BUTTONCONTROLFRME CGRectMake(5, 5, 30, 30)
@@ -76,6 +80,11 @@
     [self addNavigationBtn];
     
    
+}
+-(NSArray *)uploadData{
+    if (_uploadData == nil) {
+        _uploadData = [NSArray array];
+    }return _uploadData;
 }
 -(NSMutableDictionary *)parametersDic{
     if (_parametersDic == nil) {
@@ -146,8 +155,9 @@
             break;
         case 12:
             NSLog(@"提交");
-            [self sendButtonClick];
             [self readyToUploadData];
+            [self sendButtonClick];
+            
             break;
         default:
             NSLog(@"无效按钮");
@@ -157,7 +167,7 @@
 //准备上传数据===
 -(void)readyToUploadData {
     NSLog(@"%@",self.datasDicArray);
-    [[JHPageDataManager sharedJHPageDataManager]readyToUploadDataWith:self.datasDicArray];
+  self.uploadData = [[JHPageDataManager sharedJHPageDataManager]readyToUploadDataWith:self.datasDicArray];
     
 }
 //====
@@ -186,6 +196,7 @@
 - (void)sendButtonClick {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提交内容" message:@"确定提交?" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [[JHNetworkManager sharedJHNetworkManager]uploadDatasWithData:self.uploadData andInstanceName:self.pageName];
         
     }];
     UIAlertAction *actionNo = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
@@ -207,7 +218,8 @@
 //        [self.datasDicArray addObject:[NSString stringWithFormat:@"test%d",i]];
 //    }
     for (int i = 0 ; i < self.datasFromServerArray.count; i ++) {
-        NSLog(@"%d:%@",i + 1,self.datasFromServerArray[i]);
+        //显示从服务器上获取的流程数据
+//        NSLog(@"%d:%@",i + 1,self.datasFromServerArray[i]);
     }
     for (int i = 0 ; i <self.datasFromServerArray.count; i++) {
         if ([self.datasFromServerArray[i] isEqualToString:@""]) {
@@ -271,7 +283,7 @@
         _nib = [UINib nibWithNibName:@"JHPageTableViewCell" bundle:nil];
         [tableView registerNib:_nib forCellReuseIdentifier:cellIdentifier];
         UILabel *headTitle = [[UILabel alloc]initWithFrame:CONTROLFRME];
-        headTitle.text = self.pageNage;
+        headTitle.text = self.pageName;
         headTitle.font = [UIFont systemFontOfSize:20];
         headTitle.textAlignment = NSTextAlignmentCenter;
         headTitle.center = CGPointMake(self.view.frame.size.width / 2, 10);
@@ -363,17 +375,28 @@
         }
         UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
         button.backgroundColor = [UIColor whiteColor];
+        button.tag = 100 + index;
         if ([self.datasDicArray[index] isEqualToString:@""]) {
-            self.datasDicArray[index] = @"轻触选择...";
+            //显示当前时间
+            if ([self.sourceArray[button.tag - 100][0][@"Index"]  isEqual: @"Date"]) {
+                self.dataFormart = @"yyyy年MM月dd日";
+            }else if ([self.sourceArray[button.tag - 100][0][@"Index"]  isEqual: @"Time"]){
+                self.dataFormart = @"HH点mm分";
+            }else if ([self.sourceArray[button.tag - 100][0][@"Index"]  isEqual: @"DateTime"]){
+                self.dataFormart = @"yyyy年MM月dd日 HH点mm分";
+            }
+            NSDateFormatter *format = [[NSDateFormatter alloc]init];
+            [format setDateFormat:self.dataFormart];
+            NSString *dateTime = [format stringFromDate:[NSDate date]];
+            self.datasDicArray[index] = dateTime;
         }
         [button setTitle:self.datasDicArray[index] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
-        button.tag = 100 + index;
         [button addTarget:self action:@selector(setTimeButtonCick:) forControlEvents:UIControlEventTouchUpInside];
         [cell.controlTypeView addSubview:button];
     }
-    //控件为文本视图,多行 Html 需要添加 html 标记语言 like:"<a href='aaa.aspx?xx=33'>测试内容</a>"
+    //控件为文本视图,多行 Html 
     if ([self.typeArray[index] isEqualToString:@"String"]||[self.typeArray[index] isEqualToString:@"Html"]||[self.typeArray[index] isEqualToString:@"Comment"]) {
         UITextView *textView = [[UITextView alloc]initWithFrame:CONTROLFRME];
         textView.text = self.datasDicArray[index];
@@ -414,6 +437,8 @@
     }
     //控件为采购明细表
     if ([self.typeArray[index] isEqualToString:@"BizObjectArray"]) {
+        //暂时未实现=======
+        return;
         [self editBizDataStringWith:cell inRow:index];
     }
 

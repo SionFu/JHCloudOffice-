@@ -10,4 +10,5 @@
 
 @interface NSDictionary (JHChangeDicToJson)
 -(NSString *)changeDicToJsonWithDic:(NSDictionary *)dic;
+-(NSString *)changeDicToJsonWithArrDic:(NSDictionary *)dic;
 @end

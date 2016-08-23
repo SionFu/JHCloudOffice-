@@ -263,13 +263,24 @@
         }
         UIButton *button = [[UIButton alloc]initWithFrame:CONTROLFRME];
         button.backgroundColor = [UIColor whiteColor];
+        button.tag = 100 + index;
         if ([self.datasDicArray[index] isEqualToString:@""]) {
-            self.datasDicArray[index] = @"轻触选择...";
+            //显示当前时间
+            if ([self.sourceArray[button.tag - 100][0][@"Index"]  isEqual: @"Date"]) {
+                self.dataFormart = @"yyyy年MM月dd日";
+            }else if ([self.sourceArray[button.tag - 100][0][@"Index"]  isEqual: @"Time"]){
+                self.dataFormart = @"HH点mm分";
+            }else if ([self.sourceArray[button.tag - 100][0][@"Index"]  isEqual: @"DateTime"]){
+                self.dataFormart = @"yyyy年MM月dd日 HH点mm分";
+            }
+            NSDateFormatter *format = [[NSDateFormatter alloc]init];
+            [format setDateFormat:self.dataFormart];
+            NSString *dateTime = [format stringFromDate:[NSDate date]];
+            self.datasDicArray[index] = dateTime;
         }
         [button setTitle:self.datasDicArray[index] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [button setTitleColor:[UIColor grayColor] forState:UIControlStateHighlighted];
-        button.tag = 100 + index;
         [button addTarget:self action:@selector(setTimeButtonCick:) forControlEvents:UIControlEventTouchUpInside];
         [cell.controlTypeView addSubview:button];
     }

@@ -90,5 +90,5 @@ singleton_interface(JHNetworkManager)
 /**
  *  上传数据!!!未实现
  */
-- (void)uploadDatas;
+- (void)uploadDatasWithData:(NSArray *)uploadData andInstanceName:(NSString *)pageName;
 @end
