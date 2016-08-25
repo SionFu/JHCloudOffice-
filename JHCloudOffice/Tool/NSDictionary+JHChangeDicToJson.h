@@ -11,4 +11,5 @@
 @interface NSDictionary (JHChangeDicToJson)
 -(NSString *)changeDicToJsonWithDic:(NSDictionary *)dic;
 -(NSString *)changeDicToJsonWithArrDic:(NSDictionary *)dic;
++(NSString *)stringTOjson:(id)temps;
 @end

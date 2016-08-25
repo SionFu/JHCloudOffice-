@@ -12,6 +12,7 @@
 #import "JHChoseTableViewController.h"
 #import "JHNetworkManager.h"
 #import "JHOrguserManger.h"
+#import "MBProgressHUD+KR.h"
 @interface JHChosePeopleViewController ()<YSLContainerViewControllerDelegate,JHOrguser>
 @property (nonatomic, strong)NSArray *portalArray;
 @property (nonatomic, strong)NSMutableArray  *muPVC;
@@ -106,6 +107,12 @@
     }];
 }
 - (void)saveButtonClick {
+    
+    if ([JHOrguserManger sharedJHOrguserManger].saveUserDic[@"DisplayValue"] == nil || [[JHOrguserManger sharedJHOrguserManger].saveUserDic[@"DisplayValue"] isEqualToString:@"轻触选择..."]) {
+        [MBProgressHUD showError:@"请选择人员"];
+        return;
+    }
+    
     [self dismissViewControllerAnimated:YES completion:^{
         //将组织选出的名字 传输给 配置页面
         [self sendDataToPageTableView];

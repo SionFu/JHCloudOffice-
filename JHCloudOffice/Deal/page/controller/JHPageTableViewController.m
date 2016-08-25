@@ -531,7 +531,7 @@
     self.senderControlTag = index;
     button.tag = 100 + index;
     if ([self.datasDicArray[index] isEqualToString:@""]) {
-        self.datasDicArray[index] = @"轻触选择..";
+        self.datasDicArray[index] = @"轻触选择...";
     }
     [button setTitle:self.datasDicArray[index] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(setSingleParticipant:) forControlEvents:UIControlEventTouchUpInside];

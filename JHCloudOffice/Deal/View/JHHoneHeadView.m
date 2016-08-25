@@ -83,7 +83,8 @@
     if ([self.delegate respondsToSelector:@selector(clickHomeMenuButton:)]) {
         [self.delegate clickHomeMenuButton:(NSInteger)sender.tag];
     }
-    NSLog(@"=====%ld",(long)sender.tag);
+    //显示 点击了 左右滑动视图中的那个图标 tag 值
+//    NSLog(@"=====%ld",(long)sender.tag);
 }
 
 

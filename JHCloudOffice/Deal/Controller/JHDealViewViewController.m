@@ -12,6 +12,7 @@
 #import "JHNetworkManager.h"
 #import "JHProcessViewController.h"
 #import "JHScanCRCodeViewController.h"
+#import "MBProgressHUD+KR.h"
 @interface JHDealViewViewController ()<JHHomeMenuButtonDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,UIActionSheetDelegate>
 /**
  *  用户姓名
@@ -126,6 +127,25 @@
             evc.title = @"发起流程";
             [self.navigationController pushViewController:evc animated:YES];
                 }
+            break;
+        case 1:{
+            //发送邮件
+        }
+            break;
+        case 2:{
+            //打开集团彩云 app
+            if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"uban://"]])
+            {
+                NSLog(@"install--");
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"uban://"]];
+            }
+            else
+            {
+                [MBProgressHUD showError:@"请先安装集团彩云App"];
+                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://"]];
+                NSLog(@"no---");
+            }
+        }
             break;
         case 3:{
             JHScanCRCodeViewController *sVC = [JHScanCRCodeViewController new];

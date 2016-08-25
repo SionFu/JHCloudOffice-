@@ -21,7 +21,7 @@
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(closeScanVC)];
     self.title = @"二维码扫描";
     //模拟器不能打开摄像头
-//    [self starScanCIQRCode];
+    [self starScanCIQRCode];
 }
 - (void)starScanCIQRCode {
     AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
@@ -43,7 +43,7 @@
     metadataOutput.metadataObjectTypes = @[AVMetadataObjectTypeQRCode,AVMetadataObjectTypeEAN13Code,AVMetadataObjectTypeEAN8Code];
     //把数据输出到屏幕上,给用户看
     _viewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.session];
-    _viewLayer.frame = self.view.bounds;
+    _viewLayer.frame = [UIScreen mainScreen].bounds;
     [self.view.layer addSublayer:self.viewLayer];
     //启动管道
     [self.session startRunning];

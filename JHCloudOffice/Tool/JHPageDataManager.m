@@ -163,12 +163,16 @@ singleton_implementation(JHPageDataManager)
       NSString *type = self.typeArray[i];
         if ([type isEqualToString:@"MultiParticipant"]) {
             NSDictionary *saveUserDic = [NSDictionary dictionaryWithDictionary:[[JHOrguserManger sharedJHOrguserManger].saveAllListDic objectForKey:[NSString stringWithFormat:@"%d",i]]];
+            if (saveUserDic.count == 0) {
+                //未选择人员信息
+            }else {
             dic = @{
                     @"key":key,
                     @"value":saveUserDic[@"Value"],
                     @"displayValue":saveUserDic[@"DisplayValue"],
                     @"type":type,
                     };
+            }
         }else if ([type isEqualToString:@"Bool"]) {
             NSString *str;
             if ([dataArray[i] isEqualToString:@"0"]) {
@@ -219,9 +223,14 @@ singleton_implementation(JHPageDataManager)
                 @"type":type,
                 };
         }
+        if ([dic[@"displayValue"] isEqualToString:@""] || [dic[@"displayValue"] isEqualToString:@"轻触选择..."] ) {
+            //剔除 流程信息中未提交的信息
+        }else {
         [uploadDataArray addObject:[dic changeDicToJsonWithDic:dic]];
+//        [uploadDataArray addObject:dic];
+        }
     }
-    NSLog(@"%@",uploadDataArray);
+//    NSLog(@"%@",uploadDataArray);
     
     return uploadDataArray;
 }
