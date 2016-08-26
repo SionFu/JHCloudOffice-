@@ -12,6 +12,7 @@
 #import "JHNetworkManager.h"
 #import "JHProcessViewController.h"
 #import "JHScanCRCodeViewController.h"
+#import "JHSendMailViewController.h"
 #import "MBProgressHUD+KR.h"
 @interface JHDealViewViewController ()<JHHomeMenuButtonDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,UIActionSheetDelegate>
 /**
@@ -130,6 +131,12 @@
             break;
         case 1:{
             //发送邮件
+            JHSendMailViewController *sMailVC  = [JHSendMailViewController new];
+            sMailVC.title = @"发送邮件";
+            UINavigationController *nVC = [[UINavigationController alloc]initWithRootViewController:sMailVC];
+            [self.navigationController presentViewController:nVC animated:YES completion:^{
+                
+            }];
         }
             break;
         case 2:{

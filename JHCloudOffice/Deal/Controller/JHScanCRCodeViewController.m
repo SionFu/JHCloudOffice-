@@ -8,6 +8,7 @@
 
 #import "JHScanCRCodeViewController.h"
 #import <AVFoundation/AVFoundation.h>
+#import "JHSendMailViewController.h"
 @interface JHScanCRCodeViewController ()<AVCaptureMetadataOutputObjectsDelegate>
 @property (nonatomic, strong) AVCaptureSession *session;
 @property (nonatomic, strong) AVCaptureVideoPreviewLayer *viewLayer;
@@ -18,7 +19,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(closeScanVC)];
+    UIBarButtonItem *liftButton = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStylePlain target:self action:@selector(closeScanVC)];
+    [self.navigationItem setLeftBarButtonItem:liftButton];
     self.title = @"二维码扫描";
     //模拟器不能打开摄像头
     [self starScanCIQRCode];
@@ -31,6 +33,7 @@
         NSLog(@"扫描失败");
     }else {
         NSLog(@"扫描成功");
+        
     }
     AVCaptureMetadataOutput *metadataOutput = [AVCaptureMetadataOutput new];
     [metadataOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
@@ -56,6 +59,12 @@
         NSString *str = [NSString stringWithFormat:@"%@",obj];
         NSLog(@"%@",str);
         //推出发送邮件视图
+        JHSendMailViewController *sMailVC  = [JHSendMailViewController new];
+        UINavigationController *nVC = [[UINavigationController alloc]initWithRootViewController:sMailVC];
+        [self.navigationController presentViewController:nVC animated:YES completion:^{
+           //显示邮件发送标题
+            //传入发送邮件给谁的数据
+        }];
     }
 }
 - (void)closeScanVC {

@@ -11,7 +11,6 @@
 		3105D9F61D1BAE1A0098EA73 /* JHMenuData.m in Sources */ = {isa = PBXBuildFile; fileRef = 3105D9F51D1BAE1A0098EA73 /* JHMenuData.m */; };
 		3105D9F81D1BB26A0098EA73 /* menuData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3105D9F71D1BB26A0098EA73 /* menuData.plist */; };
 		3105D9FB1D1BBB740098EA73 /* JHUIControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 3105D9FA1D1BBB740098EA73 /* JHUIControl.m */; };
-		310D52C91D2362D8003C09E9 /* Foundation+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 310D52C81D2362D8003C09E9 /* Foundation+Log.m */; };
 		310D52D11D236F1F003C09E9 /* JHPageTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 310D52CF1D236F1F003C09E9 /* JHPageTableViewController.m */; };
 		310D52D21D236F1F003C09E9 /* JHPageTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 310D52D01D236F1F003C09E9 /* JHPageTableViewController.xib */; };
 		310D52D61D236F68003C09E9 /* JHPageTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 310D52D41D236F68003C09E9 /* JHPageTableViewCell.m */; };
@@ -29,6 +28,9 @@
 		3126A8A61D1908DD00ADC960 /* JHCloudOfficeUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3126A8A51D1908DD00ADC960 /* JHCloudOfficeUITests.m */; };
 		3126A8B51D19098400ADC960 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3126A8B41D19098400ADC960 /* AppDelegate.m */; };
 		3126A8BE1D191D1A00ADC960 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3126A8BD1D191D1A00ADC960 /* Assets.xcassets */; };
+		312BAFD01D6FC03F0037D656 /* JHSendMailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 312BAFCE1D6FC03F0037D656 /* JHSendMailViewController.m */; };
+		312BAFD11D6FC03F0037D656 /* JHSendMailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 312BAFCF1D6FC03F0037D656 /* JHSendMailViewController.xib */; };
+		312BAFD81D6FDFF80037D656 /* JHWeaverNetManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 312BAFD71D6FDFF80037D656 /* JHWeaverNetManger.m */; };
 		312F89F11D38C61100CAAA9A /* JHGetPageData.m in Sources */ = {isa = PBXBuildFile; fileRef = 312F89F01D38C61100CAAA9A /* JHGetPageData.m */; };
 		3142C6DA1D3F4EF70043C293 /* JHOrguserTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3142C6D81D3F4EF70043C293 /* JHOrguserTableViewController.m */; };
 		3142C6DB1D3F4EF70043C293 /* JHOrguserTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3142C6D91D3F4EF70043C293 /* JHOrguserTableViewController.xib */; };
@@ -106,7 +108,6 @@
 		3105D9F71D1BB26A0098EA73 /* menuData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = menuData.plist; sourceTree = "<group>"; };
 		3105D9F91D1BBB740098EA73 /* JHUIControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHUIControl.h; sourceTree = "<group>"; };
 		3105D9FA1D1BBB740098EA73 /* JHUIControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHUIControl.m; sourceTree = "<group>"; };
-		310D52C81D2362D8003C09E9 /* Foundation+Log.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Foundation+Log.m"; sourceTree = "<group>"; };
 		310D52CE1D236F1F003C09E9 /* JHPageTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHPageTableViewController.h; sourceTree = "<group>"; };
 		310D52CF1D236F1F003C09E9 /* JHPageTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHPageTableViewController.m; sourceTree = "<group>"; };
 		310D52D01D236F1F003C09E9 /* JHPageTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHPageTableViewController.xib; sourceTree = "<group>"; };
@@ -136,6 +137,11 @@
 		3126A8B31D19098400ADC960 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		3126A8B41D19098400ADC960 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		3126A8BD1D191D1A00ADC960 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		312BAFCD1D6FC03F0037D656 /* JHSendMailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHSendMailViewController.h; sourceTree = "<group>"; };
+		312BAFCE1D6FC03F0037D656 /* JHSendMailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHSendMailViewController.m; sourceTree = "<group>"; };
+		312BAFCF1D6FC03F0037D656 /* JHSendMailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHSendMailViewController.xib; sourceTree = "<group>"; };
+		312BAFD61D6FDFF80037D656 /* JHWeaverNetManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHWeaverNetManger.h; sourceTree = "<group>"; };
+		312BAFD71D6FDFF80037D656 /* JHWeaverNetManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHWeaverNetManger.m; sourceTree = "<group>"; };
 		312F89EF1D38C61100CAAA9A /* JHGetPageData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHGetPageData.h; sourceTree = "<group>"; };
 		312F89F01D38C61100CAAA9A /* JHGetPageData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHGetPageData.m; sourceTree = "<group>"; };
 		3142C6D71D3F4EF70043C293 /* JHOrguserTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHOrguserTableViewController.h; sourceTree = "<group>"; };
@@ -379,7 +385,6 @@
 			isa = PBXGroup;
 			children = (
 				31E2C7BB1D6E837900E5D367 /* TSUIKit */,
-				310D52C81D2362D8003C09E9 /* Foundation+Log.m */,
 				31A358B31D20F1B100D4C0DA /* YYModel */,
 				31B6F4661D1FACDE00A2670B /* YSLContainerViewController */,
 				31E2F52D1D1A2DB200FC212B /* MBProgessHUD */,
@@ -422,6 +427,73 @@
 			sourceTree = "<group>";
 		};
 		3126A8B71D1909BA00ADC960 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		312BAFC91D6FBFAC0037D656 /* sendEmal发送邮件 */ = {
+			isa = PBXGroup;
+			children = (
+				312BAFCA1D6FBFAC0037D656 /* Controller */,
+				312BAFCB1D6FBFAC0037D656 /* Model */,
+				312BAFCC1D6FBFAD0037D656 /* View */,
+			);
+			name = "sendEmal发送邮件";
+			path = sendEmal;
+			sourceTree = "<group>";
+		};
+		312BAFCA1D6FBFAC0037D656 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				312BAFCD1D6FC03F0037D656 /* JHSendMailViewController.h */,
+				312BAFCE1D6FC03F0037D656 /* JHSendMailViewController.m */,
+				312BAFCF1D6FC03F0037D656 /* JHSendMailViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		312BAFCB1D6FBFAC0037D656 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		312BAFCC1D6FBFAD0037D656 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		312BAFD21D6FCC390037D656 /* FileRead查看文件 */ = {
+			isa = PBXGroup;
+			children = (
+				312BAFD31D6FCC390037D656 /* Controller */,
+				312BAFD41D6FCC390037D656 /* Model */,
+				312BAFD51D6FCC390037D656 /* View */,
+			);
+			name = "FileRead查看文件";
+			path = FileRead;
+			sourceTree = "<group>";
+		};
+		312BAFD31D6FCC390037D656 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		312BAFD41D6FCC390037D656 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		312BAFD51D6FCC390037D656 /* View */ = {
 			isa = PBXGroup;
 			children = (
 			);
@@ -596,6 +668,8 @@
 			children = (
 				31E2F50A1D1A240200FC212B /* JHNetworkManager.h */,
 				31E2F50B1D1A240200FC212B /* JHNetworkManager.m */,
+				312BAFD61D6FDFF80037D656 /* JHWeaverNetManger.h */,
+				312BAFD71D6FDFF80037D656 /* JHWeaverNetManger.m */,
 				31E2F50D1D1A261400FC212B /* JHUserInfo.h */,
 				31E2F50E1D1A261400FC212B /* JHUserInfo.m */,
 				31E2F5361D1A2E0400FC212B /* Singleton.h */,
@@ -653,6 +727,8 @@
 				318A0D201D587EB500032F6D /* BizObject采购明细表 */,
 				31F875721D3DC2EB00BEE76D /* ChosePeople组织选择 */,
 				310D52CA1D236ED2003C09E9 /* page流程配置 */,
+				312BAFC91D6FBFAC0037D656 /* sendEmal发送邮件 */,
+				312BAFD21D6FCC390037D656 /* FileRead查看文件 */,
 				31E2F53A1D1A830C00FC212B /* Controller */,
 				31E2F53B1D1A830C00FC212B /* Model */,
 				31E2F53C1D1A830C00FC212B /* View */,
@@ -928,6 +1004,7 @@
 				310D52D21D236F1F003C09E9 /* JHPageTableViewController.xib in Resources */,
 				3142C6E01D3F4F170043C293 /* JHOrguserTableViewCell.xib in Resources */,
 				3126A8961D1908DD00ADC960 /* Main.storyboard in Resources */,
+				312BAFD11D6FC03F0037D656 /* JHSendMailViewController.xib in Resources */,
 				310D52D71D236F68003C09E9 /* JHPageTableViewCell.xib in Resources */,
 				312694961D65592A00046999 /* JHEditTableViewController.xib in Resources */,
 				3142C6DB1D3F4EF70043C293 /* JHOrguserTableViewController.xib in Resources */,
@@ -957,7 +1034,6 @@
 				31E2C7DE1D6E837900E5D367 /* TSTableViewHeaderSection.m in Sources */,
 				31B6F46F1D1FAECB00A2670B /* JHProcessViewController.m in Sources */,
 				31E2F5241D1A2D9500FC212B /* AFHTTPRequestOperation.m in Sources */,
-				310D52C91D2362D8003C09E9 /* Foundation+Log.m in Sources */,
 				31E2C7DB1D6E837900E5D367 /* TSTableViewExpandControlPanel.m in Sources */,
 				31E2F5271D1A2D9500FC212B /* AFNetworkReachabilityManager.m in Sources */,
 				310D52DA1D237146003C09E9 /* JHPageDataItem.m in Sources */,
@@ -968,6 +1044,7 @@
 				315A81E91D4B95DE00D8EF62 /* JHScanCRCodeViewController.m in Sources */,
 				317249EA1D22543C00B2E48A /* LoginViewController.m in Sources */,
 				31E2F52C1D1A2D9500FC212B /* AFURLSessionManager.m in Sources */,
+				312BAFD01D6FC03F0037D656 /* JHSendMailViewController.m in Sources */,
 				3105D9F61D1BAE1A0098EA73 /* JHMenuData.m in Sources */,
 				31E2F52A1D1A2D9500FC212B /* AFURLRequestSerialization.m in Sources */,
 				31E2F50C1D1A240200FC212B /* JHNetworkManager.m in Sources */,
@@ -1011,6 +1088,7 @@
 				3142C6DA1D3F4EF70043C293 /* JHOrguserTableViewController.m in Sources */,
 				3142C6DF1D3F4F170043C293 /* JHOrguserTableViewCell.m in Sources */,
 				31A358BA1D20F1B100D4C0DA /* YYClassInfo.m in Sources */,
+				312BAFD81D6FDFF80037D656 /* JHWeaverNetManger.m in Sources */,
 				31E2F5351D1A2DB200FC212B /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

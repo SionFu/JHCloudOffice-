@@ -15,8 +15,9 @@
 #import "JHOrguserManger.h"
 #import "NSDictionary+JHChangeDicToJson.h"
 #define SITEURL @"http://h3.juhua.com.cn/Portal/ForApp/"
-//#define SITEURL @"http://188.1.100.165:8010/Portal/ForApp/"http://127.0.0.1:8081/service/common/sendMail
+//#define SITEURL @"http://188.1.100.165:8010/Portal/ForApp/"
 #define APPKEY @"cloudoffice"
+
 
 @implementation JHNetworkManager
 singleton_implementation(JHNetworkManager)
@@ -29,7 +30,7 @@ singleton_implementation(JHNetworkManager)
     NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/DefaultSheet.ashx?appKey=%@&action=validateuser&userCode=%@&password=%@",SITEURL,APPKEY,user,password];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
 #warning 有打印
-//        NSLog(@"%@",responseObject);
+        NSLog(@"%@",responseObject);
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         NSDictionary *dic = responseObject;
             JHNetworkManager *loginManger = [JHNetworkManager sharedJHNetworkManager];
@@ -177,8 +178,8 @@ singleton_implementation(JHNetworkManager)
    NSString *str = [dic changeDicToJsonWithArrDic:dic];
     NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&token=%@&action=orguser&canSelType=&instance=null&code=%@&userId=%@&field=tzr&parentid=%@", SITEURL,self.modulesModel.StartSheetCode,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,self.modulesModel.ModuleCode,[JHUserInfo sharedJHUserInfo].objectId,str];
      NSString * encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes( kCFAllocatorDefault, (CFStringRef)urlStr, NULL, NULL,  kCFStringEncodingUTF8 ));
+     NSLog(@"\nJSON:%@\nURL:%@",str,encodedString);
     [manager GET:encodedString parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-//        NSLog(@"RESPONSE:%@,\nJSON:%@\nURL:%@",responseObject,str,encodedString);
 //        NSArray *array = responseObject[@"datas"];
 //        if (array.count == 0) {
 //            return;

@@ -18,11 +18,19 @@
  */
 @property (nonatomic, assign)  NSInteger indexPathTag;
 /**
- *  推出当前视图的控制器
+ *  推出当前表格视图的控制器
  */
 @property (nonatomic, strong) UITableView *indexView;
 /**
  *  此为流程上传数据的原指针数据指针地址(DisplayValue)
  */
 @property (nonatomic, strong) NSMutableArray *datasDicArray;
+/**
+ *  推出当前的视图
+ */
+@property (nonatomic, strong) UIView *indexNView;
+/**
+ *  推出当前视图的按钮
+ */
+@property (nonatomic, strong) UIButton *sendBtn;
 @end

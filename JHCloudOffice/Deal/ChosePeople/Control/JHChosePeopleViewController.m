@@ -125,6 +125,9 @@
     [[JHOrguserManger sharedJHOrguserManger].saveAllListDic setObject:userDic forKey:[NSString stringWithFormat:@"%ld",(long)self.indexPathTag]];
     NSIndexPath *indexPath=[NSIndexPath indexPathForRow:self.indexPathTag inSection:0];
     [self.indexView reloadRowsAtIndexPaths:[NSArray arrayWithObjects:indexPath ,nil] withRowAnimation:UITableViewRowAnimationBottom];
+    NSString *displayValueName = userDic[@"DisplayValue"];
+    [self.sendBtn setTitle:displayValueName forState:UIControlStateNormal];
+    [self.indexNView layoutIfNeeded];
 }
 - (void)setupPortalTableViewController{
     for (int i = 0; i < self.portalArray.count; i++) {
