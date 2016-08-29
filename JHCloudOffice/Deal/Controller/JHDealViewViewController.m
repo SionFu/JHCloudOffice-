@@ -13,7 +13,9 @@
 #import "JHProcessViewController.h"
 #import "JHScanCRCodeViewController.h"
 #import "JHSendMailViewController.h"
+#import "JHDocTableViewController.h"
 #import "MBProgressHUD+KR.h"
+
 @interface JHDealViewViewController ()<JHHomeMenuButtonDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,UIActionSheetDelegate>
 /**
  *  用户姓名
@@ -143,21 +145,27 @@
             //打开集团彩云 app
             if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"uban://"]])
             {
-                NSLog(@"install--");
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"uban://"]];
             }
             else
             {
                 [MBProgressHUD showError:@"请先安装集团彩云App"];
                 [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://"]];
-                NSLog(@"no---");
             }
         }
             break;
         case 3:{
+            //扫描二维码
             JHScanCRCodeViewController *sVC = [JHScanCRCodeViewController new];
             UINavigationController *uVC = [[UINavigationController alloc]initWithRootViewController:sVC];
             [self.navigationController presentViewController:uVC animated:YES completion:nil];
+        }
+            break;
+        case 4:{
+            //显示用户文档
+            JHDocTableViewController *docVC = [JHDocTableViewController new];
+            
+            [self.navigationController pushViewController:docVC animated:YES];
         }
             break;
         default:

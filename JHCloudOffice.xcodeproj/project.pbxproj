@@ -18,6 +18,8 @@
 		310D52DA1D237146003C09E9 /* JHPageDataItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 310D52D91D237146003C09E9 /* JHPageDataItem.m */; };
 		3120B3A21D1CED7B00206F6B /* JHModules.m in Sources */ = {isa = PBXBuildFile; fileRef = 3120B3A11D1CED7B00206F6B /* JHModules.m */; };
 		3120B3A61D1CFB4100206F6B /* UIView+WbyExtension.m in Sources */ = {isa = PBXBuildFile; fileRef = 3120B3A51D1CFB4100206F6B /* UIView+WbyExtension.m */; };
+		31267C0D1D74212A00AA1D3A /* JHDocTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31267C0B1D74212A00AA1D3A /* JHDocTableViewController.m */; };
+		31267C0E1D74212A00AA1D3A /* JHDocTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31267C0C1D74212A00AA1D3A /* JHDocTableViewController.xib */; };
 		3126948B1D654E6200046999 /* JHBizEditTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 312694891D654E6200046999 /* JHBizEditTableViewCell.m */; };
 		3126948C1D654E6200046999 /* JHBizEditTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3126948A1D654E6200046999 /* JHBizEditTableViewCell.xib */; };
 		312694951D65592A00046999 /* JHEditTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 312694931D65592A00046999 /* JHEditTableViewController.m */; };
@@ -120,6 +122,9 @@
 		3120B3A11D1CED7B00206F6B /* JHModules.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHModules.m; sourceTree = "<group>"; };
 		3120B3A41D1CFB4100206F6B /* UIView+WbyExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WbyExtension.h"; sourceTree = "<group>"; };
 		3120B3A51D1CFB4100206F6B /* UIView+WbyExtension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WbyExtension.m"; sourceTree = "<group>"; };
+		31267C0A1D74212A00AA1D3A /* JHDocTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHDocTableViewController.h; sourceTree = "<group>"; };
+		31267C0B1D74212A00AA1D3A /* JHDocTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHDocTableViewController.m; sourceTree = "<group>"; };
+		31267C0C1D74212A00AA1D3A /* JHDocTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHDocTableViewController.xib; sourceTree = "<group>"; };
 		312694881D654E6200046999 /* JHBizEditTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHBizEditTableViewCell.h; sourceTree = "<group>"; };
 		312694891D654E6200046999 /* JHBizEditTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHBizEditTableViewCell.m; sourceTree = "<group>"; };
 		3126948A1D654E6200046999 /* JHBizEditTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHBizEditTableViewCell.xib; sourceTree = "<group>"; };
@@ -482,6 +487,9 @@
 		312BAFD31D6FCC390037D656 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				31267C0A1D74212A00AA1D3A /* JHDocTableViewController.h */,
+				31267C0B1D74212A00AA1D3A /* JHDocTableViewController.m */,
+				31267C0C1D74212A00AA1D3A /* JHDocTableViewController.xib */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1009,6 +1017,7 @@
 				312694961D65592A00046999 /* JHEditTableViewController.xib in Resources */,
 				3142C6DB1D3F4EF70043C293 /* JHOrguserTableViewController.xib in Resources */,
 				3105D9F81D1BB26A0098EA73 /* menuData.plist in Resources */,
+				31267C0E1D74212A00AA1D3A /* JHDocTableViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1051,6 +1060,7 @@
 				31E2F5381D1A32BF00FC212B /* Foundation+Log.m in Sources */,
 				31E2F52B1D1A2D9500FC212B /* AFURLResponseSerialization.m in Sources */,
 				31B6F46C1D1FACDE00A2670B /* YSLScrollMenuView.m in Sources */,
+				31267C0D1D74212A00AA1D3A /* JHDocTableViewController.m in Sources */,
 				310D52D11D236F1F003C09E9 /* JHPageTableViewController.m in Sources */,
 				31E2C7DA1D6E837900E5D367 /* TSTableViewContentHolder.m in Sources */,
 				31F875791D3DC6E800BEE76D /* NSDictionary+JHChangeDicToJson.m in Sources */,

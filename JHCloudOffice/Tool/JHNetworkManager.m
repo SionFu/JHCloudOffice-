@@ -7,18 +7,11 @@
 //
 
 #import "JHNetworkManager.h"
-#import "AFNetworking.h"
-#import "JHUserInfo.h"
 #import "JHModules.h"
 #import "JHModulesData.h"
 #import "JHPageDataManager.h"
 #import "JHOrguserManger.h"
 #import "NSDictionary+JHChangeDicToJson.h"
-#define SITEURL @"http://h3.juhua.com.cn/Portal/ForApp/"
-//#define SITEURL @"http://188.1.100.165:8010/Portal/ForApp/"
-#define APPKEY @"cloudoffice"
-
-
 @implementation JHNetworkManager
 singleton_implementation(JHNetworkManager)
 
@@ -66,6 +59,7 @@ singleton_implementation(JHNetworkManager)
         [JHUserInfo sharedJHUserInfo].uid = dic[@"WeaverUser"][@"uid"];
         [JHUserInfo sharedJHUserInfo].loginid = dic[@"WeaverUser"][@"loginid"];
         [JHUserInfo sharedJHUserInfo].companyObjectId = dic[@"CompanyObjectId"];
+        [JHUserInfo sharedJHUserInfo].sessionKey = dic[@"WeaverUser"][@"sessionKey"];
         
     }
 }
