@@ -9,15 +9,19 @@
 #import "JHDocTableViewController.h"
 #import "JHWeaverNetManger.h"
 #import "JHSubDirTableViewController.h"
+#import "JHFileListTableViewController.h"
 #import "JHDocTableViewCell.h"
 #import "MBProgressHUD+KR.h"
 #import "JHDocModel.h"
+
 @interface JHDocTableViewController ()<JHDocDelegate>
 @property (nonatomic ,strong ) UINib *nib;
 /**
  *  第一层文件数组内容
  */
 @property (nonatomic,strong)NSArray *firDicArray;
+
+@property (nonatomic ,strong)JHWeaverNetManger *manger;
 @end
 
 @implementation JHDocTableViewController
@@ -33,9 +37,9 @@
     [super viewDidLoad];
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithTitle:@"返回云办公" style:UIBarButtonItemStylePlain target:self action:@selector(closeScanVC)];
     [self.navigationItem setRightBarButtonItem:rightButton];
-    JHWeaverNetManger *manger = [JHWeaverNetManger new];
-    [manger weaverCategoryObjectsgetDocContentWithMainid:@"" andSubid:self.categoryid andSeccategory:@""];
-    manger.getDocDelegate = self;
+    self.manger = [JHWeaverNetManger new];
+    [self.manger weaverCategoryObjectsgetDocContentWithMainid:@"" andSubid:self.categoryid andSeccategory:@""];
+    self.manger.getDocDelegate = self;
     [MBProgressHUD showMessage:@"正在载入..."];
 }
 -(void)closeScanVC {
@@ -83,6 +87,14 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     self.title = self.firDicArray[indexPath.row][@"categoryname"];
+    if ([JHDocModel sharedJHDocModel].thiDicArray[indexPath.row][@"subDirInfos"] == nil) {
+        //显示 文件列表视图
+        JHFileListTableViewController *fVC = [JHFileListTableViewController new];
+        fVC.title = [[JHDocModel sharedJHDocModel].thiDicArray[indexPath.row][@"categoryname"] stringByAppendingString:@"文件列表"];
+        fVC.cellForRowInFirDoc = indexPath.row;
+        [self.navigationController pushViewController:fVC animated:YES];
+        return;
+    }
     JHSubDirTableViewController *subVC = [JHSubDirTableViewController new];
     subVC.cellForRowInFirDoc = indexPath.row;
     [self.navigationController pushViewController:subVC animated:YES];

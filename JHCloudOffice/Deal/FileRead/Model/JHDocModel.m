@@ -26,5 +26,13 @@
 -(void)removeLasterDocArray {
     [self.allDataArray removeLastObject];
 }
+- (NSDictionary *)fileListData {
+    if (_fileListData == nil) {
+        _fileListData = [NSDictionary dictionary];
+    }return _fileListData;
+}
+-(NSArray *)fileListArray {
+    return self.fileListData[@"data"][@"data"];
+}
 singleton_implementation(JHDocModel)
 @end

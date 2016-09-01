@@ -33,8 +33,16 @@ singleton_interface(JHDocModel)
  */
 @property (nonatomic, strong) NSArray *thiDicArray;
 /**
- *  所有数据内容的数组
+ *  所有文件夹数据内容的数组
  */
 @property (nonatomic, strong) NSMutableArray *allDataArray;
 - (void)removeLasterDocArray;
+/**
+ *  文件列表&通知的数据
+ */
+@property (nonatomic, strong) NSDictionary *fileListData;
+/**
+ *  文件列表内容数组
+ */
+@property (nonatomic, strong) NSArray *fileListArray;
 @end

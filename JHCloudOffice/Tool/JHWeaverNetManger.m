@@ -28,7 +28,7 @@
      *  将泛微地址进行 url 编码
      */
     NSString *encodedValue = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(nil,(CFStringRef)url, nil,(CFStringRef)@"!*'();:@&=+$,/?%#[]", kCFStringEncodingUTF8));
-    NSLog(@"%@",[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]);
+    NSLog(@"%@",url);
     NSString *Realurl = [NSString stringWithFormat:@"%@Sheets/WeaverProxy.ashx?ispost=%@&isattachment=%@&rurl=%@",SITEURL,isPostStr,isAttachmentStr,encodedValue];
     return Realurl;
 }
@@ -37,11 +37,11 @@
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *urlStr = [NSString stringWithFormat:@"%@getDocDir?sessionKey=%@&publishType=0&mainid=%@&subid=%@&seccategory=%@",WEAVURL,[JHUserInfo sharedJHUserInfo].sessionKey,mainid,subid,seccategory];
     urlStr = [self proxyUrlWithUrl:urlStr andisPost:false andisAttachment:false];
-    NSLog(@"%@",urlStr);
+//    NSLog(@"%@",urlStr);
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         [[JHDocModel sharedJHDocModel].allDataArray addObject:responseObject];
         [self.getDocDelegate getDocSuccess];
-        NSLog(@"%@",responseObject);
+//        NSLog(@"%@",responseObject);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [self.getDocDelegate getDocFaild];
     }];
@@ -52,9 +52,11 @@
     NSString *urlStr = [NSString stringWithFormat:@"%@getDocDir?sessionKey=%@&publishType=0&subid=%@&seccategory=%@&newOnly=%@&page=%@&pageSize=%@",WEAVURL,[JHUserInfo sharedJHUserInfo].sessionKey,subid,seccategory,newOnly,page,pageSize];
     urlStr = [self proxyUrlWithUrl:urlStr andisPost:false andisAttachment:false];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"%@",responseObject);
+        NSLog(@"URL:%@%@",urlStr ,responseObject);
+        [JHDocModel sharedJHDocModel].fileListData = responseObject;
+        [self.getFileListDelegate getFileListSuccess];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
+        [self.getFileListDelegate getFileListFaild];
     }];
 }
 -(void)docInfoContentObjectGetDocContentWithDocId:(NSString *)docId {

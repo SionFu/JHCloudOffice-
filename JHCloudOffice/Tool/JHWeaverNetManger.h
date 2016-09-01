@@ -24,7 +24,20 @@
 - (void)getDocSuccess;
 - (void)getDocFaild;
 @end
+/**
+ *  获取文件列表 通知 代理
+ */
+@protocol JHFileListDelegate <NSObject>
+
+- (void)getFileListSuccess;
+- (void)getFileListFaild;
+
+@end
 @interface JHWeaverNetManger : NSObject
+/**
+ *  成功获取文件列表 通知 代理
+ */
+@property (nonatomic, weak) id<JHFileListDelegate> getFileListDelegate;
 /**
  *  发送邮件代理
  */
@@ -42,7 +55,7 @@
  */
 - (void)weaverCategoryObjectsgetDocContentWithMainid:(NSString *)mainid andSubid:(NSString *)subid andSeccategory:(NSString *)seccategory;
 /**
- * 通知
+ * 通知 和 文件列表
  */
 - (void)docInfoObjectsgetNoticesWithMainid:(NSString *)mainid andSubid:(NSString *)subid andSeccategory:(NSString *)seccategory andnewOnly:(NSString *)newOnly andPage:(NSString *)page andPageSize:(NSString *)pageSize;
 /**
