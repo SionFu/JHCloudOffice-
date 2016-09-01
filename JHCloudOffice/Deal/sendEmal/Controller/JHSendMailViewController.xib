@@ -7,6 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="JHSendMailViewController">
             <connections>
+                <outlet property="mailContent" destination="Gz3-hX-Vop" id="FRo-Qm-v57"/>
+                <outlet property="mailTitle" destination="M8c-bz-Pnv" id="M9f-dp-xhO"/>
                 <outlet property="receivePeopleBtn" destination="x0U-Sm-E4e" id="fwX-wQ-xux"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -69,6 +71,9 @@
                                 <constraint firstAttribute="height" constant="30" id="KRa-bu-chI"/>
                             </constraints>
                             <state key="normal" title="轻触选择..."/>
+                            <connections>
+                                <action selector="selectFileBtn:" destination="-1" eventType="touchUpInside" id="ZHq-4b-Ikn"/>
+                            </connections>
                         </button>
                     </subviews>
                     <color key="backgroundColor" red="0.80000001190000003" green="0.80000001190000003" blue="0.80000001190000003" alpha="1" colorSpace="calibratedRGB"/>

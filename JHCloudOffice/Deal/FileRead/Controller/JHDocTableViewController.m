@@ -8,21 +8,35 @@
 
 #import "JHDocTableViewController.h"
 #import "JHWeaverNetManger.h"
-@interface JHDocTableViewController ()
-
+#import "JHSubDirTableViewController.h"
+#import "JHDocTableViewCell.h"
+#import "MBProgressHUD+KR.h"
+#import "JHDocModel.h"
+@interface JHDocTableViewController ()<JHDocDelegate>
+@property (nonatomic ,strong ) UINib *nib;
+/**
+ *  第一层文件数组内容
+ */
+@property (nonatomic,strong)NSArray *firDicArray;
 @end
 
 @implementation JHDocTableViewController
-
+-(NSArray *)firDicArray {
+    return  [JHDocModel sharedJHDocModel].firDicArray;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     JHWeaverNetManger *manger = [JHWeaverNetManger new];
-    [manger weaverCategoryObjectsgetDocContentWithMainid:@"" andSubid:@"" andSeccategory:@""];
+    [manger weaverCategoryObjectsgetDocContentWithMainid:@"" andSubid:self.categoryid andSeccategory:@""];
+    manger.getDocDelegate = self;
+    [MBProgressHUD showMessage:@"正在载入..."];
 }
-
--(void)closeScanVC {
-[self.view endEditing:YES];
-[self.navigationController dismissViewControllerAnimated:YES completion:nil];
+-(void)getDocSuccess {
+    [MBProgressHUD hideHUD];
+    [self.tableView reloadData];
+}
+-(void)getDocFaild {
+    [MBProgressHUD showError:@"网络错误"];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -32,83 +46,37 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+    return self.firDicArray.count;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+    static NSString * cellIdentifier = @"docCell";
+    if (_nib == nil) {
+        _nib = [UINib nibWithNibName:@"JHDocTableViewCell" bundle:nil];
+        [tableView registerNib:_nib forCellReuseIdentifier: cellIdentifier];
+    }
+    JHDocTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    cell.headImageView.image = [UIImage imageNamed:@"folder1"];
+    cell.docNameLabel.text = self.firDicArray[indexPath.row][@"categoryname"];
+    NSString *doccount = self.firDicArray[indexPath.row][@"doccount"];
+    NSString *newDocCount = self.firDicArray[indexPath.row][@"newDocCount"];
+    cell.docCountLabel.text = [NSString stringWithFormat:@"%@/%@",newDocCount,doccount];
     return cell;
 }
-*/
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Table view delegate
-
-// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here, for example:
-    // Create the next view controller.
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:<#@"Nib name"#> bundle:nil];
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    self.title = self.firDicArray[indexPath.row][@"categoryname"];
+    JHSubDirTableViewController *subVC = [JHSubDirTableViewController new];
+    subVC.cellForRowInFirDoc = indexPath.row;
+    [self.navigationController pushViewController:subVC animated:YES];
     
-    // Pass the selected object to the new view controller.
-    
-    // Push the view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
 }
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 60;
 }
-*/
 
 @end

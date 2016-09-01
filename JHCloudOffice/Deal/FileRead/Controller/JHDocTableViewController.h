@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface JHDocTableViewController : UITableViewController
-
+/**
+ *  一级文件  主目录id
+ */
+@property (nonatomic, strong) NSString *categoryid;
 @end

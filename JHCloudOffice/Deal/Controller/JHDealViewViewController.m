@@ -164,7 +164,6 @@
         case 4:{
             //显示用户文档
             JHDocTableViewController *docVC = [JHDocTableViewController new];
-            
             [self.navigationController pushViewController:docVC animated:YES];
         }
             break;

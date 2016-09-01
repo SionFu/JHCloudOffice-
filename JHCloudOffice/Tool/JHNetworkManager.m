@@ -22,7 +22,6 @@ singleton_implementation(JHNetworkManager)
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/DefaultSheet.ashx?appKey=%@&action=validateuser&userCode=%@&password=%@",SITEURL,APPKEY,user,password];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-#warning 有打印
         NSLog(@"%@",responseObject);
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         NSDictionary *dic = responseObject;
