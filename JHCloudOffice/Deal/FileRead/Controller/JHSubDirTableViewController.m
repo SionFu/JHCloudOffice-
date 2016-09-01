@@ -24,9 +24,12 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithTitle:@"返回云办公" style:UIBarButtonItemStylePlain target:self action:@selector(closeScanVC)];
+    [self.navigationItem setRightBarButtonItem:rightButton];
 }
-
+-(void)closeScanVC {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

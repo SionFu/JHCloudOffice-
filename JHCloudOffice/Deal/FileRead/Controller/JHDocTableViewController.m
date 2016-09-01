@@ -24,12 +24,25 @@
 -(NSArray *)firDicArray {
     return  [JHDocModel sharedJHDocModel].firDicArray;
 }
+-(NSString *)categoryid {
+    if (_categoryid == nil) {
+        _categoryid = @"";
+    }return _categoryid;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithTitle:@"返回云办公" style:UIBarButtonItemStylePlain target:self action:@selector(closeScanVC)];
+    [self.navigationItem setRightBarButtonItem:rightButton];
     JHWeaverNetManger *manger = [JHWeaverNetManger new];
     [manger weaverCategoryObjectsgetDocContentWithMainid:@"" andSubid:self.categoryid andSeccategory:@""];
     manger.getDocDelegate = self;
     [MBProgressHUD showMessage:@"正在载入..."];
+}
+-(void)closeScanVC {
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+-(void)dealloc {
+    [[JHDocModel sharedJHDocModel] removeLasterDocArray];
 }
 -(void)getDocSuccess {
     [MBProgressHUD hideHUD];

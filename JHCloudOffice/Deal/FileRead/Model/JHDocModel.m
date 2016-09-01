@@ -10,14 +10,21 @@
 
 @implementation JHDocModel
 -(NSDictionary *)docData {
-    if (_docData == nil) {
-        _docData = [NSDictionary dictionary];
-    }return _docData;
+    return self.allDataArray.lastObject;
 }
 -(NSArray *)firDicArray {
-    if (_firDicArray == nil) {
-        _firDicArray = self.docData[@"data"];
-    }return _firDicArray;
+     return   self.docData[@"data"];
+}
+- (NSArray *)thiDicArray {
+      return  self.docData[@"data"];
+}
+- (NSMutableArray *)allDataArray {
+    if (_allDataArray == nil) {
+        _allDataArray = [NSMutableArray array];
+    }return _allDataArray;
+}
+-(void)removeLasterDocArray {
+    [self.allDataArray removeLastObject];
 }
 singleton_implementation(JHDocModel)
 @end

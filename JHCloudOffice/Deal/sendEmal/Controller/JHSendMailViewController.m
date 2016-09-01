@@ -54,7 +54,9 @@
 }
 - (void)sendEmailSuccess {
 //    用代理返回到主页面  并显示是否发送成功
-    [MBProgressHUD showSuccess:@"提交成功"];
+    [MBProgressHUD hideHUD];
+    [MBProgressHUD showSuccess:@"邮件发送成功"];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
     
 }

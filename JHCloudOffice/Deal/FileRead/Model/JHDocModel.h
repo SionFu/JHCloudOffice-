@@ -15,7 +15,7 @@ singleton_interface(JHDocModel)
  */
 @property (nonatomic, strong) NSDictionary *docData;
 /**
- *  第一层文件夹内容
+ *  第一二层文件夹内容
  like
  categoryid : 161,
 	doccount : 9336,
@@ -24,12 +24,17 @@ singleton_interface(JHDocModel)
  */
 @property (nonatomic, strong) NSArray *firDicArray;
 /**
- *  第二层文件夹内容
+ *  第三层文件夹内容
  like 
- categoryid : 301,
-	doccount : 6,
-	newDocCount : 6,
-	categoryname : 上级来文
+	categoryid : 494,
+	doccount : 90,
+	newDocCount : 0,
+	categoryname : 巨化
  */
-@property (nonatomic, strong) NSArray *secDic;
+@property (nonatomic, strong) NSArray *thiDicArray;
+/**
+ *  所有数据内容的数组
+ */
+@property (nonatomic, strong) NSMutableArray *allDataArray;
+- (void)removeLasterDocArray;
 @end

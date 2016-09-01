@@ -24,7 +24,12 @@
     }else {
         isAttachmentStr = @"false";
     }
-    NSString *Realurl = [NSString stringWithFormat:@"%@Sheets/WeaverProxy.ashx?ispost=%@&isattachment=%@&rurl=%@",SITEURL,isPostStr,isAttachmentStr,url];
+    /**
+     *  将泛微地址进行 url 编码
+     */
+    NSString *encodedValue = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(nil,(CFStringRef)url, nil,(CFStringRef)@"!*'();:@&=+$,/?%#[]", kCFStringEncodingUTF8));
+    NSLog(@"%@",[url stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]);
+    NSString *Realurl = [NSString stringWithFormat:@"%@Sheets/WeaverProxy.ashx?ispost=%@&isattachment=%@&rurl=%@",SITEURL,isPostStr,isAttachmentStr,encodedValue];
     return Realurl;
 }
 
@@ -34,7 +39,7 @@
     urlStr = [self proxyUrlWithUrl:urlStr andisPost:false andisAttachment:false];
     NSLog(@"%@",urlStr);
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        [JHDocModel sharedJHDocModel].docData = responseObject;
+        [[JHDocModel sharedJHDocModel].allDataArray addObject:responseObject];
         [self.getDocDelegate getDocSuccess];
         NSLog(@"%@",responseObject);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -117,7 +122,7 @@
         
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         
-        [[[UIAlertView alloc] initWithTitle:@"上传结果" message:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]  delegate:self cancelButtonTitle:@"关闭" otherButtonTitles:nil] show];
+//        [[[UIAlertView alloc] initWithTitle:@"上传结果" message:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]  delegate:self cancelButtonTitle:@"关闭" otherButtonTitles:nil] show];
         NSLog(@"%@",responseObject);
         [self.sendEamilDelegate sendEmailSuccess];
         

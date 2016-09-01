@@ -61,7 +61,7 @@
         //推出发送邮件视图
         JHSendMailViewController *sMailVC  = [JHSendMailViewController new];
         sMailVC.title = @"发送邮件";
-        [self.navigationController presentViewController:sMailVC animated:YES completion:^{
+        [self presentViewController:sMailVC animated:YES completion:^{
            //显示邮件发送标题
             //传入发送邮件给谁的数据
         }];
