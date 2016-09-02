@@ -35,7 +35,7 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithTitle:@"返回云办公" style:UIBarButtonItemStylePlain target:self action:@selector(closeScanVC)];
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithTitle:@"退出" style:UIBarButtonItemStylePlain target:self action:@selector(closeScanVC)];
     [self.navigationItem setRightBarButtonItem:rightButton];
     self.manger = [JHWeaverNetManger new];
     [self.manger weaverCategoryObjectsgetDocContentWithMainid:@"" andSubid:self.categoryid andSeccategory:@""];
@@ -90,7 +90,7 @@
     if ([JHDocModel sharedJHDocModel].thiDicArray[indexPath.row][@"subDirInfos"] == nil) {
         //显示 文件列表视图
         JHFileListTableViewController *fVC = [JHFileListTableViewController new];
-        fVC.title = [[JHDocModel sharedJHDocModel].thiDicArray[indexPath.row][@"categoryname"] stringByAppendingString:@"文件列表"];
+        fVC.title = [[JHDocModel sharedJHDocModel].thiDicArray[indexPath.row][@"categoryname"] stringByAppendingString:@"目录"];
         fVC.cellForRowInFirDoc = indexPath.row;
         [self.navigationController pushViewController:fVC animated:YES];
         return;

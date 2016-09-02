@@ -33,7 +33,17 @@
 - (void)getFileListFaild;
 
 @end
+/**
+ *  获取文件内容 代理
+ */
+@protocol JHFileContentDelegate <NSObject>
+
+- (void)getFileContentSuccess;
+- (void)getFileContentFaild;
+
+@end
 @interface JHWeaverNetManger : NSObject
+@property (nonatomic ,weak) id<JHFileContentDelegate> getFileContentDelegate;
 /**
  *  成功获取文件列表 通知 代理
  */

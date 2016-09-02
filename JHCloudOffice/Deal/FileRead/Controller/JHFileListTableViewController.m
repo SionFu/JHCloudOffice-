@@ -7,6 +7,7 @@
 //
 
 #import "JHFileListTableViewController.h"
+#import "JHFileContentViewController.h"
 #import "JHWeaverNetManger.h"
 #import "JHDocModel.h"
 #import "MBProgressHUD+KR.h"
@@ -24,15 +25,15 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithTitle:@"退出" style:UIBarButtonItemStylePlain target:self action:@selector(closeScanVC)];
+    [self.navigationItem setRightBarButtonItem:rightButton];
     self.manger = [JHWeaverNetManger new];
     [self.manger docInfoObjectsgetNoticesWithMainid:@"" andSubid:@"" andSeccategory:[JHDocModel sharedJHDocModel].thiDicArray[self.cellForRowInFirDoc][@"categoryid"] andnewOnly:@"" andPage:@"" andPageSize:@""];
     self.manger.getFileListDelegate = self;
     [MBProgressHUD showMessage:@"正在载入..."];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+}
+-(void)closeScanVC {
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 -(void)getFileListFaild {
     [MBProgressHUD showError:@"获取文件列表失败"];
@@ -41,6 +42,7 @@
     [MBProgressHUD hideHUD];
     [self.tableView reloadData];
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -62,22 +64,31 @@
     
     cell.textLabel.text = self.fileListArray[indexPath.row][@"docsubject"];
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
-    NSDate *date = [dateFormatter dateFromString:self.fileListArray[indexPath.row][@"doccreatedate"]];
-    [dateFormatter setDateFormat:@"yyyy年MM月dd日"];
+    [dateFormatter setDateFormat:@"yyyy-MM-ddHH:mm:ss"];
+    NSString *dateTimeStr = [NSString stringWithFormat:@"%@%@",self.fileListArray[indexPath.row][@"doccreatedate"],self.fileListArray[indexPath.row][@"doccreatetime"]];
+    NSDate *date = [dateFormatter dateFromString:dateTimeStr];
+    [dateFormatter setDateFormat:@"yyyy年MM月dd日 HH点mm分"];
     cell.detailTextLabel.text = [dateFormatter stringFromDate:date];
     [cell.detailTextLabel setTextColor:[UIColor grayColor]];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     NSNumber *isNew = self.fileListArray[indexPath.row][@"isNew"];
     int inew = [isNew intValue];
     if (inew == 0) {
-       cell.imageView.image = [UIImage imageNamed:@"checkboxChecked"];
+       cell.imageView.image = [UIImage imageNamed:@"ic_remindernull"];
     }else {
-    cell.imageView.image = [UIImage imageNamed:@"checkBoxDefault"];
+    cell.imageView.image = [UIImage imageNamed:@"ic_reminder"];
     }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.imageView.image = [UIImage imageNamed:@"ic_remindernull"];
+    [cell reloadInputViews];
     //显示文件内容
+    JHFileContentViewController *fileVC = [JHFileContentViewController new];
+    //传入文件 id
+    NSNumber *docIdNumber = self.fileListArray[indexPath.row][@"id"];
+    fileVC.docId = [docIdNumber intValue];
+    [self.navigationController pushViewController:fileVC animated:YES];
 }
 @end

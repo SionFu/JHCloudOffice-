@@ -65,6 +65,7 @@
     urlStr = [self proxyUrlWithUrl:urlStr andisPost:false andisAttachment:false];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"%@",responseObject);
+        
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
     }];
