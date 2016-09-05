@@ -34,5 +34,16 @@
 -(NSArray *)fileListArray {
     return self.fileListData[@"data"][@"data"];
 }
+-(NSDictionary *)fileContentData {
+    if (_fileContentData == nil) {
+        _fileContentData = [NSDictionary dictionary];
+    }return _fileContentData;
+}
+-(NSArray *)fileSubArray {
+    return self.fileContentData[@"data"][@"subDocs"];
+}
+-(NSString *)fileContentDetailStr {
+    return self.fileContentData[@"data"][@"gwDetail"];
+}
 singleton_implementation(JHDocModel)
 @end

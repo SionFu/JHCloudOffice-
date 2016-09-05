@@ -10,7 +10,7 @@
 /**
  *  发送邮件代理
  */
-@protocol JHSendEmailDelegate <NSObject>
+@protocol JHSendEmailDelegate <NSObject,NSURLSessionDownloadDelegate>
 
 - (void)sendEmailSuccess;
 - (void)sendEmailFaild;
@@ -84,4 +84,8 @@
  *  发送邮件
  */
 - (void)mailResultSendMailWithPriority:(NSString *)priority andReceiver:(NSString *)receiver andSendToId:(NSString *)sendToId andMailSubject:(NSString *)mailSubject andMouldText:(NSString *)mouldText andFileURL:(NSURL *)fileURL andFileName:(NSString *)fileName;
+/**
+ *  downloadFile
+ */
+- (void)downloadFileWithRealPath:(NSString *)realPath;
 @end

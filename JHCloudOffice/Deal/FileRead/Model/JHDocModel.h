@@ -45,4 +45,16 @@ singleton_interface(JHDocModel)
  *  文件列表内容数组
  */
 @property (nonatomic, strong) NSArray *fileListArray;
+/**
+ *  文件内容数据
+ */
+@property (nonatomic, strong) NSDictionary *fileContentData;
+/**
+ *  文件中下载文件的 文件列表数组
+ */
+@property (nonatomic, strong) NSArray *fileSubArray;
+/**
+ *  文件中信息的内容 html 标记语言
+ */
+@property (nonatomic, strong) NSString *fileContentDetailStr;
 @end

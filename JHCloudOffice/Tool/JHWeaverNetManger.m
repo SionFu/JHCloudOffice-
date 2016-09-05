@@ -10,17 +10,20 @@
 #import "JHNetworkManager.h"
 #import "JHDocModel.h"
 #define WEAVURL @"http://188.1.10.5/service/common/"
+@interface JHWeaverNetManger ()<NSURLSessionDownloadDelegate>
+
+@end
 @implementation JHWeaverNetManger
 - (NSString *)proxyUrlWithUrl:(NSString *)url andisPost:(BOOL)isPost andisAttachment:(BOOL)isAttachment {
     NSString *isPostStr;
     NSString *isAttachmentStr;
     if (isPost) {
-        isPostStr = @"ture";
+        isPostStr = @"true";
     }else {
         isPostStr = @"false";
     }
     if (isAttachment) {
-        isAttachmentStr = @"ture";
+        isAttachmentStr = @"true";
     }else {
         isAttachmentStr = @"false";
     }
@@ -28,7 +31,7 @@
      *  将泛微地址进行 url 编码
      */
     NSString *encodedValue = (NSString*)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes(nil,(CFStringRef)url, nil,(CFStringRef)@"!*'();:@&=+$,/?%#[]", kCFStringEncodingUTF8));
-    NSLog(@"%@",url);
+//    NSLog(@"%@",url);
     NSString *Realurl = [NSString stringWithFormat:@"%@Sheets/WeaverProxy.ashx?ispost=%@&isattachment=%@&rurl=%@",SITEURL,isPostStr,isAttachmentStr,encodedValue];
     return Realurl;
 }
@@ -52,7 +55,7 @@
     NSString *urlStr = [NSString stringWithFormat:@"%@getDocDir?sessionKey=%@&publishType=0&subid=%@&seccategory=%@&newOnly=%@&page=%@&pageSize=%@",WEAVURL,[JHUserInfo sharedJHUserInfo].sessionKey,subid,seccategory,newOnly,page,pageSize];
     urlStr = [self proxyUrlWithUrl:urlStr andisPost:false andisAttachment:false];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"URL:%@%@",urlStr ,responseObject);
+//        NSLog(@"URL:%@%@",urlStr ,responseObject);
         [JHDocModel sharedJHDocModel].fileListData = responseObject;
         [self.getFileListDelegate getFileListSuccess];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -63,11 +66,12 @@
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *urlStr = [NSString stringWithFormat:@"%@viewGw?sessionKey=%@&docid=%@",WEAVURL,[JHUserInfo sharedJHUserInfo].sessionKey,docId];
     urlStr = [self proxyUrlWithUrl:urlStr andisPost:false andisAttachment:false];
+    NSLog(@"%@",urlStr);
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"%@",responseObject);
-        
+        [JHDocModel sharedJHDocModel].fileContentData = responseObject;
+        [self.getFileContentDelegate getFileContentSuccess];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
+        [self.getFileContentDelegate getFileContentFaild];
     }];
 }
 
@@ -100,7 +104,7 @@
 - (void)mailResultSendMailWithPriority:(NSString *)priority andReceiver:(NSString *)receiver andSendToId:(NSString *)sendToId andMailSubject:(NSString *)mailSubject andMouldText:(NSString *)mouldText andFileURL:(NSURL *)fileURL andFileName:(NSString *)fileName {
 //    NSURL *filePath = [[NSBundle mainBundle] URLForResource:fileName withExtension:@"png"];
     NSString *urlStr = [NSString stringWithFormat:@"%@sendMail",WEAVURL];
-    urlStr = [self proxyUrlWithUrl:urlStr andisPost:false andisAttachment:false];
+    urlStr = [self proxyUrlWithUrl:urlStr andisPost:true andisAttachment:false];
     NSDictionary *priorityDic = @{@"priority":priority};
     NSDictionary *sendToIdDic = [NSDictionary dictionary];
     if ([receiver isEqualToString:@""]) {
@@ -134,5 +138,46 @@
         NSLog(@"获取服务器响应出错");
         
     }];
+}
+- (void)downloadFileWithRealPath:(NSString *)realPath {
+    NSString *filePath = [NSString stringWithFormat:@"http://188.1.10.5/%@",realPath];
+    filePath = [self proxyUrlWithUrl:filePath andisPost:false andisAttachment:true];
+    NSURLRequest *request =[NSURLRequest requestWithURL:[NSURL URLWithString:filePath]];
+    //2.session对象(delegate)
+    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:[NSOperationQueue mainQueue]];
+    //3.遵循一个下载协议
+    
+    //4.下载任务
+    NSURLSessionDownloadTask *downloadTask = [session downloadTaskWithRequest:request];
+    
+    //5.执行任务
+//    [downloadTask resume];
+    [self downWithURL:filePath];
+}
+- (void)downWithURL:(NSString *)url {
+    NSData *fileData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *testFile = [documentPath stringByAppendingPathComponent:@"test.zip"];
+    NSLog(@"%@",testFile);
+    [[NSFileManager defaultManager] createFileAtPath:testFile contents:fileData attributes:nil];
+
+    
+}
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location{
+    NSLog(@"下载完毕");
+    //移动到非tem得路径下/Document/text.pdf
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *testFile = [documentPath stringByAppendingPathComponent:@"test.zip"];
+    NSLog(@"%@",testFile);
+    NSError *error = nil;
+    [[NSFileManager defaultManager] moveItemAtURL:location toURL:[NSURL fileURLWithPath:testFile] error:&error];
+    if (error) {
+        NSLog(@"移动失败%@",error.userInfo);
+    }
+    
+}
+- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite{
+    int64_t pregress = totalBytesWritten *1.0 / totalBytesExpectedToWrite;
+    NSLog(@"%lld",pregress);
 }
 @end
