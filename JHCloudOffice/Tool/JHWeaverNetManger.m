@@ -9,6 +9,7 @@
 #import "JHWeaverNetManger.h"
 #import "JHNetworkManager.h"
 #import "JHDocModel.h"
+#import "NSString+JHChangeStringToBase.h"
 #define WEAVURL @"http://188.1.10.5/service/common/"
 @interface JHWeaverNetManger ()<NSURLSessionDownloadDelegate>
 
@@ -104,40 +105,49 @@
 - (void)mailResultSendMailWithPriority:(NSString *)priority andReceiver:(NSString *)receiver andSendToId:(NSString *)sendToId andMailSubject:(NSString *)mailSubject andMouldText:(NSString *)mouldText andFileURL:(NSURL *)fileURL andFileName:(NSString *)fileName {
 //    NSURL *filePath = [[NSBundle mainBundle] URLForResource:fileName withExtension:@"png"];
     NSString *urlStr = [NSString stringWithFormat:@"%@sendMail",WEAVURL];
-    urlStr = [self proxyUrlWithUrl:urlStr andisPost:true andisAttachment:false];
+    urlStr = [self proxyUrlWithUrl:urlStr andisPost:true andisAttachment:true];
     NSDictionary *priorityDic = @{@"priority":priority};
     NSDictionary *sendToIdDic = [NSDictionary dictionary];
     if ([receiver isEqualToString:@""]) {
-        sendToIdDic = @{@"sendToId":sendToId};
+        sendToIdDic = @{@"sendToId":[sendToId changeStringToBaseWithString:sendToId]};
     }else {
-        sendToIdDic = @{@"receiver":receiver};
+        sendToIdDic = @{@"receiver":[receiver changeStringToBaseWithString:receiver]};
     }
-    NSDictionary *mailSubjectDic = @{@"mailSubject":mailSubject};
-    NSDictionary *mouldtextDic = @{@"mouldtext":mouldText};
+    NSDictionary *mailSubjectDic = @{@"mailSubject":[mailSubject changeStringToBaseWithString:mailSubject]};
+    NSDictionary *mouldtextDic = @{@"mouldtext":[mouldText changeStringToBaseWithString:mouldText] };
     NSDictionary *sessionKeyDic = @{@"sessionKey":[JHUserInfo sharedJHUserInfo].sessionKey};
     NSArray *parametersArray = [NSArray arrayWithObjects:priorityDic,sendToId,sendToIdDic,mailSubjectDic,mouldtextDic,sessionKeyDic ,nil];
     AFHTTPRequestOperationManager *requestManager = [AFHTTPRequestOperationManager manager];
-    [requestManager POST:urlStr parameters:parametersArray constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
-        
-        /**
-         *  appendPartWithFileURL   //  指定上传的文件
-         *  name                    //  指定在服务器中获取对应文件或文本时的key
-         *  fileName                //  指定上传文件的原始文件名
-         *  mimeType                //  指定商家文件的MIME类型
-         */
-        [formData appendPartWithFileURL:fileURL name:@"file" fileName:[NSString stringWithFormat:@"%@.png",fileName] mimeType:@"image/png" error:nil];
-        
-    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-//        [[[UIAlertView alloc] initWithTitle:@"上传结果" message:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]  delegate:self cancelButtonTitle:@"关闭" otherButtonTitles:nil] show];
+    NSLog(@"%@",parametersArray);
+    [requestManager POST:urlStr parameters:parametersArray success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"%@",responseObject);
-        [self.sendEamilDelegate sendEmailSuccess];
-        
+                [self.sendEamilDelegate sendEmailSuccess];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        [self.sendEamilDelegate sendEmailFaild];
-        NSLog(@"获取服务器响应出错");
         
     }];
+//    [requestManager POST:urlStr parameters:parametersArray constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+//        
+//        /**
+//         *  appendPartWithFileURL   //  指定上传的文件
+//         *  name                    //  指定在服务器中获取对应文件或文本时的key
+//         *  fileName                //  指定上传文件的原始文件名
+//         *  mimeType                //  指定商家文件的MIME类型
+//         */
+//        [formData appendPartWithFileURL:fileURL name:@"file" fileName:[NSString stringWithFormat:@"%@.png",fileName] mimeType:@"image/png" error:nil];
+    
+//    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+    
+//        [[[UIAlertView alloc] initWithTitle:@"上传结果" message:[[NSString alloc] initWithData:responseObject encoding:NSUTF8StringEncoding]  delegate:self cancelButtonTitle:@"关闭" otherButtonTitles:nil] show];
+//        NSLog(@"%@",responseObject);
+//        if ([responseObject[@"code"] isEqualToString:@"98"]) {
+//            NSLog(@"用户不存在");
+//        } 
+//        [self.sendEamilDelegate sendEmailSuccess];
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        [self.sendEamilDelegate sendEmailFaild];
+//        NSLog(@"获取服务器响应出错");
+//        
+//    }];
 }
 - (void)downloadFileWithRealPath:(NSString *)realPath {
     NSString *filePath = [NSString stringWithFormat:@"http://188.1.10.5/%@",realPath];
@@ -160,7 +170,20 @@
     NSString *testFile = [documentPath stringByAppendingPathComponent:@"test.zip"];
     NSLog(@"%@",testFile);
     [[NSFileManager defaultManager] createFileAtPath:testFile contents:fileData attributes:nil];
-
+    
+    /*
+     *afnetworking
+     */
+    NSURLRequest *request = [NSURLRequest requestWithURL:
+                             [NSURL URLWithString:url]];
+    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response,
+                                                                                                            NSData *data,
+                                                                                                            NSError *connectionError) {
+        NSString *testFile = [documentPath stringByAppendingPathComponent:@"test1.zip"];
+        [[NSFileManager defaultManager] createFileAtPath:testFile contents:fileData attributes:nil];
+         [[NSFileManager defaultManager] createFileAtPath:testFile contents:fileData attributes:nil];
+        // handle response
+    }];
     
 }
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location{
@@ -176,6 +199,7 @@
     }
     
 }
+
 - (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite{
     int64_t pregress = totalBytesWritten *1.0 / totalBytesExpectedToWrite;
     NSLog(@"%lld",pregress);

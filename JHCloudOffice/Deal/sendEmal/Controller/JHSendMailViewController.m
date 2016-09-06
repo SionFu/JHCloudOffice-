@@ -83,7 +83,8 @@
 - (void)sendEmailContent {
     JHWeaverNetManger *manger = [JHWeaverNetManger new];
     manger.sendEamilDelegate = self;
-    NSString *sendToId = [JHOrguserManger sharedJHOrguserManger].saveAllListDic[@"0"][@"Key"];
+    NSString *sendToId = [JHOrguserManger sharedJHOrguserManger].saveAllListDic[@"0"][@"Other1"];
+    NSLog(@"%@",sendToId);
     if ([sendToId isEqualToString:@""]) {
         [MBProgressHUD showError:@"选择收件人"];
         return;
@@ -94,7 +95,7 @@
     if ([self.mailContent.text isEqualToString:@""]) {
         [MBProgressHUD showError:@"邮件内容不能为空"];
     }
-    [manger mailResultSendMailWithPriority:@"3" andReceiver:@"" andSendToId:sendToId andMailSubject:self.mailTitle.text andMouldText:self.mailContent.text andFileURL:self.fileUrl andFileName:@"test"];
+    [manger mailResultSendMailWithPriority:@"3" andReceiver:sendToId andSendToId:@"" andMailSubject:self.mailTitle.text andMouldText:self.mailContent.text andFileURL:self.fileUrl andFileName:@"test"];
     [MBProgressHUD showMessage:@"正在提交..."];
 }
 - (void)closeScanVC {
@@ -143,6 +144,7 @@
 - (void)dealloc {
 //视图消失时  自动删除 最后一个数组
 [[JHOrguserManger sharedJHOrguserManger]removerLastParentidsArray];
+    [[JHOrguserManger sharedJHOrguserManger].saveAllListDic removeAllObjects];
 }
 - (IBAction)selectFileBtn:(UIButton *)sender {
     
