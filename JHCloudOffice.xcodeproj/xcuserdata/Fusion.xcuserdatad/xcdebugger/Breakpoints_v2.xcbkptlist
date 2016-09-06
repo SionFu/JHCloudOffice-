@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/Tool/JHNetworkManager.m"
-            timestampString = "494216529.112114"
+            timestampString = "494828591.874997"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "95"
-            endingLineNumber = "95"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
             landmarkName = "-getPageSettingWithCurrentVC:andRow:"
             landmarkType = "5">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/Tool/JHNetworkManager.m"
-            timestampString = "494216529.112114"
+            timestampString = "494828591.874997"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "98"
-            endingLineNumber = "98"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
             landmarkName = "-getPageSettingWithCurrentVC:andRow:"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/Tool/JHNetworkManager.m"
-            timestampString = "494216529.112114"
+            timestampString = "494828591.874997"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70"
+            startingLineNumber = "71"
+            endingLineNumber = "71"
             landmarkName = "-getModules"
             landmarkType = "5">
          </BreakpointContent>
@@ -58,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/Tool/JHNetworkManager.m"
-            timestampString = "494216529.112114"
+            timestampString = "494828591.874997"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "157"
-            endingLineNumber = "157"
+            startingLineNumber = "158"
+            endingLineNumber = "158"
             landmarkName = "-getPageDatas"
             landmarkType = "5">
          </BreakpointContent>
@@ -303,22 +303,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JHCloudOffice/Tool/JHWeaverNetManger.m"
-            timestampString = "494752504.906882"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
-            landmarkName = "-docInfoContentObjectGetDocContentWithDocId:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/Deal/sendEmal/Controller/JHSendMailViewController.m"
             timestampString = "494748973.675961"
             startingColumnNumber = "9223372036854775807"
@@ -368,7 +352,7 @@
                   moduleName = "JHCloudOffice"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Fusion/Desktop/%E5%B7%A8%E5%8C%96%E9%9B%86%E5%9B%A2/JHCloudOffice%E5%89%AF%E6%9C%AC/JHCloudOffice/Tool/JHWeaverNetManger.m"
-                  timestampString = "494759058.391251"
+                  timestampString = "494840525.53727"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "122"
@@ -383,7 +367,7 @@
                   moduleName = "JHCloudOffice"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Fusion/Desktop/%E5%B7%A8%E5%8C%96%E9%9B%86%E5%9B%A2/JHCloudOffice%E5%89%AF%E6%9C%AC/JHCloudOffice/Tool/JHWeaverNetManger.m"
-                  timestampString = "494759058.391501"
+                  timestampString = "494840525.537408"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "122"

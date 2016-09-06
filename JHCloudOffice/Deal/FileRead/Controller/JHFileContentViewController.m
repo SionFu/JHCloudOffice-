@@ -11,7 +11,12 @@
 #import "JHDocModel.h"
 #import "MBProgressHUD+KR.h"
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
-@interface JHFileContentViewController ()<JHFileContentDelegate,UIWebViewDelegate>
+@interface JHFileContentViewController ()<JHFileContentDelegate,UIWebViewDelegate,JHDownFileDelegate,UIDocumentInteractionControllerDelegate>
+@property (nonatomic, strong) UIDocumentInteractionController *documentInteractionController;
+/**
+ *  当前文件的路径
+ */
+@property (nonatomic, strong) NSString *filePath;
 /**
  *  进度条
  */
@@ -76,20 +81,76 @@
     }
 }
 - (void)fileDownBtnClick:(UIButton *)sender {
-    NSString *filePath = self.fileSubArray[sender.tag - 100][@"realpath"];
+    NSString *fileName = self.fileSubArray[sender.tag - 100][@"fileName"];
+    NSString *docid = self.fileSubArray[sender.tag - 100][@"docid"];
     //downloadFile
-    [self.manger downloadFileWithRealPath:filePath];
+    //判断文件是否存在
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *filePath = [documentPath stringByAppendingPathComponent:fileName];
+    self.filePath = filePath;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    self.manger.downFileDelegate = self;
+    if( [fileManager fileExistsAtPath:filePath]== YES ) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"已经下载过同样名字的文件!" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"重新下载" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            //重新下载文件
+            [MBProgressHUD showMessage:@"正在下载" toView:self.view];
+            [self.manger downloadFileWithDocId:docid AndFileName:fileName];
+        }];
+        UIAlertAction *actionOpen = [UIAlertAction actionWithTitle:@"直接打开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            //直接打开文件
+            NSURL *url = [NSURL fileURLWithPath:filePath];
+            _documentInteractionController = [UIDocumentInteractionController
+                                              interactionControllerWithURL:url];
+            [_documentInteractionController setDelegate:self];
+            
+            [_documentInteractionController presentOpenInMenuFromRect:CGRectZero inView:self.view animated:YES];
+//            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"file://%@",filePath]]];
+        }];
+        [alert addAction:actionYes];
+        [alert addAction:actionOpen];
+        [self presentViewController:alert animated:YES completion:nil];
+    } else {
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"下载文件!" message:[NSString stringWithFormat:@"确定下载文件:%@?",fileName] preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            //下载文件
+            [MBProgressHUD showMessage:@"正在下载" toView:self.view];
+            [self.manger downloadFileWithDocId:docid AndFileName:fileName];
+            
+        }];
+        UIAlertAction *actionNo = [UIAlertAction actionWithTitle:@" 取消" style:UIAlertActionStyleCancel handler:nil];
+        [alert addAction:actionYes];
+        [alert addAction:actionNo];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
 }
 
-- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite{
-    
-    
-    self.progressView.progress = totalBytesWritten *1.0 / totalBytesExpectedToWrite;
-    NSLog(@"%f",self.progressView.progress);
-    
-    
+#pragma mark downloadFileDelegate
+-(void)downFileSuccess {
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"下载成功!" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"打开文件" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //打开文件
+        NSURL *url = [NSURL fileURLWithPath:self.filePath];
+        _documentInteractionController = [UIDocumentInteractionController
+                                          interactionControllerWithURL:url];
+        [_documentInteractionController setDelegate:self];
+        
+        [_documentInteractionController presentOpenInMenuFromRect:CGRectZero inView:self.view animated:YES];
+        
+    }];
+    UIAlertAction *actionNo = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:actionYes];
+    [alert addAction:actionNo];
+    [self presentViewController:alert animated:YES completion:nil];
 }
 
+-(void)downFileFaild {
+    [MBProgressHUD hideHUD];
+    [MBProgressHUD showError:@"文件下载失败"];
+}
+#pragma markJHFileContentDelegate
 -(void)getFileContentFaild {
     [MBProgressHUD showError:@"网络错误"];
 }

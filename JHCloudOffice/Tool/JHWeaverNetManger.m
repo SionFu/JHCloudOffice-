@@ -11,7 +11,7 @@
 #import "JHDocModel.h"
 #import "NSString+JHChangeStringToBase.h"
 #define WEAVURL @"http://188.1.10.5/service/common/"
-@interface JHWeaverNetManger ()<NSURLSessionDownloadDelegate>
+@interface JHWeaverNetManger ()//<NSURLSessionDownloadDelegate>
 
 @end
 @implementation JHWeaverNetManger
@@ -149,59 +149,51 @@
 //        
 //    }];
 }
-- (void)downloadFileWithRealPath:(NSString *)realPath {
-    NSString *filePath = [NSString stringWithFormat:@"http://188.1.10.5/%@",realPath];
-    filePath = [self proxyUrlWithUrl:filePath andisPost:false andisAttachment:true];
-    NSURLRequest *request =[NSURLRequest requestWithURL:[NSURL URLWithString:filePath]];
-    //2.session对象(delegate)
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:[NSOperationQueue mainQueue]];
-    //3.遵循一个下载协议
+- (void)downloadFileWithDocId:(NSString *)docId AndFileName:(NSString *)fileName {
+    NSString *fileurl = [NSString stringWithFormat:@"%@viewDoc?docType=1&docid=%@&sessionKey=%@",WEAVURL,docId,[JHUserInfo sharedJHUserInfo].sessionKey];
+    fileurl = [self proxyUrlWithUrl:fileurl andisPost:false andisAttachment:true];
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *filePath = [documentPath stringByAppendingPathComponent:fileName];
+        //下载文件
+        NSData *fileData = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileurl]];
+        if ([[NSFileManager defaultManager] createFileAtPath:filePath contents:fileData attributes:nil]){
+            [self.downFileDelegate downFileSuccess];
+        }else {
+            [self.downFileDelegate downFileFaild];
+        }
+
+
     
-    //4.下载任务
-    NSURLSessionDownloadTask *downloadTask = [session downloadTaskWithRequest:request];
     
-    //5.执行任务
+    
+//    NSURLRequest *request =[NSURLRequest requestWithURL:[NSURL URLWithString:fileurl]];
+//    //2.session对象(delegate)
+//    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:[NSOperationQueue mainQueue]];
+//    //3.遵循一个下载协议
+//    self.fileName = fileName;
+//    //4.下载任务
+//    NSURLSessionDownloadTask *downloadTask = [session downloadTaskWithRequest:request];
+//    
+//    //5.执行任务
 //    [downloadTask resume];
-    [self downWithURL:filePath];
-}
-- (void)downWithURL:(NSString *)url {
-    NSData *fileData = [NSData dataWithContentsOfURL:[NSURL URLWithString:url]];
-    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *testFile = [documentPath stringByAppendingPathComponent:@"test.zip"];
-    NSLog(@"%@",testFile);
-    [[NSFileManager defaultManager] createFileAtPath:testFile contents:fileData attributes:nil];
-    
-    /*
-     *afnetworking
-     */
-    NSURLRequest *request = [NSURLRequest requestWithURL:
-                             [NSURL URLWithString:url]];
-    [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response,
-                                                                                                            NSData *data,
-                                                                                                            NSError *connectionError) {
-        NSString *testFile = [documentPath stringByAppendingPathComponent:@"test1.zip"];
-        [[NSFileManager defaultManager] createFileAtPath:testFile contents:fileData attributes:nil];
-         [[NSFileManager defaultManager] createFileAtPath:testFile contents:fileData attributes:nil];
-        // handle response
-    }];
-    
-}
-- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location{
-    NSLog(@"下载完毕");
-    //移动到非tem得路径下/Document/text.pdf
-    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-    NSString *testFile = [documentPath stringByAppendingPathComponent:@"test.zip"];
-    NSLog(@"%@",testFile);
-    NSError *error = nil;
-    [[NSFileManager defaultManager] moveItemAtURL:location toURL:[NSURL fileURLWithPath:testFile] error:&error];
-    if (error) {
-        NSLog(@"移动失败%@",error.userInfo);
-    }
-    
 }
 
-- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite{
-    int64_t pregress = totalBytesWritten *1.0 / totalBytesExpectedToWrite;
-    NSLog(@"%lld",pregress);
-}
+//- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didFinishDownloadingToURL:(NSURL *)location{
+//    NSLog(@"下载完毕");
+//    //移动到非tem得路径下/Document/text.pdf
+//    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+//    NSString *testFile = [documentPath stringByAppendingPathComponent:self.fileName];
+//    NSLog(@"%@",testFile);
+//    NSError *error = nil;
+//    [[NSFileManager defaultManager] moveItemAtURL:location toURL:[NSURL fileURLWithPath:testFile] error:&error];
+//    if (error) {
+//        NSLog(@"移动失败%@",error.userInfo);
+//    }
+//    
+//}
+//
+//- (void)URLSession:(NSURLSession *)session downloadTask:(NSURLSessionDownloadTask *)downloadTask didWriteData:(int64_t)bytesWritten totalBytesWritten:(int64_t)totalBytesWritten totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite{
+//    int64_t pregress = totalBytesWritten *1.0 / totalBytesExpectedToWrite;
+//    NSLog(@"%f",pregress*1.0);
+//}
 @end

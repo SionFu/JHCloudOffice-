@@ -8,9 +8,18 @@
 
 #import <Foundation/Foundation.h>
 /**
+ *下载附件代理
+ */
+@protocol JHDownFileDelegate <NSObject>
+
+- (void)downFileSuccess;
+- (void)downFileFaild;
+
+@end
+/**
  *  发送邮件代理
  */
-@protocol JHSendEmailDelegate <NSObject,NSURLSessionDownloadDelegate>
+@protocol JHSendEmailDelegate <NSObject>
 
 - (void)sendEmailSuccess;
 - (void)sendEmailFaild;
@@ -43,6 +52,7 @@
 
 @end
 @interface JHWeaverNetManger : NSObject
+@property (nonatomic, weak) id<JHDownFileDelegate> downFileDelegate;
 @property (nonatomic ,weak) id<JHFileContentDelegate> getFileContentDelegate;
 /**
  *  成功获取文件列表 通知 代理
@@ -87,5 +97,5 @@
 /**
  *  downloadFile
  */
-- (void)downloadFileWithRealPath:(NSString *)realPath;
+- (void)downloadFileWithDocId:(NSString *)docId AndFileName:(NSString *)fileName;
 @end

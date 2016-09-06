@@ -12,6 +12,7 @@
 #import "JHPageDataManager.h"
 #import "JHOrguserManger.h"
 #import "NSDictionary+JHChangeDicToJson.h"
+
 @implementation JHNetworkManager
 singleton_implementation(JHNetworkManager)
 
@@ -190,83 +191,20 @@ singleton_implementation(JHNetworkManager)
      */
     NSString *instancename = [pageName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&action=create&code=%@&userid=%@&instancename=%@", SITEURL,self.modulesModel.StartSheetCode,APPKEY,self.modulesModel.ModuleCode,[JHUserInfo sharedJHUserInfo].objectId,instancename];
-    AFHTTPRequestOperationManager *manager = [AFHTTPRequestOperationManager manager];
-//    manager.requestSerializer = [AFJSONRequestSerializer serializer];
-//    manager.responseSerializer = [AFJSONResponseSerializer serializer];
-    NSString *strJson = [NSString stringWithFormat:@"[%@]",[uploadData componentsJoinedByString:@","]];
-
-    NSLog(@"url:%@\nJson:%@",urlStr,strJson);
-//    NSData *dataJson = [NSJSONSerialization dataWithJSONObject:strJson options:NSJSONWritingPrettyPrinted error:nil];
-//    NSString *strJson1 = [[NSString alloc]initWithData:dataJson encoding:NSUTF8StringEncoding];
-//    NSLog(@"%@",strJson1);
-    [manager POST:urlStr parameters:uploadData constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    NSString *jsonStr = [NSString stringWithFormat:@"[%@]",[uploadData componentsJoinedByString:@","]];
+    AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
+    [manger POST:urlStr parameters:jsonStr constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"接收成功%@",responseObject);
-//        NSArray *array = responseObject[@"datas"];
-//        if (array.count == 0) {
-//            NSLog(@"上传失败");
-//            return ;
-//        }
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"上传失败:%@",error.userInfo);
-    }];
-    AFHTTPRequestOperationManager *mangert = [AFHTTPRequestOperationManager manager];
-    mangert.responseSerializer = [AFJSONResponseSerializer serializer];
-    mangert.requestSerializer = [AFJSONRequestSerializer serializer];
-    mangert.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
-    [mangert POST:urlStr parameters:uploadData success:^(AFHTTPRequestOperation *operation, id responseObject) {
-        NSLog(@"%@",responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         NSLog(@"%@",error.userInfo);
     }];
     
-//    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]
-//                                                           cachePolicy:NSURLRequestReloadIgnoringCacheData  timeoutInterval:10];
-//    
-//    [request setHTTPMethod:@"POST"];
-//    [request setValue: @"application/json" forHTTPHeaderField:@"Content-Type"];
-//    [request setHTTPBody: [strJson dataUsingEncoding:NSUTF8StringEncoding]];
-//    
-//    AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-//    op.responseSerializer = [AFJSONResponseSerializer serializer];
-//    [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        
-//        NSLog(@"JSON responseObject: %@ ",responseObject);
-//        
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"Error: %@", [error localizedDescription]);
-//        
-//    }];
-//    [op start];
-    
-//    NSMutableArray *parameters = @[@"foo", @"bar"];
-//    NSError *error;
-//    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:uploadData
-//                                                       options:NSJSONWritingPrettyPrinted
-//                                                         error:&error];
-//    NSString *body = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
     
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:urlStr]
-                                                           cachePolicy:NSURLRequestReloadIgnoringCacheData
-                                                       timeoutInterval:10];
-    
-    [request setHTTPMethod:@"POST"];
-    [request setValue: @"application/json" forHTTPHeaderField:@"Content-Type"];
-    [request setHTTPBody: [strJson dataUsingEncoding:NSUTF8StringEncoding]];
-    AFHTTPRequestOperation *op = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    op.responseSerializer = [AFJSONResponseSerializer serializer];
-    [op setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        
-        NSLog(@"JSON responseObject: %@ ",responseObject);
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        NSLog(@"Error: %@", [error localizedDescription]);
-        NSLog(@"%@",error.userInfo);
-        
-    }];
-    [op start];
-    
+
+
 }
+
+
 @end
