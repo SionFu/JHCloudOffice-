@@ -60,6 +60,10 @@
     self.unReadTaskLabel.text = [NSString stringWithFormat:@"%@",responseObject[@"taskCount"]];
     self.unReadEmailLabel.text = [NSString stringWithFormat:@"%@",responseObject[@"emailCount"]];
     self.unReadNotiLabel.text = [NSString stringWithFormat:@"%@",responseObject[@"noticeCount"]];
+    NSString *timeStr= [NSString stringWithFormat:@"%@",responseObject[@"time"]];
+    NSRange range = [timeStr rangeOfString:@" "];
+    timeStr = [timeStr substringToIndex:(range.location)];
+    [JHUserInfo sharedJHUserInfo].notificationTime = timeStr;
     [self loadViewIfNeeded];
 }
 - (void)viewDidLoad {
