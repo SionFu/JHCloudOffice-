@@ -17,7 +17,7 @@
 #import "JHChosePeopleViewController.h"
 #import "JHOrguserManger.h"
 #import "JHBizViewController.h"
-@interface JHPageTableViewController ()<JHPageDelegate,UIPickerViewDataSource,UIPickerViewDelegate,JHOrguser,UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate>
+@interface JHPageTableViewController ()<JHPageDelegate,UIPickerViewDataSource,UIPickerViewDelegate,JHOrguser,UITextViewDelegate,UINavigationControllerDelegate,UIImagePickerControllerDelegate,JHUploadDataDelegate>
 /**
  *  所有流程项目名称
  */
@@ -187,6 +187,8 @@
 - (void)saveButtonClick {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"保存内容" message:@"确定保存草稿?" preferredStyle:UIAlertControllerStyleAlert];
      UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+         //保存数据
+         [[JHNetworkManager sharedJHNetworkManager]uploadDatasWithData:self.uploadData andInstanceName:self.pageName andAction:@"save"];
      }];
     UIAlertAction *actionNo = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     [alert addAction:actionYes];
@@ -196,7 +198,8 @@
 - (void)sendButtonClick {
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"提交内容" message:@"确定提交?" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [[JHNetworkManager sharedJHNetworkManager]uploadDatasWithData:self.uploadData andInstanceName:self.pageName];
+        //提交数据
+        [[JHNetworkManager sharedJHNetworkManager]uploadDatasWithData:self.uploadData andInstanceName:self.pageName andAction:@"create"];
         
     }];
     UIAlertAction *actionNo = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];

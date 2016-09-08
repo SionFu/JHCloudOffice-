@@ -33,7 +33,10 @@
 @end
 
 @implementation JHDealViewViewController
-
+- (void)viewWillAppear:(BOOL)animated {
+    UINavigationBar *navBar = self.navigationController.navigationBar;
+    navBar.hidden = NO;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     //设置滚动选择视图

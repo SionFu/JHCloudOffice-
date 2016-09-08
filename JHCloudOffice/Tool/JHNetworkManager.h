@@ -54,8 +54,16 @@
 - (void) getsetSingleParticipantFromServerfaild;
 
 @end
+/**
+ *  返回提交\保存流程返回消息
+ */
+@protocol JHUploadDataDelegate <NSObject>
+- (void) uploadSuccess;
+- (void) uploadFaild;
+@end
 @interface JHNetworkManager : NSObject
 singleton_interface(JHNetworkManager)
+@property (nonatomic, weak) id<JHUploadDataDelegate> uploadDelegate;
 @property (nonatomic, weak) id<JHLoginDelegate> loginDelegate;
 @property (nonatomic, weak) id<JHPageDelegate> getPageDelegate;
 @property (nonatomic, weak) id<JHOrguser> getOrguserDelegate;
@@ -91,5 +99,5 @@ singleton_interface(JHNetworkManager)
 /**
  *  上传数据!!!未实现
  */
-- (void)uploadDatasWithData:(NSArray *)uploadData andInstanceName:(NSString *)pageName;
+- (void)uploadDatasWithData:(NSArray *)uploadData andInstanceName:(NSString *)pageName andAction:(NSString *)action;
 @end

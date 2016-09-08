@@ -11,6 +11,7 @@
 #import "JHDocModel.h"
 #import "MBProgressHUD+KR.h"
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
+#define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
 @interface JHFileContentViewController ()<JHFileContentDelegate,UIWebViewDelegate,JHDownFileDelegate,UIDocumentInteractionControllerDelegate>
 @property (nonatomic, strong) UIDocumentInteractionController *documentInteractionController;
 /**
@@ -21,6 +22,7 @@
  *  进度条
  */
 @property (weak, nonatomic) IBOutlet UIProgressView *progressView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *downFileViewToTopHeigt;
 
 /**
  *  显示文件内容 webView 视图
@@ -68,7 +70,7 @@
 - (void)addFileArrayToButton {
     for (int i = 0; i< self.fileSubArray.count; i++) {
         NSDictionary *fileDic = self.fileSubArray[i];
-        UIButton *btn  = [[UIButton alloc]initWithFrame:CGRectMake(0, i * 30,SCREENWIDTH, 30)];
+        UIButton *btn  = [[UIButton alloc]initWithFrame:CGRectMake(0, i * 35,SCREENWIDTH, 30)];
         [btn.titleLabel setLineBreakMode:NSLineBreakByWordWrapping];
         [btn.titleLabel setFont:[UIFont systemFontOfSize:12]];
         [btn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
@@ -76,9 +78,13 @@
         [btn setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
         [btn setTitle:fileDic[@"fileName"] forState:UIControlStateNormal];
         [btn setTag:i+100];
+        //设置文本自动大小
+        [btn.titleLabel setAutoresizesSubviews:YES];
+        [btn.titleLabel setMinimumScaleFactor:0.5];
         [btn addTarget:self action:@selector(fileDownBtnClick:) forControlEvents:UIControlEventTouchUpInside];
         [self.fileSubScroolView addSubview:btn];
     }
+    self.downFileViewToTopHeigt.constant =SCREENHEIGHT - 35 * self.fileSubArray.count - 10;
 }
 - (void)fileDownBtnClick:(UIButton *)sender {
     NSString *fileName = self.fileSubArray[sender.tag - 100][@"fileName"];
@@ -99,16 +105,19 @@
         }];
         UIAlertAction *actionOpen = [UIAlertAction actionWithTitle:@"直接打开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             //直接打开文件
+            //            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"file://%@",filePath]]];
             NSURL *url = [NSURL fileURLWithPath:filePath];
             _documentInteractionController = [UIDocumentInteractionController
                                               interactionControllerWithURL:url];
             [_documentInteractionController setDelegate:self];
             
             [_documentInteractionController presentOpenInMenuFromRect:CGRectZero inView:self.view animated:YES];
-//            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"file://%@",filePath]]];
+
         }];
+        UIAlertAction *actionNo = [UIAlertAction actionWithTitle:@" 取消" style:UIAlertActionStyleCancel handler:nil];
         [alert addAction:actionYes];
         [alert addAction:actionOpen];
+        [alert addAction:actionNo];
         [self presentViewController:alert animated:YES completion:nil];
     } else {
         

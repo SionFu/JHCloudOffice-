@@ -23,6 +23,10 @@ singleton_interface(JHUserInfo)
  */
 @property (nonatomic, strong) NSString *code;
 /**
+ *  token
+ */
+@property (nonatomic, strong) NSString *sSOKey;
+/**
  *  WeaverUser : {
 	sessionKey : 2125B69C4AB2AB5DFCE13A735A4AAB1D,
 	uid : 1280,
@@ -34,6 +38,7 @@ singleton_interface(JHUserInfo)
 @property (nonatomic, strong) NSString *loginid;
 @property (nonatomic, strong) NSString *errorCode;
 @property (nonatomic, strong) NSString *traceMessage;
+
 /**
  *  用户显示名称
  */

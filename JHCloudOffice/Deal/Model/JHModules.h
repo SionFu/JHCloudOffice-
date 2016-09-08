@@ -31,7 +31,7 @@
  */
 @property (nonatomic, strong) NSString *ModuleVersion;
 /**
- *  开始环节编码
+ *  开始环节编码  [环节编码]
  */
 @property (nonatomic, strong) NSString *StartActivityCode;
 /**

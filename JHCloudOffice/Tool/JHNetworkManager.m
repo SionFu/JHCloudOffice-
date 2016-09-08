@@ -60,16 +60,16 @@ singleton_implementation(JHNetworkManager)
         [JHUserInfo sharedJHUserInfo].loginid = dic[@"WeaverUser"][@"loginid"];
         [JHUserInfo sharedJHUserInfo].companyObjectId = dic[@"CompanyObjectId"];
         [JHUserInfo sharedJHUserInfo].sessionKey = dic[@"WeaverUser"][@"sessionKey"];
-        
+        [JHUserInfo sharedJHUserInfo].sSOKey = dic[@"SSOKey"];
     }
 }
 
 - (void)getModules {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/DefaultSheet.ashx?appKey=%@&token=%@&action=modules&create=1&userId=%@", SITEURL, APPKEY, [JHUserInfo sharedJHUserInfo].objectId, [JHUserInfo sharedJHUserInfo].uid];
+    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/DefaultSheet.ashx?appKey=%@&token=%@&action=modules&create=1&userId=%@", SITEURL, APPKEY, [JHUserInfo sharedJHUserInfo].objectId, [JHUserInfo sharedJHUserInfo].objectId];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSString *filepath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)firstObject] stringByAppendingPathComponent:@"Modules.plist"];
-        [responseObject writeToFile:filepath atomically:YES];
+//        NSString *filepath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)firstObject] stringByAppendingPathComponent:@"Modules.plist"];
+//        [responseObject writeToFile:filepath atomically:YES];
         NSArray *array = responseObject[@"datas"];
         [JHModulesData sharedJHModulesData].count = responseObject[@"count"];
         [JHModulesData sharedJHModulesData].errorCode = responseObject[@"ErrorCode"];
@@ -95,24 +95,24 @@ singleton_implementation(JHNetworkManager)
     self.modulesModel =  module;
     NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&token=%@&action=page&code=%@&version=%@&activity=%@&userId=%@&instance=nil&item=nil&viewmode=false", SITEURL,self.modulesModel.StartSheetCode,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,module.ModuleCode,module.ModuleVersion,module.StartActivityCode,[JHUserInfo sharedJHUserInfo].uid];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-#warning 本地化数据
-    NSString *filepath = [[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)firstObject]stringByAppendingPathComponent:responseObject[@"ModuleName"]]stringByAppendingPathExtension:@"plist"];
-//        NSLog(@"%@",responseObject);
-        [responseObject writeToFile:filepath atomically:YES];
-        NSDictionary *dicAllPageData = [NSDictionary dictionaryWithContentsOfFile:filepath];
-        
+//#warning 本地化数据
+//    NSString *filepath = [[[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES)firstObject]stringByAppendingPathComponent:responseObject[@"ModuleName"]]stringByAppendingPathExtension:@"plist"];
+////        NSLog(@"%@",responseObject);
+//        [responseObject writeToFile:filepath atomically:YES];
+//        NSDictionary *dicAllPageData = [NSDictionary dictionaryWithContentsOfFile:filepath];
+//        
         //获取流程里的	StartActivityCode : Activity?
         int i = 0;
-            for (NSDictionary *activitys in dicAllPageData[@"Activitys"]) {
+            for (NSDictionary *activitys in responseObject[@"Activitys"]) {
                 i ++;
                 if ( [module.StartActivityCode isEqualToString:activitys[@"ActivityCode"]]) {
-                   [JHPageDataManager sharedJHPageDataManager].pageVisibleItemArray = [NSArray arrayWithArray:dicAllPageData[@"Activitys"][i][@"DataItemPermissions"]];
+                   [JHPageDataManager sharedJHPageDataManager].pageVisibleItemArray = [NSArray arrayWithArray:responseObject[@"Activitys"][i][@"DataItemPermissions"]];
                 }
             }
         //值获取其中的一个流程
 //        [JHPageDataManager sharedJHPageDataManager].pageVisibleItemArray = [NSArray arrayWithArray:dicAllPageData[@"Activitys"][2][@"DataItemPermissions"]];
         
-        [JHPageDataManager sharedJHPageDataManager].pageDataItemsArray = [NSMutableArray arrayWithArray:dicAllPageData[@"DataItems"]];
+        [JHPageDataManager sharedJHPageDataManager].pageDataItemsArray = [NSMutableArray arrayWithArray:responseObject[@"DataItems"]];
         //反回获取流程菜单数据代理
         [self.getPageDelegate getPageSuccess];
          [self.getPageDelegate getPageDatasSuccess];
@@ -150,7 +150,7 @@ singleton_implementation(JHNetworkManager)
 }
 -(void)getPageDatas{
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&token=%@&action=data&code=%@&version=%@&activity=%@&userId=%@&viewmode=false", SITEURL,self.modulesModel.StartSheetCode,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,self.modulesModel.ModuleCode,self.modulesModel.ModuleVersion,self.modulesModel.StartActivityCode,[JHUserInfo sharedJHUserInfo].objectId];
+    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&token=%@&action=data&code=%@&version=%@&activity=%@&userId=%@&viewmode=false", SITEURL,self.modulesModel.StartSheetCode,APPKEY,[JHUserInfo sharedJHUserInfo].sSOKey,self.modulesModel.ModuleCode,self.modulesModel.ModuleVersion,self.modulesModel.StartActivityCode,[JHUserInfo sharedJHUserInfo].objectId];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"从服务器上获取流程信息成功:%@\nURL:\n%@",responseObject,urlStr);
         //将从服务器上获取的流程数据存入数组中
@@ -185,18 +185,23 @@ singleton_implementation(JHNetworkManager)
         NSLog(@"%@",error.userInfo);
     }];
 }
-- (void)uploadDatasWithData:(NSArray *)uploadData andInstanceName:(NSString *)pageName {
+- (void)uploadDatasWithData:(NSArray *)uploadData andInstanceName:(NSString *)pageName andAction:(NSString *)action {
     /*
      http://h3.juhua.com.cn/Portal/ForApp/Sheets/ceshi.ashx?appKey=cloudoffice&userid=f0bbd1cc-7727-449c-ba74-e63dca84f9f1&action=create&code=ceshi&instancename=%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B
      */
     NSString *instancename = [pageName stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&action=create&code=%@&userid=%@&instancename=%@", SITEURL,self.modulesModel.StartSheetCode,APPKEY,self.modulesModel.ModuleCode,[JHUserInfo sharedJHUserInfo].objectId,instancename];
+    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&action=%@&code=%@&userid=%@&instancename=%@&token=%@&activity=%@", SITEURL,self.modulesModel.StartSheetCode,APPKEY,action,self.modulesModel.ModuleCode,[JHUserInfo sharedJHUserInfo].objectId,instancename,[JHUserInfo sharedJHUserInfo].sSOKey,self.modulesModel.StartActivityCode];
     NSString *jsonStr = [NSString stringWithFormat:@"[%@]",[uploadData componentsJoinedByString:@","]];
     AFHTTPRequestOperationManager *manger = [AFHTTPRequestOperationManager manager];
-    [manger POST:urlStr parameters:jsonStr constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    NSMutableDictionary *parametersDic = [NSMutableDictionary dictionary];
+    [parametersDic setObject:jsonStr forKey:@"datas"];
+    NSLog(@"%@",parametersDic);
+    [manger POST:urlStr parameters:parametersDic constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         NSLog(@"接收成功%@",responseObject);
+        [self.uploadDelegate uploadSuccess];
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [self.uploadDelegate uploadFaild];
         NSLog(@"%@",error.userInfo);
     }];
     
