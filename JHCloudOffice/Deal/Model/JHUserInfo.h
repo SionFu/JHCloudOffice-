@@ -50,5 +50,12 @@ singleton_interface(JHUserInfo)
  *  公司信息
  */
 @property (nonatomic, strong) NSString *company;
-
+/**
+ *  获取的首页消息信息
+ */
+@property (nonatomic, strong) NSDictionary *notificationDic;
+/**
+ *  获取消息时间
+ */
+@property (nonatomic, strong) NSString *notificationTime;
 @end

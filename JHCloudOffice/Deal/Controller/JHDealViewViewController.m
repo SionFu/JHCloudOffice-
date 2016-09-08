@@ -15,8 +15,8 @@
 #import "JHSendMailViewController.h"
 #import "JHDocTableViewController.h"
 #import "MBProgressHUD+KR.h"
-
-@interface JHDealViewViewController ()<JHHomeMenuButtonDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,UIActionSheetDelegate>
+#import "JHRestApi.h"
+@interface JHDealViewViewController ()<JHHomeMenuButtonDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,UIActionSheetDelegate,JHGetNotificationObjectDelegate>
 /**
  *  用户姓名
  */
@@ -28,14 +28,39 @@
  *  显示本人的二维码
  */
 - (IBAction)cIQRCodeButton:(id)sender;
+/**
+ *  待办流程数
+ */
+@property (weak, nonatomic) IBOutlet UILabel *unReadTaskLabel;
+/**
+ *  未读邮件数
+ */
+@property (weak, nonatomic) IBOutlet UILabel *unReadEmailLabel;
+/**
+ *  未读通知数
+ */
+@property (weak, nonatomic) IBOutlet UILabel *unReadNotiLabel;
 @property (nonatomic, strong)NSString *userCIQRCodeStr;
 
 @end
 
 @implementation JHDealViewViewController
+
 - (void)viewWillAppear:(BOOL)animated {
     UINavigationBar *navBar = self.navigationController.navigationBar;
     navBar.hidden = NO;
+    //刷新通知数
+    JHRestApi *apiManger = [JHRestApi new];
+    [apiManger notificationObjectGetNotificationWithTime:[JHUserInfo sharedJHUserInfo].notificationTime];
+    apiManger.getNotificationDelegate = self;
+}
+
+-(void)getNoticationSuccess {
+    NSDictionary *responseObject = [JHUserInfo sharedJHUserInfo].notificationDic;
+    self.unReadTaskLabel.text = [NSString stringWithFormat:@"%@",responseObject[@"taskCount"]];
+    self.unReadEmailLabel.text = [NSString stringWithFormat:@"%@",responseObject[@"emailCount"]];
+    self.unReadNotiLabel.text = [NSString stringWithFormat:@"%@",responseObject[@"noticeCount"]];
+    [self loadViewIfNeeded];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -46,11 +71,7 @@
     [self.heandImageView addGestureRecognizer:[[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(headImageViewTep)]];
     //获取形成用户的二维码字符串
     [self getuserCIQRCodeStr];
-    
 
-}
-- (void)searchBtnClick {
-    NSLog(@"进入搜索视图");
 }
 -(void)headImageViewTep{
     //只能选择相册

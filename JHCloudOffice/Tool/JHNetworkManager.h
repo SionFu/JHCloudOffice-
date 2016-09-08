@@ -11,7 +11,7 @@
 #import "JHUserInfo.h"
 #import "Singleton.h"
 #import "JHModules.h"
-#define SITEURL @"http://h3.juhua.com.cn/Portal/ForApp/"
+#define SITEURL @"http://h3.juhua.com.cn:8010/Portal/ForApp/"
 //#define SITEURL @"http://188.1.100.165:8010/Portal/ForApp/"
 #define APPKEY @"cloudoffice"
 /**

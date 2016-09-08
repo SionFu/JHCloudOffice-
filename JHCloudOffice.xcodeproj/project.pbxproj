@@ -86,7 +86,6 @@
 		31E2C7E21D6E837900E5D367 /* TSTableViewHeaderSectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 31E2C7D61D6E837900E5D367 /* TSTableViewHeaderSectionView.m */; };
 		31E2C7E31D6E837900E5D367 /* TSTableViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 31E2C7D81D6E837900E5D367 /* TSTableViewModel.m */; };
 		31E2F50C1D1A240200FC212B /* JHNetworkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 31E2F50B1D1A240200FC212B /* JHNetworkManager.m */; };
-		31E2F50F1D1A261400FC212B /* JHUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 31E2F50E1D1A261400FC212B /* JHUserInfo.m */; };
 		31E2F5241D1A2D9500FC212B /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 31E2F5121D1A2D9500FC212B /* AFHTTPRequestOperation.m */; };
 		31E2F5251D1A2D9500FC212B /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 31E2F5141D1A2D9500FC212B /* AFHTTPRequestOperationManager.m */; };
 		31E2F5261D1A2D9500FC212B /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 31E2F5161D1A2D9500FC212B /* AFHTTPSessionManager.m */; };
@@ -102,6 +101,8 @@
 		31E2F5381D1A32BF00FC212B /* Foundation+Log.m in Sources */ = {isa = PBXBuildFile; fileRef = 31E2F5371D1A32BF00FC212B /* Foundation+Log.m */; };
 		31E2F54B1D1A83B300FC212B /* JHDealViewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31E2F54A1D1A83B300FC212B /* JHDealViewViewController.m */; };
 		31E84F0A1D8103270036069E /* JHMoreTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31E84F091D8103270036069E /* JHMoreTableViewController.m */; };
+		31E84F0D1D8143E10036069E /* JHRestApi.m in Sources */ = {isa = PBXBuildFile; fileRef = 31E84F0C1D8143E10036069E /* JHRestApi.m */; };
+		31E84F101D8153570036069E /* JHUserInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 31E84F0F1D8153570036069E /* JHUserInfo.m */; };
 		31F2E96C1D2641890079BDB9 /* JHDataItemPermissions.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F2E96B1D2641890079BDB9 /* JHDataItemPermissions.m */; };
 		31F2E96F1D264A8E0079BDB9 /* JHPageDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F2E96E1D264A8E0079BDB9 /* JHPageDataManager.m */; };
 		31F875791D3DC6E800BEE76D /* NSDictionary+JHChangeDicToJson.m in Sources */ = {isa = PBXBuildFile; fileRef = 31F875781D3DC6E800BEE76D /* NSDictionary+JHChangeDicToJson.m */; };
@@ -263,8 +264,6 @@
 		31E2C7D81D6E837900E5D367 /* TSTableViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSTableViewModel.m; sourceTree = "<group>"; };
 		31E2F50A1D1A240200FC212B /* JHNetworkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHNetworkManager.h; sourceTree = "<group>"; };
 		31E2F50B1D1A240200FC212B /* JHNetworkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHNetworkManager.m; sourceTree = "<group>"; };
-		31E2F50D1D1A261400FC212B /* JHUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHUserInfo.h; sourceTree = "<group>"; };
-		31E2F50E1D1A261400FC212B /* JHUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHUserInfo.m; sourceTree = "<group>"; };
 		31E2F5111D1A2D9500FC212B /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
 		31E2F5121D1A2D9500FC212B /* AFHTTPRequestOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPRequestOperation.m; sourceTree = "<group>"; };
 		31E2F5131D1A2D9500FC212B /* AFHTTPRequestOperationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperationManager.h; sourceTree = "<group>"; };
@@ -295,6 +294,10 @@
 		31E2F54A1D1A83B300FC212B /* JHDealViewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHDealViewViewController.m; sourceTree = "<group>"; };
 		31E84F081D8103270036069E /* JHMoreTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHMoreTableViewController.h; sourceTree = "<group>"; };
 		31E84F091D8103270036069E /* JHMoreTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHMoreTableViewController.m; sourceTree = "<group>"; };
+		31E84F0B1D8143E10036069E /* JHRestApi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHRestApi.h; sourceTree = "<group>"; };
+		31E84F0C1D8143E10036069E /* JHRestApi.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHRestApi.m; sourceTree = "<group>"; };
+		31E84F0E1D8153570036069E /* JHUserInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHUserInfo.h; sourceTree = "<group>"; };
+		31E84F0F1D8153570036069E /* JHUserInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHUserInfo.m; sourceTree = "<group>"; };
 		31F2E96A1D2641890079BDB9 /* JHDataItemPermissions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHDataItemPermissions.h; sourceTree = "<group>"; };
 		31F2E96B1D2641890079BDB9 /* JHDataItemPermissions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHDataItemPermissions.m; sourceTree = "<group>"; };
 		31F2E96D1D264A8E0079BDB9 /* JHPageDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHPageDataManager.h; sourceTree = "<group>"; };
@@ -735,10 +738,10 @@
 			children = (
 				31E2F50A1D1A240200FC212B /* JHNetworkManager.h */,
 				31E2F50B1D1A240200FC212B /* JHNetworkManager.m */,
+				31E84F0B1D8143E10036069E /* JHRestApi.h */,
+				31E84F0C1D8143E10036069E /* JHRestApi.m */,
 				312BAFD61D6FDFF80037D656 /* JHWeaverNetManger.h */,
 				312BAFD71D6FDFF80037D656 /* JHWeaverNetManger.m */,
-				31E2F50D1D1A261400FC212B /* JHUserInfo.h */,
-				31E2F50E1D1A261400FC212B /* JHUserInfo.m */,
 				31E2F5361D1A2E0400FC212B /* Singleton.h */,
 				31F2E96D1D264A8E0079BDB9 /* JHPageDataManager.h */,
 				31F2E96E1D264A8E0079BDB9 /* JHPageDataManager.m */,
@@ -819,6 +822,8 @@
 		31E2F53B1D1A830C00FC212B /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				31E84F0E1D8153570036069E /* JHUserInfo.h */,
+				31E84F0F1D8153570036069E /* JHUserInfo.m */,
 				3105D9F41D1BAE1A0098EA73 /* JHMenuData.h */,
 				3105D9F51D1BAE1A0098EA73 /* JHMenuData.m */,
 				31A358B01D20DD6C00D4C0DA /* JHModulesData.h */,
@@ -1139,6 +1144,7 @@
 				3105D9F61D1BAE1A0098EA73 /* JHMenuData.m in Sources */,
 				31E2F52A1D1A2D9500FC212B /* AFURLRequestSerialization.m in Sources */,
 				31E2F50C1D1A240200FC212B /* JHNetworkManager.m in Sources */,
+				31E84F101D8153570036069E /* JHUserInfo.m in Sources */,
 				31E2F5381D1A32BF00FC212B /* Foundation+Log.m in Sources */,
 				31E2F52B1D1A2D9500FC212B /* AFURLResponseSerialization.m in Sources */,
 				31B6F46C1D1FACDE00A2670B /* YSLScrollMenuView.m in Sources */,
@@ -1151,7 +1157,6 @@
 				311FC1E41D800FDE000C35D0 /* JHUserTableViewController.m in Sources */,
 				31E2C7D91D6E837900E5D367 /* TSUtils.m in Sources */,
 				318A0D2C1D587EB500032F6D /* JHBizViewController+BizDataDefinition.m in Sources */,
-				31E2F50F1D1A261400FC212B /* JHUserInfo.m in Sources */,
 				3142C6E31D3F50E40043C293 /* JHChosePeopleViewController.m in Sources */,
 				31E2C7E11D6E837900E5D367 /* TSTableViewCell.m in Sources */,
 				318A0D2D1D587EB500032F6D /* JHBizDataManager.m in Sources */,
@@ -1162,6 +1167,7 @@
 				31E2F5251D1A2D9500FC212B /* AFHTTPRequestOperationManager.m in Sources */,
 				31F2E96C1D2641890079BDB9 /* JHDataItemPermissions.m in Sources */,
 				31E84F0A1D8103270036069E /* JHMoreTableViewController.m in Sources */,
+				31E84F0D1D8143E10036069E /* JHRestApi.m in Sources */,
 				31E2F5281D1A2D9500FC212B /* AFSecurityPolicy.m in Sources */,
 				31E2F5331D1A2DB200FC212B /* MBProgressHUD+KR.m in Sources */,
 				31F8757C1D3DCBDF00BEE76D /* JHOrguser.m in Sources */,

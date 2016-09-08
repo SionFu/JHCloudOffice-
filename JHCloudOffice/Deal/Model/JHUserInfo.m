@@ -10,4 +10,10 @@
 
 @implementation JHUserInfo
 singleton_implementation(JHUserInfo)
+-(NSString *)notificationTime {
+    if (_notificationTime == nil) {
+        _notificationTime = @"2015/12/19";
+    }
+        return _notificationTime;
+}
 @end
