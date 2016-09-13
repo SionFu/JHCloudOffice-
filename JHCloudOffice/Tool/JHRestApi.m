@@ -9,6 +9,7 @@
 #import "JHRestApi.h"
 #import "JHNetworkManager.h"
 #import "JHUserInfo.h"
+#import "JHPoiModel.h"
 @implementation JHRestApi
 - (void)notificationObjectGetNotificationWithUserId:(NSString *)UserId andUserCode:(NSString *)userCode andUser:(NSString *)user andTime:(NSString *)time andToken:(NSString *)token andPassword:(NSString *)password {
     //userId,"", "", notifiTime, sessionKey,user.getToken(), new NotificationInfoPojoCallback
@@ -28,6 +29,44 @@
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         [JHUserInfo sharedJHUserInfo].notificationDic = responseObject;
         [self.getNotificationDelegate getNoticationSuccess];
+        NSLog(@"%@",responseObject);
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
+}
+- (void)subscribeObjectsGetSubscribeObjectsWithAction:(NSString *)action {
+    NSString *urlStr = [NSString stringWithFormat:@"%@RestAPI/Subscribe.ashx?appKey=%@&action=%@&userid=%@&platform=ios",SITEURL,APPKEY,action,[JHUserInfo sharedJHUserInfo].objectId];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+     NSLog(@"%@",responseObject);
+        if ([action isEqualToString:@"list"]) {
+           [JHPoiModel sharedJHPoiModel].listData = responseObject;
+        } else if ([action isEqualToString:@"alllist"]) {
+           [JHPoiModel sharedJHPoiModel].allListData = responseObject;
+        }
+        
+        [self.getPoiListdDelegate getPoiListSuccess];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
+}
+- (void)resultPojoCancelSubscribeWithSubscribe:(NSString *)subscribe {
+        NSString *urlStr = [NSString stringWithFormat:@"%@RestAPI/Subscribe.ashx?appKey=%@&action=cancel&userid=%@&subscribe=%@",SITEURL,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,subscribe];
+    NSLog(@"%@",urlStr);
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.subscribeDelegate cancelSubscribeSuccess];
+        NSLog(@"%@",responseObject);
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        
+    }];
+}
+- (void)subscribeObjectFollowSubscribeWithSubscribe:(NSString *)subscribe {
+        NSString *urlStr = [NSString stringWithFormat:@"%@RestAPI/Subscribe.ashx?appKey=%@&action=follow&userid=%@&subscribe=%@",SITEURL,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,subscribe];
+    NSLog(@"%@",urlStr);
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        [self.subscribeDelegate foolwSubcribeSuccess];
         NSLog(@"%@",responseObject);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         

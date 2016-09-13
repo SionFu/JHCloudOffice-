@@ -41,6 +41,7 @@
  */
 @property (nonatomic, strong) NSString *fileContentDetailStr;
 @property (nonatomic ,strong) JHWeaverNetManger *manger;
+@property (nonatomic ,strong) UIView *nowView;
 @end
 
 @implementation JHFileContentViewController
@@ -59,6 +60,7 @@
     self.manger = [JHWeaverNetManger new];
     self.manger.getFileContentDelegate = self;
     [self.manger docInfoContentObjectGetDocContentWithDocId:[NSString stringWithFormat:@"%d",self.docId]];
+    self.nowView = self.view;
 }
 - (void)getFileContentSuccess {
     [MBProgressHUD hideHUD];
@@ -100,7 +102,7 @@
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"已经下载过同样名字的文件!" message:@"" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"重新下载" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             //重新下载文件
-            [MBProgressHUD showMessage:@"正在下载" toView:self.view];
+            [MBProgressHUD showMessage:@"正在下载" toView:self.nowView];
             [self.manger downloadFileWithDocId:docid AndFileName:fileName];
         }];
         UIAlertAction *actionOpen = [UIAlertAction actionWithTitle:@"直接打开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
@@ -124,7 +126,7 @@
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"下载文件!" message:[NSString stringWithFormat:@"确定下载文件:%@?",fileName] preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             //下载文件
-            [MBProgressHUD showMessage:@"正在下载" toView:self.view];
+            [MBProgressHUD showMessage:@"正在下载" toView:self.nowView];
             [self.manger downloadFileWithDocId:docid AndFileName:fileName];
             
         }];

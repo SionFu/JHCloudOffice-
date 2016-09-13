@@ -48,7 +48,7 @@
                                         </constraints>
                                     </imageView>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.36078431372549019" green="0.65490196078431373" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstItem="lme-nl-hwk" firstAttribute="leading" secondItem="Kei-fz-dey" secondAttribute="leading" id="2vn-Ic-N4k"/>
                                     <constraint firstAttribute="bottom" secondItem="HrL-oa-Gc8" secondAttribute="bottom" id="LDk-nC-fQL"/>
@@ -104,6 +104,7 @@
                                         </variation>
                                         <connections>
                                             <action selector="enterBtnClick:" destination="BYZ-38-t0r" eventType="editingDidEndOnExit" id="Gca-XS-D2d"/>
+                                            <action selector="textFieldDidBeginEditing:" destination="BYZ-38-t0r" eventType="editingDidBegin" id="nDM-Zo-XYX"/>
                                         </connections>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ywP-tI-5Mh">
@@ -175,7 +176,7 @@
                                 </constraints>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.36078431372549019" green="0.65490196078431373" blue="0.96862745098039216" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="E21-LD-HLr" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="1zE-9f-aWl"/>
                             <constraint firstAttribute="trailing" secondItem="Kei-fz-dey" secondAttribute="trailing" id="74k-zG-Hv7"/>
@@ -578,6 +579,9 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="发现" image="ic_menu_poi_off" badgeValue="1" id="Esg-tR-6mf"/>
+                    <connections>
+                        <outlet property="poiListTableView" destination="wgD-0T-j1p" id="RhK-91-sw8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Mx-qf-i7B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -941,7 +945,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MgE-g4-g2F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2658" y="1529"/>
+            <point key="canvasLocation" x="2568" y="1373"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Rgt-Cd-U5j">

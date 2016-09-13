@@ -40,6 +40,7 @@
 @end
 
 @implementation LoginViewController
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     //关闭用户名的文本框的自动修正
@@ -66,7 +67,7 @@
     self.userNameTextField.leftViewMode = UITextFieldViewModeAlways;
     self.userPwdTextFileField.leftViewMode = UITextFieldViewModeAlways;
 }
-//当用户名输入框开始编辑
+//当用户名和密码输入框开始编辑
 - (IBAction)textFieldDidBeginEditing:(UITextField *)sender {
         [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(showKeyboard:) name:UIKeyboardWillShowNotification object:nil];
 //    self.userViewBottomConstraint.constant = 130;
@@ -99,6 +100,14 @@
 
 }
 - (IBAction)enterBtnClick:(id)sender {
+    if ([self.userNameTextField.text isEqualToString:@""]) {
+        [MBProgressHUD showError:@"用户名不能为空"];
+        return;
+    }
+    if ([self.userPwdTextFileField.text isEqualToString:@""]) {
+        [MBProgressHUD showError:@"密码不能为空"];
+        return;
+    }
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(closeKeyboard:) name:UIKeyboardWillHideNotification object:nil];
 
     [JHNetworkManager vaidataUserWithUserName:self.userNameTextField.text andPassword:self.userPwdTextFileField.text];
@@ -130,7 +139,7 @@
     //登陆成功就开始获取流程数据
     [MBProgressHUD showSuccess:@"登陆成功"];
     [MBProgressHUD hideHUDForView:self.view animated:YES];
-    [MBProgressHUD showMessage:@"正在加载配置.." toView:self.view];
+//    [MBProgressHUD showMessage:@"正在加载配置.." toView:self.view];
     [[[JHNetworkManager alloc]init] getModules];
     
 
@@ -139,6 +148,7 @@
     [self performSegueWithIdentifier:@"Login" sender:nil];
 }
 -(void)loginfaild{
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [MBProgressHUD showError:[JHUserInfo sharedJHUserInfo].errorCode];
 }
 -(void)loginNetError{
@@ -149,8 +159,6 @@
 - (IBAction)loginBtnClick:(id)sender {
     [self enterBtnClick:nil];
     [self.view endEditing:YES];
-    
-    
 }
 - (IBAction)rembePwdCheckBox:(UIButton *)sender {
     sender.selected = !sender.selected;

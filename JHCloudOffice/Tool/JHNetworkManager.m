@@ -21,8 +21,9 @@ singleton_implementation(JHNetworkManager)
 + (void)vaidataUserWithUserName:(NSString *)user andPassword:(NSString *)password{
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/DefaultSheet.ashx?appKey=%@&action=validateuser&userCode=%@&password=%@",SITEURL,APPKEY,user,password];
-    [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/DefaultSheet.ashx?appKey=%@&action=validateuser&userCode=%@&password=%@",SITEURL,APPKEY,user ,password];
+    NSString * encodedString = (NSString *)CFBridgingRelease(CFURLCreateStringByAddingPercentEscapes( kCFAllocatorDefault, (CFStringRef)urlStr, NULL, NULL,  kCFStringEncodingUTF8 ));
+    [manager GET:encodedString parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         NSLog(@"%@",responseObject);
         [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
         NSDictionary *dic = responseObject;

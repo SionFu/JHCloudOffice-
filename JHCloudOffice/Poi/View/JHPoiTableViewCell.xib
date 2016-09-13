@@ -16,7 +16,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="巨化公司通讯录" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rq2-sh-y9Q">
-                        <rect key="frame" x="88" y="9" width="119" height="21"/>
+                        <rect key="frame" x="71" y="9" width="119" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="s1S-iH-xGZ"/>
                         </constraints>
@@ -24,37 +24,51 @@
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已订阅" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g7z-KG-HEK">
-                        <rect key="frame" x="273" y="27.5" width="41" height="25"/>
-                        <constraints>
-                            <constraint firstAttribute="width" constant="41" id="AbL-TJ-ywq"/>
-                            <constraint firstAttribute="height" constant="25" id="rWg-92-8p8"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                        <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="信息公司全体员工联系 通讯录   测试下两行的显示效果" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m1e-ez-cUs">
-                        <rect key="frame" x="88" y="33" width="177" height="32.5"/>
+                        <rect key="frame" x="71" y="33" width="205" height="29"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="33" id="DCr-p1-IdT"/>
+                            <constraint firstAttribute="height" constant="29" id="ah2-zW-DHu"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                         <color key="textColor" red="0.50196081400000003" green="0.50196081400000003" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="DCr-p1-IdT"/>
+                            </mask>
+                        </variation>
                     </label>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="h6U-Dd-hWb">
-                        <rect key="frame" x="8" y="4" width="72" height="72"/>
+                        <rect key="frame" x="8" y="12" width="55" height="55"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="72" id="PQq-FU-GhR"/>
-                            <constraint firstAttribute="height" constant="72" id="qqh-rc-zoJ"/>
+                            <constraint firstAttribute="width" constant="55" id="PQq-FU-GhR"/>
+                            <constraint firstAttribute="height" constant="55" id="qqh-rc-zoJ"/>
                         </constraints>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="已订阅" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g7z-KG-HEK">
+                        <rect key="frame" x="278" y="27" width="36" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="41" id="AbL-TJ-ywq"/>
+                            <constraint firstAttribute="height" constant="25" id="rWg-92-8p8"/>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="36" id="uvM-Gc-hnt"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="AbL-TJ-ywq"/>
+                            </mask>
+                        </variation>
+                    </label>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="trailing" secondItem="m1e-ez-cUs" secondAttribute="trailing" constant="35" id="Ayg-Mp-bZ0"/>
                     <constraint firstItem="h6U-Dd-hWb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="LZx-R0-dng"/>
                     <constraint firstAttribute="bottomMargin" secondItem="g7z-KG-HEK" secondAttribute="bottom" constant="23.5" id="QiU-vf-UZo"/>
                     <constraint firstItem="m1e-ez-cUs" firstAttribute="leading" secondItem="h6U-Dd-hWb" secondAttribute="trailing" constant="8" id="Sh3-Mc-PfC"/>
+                    <constraint firstItem="m1e-ez-cUs" firstAttribute="top" secondItem="rq2-sh-y9Q" secondAttribute="bottom" constant="3" id="UTS-o7-CdX"/>
                     <constraint firstItem="g7z-KG-HEK" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="VgN-Bq-WeM"/>
                     <constraint firstAttribute="bottomMargin" secondItem="m1e-ez-cUs" secondAttribute="bottom" constant="6" id="Y7T-9C-TxJ"/>
                     <constraint firstItem="g7z-KG-HEK" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="15" id="ako-HQ-6CO"/>
@@ -63,11 +77,17 @@
                     <constraint firstItem="g7z-KG-HEK" firstAttribute="leading" secondItem="m1e-ez-cUs" secondAttribute="trailing" constant="8" id="yee-ff-Tt4"/>
                     <constraint firstItem="h6U-Dd-hWb" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="z11-PH-GPx"/>
                     <constraint firstItem="rq2-sh-y9Q" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="1" id="zbj-n0-k3S"/>
+                    <constraint firstItem="g7z-KG-HEK" firstAttribute="leading" secondItem="m1e-ez-cUs" secondAttribute="trailing" id="zcM-jz-Ixr"/>
+                    <constraint firstItem="g7z-KG-HEK" firstAttribute="leading" secondItem="m1e-ez-cUs" secondAttribute="trailing" constant="2" id="zlS-la-5Sz"/>
                 </constraints>
                 <variation key="default">
                     <mask key="constraints">
+                        <exclude reference="Ayg-Mp-bZ0"/>
+                        <exclude reference="Y7T-9C-TxJ"/>
                         <exclude reference="QiU-vf-UZo"/>
                         <exclude reference="ako-HQ-6CO"/>
+                        <exclude reference="yee-ff-Tt4"/>
+                        <exclude reference="zcM-jz-Ixr"/>
                     </mask>
                 </variation>
             </tableViewCellContentView>
@@ -77,7 +97,7 @@
                 <outlet property="poiRSSLabel" destination="g7z-KG-HEK" id="YaH-fw-bef"/>
                 <outlet property="poiTitleLabel" destination="rq2-sh-y9Q" id="hr2-lX-OnC"/>
             </connections>
-            <point key="canvasLocation" x="264.5" y="283"/>
+            <point key="canvasLocation" x="261.5" y="283"/>
         </tableViewCell>
     </objects>
 </document>
