@@ -44,7 +44,7 @@
         } else if ([action isEqualToString:@"alllist"]) {
            [JHPoiModel sharedJHPoiModel].allListData = responseObject;
         }
-        
+     
         [self.getPoiListdDelegate getPoiListSuccess];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
@@ -71,5 +71,14 @@
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
     }];
+}
++(NSDictionary *)getObjectFollowSubscribeInAllListWithPublicCode:(NSString *)publicCode {
+    NSDictionary *poiDic;
+    for (NSDictionary *allPoiDic in [JHPoiModel sharedJHPoiModel].allListArray) {
+        if ([allPoiDic[@"PUBLICCODE"] isEqualToString:publicCode]) {
+            poiDic = allPoiDic;
+        }
+    }
+    return poiDic;
 }
 @end

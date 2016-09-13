@@ -10,6 +10,7 @@
 #import "JHSubscribeViewController.h"
 #import "NSString+FDGetTopUrl.h"
 #import "JHSubscribeWebViewActivity.h"
+#import "JHRestApi.h"
 @interface JHWebContentViewController ()<UIWebViewDelegate>
 @property (weak, nonatomic) IBOutlet UIWebView *contentWebView;
 
@@ -20,11 +21,14 @@
 - (void)viewWillAppear:(BOOL)animated {
     UINavigationBar *navBar = self.navigationController.navigationBar;
     navBar.hidden = NO;
+    //获取所有列表检查 此项目是否订阅
+        [[JHRestApi new] subscribeObjectsGetSubscribeObjectsWithAction:@"alllist"];
 }
 -(NSString *)urlStr {
     _urlStr = [[JHSubscribeWebViewActivity new]getUserAndSsoUrlWithUrl:_urlStr];
     return _urlStr;
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = self.poiDic[@"PUBLICNAME"];
@@ -44,8 +48,9 @@
 }
 
 - (void)detalButtonClink:(id)sender {
+    //推出是否取消订阅视图
     JHSubscribeViewController *subView = [JHSubscribeViewController new];
-    subView.poiDic = self.poiDic;
+    subView.poiDic = [JHRestApi getObjectFollowSubscribeInAllListWithPublicCode:self.poiDic[@"PUBLICCODE"]];
     [self.navigationController pushViewController:subView animated:YES];
 }
 @end

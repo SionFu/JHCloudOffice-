@@ -60,4 +60,8 @@
  *  获取主页通知数
  */
 - (void)notificationObjectGetNotificationWithTime:(NSString *)lastTime;
+/**
+ *  检查是否订阅, 直接从所有列表中获取数据
+ */
++ (NSDictionary *)getObjectFollowSubscribeInAllListWithPublicCode:(NSString *)publicCode;
 @end

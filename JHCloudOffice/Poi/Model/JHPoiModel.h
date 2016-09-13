@@ -30,4 +30,5 @@ singleton_interface(JHPoiModel)
  *  未查看数 unviewcount
  */
 @property (nonatomic ,strong) NSNumber *unViewCount;
+
 @end

@@ -79,11 +79,11 @@
     self.apiManger.subscribeDelegate = self;
     if ([sender.title isEqualToString:@"订阅"]) {
         //订阅内容
-       [self.apiManger subscribeObjectFollowSubscribeWithSubscribe:self.poiDic[@"PUBLICCODE"]];
+       [self.apiManger subscribeObjectFollowSubscribeWithSubscribe:self.poiDic[@"PUBLICGUID"]];
        sender.title = @"取消订阅";
     }else if ([sender.title isEqualToString:@"取消订阅"]){
         //取消订阅
-        [self.apiManger resultPojoCancelSubscribeWithSubscribe:self.poiDic[@"PUBLICCODE"]];
+        [self.apiManger resultPojoCancelSubscribeWithSubscribe:self.poiDic[@"PUBLICGUID"]];
         sender.title = @"订阅";
     }
     

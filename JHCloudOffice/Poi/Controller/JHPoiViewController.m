@@ -50,6 +50,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [MBProgressHUD showMessage:@"加载数据..." toView:self.view];
+    
    }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -79,7 +80,6 @@
     return 75.0;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"%ld",(long)indexPath.row);
     if ([[NSString stringWithFormat:@"%@",self.listArray[indexPath.row][@"PUSHTYPE"]] isEqualToString:@"9"]) {
         //推出UIWebView
         JHWebContentViewController *webView = [JHWebContentViewController new];
