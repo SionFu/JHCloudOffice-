@@ -98,6 +98,10 @@
 		31B985E01D750A3C007F5059 /* JHDocTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31B985DE1D750A3C007F5059 /* JHDocTableViewCell.xib */; };
 		31B985E41D751B80007F5059 /* JHSubDirTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31B985E21D751B80007F5059 /* JHSubDirTableViewController.m */; };
 		31B985E51D751B80007F5059 /* JHSubDirTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31B985E31D751B80007F5059 /* JHSubDirTableViewController.xib */; };
+		31CBA2CE1D88F6AB00AE023E /* JHQueueContentTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 31CBA2CC1D88F6AB00AE023E /* JHQueueContentTableViewController.m */; };
+		31CBA2CF1D88F6AB00AE023E /* JHQueueContentTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31CBA2CD1D88F6AB00AE023E /* JHQueueContentTableViewController.xib */; };
+		31CBA2D81D89368700AE023E /* JHQueueTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31CBA2D61D89368700AE023E /* JHQueueTableViewCell.m */; };
+		31CBA2D91D89368700AE023E /* JHQueueTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 31CBA2D71D89368700AE023E /* JHQueueTableViewCell.xib */; };
 		31E2C7D91D6E837900E5D367 /* TSUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 31E2C7BF1D6E837900E5D367 /* TSUtils.m */; };
 		31E2C7DA1D6E837900E5D367 /* TSTableViewContentHolder.m in Sources */ = {isa = PBXBuildFile; fileRef = 31E2C7C41D6E837900E5D367 /* TSTableViewContentHolder.m */; };
 		31E2C7DB1D6E837900E5D367 /* TSTableViewExpandControlPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = 31E2C7C61D6E837900E5D367 /* TSTableViewExpandControlPanel.m */; };
@@ -309,6 +313,12 @@
 		31B985E11D751B80007F5059 /* JHSubDirTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHSubDirTableViewController.h; sourceTree = "<group>"; };
 		31B985E21D751B80007F5059 /* JHSubDirTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHSubDirTableViewController.m; sourceTree = "<group>"; };
 		31B985E31D751B80007F5059 /* JHSubDirTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHSubDirTableViewController.xib; sourceTree = "<group>"; };
+		31CBA2CB1D88F6AB00AE023E /* JHQueueContentTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHQueueContentTableViewController.h; sourceTree = "<group>"; };
+		31CBA2CC1D88F6AB00AE023E /* JHQueueContentTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHQueueContentTableViewController.m; sourceTree = "<group>"; };
+		31CBA2CD1D88F6AB00AE023E /* JHQueueContentTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHQueueContentTableViewController.xib; sourceTree = "<group>"; };
+		31CBA2D51D89368700AE023E /* JHQueueTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHQueueTableViewCell.h; sourceTree = "<group>"; };
+		31CBA2D61D89368700AE023E /* JHQueueTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHQueueTableViewCell.m; sourceTree = "<group>"; };
+		31CBA2D71D89368700AE023E /* JHQueueTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHQueueTableViewCell.xib; sourceTree = "<group>"; };
 		31E2C7BD1D6E837900E5D367 /* TSDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSDefines.h; sourceTree = "<group>"; };
 		31E2C7BE1D6E837900E5D367 /* TSUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TSUtils.h; sourceTree = "<group>"; };
 		31E2C7BF1D6E837900E5D367 /* TSUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSUtils.m; sourceTree = "<group>"; };
@@ -646,7 +656,7 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		315A81E41D4B925500D8EF62 /* 发起流程 */ = {
+		315A81E41D4B925500D8EF62 /* StartFlow发起流程 */ = {
 			isa = PBXGroup;
 			children = (
 				31B6F46D1D1FAECB00A2670B /* JHProcessViewController.h */,
@@ -655,17 +665,17 @@
 				31B6F4741D1FB02000A2670B /* JHPortalTableViewController.m */,
 				317249E51D22283600B2E48A /* JHPortalTableViewController.xib */,
 			);
-			name = "发起流程";
+			name = "StartFlow发起流程";
 			sourceTree = "<group>";
 		};
-		315A81E51D4B926700D8EF62 /* 扫描二维码 */ = {
+		315A81E51D4B926700D8EF62 /* ScanEQCode */ = {
 			isa = PBXGroup;
 			children = (
 				315A81E61D4B95DE00D8EF62 /* JHScanCRCodeViewController.h */,
 				315A81E71D4B95DE00D8EF62 /* JHScanCRCodeViewController.m */,
 				315A81E81D4B95DE00D8EF62 /* JHScanCRCodeViewController.xib */,
 			);
-			name = "扫描二维码";
+			name = ScanEQCode;
 			sourceTree = "<group>";
 		};
 		317249E71D22543C00B2E48A /* controller */ = {
@@ -790,6 +800,36 @@
 				31B744D81D82497F006D5ACA /* UIView+WebCacheOperation.m */,
 			);
 			path = SDWebImage;
+			sourceTree = "<group>";
+		};
+		31CBA2C31D88E06600AE023E /* PUSHTYPE 1  ViewContrller */ = {
+			isa = PBXGroup;
+			children = (
+				31CBA2CB1D88F6AB00AE023E /* JHQueueContentTableViewController.h */,
+				31CBA2CC1D88F6AB00AE023E /* JHQueueContentTableViewController.m */,
+				31CBA2CD1D88F6AB00AE023E /* JHQueueContentTableViewController.xib */,
+			);
+			name = "PUSHTYPE 1  ViewContrller";
+			sourceTree = "<group>";
+		};
+		31CBA2C41D88E09000AE023E /* PUSHTYPE 9 ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				31FB4EF31D86846800A07882 /* JHWebContentViewController.h */,
+				31FB4EF41D86846800A07882 /* JHWebContentViewController.m */,
+				31FB4EF51D86846800A07882 /* JHWebContentViewController.xib */,
+			);
+			name = "PUSHTYPE 9 ViewController";
+			sourceTree = "<group>";
+		};
+		31CBA2C51D88F00A00AE023E /* Subscribe ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				31B744EE1D826F8A006D5ACA /* JHSubscribeViewController.h */,
+				31B744EF1D826F8A006D5ACA /* JHSubscribeViewController.m */,
+				31B744F01D826F8A006D5ACA /* JHSubscribeViewController.xib */,
+			);
+			name = "Subscribe ViewController";
 			sourceTree = "<group>";
 		};
 		31E2C7BB1D6E837900E5D367 /* TSUIKit */ = {
@@ -934,8 +974,8 @@
 		31E2F53A1D1A830C00FC212B /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				315A81E41D4B925500D8EF62 /* 发起流程 */,
-				315A81E51D4B926700D8EF62 /* 扫描二维码 */,
+				315A81E41D4B925500D8EF62 /* StartFlow发起流程 */,
+				315A81E51D4B926700D8EF62 /* ScanEQCode */,
 				31E2F5491D1A83B300FC212B /* JHDealViewViewController.h */,
 				31E2F54A1D1A83B300FC212B /* JHDealViewViewController.m */,
 			);
@@ -1024,12 +1064,9 @@
 				31B744E91D825917006D5ACA /* JHPoiAllListTableViewController.h */,
 				31B744EA1D825917006D5ACA /* JHPoiAllListTableViewController.m */,
 				31B744EB1D825917006D5ACA /* JHPoiAllListTableViewController.xib */,
-				31B744EE1D826F8A006D5ACA /* JHSubscribeViewController.h */,
-				31B744EF1D826F8A006D5ACA /* JHSubscribeViewController.m */,
-				31B744F01D826F8A006D5ACA /* JHSubscribeViewController.xib */,
-				31FB4EF31D86846800A07882 /* JHWebContentViewController.h */,
-				31FB4EF41D86846800A07882 /* JHWebContentViewController.m */,
-				31FB4EF51D86846800A07882 /* JHWebContentViewController.xib */,
+				31CBA2C51D88F00A00AE023E /* Subscribe ViewController */,
+				31CBA2C31D88E06600AE023E /* PUSHTYPE 1  ViewContrller */,
+				31CBA2C41D88E09000AE023E /* PUSHTYPE 9 ViewController */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1049,6 +1086,9 @@
 				318E133B1D7FEB3E00FC8C6E /* JHPoiTableViewCell.h */,
 				318E133C1D7FEB3E00FC8C6E /* JHPoiTableViewCell.m */,
 				318E133D1D7FEB3E00FC8C6E /* JHPoiTableViewCell.xib */,
+				31CBA2D51D89368700AE023E /* JHQueueTableViewCell.h */,
+				31CBA2D61D89368700AE023E /* JHQueueTableViewCell.m */,
+				31CBA2D71D89368700AE023E /* JHQueueTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1218,6 +1258,7 @@
 				3126948C1D654E6200046999 /* JHBizEditTableViewCell.xib in Resources */,
 				3126A89B1D1908DD00ADC960 /* LaunchScreen.storyboard in Resources */,
 				31E2F5341D1A2DB200FC212B /* MBProgressHUD.bundle in Resources */,
+				31CBA2D91D89368700AE023E /* JHQueueTableViewCell.xib in Resources */,
 				31B985E01D750A3C007F5059 /* JHDocTableViewCell.xib in Resources */,
 				31FB4EF71D86846800A07882 /* JHWebContentViewController.xib in Resources */,
 				315A81EA1D4B95DE00D8EF62 /* JHScanCRCodeViewController.xib in Resources */,
@@ -1229,6 +1270,7 @@
 				310D52D21D236F1F003C09E9 /* JHPageTableViewController.xib in Resources */,
 				3142C6E01D3F4F170043C293 /* JHOrguserTableViewCell.xib in Resources */,
 				3126A8961D1908DD00ADC960 /* Main.storyboard in Resources */,
+				31CBA2CF1D88F6AB00AE023E /* JHQueueContentTableViewController.xib in Resources */,
 				312BAFD11D6FC03F0037D656 /* JHSendMailViewController.xib in Resources */,
 				310D52D71D236F68003C09E9 /* JHPageTableViewCell.xib in Resources */,
 				312694961D65592A00046999 /* JHEditTableViewController.xib in Resources */,
@@ -1308,6 +1350,7 @@
 				31B744DC1D82497F006D5ACA /* SDWebImageCompat.m in Sources */,
 				31B744DE1D82497F006D5ACA /* SDWebImageDownloader.m in Sources */,
 				318A0D2C1D587EB500032F6D /* JHBizViewController+BizDataDefinition.m in Sources */,
+				31CBA2CE1D88F6AB00AE023E /* JHQueueContentTableViewController.m in Sources */,
 				3142C6E31D3F50E40043C293 /* JHChosePeopleViewController.m in Sources */,
 				31B744E61D82497F006D5ACA /* UIImageView+HighlightedWebCache.m in Sources */,
 				31E2C7E11D6E837900E5D367 /* TSTableViewCell.m in Sources */,
@@ -1349,6 +1392,7 @@
 				310D52D61D236F68003C09E9 /* JHPageTableViewCell.m in Sources */,
 				31E2C7DF1D6E837900E5D367 /* TSTableViewRow.m in Sources */,
 				31B744DF1D82497F006D5ACA /* SDWebImageDownloaderOperation.m in Sources */,
+				31CBA2D81D89368700AE023E /* JHQueueTableViewCell.m in Sources */,
 				31B6F4761D1FB02000A2670B /* JHPortalTableViewController.m in Sources */,
 				31798F2B1D77E9DD008368CB /* JHFileListTableViewController.m in Sources */,
 				31B985E41D751B80007F5059 /* JHSubDirTableViewController.m in Sources */,

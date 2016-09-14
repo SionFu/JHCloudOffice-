@@ -155,6 +155,7 @@
     NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
     NSString *filePath = [documentPath stringByAppendingPathComponent:fileName];
         //下载文件
+//    NSLog(@"%@",filePath);
         NSData *fileData = [NSData dataWithContentsOfURL:[NSURL URLWithString:fileurl]];
         if ([[NSFileManager defaultManager] createFileAtPath:filePath contents:fileData attributes:nil]){
             [self.downFileDelegate downFileSuccess];

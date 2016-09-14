@@ -320,7 +320,7 @@
                   moduleName = "JHCloudOffice"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Fusion/Desktop/%E5%B7%A8%E5%8C%96%E9%9B%86%E5%9B%A2/JHCloudOffice%E5%89%AF%E6%9C%AC/JHCloudOffice/Tool/JHWeaverNetManger.m"
-                  timestampString = "495450355.307333"
+                  timestampString = "495531312.856617"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "122"
@@ -335,7 +335,7 @@
                   moduleName = "JHCloudOffice"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Fusion/Desktop/%E5%B7%A8%E5%8C%96%E9%9B%86%E5%9B%A2/JHCloudOffice%E5%89%AF%E6%9C%AC/JHCloudOffice/Tool/JHWeaverNetManger.m"
-                  timestampString = "495450355.307481"
+                  timestampString = "495531312.856804"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "122"
@@ -367,44 +367,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JHCloudOffice/Tool/JHRestApi.m"
-            timestampString = "495447237.057145"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
-            landmarkName = "-subscribeObjectsGetSubscribeObjectsWithAction:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "JHCloudOffice/Tool/JHRestApi.m"
-            timestampString = "495447300.922454"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "43"
-            endingLineNumber = "43"
-            landmarkName = "-subscribeObjectsGetSubscribeObjectsWithAction:"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/Poi/Controller/JHPoiViewController.m"
-            timestampString = "495450541.258811"
+            timestampString = "495523145.391814"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "51"
-            endingLineNumber = "51"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
             landmarkName = "-viewDidLoad"
             landmarkType = "5">
          </BreakpointContent>
@@ -415,12 +383,12 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "JHCloudOffice/Poi/Controller/JHPoiViewController.m"
-            timestampString = "495450342.729756"
+            filePath = "JHCloudOffice/Poi/Controller/JHQueueContentTableViewController.m"
+            timestampString = "495535769.018338"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
+            startingLineNumber = "37"
+            endingLineNumber = "37"
             landmarkName = "-viewWillAppear:"
             landmarkType = "5">
          </BreakpointContent>

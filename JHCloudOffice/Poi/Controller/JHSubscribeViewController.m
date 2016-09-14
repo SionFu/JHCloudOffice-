@@ -67,6 +67,10 @@
     {
         rightButton.title = @"订阅";
     }
+    //判断是需要显示订阅\取消按钮
+    if ([[NSString stringWithFormat:@"%@",self.poiDic[@"FOLLOWTYPE"]] isEqualToString:@"1"]) {
+        return;
+    }
     [self.navigationItem setRightBarButtonItem:rightButton];
 }
 -(void)cancelSubscribeSuccess {

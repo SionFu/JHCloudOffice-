@@ -14,6 +14,7 @@
 #import "MBProgressHUD+KR.h"
 #import "JHPoiAllListTableViewController.h"
 #import "JHWebContentViewController.h"
+#import "JHQueueContentTableViewController.h"
 @interface JHPoiViewController ()<UITableViewDataSource,UITableViewDelegate,JHGetPoiListDelegate>
 /**
  *  显示已订阅列表视图
@@ -36,6 +37,7 @@
 - (void)viewWillAppear:(BOOL)animated {
     UINavigationBar *navBar = self.navigationController.navigationBar;
     navBar.hidden = YES;
+   
         //开始获取订阅的消息
     self.apiManger = [JHRestApi new];
     self.apiManger.getPoiListdDelegate = self;
@@ -50,7 +52,6 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [MBProgressHUD showMessage:@"加载数据..." toView:self.view];
-    
    }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -88,7 +89,9 @@
         [self.navigationController pushViewController:webView animated:YES];
     }else if ([[NSString stringWithFormat:@"%@",self.listArray[indexPath.row][@"PUSHTYPE"]] isEqualToString:@"1"]) {
         //推出自定义视图表格
-        
+        JHQueueContentTableViewController *qVC = [JHQueueContentTableViewController new];
+        qVC.poiDic = self.listArray[indexPath.row];
+        [self.navigationController pushViewController:qVC animated:YES];
     }
 }
 - (void)didReceiveMemoryWarning {

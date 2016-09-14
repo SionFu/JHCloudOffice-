@@ -23,6 +23,7 @@
     navBar.hidden = NO;
     //获取所有列表检查 此项目是否订阅
         [[JHRestApi new] subscribeObjectsGetSubscribeObjectsWithAction:@"alllist"];
+    self.navigationController.navigationItem.backBarButtonItem.title = @"返回";
 }
 -(NSString *)urlStr {
     _urlStr = [[JHSubscribeWebViewActivity new]getUserAndSsoUrlWithUrl:_urlStr];
@@ -48,7 +49,7 @@
 }
 
 - (void)detalButtonClink:(id)sender {
-    //推出是否取消订阅视图
+    //推出是否取消\订阅视图
     JHSubscribeViewController *subView = [JHSubscribeViewController new];
     subView.poiDic = [JHRestApi getObjectFollowSubscribeInAllListWithPublicCode:self.poiDic[@"PUBLICCODE"]];
     [self.navigationController pushViewController:subView animated:YES];

@@ -545,6 +545,7 @@
                         <subviews>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tPe-Jk-gUA">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
+                                <color key="backgroundColor" red="0.16470588235294117" green="0.46274509803921571" blue="0.87450980392156863" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="NoY-cI-Quw"/>
                                 </constraints>

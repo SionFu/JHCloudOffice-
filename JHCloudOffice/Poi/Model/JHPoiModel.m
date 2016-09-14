@@ -9,13 +9,18 @@
 #import "JHPoiModel.h"
 
 @implementation JHPoiModel
+-(NSDictionary *)queueData {
+    if (_queueData == nil) {
+        _queueData = [NSDictionary dictionary];
+    }return _queueData;
+}
 -(NSDictionary *)listData {
     if (_listData == nil) {
         _listData = [NSDictionary dictionary];
     }return _listData;
 }
 -(NSArray *)listArray {
-    return [NSArray arrayWithArray:self.listData[@"datas"]];
+    return self.listData[@"datas"];
 }
 -(NSDictionary *)allListData {
     if (_allListData == nil) {
@@ -23,7 +28,10 @@
     }return  _allListData;
 }
 -(NSArray *)allListArray {
-    return [NSArray arrayWithArray:self.allListData[@"datas"]];
+    return self.allListData[@"datas"];
+}
+-(NSArray *)queueDatasArray {
+    return self.queueData[@"datas"];
 }
 singleton_implementation(JHPoiModel)
 @end

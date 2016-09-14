@@ -8,6 +8,14 @@
 
 #import <Foundation/Foundation.h>
 /**
+ *  获取 Queue 公司推送通知内容
+ */
+@protocol JHQueueObjectsDelegate <NSObject>
+
+- (void)getQueueObjectsSuccess;
+
+@end
+/**
  *  取消和获取订阅代理
  */
 @protocol JHFollowAndCancelSubscribeDelegate <NSObject>
@@ -33,6 +41,7 @@
 - (void)getNoticationSuccess;
 @end
 @interface JHRestApi : NSObject
+@property (nonatomic ,weak) id<JHQueueObjectsDelegate>getQueueObjectsDelegate;
 @property (nonatomic, weak) id<JHFollowAndCancelSubscribeDelegate>subscribeDelegate;
 @property (nonatomic, weak) id<JHGetPoiListDelegate> getPoiListdDelegate;
 @property (nonatomic, weak) id<JHGetNotificationObjectDelegate>getNotificationDelegate;
@@ -43,7 +52,7 @@
 /**
  *  获取本公司订阅内容
  */
-- (void)pushQueueObjectsGetPushQueueObjectsWithUserid:(NSString *)userid andPublicGuid:(NSString *)publicGuid andPageSize:(NSString *)pageSize andPageIndex:(NSString *)pageIndex;
+- (void)pushQueueObjectsGetPushQueueObjectsWithPublicGuid:(NSString *)publicGuid andPageSize:(NSString *)pageSize andPageIndex:(NSString *)pageIndex;
 /**
  *  删除通知
  */
