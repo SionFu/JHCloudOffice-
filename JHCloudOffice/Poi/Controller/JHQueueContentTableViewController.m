@@ -16,9 +16,18 @@
 @property (nonatomic ,strong)JHRestApi *apiManger;
 @property (nonatomic ,strong ) UINib *nib;
 @property (nonatomic, strong ) NSArray *queueArray;
+//是否有查看全文
+@property (nonatomic, assign) BOOL haveDetalContent;
 @end
 
 @implementation JHQueueContentTableViewController
+-(BOOL)haveDetalContent {
+    NSDictionary *dic = self.queueArray[0];
+    if ([[dic allKeys]containsObject:@"PURL"]) {
+        return true;
+    }
+    return false;
+}
 -(NSArray *)queueArray {
     return [JHPoiModel sharedJHPoiModel].queueDatasArray;
 }
@@ -47,7 +56,7 @@
     //预估值
     self.tableView.estimatedRowHeight = 200;
     [MBProgressHUD showMessage:@"正在加载..." toView:self.view];
-    // Uncomment the following line to preserve selection between presentations.
+
      self.clearsSelectionOnViewWillAppear = NO;
     self.title = self.poiDic[@"PUBLICNAME"];
      self.navigationItem.rightBarButtonItem = self.editButtonItem;
@@ -101,14 +110,57 @@
     cell.publicTimeLabel.text = [dateFormatter stringFromDate:date];
     cell.publicDescLabel.text = self.queueArray[indexPath.row][@"PDESC"];
     //判断是否需要显示 详细内容
-    NSDictionary *dic = self.queueArray[indexPath.row];
-    if ([[dic allKeys]containsObject:@"PURL"]) {
+    if (self.haveDetalContent) {
      cell.publicUrlLabel.hidden = NO;
+        cell.userInteractionEnabled = YES;
+    }else {
+        cell.userInteractionEnabled = NO;
     }
-    
     return cell;
 }
-
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+        NSLog(@"%ld",(long)indexPath.row);
+    //显示详细视图
+}
+#pragma mark delete
+//1.是否可以编辑canEdit
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    return YES;
+}
+//2.每行编辑的样式editstyleForAtIndex
+-(UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return UITableViewCellEditingStyleDelete;
+}
+//3.点中删除后的效果commitEditStyle
+-(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"确定删除本条推送?" message:@"确定" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *action = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *delAction = [UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
+        //1.获取数据
+//        TRPoetry *proty = self.poetryArray[indexPath.row];
+//        
+//        if ([TRPoetry removePotryWithID:proty.poetryID]) {
+//            NSLog(@"删除成功");
+//            //2.更新数组中的数据
+//            NSString *protuStr = proty.poetryKind;
+//            self.poetryArray = [TRPoetry poetryListWithKind:protuStr];
+//            //[self.collectionView reloadData];
+//            //3.删除对应的cell
+//            
+//            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+//        }
+    }];
+    [alertController addAction:action];
+    [alertController addAction:delAction];
+    [self presentViewController:alertController animated:YES completion:nil];
+    
+}
+//自定义删除按钮
+-(NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return @"删除推送";
+}
 //- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
 //      自适应高度
 //    return 400;
