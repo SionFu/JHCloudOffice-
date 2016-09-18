@@ -12,9 +12,13 @@
 #import "JHQueueTableViewCell.h"
 #import "JHPoiModel.h"
 #import "MBProgressHUD+KR.h"
+#import "JHDetailWebViewController.h"
 @interface JHQueueContentTableViewController ()<JHQueueObjectsDelegate>
 @property (nonatomic ,strong)JHRestApi *apiManger;
 @property (nonatomic ,strong ) UINib *nib;
+/**
+ *  推送列表数组内容
+ */
 @property (nonatomic, strong ) NSArray *queueArray;
 //是否有查看全文
 @property (nonatomic, assign) BOOL haveDetalContent;
@@ -112,15 +116,21 @@
     //判断是否需要显示 详细内容
     if (self.haveDetalContent) {
      cell.publicUrlLabel.hidden = NO;
-        cell.userInteractionEnabled = YES;
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }else {
-        cell.userInteractionEnabled = NO;
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.haveDetalContent) {
         NSLog(@"%ld",(long)indexPath.row);
-    //显示详细视图
+        //显示详细视图
+        JHDetailWebViewController *webView = [JHDetailWebViewController new];
+        webView.urlStr = self.queueArray[indexPath.row][@"PURL"];
+        [self.navigationController pushViewController:webView animated:YES];
+    }
+
 }
 #pragma mark delete
 //1.是否可以编辑canEdit
