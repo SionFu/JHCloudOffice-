@@ -36,6 +36,7 @@
     NSString *urlStr = [NSString stringWithFormat:@"%@RestAPI/Subscribe.ashx?appKey=%@&action=%@&userid=%@&platform=ios",SITEURL,APPKEY,action,[JHUserInfo sharedJHUserInfo].objectId];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+//        NSLog(@"%@",responseObject);
         if ([action isEqualToString:@"list"]) {
            [JHPoiModel sharedJHPoiModel].listData = responseObject;
         } else if ([action isEqualToString:@"alllist"]) {
@@ -84,5 +85,24 @@
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
     }];
+}
+- (void)resultPojoDeletePushQueueObjectWithPqid:(NSString *)pqid{
+    NSString *urlStr = [NSString stringWithFormat:@"%@RestAPI/Subscribe.ashx?appKey=%@&action=deletepush&userid=%@&pqid=%@",SITEURL,APPKEY,[JHUserInfo sharedJHUserInfo].objectId,pqid];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:urlStr parameters:nil success:nil failure:nil];
+}
+-(void)downloadFileWithPURL:(NSString *)pUrl AndFileName:(NSString *)fileName {
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *filePath = [documentPath stringByAppendingPathComponent:fileName];
+    //下载文件
+    //    NSLog(@"%@",filePath);
+    pUrl = [pUrl stringByReplacingOccurrencesOfString:@"h3.juhua.com.cn" withString:@"h3.juhua.com.cn/portal"];
+    NSData *fileData = [NSData dataWithContentsOfURL:[NSURL URLWithString:pUrl]];
+    if ([[NSFileManager defaultManager] createFileAtPath:filePath contents:fileData attributes:nil]){
+        [self.downFileDelegate downFileSuccess];
+    }else {
+        [self.downFileDelegate downFileFaild];
+    }
+
 }
 @end

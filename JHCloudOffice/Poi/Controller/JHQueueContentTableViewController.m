@@ -13,18 +13,34 @@
 #import "JHPoiModel.h"
 #import "MBProgressHUD+KR.h"
 #import "JHDetailWebViewController.h"
-@interface JHQueueContentTableViewController ()<JHQueueObjectsDelegate>
+@interface JHQueueContentTableViewController ()<JHQueueObjectsDelegate,UIDocumentInteractionControllerDelegate,JHDownPFileDelegate>
+@property (nonatomic, strong) UIDocumentInteractionController *documentInteractionController;
 @property (nonatomic ,strong)JHRestApi *apiManger;
 @property (nonatomic ,strong ) UINib *nib;
 /**
  *  推送列表数组内容
  */
-@property (nonatomic, strong ) NSArray *queueArray;
+@property (nonatomic, strong ) NSMutableArray *queueArray;
 //是否有查看全文
 @property (nonatomic, assign) BOOL haveDetalContent;
+/**
+ *  是否有下载内容
+ */
+@property (nonatomic, assign) BOOL isFile;
+/**
+ *  当前文件的路径
+ */
+@property (nonatomic, strong) NSString *filePath;
 @end
 
 @implementation JHQueueContentTableViewController
+- (BOOL)isFile {
+    if ([[NSString stringWithFormat:@"%@",self.queueArray[0][@"ISFILE"]]isEqualToString:@"1"]) {
+        return true;
+    }else {
+        return false;
+    }
+}
 -(BOOL)haveDetalContent {
     NSDictionary *dic = self.queueArray[0];
     if ([[dic allKeys]containsObject:@"PURL"]) {
@@ -32,8 +48,11 @@
     }
     return false;
 }
--(NSArray *)queueArray {
-    return [JHPoiModel sharedJHPoiModel].queueDatasArray;
+-(NSMutableArray *)queueArray {
+    if (_queueArray == nil) {
+        _queueArray = [[JHPoiModel sharedJHPoiModel].queueDatasArray mutableCopy];
+    }
+    return _queueArray;
 }
 -(JHRestApi *)apiManger {
     if (_apiManger == nil) {
@@ -44,10 +63,13 @@
     [JHPoiModel sharedJHPoiModel].queueData = nil;
     UINavigationBar *navBar = self.navigationController.navigationBar;
     navBar.hidden = NO;
+    [self getData];
+}
+- (void)getData {
     //获取所有列表检查 此项目是否订阅
     [self.apiManger subscribeObjectsGetSubscribeObjectsWithAction:@"alllist"];
     self.apiManger.getQueueObjectsDelegate = self;
-    [self.apiManger pushQueueObjectsGetPushQueueObjectsWithPublicGuid:self.poiDic[@"PUBLICGUID"] andPageSize:@"4" andPageIndex:@"1"];
+    [self.apiManger pushQueueObjectsGetPushQueueObjectsWithPublicGuid:self.poiDic[@"PUBLICGUID"] andPageSize:@"6" andPageIndex:@"1"];
 }
 -(void)getQueueObjectsSuccess {
     [self.tableView reloadData];
@@ -115,22 +137,103 @@
     cell.publicDescLabel.text = self.queueArray[indexPath.row][@"PDESC"];
     //判断是否需要显示 详细内容
     if (self.haveDetalContent) {
-     cell.publicUrlLabel.hidden = NO;
+        if (self.isFile) {
+         cell.publicUrlLabel.text = @"点击下载";
+        }else {
+        cell.publicUrlLabel.text = @"查看全文";
+        }
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }else {
+        cell.publicUrlLabel.text = @"";
         [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (self.haveDetalContent) {
-        NSLog(@"%ld",(long)indexPath.row);
+        if (self.isFile) {
+            [self downLoadFileWith:indexPath];
+        }else {
         //显示详细视图
         JHDetailWebViewController *webView = [JHDetailWebViewController new];
         webView.urlStr = self.queueArray[indexPath.row][@"PURL"];
         [self.navigationController pushViewController:webView animated:YES];
     }
+    }
 
+}
+- (void)downLoadFileWith:(NSIndexPath *) indexpath{
+    NSString *fileName = [NSString stringWithFormat:@"%@.%@",self.queueArray[indexpath.row][@"PTITLE"],self.queueArray[indexpath.row][@"FILETYPE"]];
+    NSString *pUrl = self.queueArray[indexpath.row][@"PURL"];
+    //downloadFile
+    //判断文件是否存在
+    NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *filePath = [documentPath stringByAppendingPathComponent:fileName];
+    self.filePath = filePath;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    self.apiManger.downFileDelegate = self;
+    if( [fileManager fileExistsAtPath:filePath]== YES ) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"已经下载过同样名字的文件!" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"重新下载" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            //重新下载文件
+            [MBProgressHUD showMessage:@"正在下载" toView:self.view];
+            [self.apiManger downloadFileWithPURL:pUrl AndFileName:fileName];
+        }];
+        UIAlertAction *actionOpen = [UIAlertAction actionWithTitle:@"直接打开" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            //直接打开文件
+            //            [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"file://%@",filePath]]];
+            NSURL *url = [NSURL fileURLWithPath:filePath];
+            _documentInteractionController = [UIDocumentInteractionController
+                                              interactionControllerWithURL:url];
+            [_documentInteractionController setDelegate:self];
+            
+            [_documentInteractionController presentOpenInMenuFromRect:CGRectZero inView:self.view animated:YES];
+            
+        }];
+        UIAlertAction *actionNo = [UIAlertAction actionWithTitle:@" 取消" style:UIAlertActionStyleCancel handler:nil];
+        [alert addAction:actionYes];
+        [alert addAction:actionOpen];
+        [alert addAction:actionNo];
+        [self presentViewController:alert animated:YES completion:nil];
+    } else {
+        
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"下载文件!" message:[NSString stringWithFormat:@"确定下载文件:%@?",fileName] preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            //下载文件
+            [MBProgressHUD showMessage:@"正在下载" toView:self.view];
+            [self.apiManger downloadFileWithPURL:pUrl AndFileName:fileName];
+            
+        }];
+        UIAlertAction *actionNo = [UIAlertAction actionWithTitle:@" 取消" style:UIAlertActionStyleCancel handler:nil];
+        [alert addAction:actionYes];
+        [alert addAction:actionNo];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+}
+#pragma mark downloadFileDelegate
+-(void)downFileSuccess {
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"下载成功!" message:@"" preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"打开文件" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        //打开文件
+        NSLog(@"%@",self.filePath);
+        NSURL *url = [NSURL fileURLWithPath:self.filePath];
+        _documentInteractionController = [UIDocumentInteractionController
+                                          interactionControllerWithURL:url];
+        [_documentInteractionController setDelegate:self];
+        
+        [_documentInteractionController presentOpenInMenuFromRect:CGRectZero inView:self.view animated:YES];
+        
+    }];
+    UIAlertAction *actionNo = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:actionYes];
+    [alert addAction:actionNo];
+    [self presentViewController:alert animated:YES completion:nil];
+}
+
+-(void)downFileFaild {
+    [MBProgressHUD hideHUD];
+    [MBProgressHUD showError:@"文件下载失败"];
 }
 #pragma mark delete
 //1.是否可以编辑canEdit
@@ -148,19 +251,14 @@
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"确定删除本条推送?" message:@"确定" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *action = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     UIAlertAction *delAction = [UIAlertAction actionWithTitle:@"删除" style:UIAlertActionStyleDestructive handler:^(UIAlertAction * _Nonnull action) {
-        //1.获取数据
-//        TRPoetry *proty = self.poetryArray[indexPath.row];
-//        
-//        if ([TRPoetry removePotryWithID:proty.poetryID]) {
-//            NSLog(@"删除成功");
-//            //2.更新数组中的数据
-//            NSString *protuStr = proty.poetryKind;
-//            self.poetryArray = [TRPoetry poetryListWithKind:protuStr];
-//            //[self.collectionView reloadData];
-//            //3.删除对应的cell
-//            
-//            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
-//        }
+            //1.删除服务器数据
+        [self.apiManger resultPojoDeletePushQueueObjectWithPqid:self.queueArray[indexPath.row][@"PQID"]];
+        // 2.删除本视图 数组内容
+        [self.queueArray removeObjectAtIndex:indexPath.row];
+            //3.返回 block 更新数据 删除 cell
+        
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+
     }];
     [alertController addAction:action];
     [alertController addAction:delAction];

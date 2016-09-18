@@ -49,6 +49,10 @@
 
 -(void)containerViewItemIndex:(NSInteger)index currentController:(UIViewController *)controller{
     //    [JHModulesData sharedJHModulesData].curreatVCIndex = index;
+    if (index == 4) {
+        
+    }
+    NSLog(@"%ld",(long)index);
 }
 
 - (void)didReceiveMemoryWarning {

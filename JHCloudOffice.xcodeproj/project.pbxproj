@@ -44,6 +44,9 @@
 		3142C6E31D3F50E40043C293 /* JHChosePeopleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3142C6E21D3F50E40043C293 /* JHChosePeopleViewController.m */; };
 		3155DEB51D8E21B900AC6FBD /* JHDetailWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3155DEB31D8E21B900AC6FBD /* JHDetailWebViewController.m */; };
 		3155DEB61D8E21B900AC6FBD /* JHDetailWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3155DEB41D8E21B900AC6FBD /* JHDetailWebViewController.xib */; };
+		3155DEBA1D8E80E700AC6FBD /* JHFileManger.m in Sources */ = {isa = PBXBuildFile; fileRef = 3155DEB91D8E80E700AC6FBD /* JHFileManger.m */; };
+		3155DEBE1D8E83C700AC6FBD /* JHUserTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3155DEBC1D8E83C700AC6FBD /* JHUserTableViewCell.m */; };
+		3155DEBF1D8E83C700AC6FBD /* JHUserTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3155DEBD1D8E83C700AC6FBD /* JHUserTableViewCell.xib */; };
 		315A81E91D4B95DE00D8EF62 /* JHScanCRCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 315A81E71D4B95DE00D8EF62 /* JHScanCRCodeViewController.m */; };
 		315A81EA1D4B95DE00D8EF62 /* JHScanCRCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 315A81E81D4B95DE00D8EF62 /* JHScanCRCodeViewController.xib */; };
 		316EA3871D78FA3600B8CE81 /* JHFileContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 316EA3851D78FA3600B8CE81 /* JHFileContentViewController.m */; };
@@ -215,6 +218,11 @@
 		3155DEB21D8E21B900AC6FBD /* JHDetailWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHDetailWebViewController.h; sourceTree = "<group>"; };
 		3155DEB31D8E21B900AC6FBD /* JHDetailWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHDetailWebViewController.m; sourceTree = "<group>"; };
 		3155DEB41D8E21B900AC6FBD /* JHDetailWebViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHDetailWebViewController.xib; sourceTree = "<group>"; };
+		3155DEB81D8E80E700AC6FBD /* JHFileManger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHFileManger.h; sourceTree = "<group>"; };
+		3155DEB91D8E80E700AC6FBD /* JHFileManger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHFileManger.m; sourceTree = "<group>"; };
+		3155DEBB1D8E83C700AC6FBD /* JHUserTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHUserTableViewCell.h; sourceTree = "<group>"; };
+		3155DEBC1D8E83C700AC6FBD /* JHUserTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHUserTableViewCell.m; sourceTree = "<group>"; };
+		3155DEBD1D8E83C700AC6FBD /* JHUserTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHUserTableViewCell.xib; sourceTree = "<group>"; };
 		315A81E61D4B95DE00D8EF62 /* JHScanCRCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHScanCRCodeViewController.h; sourceTree = "<group>"; };
 		315A81E71D4B95DE00D8EF62 /* JHScanCRCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHScanCRCodeViewController.m; sourceTree = "<group>"; };
 		315A81E81D4B95DE00D8EF62 /* JHScanCRCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHScanCRCodeViewController.xib; sourceTree = "<group>"; };
@@ -671,6 +679,21 @@
 			name = "Detal WebView";
 			sourceTree = "<group>";
 		};
+		3155DEB71D8E803B00AC6FBD /* Category */ = {
+			isa = PBXGroup;
+			children = (
+				31F875771D3DC6E800BEE76D /* NSDictionary+JHChangeDicToJson.h */,
+				31F875781D3DC6E800BEE76D /* NSDictionary+JHChangeDicToJson.m */,
+				3181EDB11D7D50E6003C035F /* NSString+JHChangeStringToBase.h */,
+				3181EDB21D7D50E6003C035F /* NSString+JHChangeStringToBase.m */,
+				319637ED1D87D38B000C745C /* NSString+FDGetTopUrl.h */,
+				319637EE1D87D38B000C745C /* NSString+FDGetTopUrl.m */,
+				31B744FC1D82A1A1006D5ACA /* UIImage+FDChangeStringToCRCode.h */,
+				31B744FD1D82A1A1006D5ACA /* UIImage+FDChangeStringToCRCode.m */,
+			);
+			name = Category;
+			sourceTree = "<group>";
+		};
 		315A81E41D4B925500D8EF62 /* StartFlow发起流程 */ = {
 			isa = PBXGroup;
 			children = (
@@ -909,6 +932,8 @@
 		31E2F5091D1A211C00FC212B /* Tool */ = {
 			isa = PBXGroup;
 			children = (
+				3155DEB81D8E80E700AC6FBD /* JHFileManger.h */,
+				3155DEB91D8E80E700AC6FBD /* JHFileManger.m */,
 				31E2F50A1D1A240200FC212B /* JHNetworkManager.h */,
 				31E2F50B1D1A240200FC212B /* JHNetworkManager.m */,
 				31E84F0B1D8143E10036069E /* JHRestApi.h */,
@@ -917,19 +942,12 @@
 				319637F11D87D71D000C745C /* JHSubscribeWebViewActivity.m */,
 				312BAFD61D6FDFF80037D656 /* JHWeaverNetManger.h */,
 				312BAFD71D6FDFF80037D656 /* JHWeaverNetManger.m */,
-				31E2F5361D1A2E0400FC212B /* Singleton.h */,
 				31F2E96D1D264A8E0079BDB9 /* JHPageDataManager.h */,
 				31F2E96E1D264A8E0079BDB9 /* JHPageDataManager.m */,
 				31F8757D1D3E010000BEE76D /* JHOrguserManger.h */,
 				31F8757E1D3E010000BEE76D /* JHOrguserManger.m */,
-				31F875771D3DC6E800BEE76D /* NSDictionary+JHChangeDicToJson.h */,
-				31F875781D3DC6E800BEE76D /* NSDictionary+JHChangeDicToJson.m */,
-				3181EDB11D7D50E6003C035F /* NSString+JHChangeStringToBase.h */,
-				3181EDB21D7D50E6003C035F /* NSString+JHChangeStringToBase.m */,
-				319637ED1D87D38B000C745C /* NSString+FDGetTopUrl.h */,
-				319637EE1D87D38B000C745C /* NSString+FDGetTopUrl.m */,
-				31B744FC1D82A1A1006D5ACA /* UIImage+FDChangeStringToCRCode.h */,
-				31B744FD1D82A1A1006D5ACA /* UIImage+FDChangeStringToCRCode.m */,
+				31E2F5361D1A2E0400FC212B /* Singleton.h */,
+				3155DEB71D8E803B00AC6FBD /* Category */,
 			);
 			path = Tool;
 			sourceTree = "<group>";
@@ -1141,6 +1159,9 @@
 		31E2F5481D1A830C00FC212B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				3155DEBB1D8E83C700AC6FBD /* JHUserTableViewCell.h */,
+				3155DEBC1D8E83C700AC6FBD /* JHUserTableViewCell.m */,
+				3155DEBD1D8E83C700AC6FBD /* JHUserTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1292,6 +1313,7 @@
 				310D52D71D236F68003C09E9 /* JHPageTableViewCell.xib in Resources */,
 				312694961D65592A00046999 /* JHEditTableViewController.xib in Resources */,
 				3142C6DB1D3F4EF70043C293 /* JHOrguserTableViewController.xib in Resources */,
+				3155DEBF1D8E83C700AC6FBD /* JHUserTableViewCell.xib in Resources */,
 				31B744F21D826F8A006D5ACA /* JHSubscribeViewController.xib in Resources */,
 				31B744ED1D825917006D5ACA /* JHPoiAllListTableViewController.xib in Resources */,
 				3105D9F81D1BB26A0098EA73 /* menuData.plist in Resources */,
@@ -1329,6 +1351,7 @@
 				31E2F5291D1A2D9500FC212B /* AFURLConnectionOperation.m in Sources */,
 				31E2C7DD1D6E837900E5D367 /* TSTableViewHeaderPanel.m in Sources */,
 				31E2C7DE1D6E837900E5D367 /* TSTableViewHeaderSection.m in Sources */,
+				3155DEBE1D8E83C700AC6FBD /* JHUserTableViewCell.m in Sources */,
 				31B744E31D82497F006D5ACA /* UIImage+GIF.m in Sources */,
 				31B744E01D82497F006D5ACA /* SDWebImageManager.m in Sources */,
 				31B6F46F1D1FAECB00A2670B /* JHProcessViewController.m in Sources */,
@@ -1345,6 +1368,7 @@
 				31A358B91D20F1B100D4C0DA /* NSObject+YYModel.m in Sources */,
 				315A81E91D4B95DE00D8EF62 /* JHScanCRCodeViewController.m in Sources */,
 				317249EA1D22543C00B2E48A /* LoginViewController.m in Sources */,
+				3155DEBA1D8E80E700AC6FBD /* JHFileManger.m in Sources */,
 				31E2F52C1D1A2D9500FC212B /* AFURLSessionManager.m in Sources */,
 				312BAFD01D6FC03F0037D656 /* JHSendMailViewController.m in Sources */,
 				3105D9F61D1BAE1A0098EA73 /* JHMenuData.m in Sources */,

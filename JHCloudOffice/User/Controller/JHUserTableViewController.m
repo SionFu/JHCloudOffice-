@@ -7,16 +7,23 @@
 //
 
 #import "JHUserTableViewController.h"
-
+#import "JHFileManger.h"
+#import "JHUserTableViewCell.h"
 @interface JHUserTableViewController ()
-
+@property (nonatomic ,strong) NSArray *contentArray;
+@property (nonatomic ,strong) UINib *nib;
 @end
 
 @implementation JHUserTableViewController
-
+- (void)viewWillAppear:(BOOL)animated {
+    NSArray *filePathArray = [[JHFileManger new] showAllFile];
+    NSLog(@"%@",filePathArray);
+    self.contentArray = [NSArray arrayWithArray:filePathArray];
+    [self.tableView reloadData];
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+   
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -32,24 +39,26 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+    return self.contentArray.count;
 }
 
-/*
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
+    static NSString * cellIdentifier = @"User";
+    if (_nib == nil) {
+        _nib = [UINib nibWithNibName:@"JHUserTableViewCell" bundle:nil];
+        [tableView registerNib:_nib forCellReuseIdentifier: cellIdentifier];
+    }
+    JHUserTableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
+    cell.textLabel.text = self.contentArray[indexPath.row];
     
     return cell;
 }
-*/
+
 
 /*
 // Override to support conditional editing of the table view.

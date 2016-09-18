@@ -75,8 +75,12 @@
     cell.poiRSSLabel.text = @"";
     [cell.poiHandImaageView sd_setImageWithURL:[NSURL URLWithString:self.listArray[indexPath.row][@"PUSHICON"]] placeholderImage:[UIImage imageNamed:@"ic_dyh"]];
     
+    
     return cell;
 }
+
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
     return 75.0;
 }

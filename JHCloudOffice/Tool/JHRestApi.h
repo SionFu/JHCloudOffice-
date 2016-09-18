@@ -8,6 +8,15 @@
 
 #import <Foundation/Foundation.h>
 /**
+ *下载附件(巨化报)代理
+ */
+@protocol JHDownPFileDelegate <NSObject>
+
+- (void)downFileSuccess;
+- (void)downFileFaild;
+
+@end
+/**
  *  获取 Queue 公司推送通知内容
  */
 @protocol JHQueueObjectsDelegate <NSObject>
@@ -41,6 +50,7 @@
 - (void)getNoticationSuccess;
 @end
 @interface JHRestApi : NSObject
+@property (nonatomic, weak) id<JHDownPFileDelegate>downFileDelegate;
 @property (nonatomic ,weak) id<JHQueueObjectsDelegate>getQueueObjectsDelegate;
 @property (nonatomic, weak) id<JHFollowAndCancelSubscribeDelegate>subscribeDelegate;
 @property (nonatomic, weak) id<JHGetPoiListDelegate> getPoiListdDelegate;
@@ -54,9 +64,9 @@
  */
 - (void)pushQueueObjectsGetPushQueueObjectsWithPublicGuid:(NSString *)publicGuid andPageSize:(NSString *)pageSize andPageIndex:(NSString *)pageIndex;
 /**
- *  删除通知
+ *  删除通知 公司内部通知
  */
-//- (void)resultPojoDeletePushQueueObjectWithUserid:(NSString *)userid andPqid:(NSString *)pqid;
+- (void)resultPojoDeletePushQueueObjectWithPqid:(NSString *)pqid;
 /**
  *  传入subscribe[PUBLICCODE] 取消订阅此内容
  */
@@ -73,4 +83,8 @@
  *  检查是否订阅, 直接从所有列表中获取数据
  */
 + (NSDictionary *)getObjectFollowSubscribeInAllListWithPublicCode:(NSString *)publicCode;
+/**
+ *  downloadFile
+ */
+- (void)downloadFileWithPURL:(NSString *)pUrl AndFileName:(NSString *)fileName;
 @end
