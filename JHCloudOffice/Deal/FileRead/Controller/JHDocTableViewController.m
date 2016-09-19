@@ -91,7 +91,7 @@
         //显示 文件列表视图
         JHFileListTableViewController *fVC = [JHFileListTableViewController new];
         fVC.title = [[JHDocModel sharedJHDocModel].thiDicArray[indexPath.row][@"categoryname"] stringByAppendingString:@"目录"];
-        fVC.cellForRowInFirDoc = indexPath.row;
+        fVC.seccategory = [JHDocModel sharedJHDocModel].thiDicArray[indexPath.row][@"categoryid"];
         [self.navigationController pushViewController:fVC animated:YES];
         return;
     }

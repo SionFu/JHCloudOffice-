@@ -139,6 +139,25 @@
     if (self.haveDetalContent) {
         if (self.isFile) {
          cell.publicUrlLabel.text = @"点击下载";
+            if ([self.queueArray[indexPath.row][@"FILETYPE"] isEqualToString:@"pdf"]) {
+                 cell.fileImage.image = [UIImage imageNamed:@"filesystem_icon_pdf"];
+            }
+            if ([self.queueArray[indexPath.row][@"FILETYPE"] isEqualToString:@"doc"]) {
+                cell.fileImage.image = [UIImage imageNamed:@"filesystem_icon_word"];
+            }
+            if ([self.queueArray[indexPath.row][@"FILETYPE"] isEqualToString:@""]) {
+                cell.fileImage.image = [UIImage imageNamed:@"filesystem_icon_default"];
+            }
+            if ([self.queueArray[indexPath.row][@"FILETYPE"] isEqualToString:@"ppt"]) {
+                cell.fileImage.image = [UIImage imageNamed:@"filesystem_icon_ppt"];
+            }
+            if ([self.queueArray[indexPath.row][@"FILETYPE"] isEqualToString:@"rar"]) {
+                cell.fileImage.image = [UIImage imageNamed:@"filesystem_icon_rar"];
+            }
+            if ([self.queueArray[indexPath.row][@"FILETYPE"] isEqualToString:@"txt"]) {
+                cell.fileImage.image = [UIImage imageNamed:@"filesystem_icon_text"];
+            }
+           
         }else {
         cell.publicUrlLabel.text = @"查看全文";
         }

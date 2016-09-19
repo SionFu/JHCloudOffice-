@@ -371,6 +371,9 @@
                                         <state key="normal" title="待办流程数">
                                             <color key="titleColor" name="alternateSelectedControlColor" catalog="System" colorSpace="catalog"/>
                                         </state>
+                                        <connections>
+                                            <action selector="unReadTaskBtnClick:" destination="Oay-1r-6FZ" eventType="touchUpInside" id="h5M-6Z-CPQ"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sym-3B-jqg">
                                         <rect key="frame" x="160" y="214" width="199.5" height="21"/>
@@ -383,6 +386,9 @@
                                         <state key="normal" title="未读邮件数">
                                             <color key="titleColor" name="alternateSelectedControlColor" catalog="System" colorSpace="catalog"/>
                                         </state>
+                                        <connections>
+                                            <action selector="unReadEmailBtnClick:" destination="Oay-1r-6FZ" eventType="touchUpInside" id="22Y-hF-FeJ"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ikj-7A-Khe">
                                         <rect key="frame" x="160" y="256" width="199.5" height="21"/>
@@ -395,6 +401,9 @@
                                         <state key="normal" title="未读通知数">
                                             <color key="titleColor" name="alternateSelectedControlColor" catalog="System" colorSpace="catalog"/>
                                         </state>
+                                        <connections>
+                                            <action selector="unReadNotiBtnClick:" destination="Oay-1r-6FZ" eventType="touchUpInside" id="wX0-x4-WVc"/>
+                                        </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arraw_ic" translatesAutoresizingMaskIntoConstraints="NO" id="4Cm-LP-pAF">
                                         <rect key="frame" x="333" y="172" width="27" height="21"/>
@@ -601,7 +610,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="我的" image="ic_menu_user_off" id="Ibf-9O-Cpw"/>
+                    <tabBarItem key="tabBarItem" title="我的" image="ic_menu_user_off" badgeValue="2" id="Ibf-9O-Cpw"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aZ2-lX-TM3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

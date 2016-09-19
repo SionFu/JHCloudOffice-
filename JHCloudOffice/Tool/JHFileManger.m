@@ -26,21 +26,23 @@
     //4.遍历所有的子路径
     NSMutableArray *muArray = [NSMutableArray array];
     for (NSString *subPath in allPath) {
-        NSString *str = [path stringByAppendingPathComponent:subPath];
-        NSDictionary * attrs = [manager attributesOfItemAtPath:str error:nil];
-        NSLog(@"attrs%@",attrs);
-        
+        NSString *filePath = [path stringByAppendingPathComponent:subPath];
+        NSDictionary * attrs = [manager attributesOfItemAtPath:filePath error:nil];
         //获取创建大小
-        NSString * fileSize = attrs[NSFileSize];
-        NSLog(@"%@",fileSize);
-        
+//        NSString * fileSize = attrs[NSFileSize];
+//        NSLog(@"%@",fileSize);
         //获取字典中文件创建时间
-        
-        NSString * fileCreatTime = attrs[NSFileCreationDate];
-        NSLog(@"%@",fileCreatTime);
-        
+        NSDate *fileCreatTime = attrs[NSFileCreationDate];
+        NSDateFormatter *format = [NSDateFormatter new];
+        [format setDateFormat:@"yyyy年MM月dd日 hh点mm分ss秒"];
+        NSString *time = [format stringFromDate:fileCreatTime];
+        NSMutableDictionary *information = [NSMutableDictionary dictionary];
+        [information setValue:subPath forKey:@"title"];
+        [information setValue:time forKey:@"subTitle"];
+        [information setObject:filePath forKey:@"filePath"];
+        [muArray addObject:information];
     }
     
-    return allPath;
+    return muArray;
 }
 @end

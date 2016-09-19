@@ -9,21 +9,38 @@
 #import "JHUserTableViewController.h"
 #import "JHFileManger.h"
 #import "JHUserTableViewCell.h"
-@interface JHUserTableViewController ()
+@interface JHUserTableViewController ()<UIDocumentInteractionControllerDelegate>
+@property (nonatomic, strong) UIDocumentInteractionController *documentInteractionController;
 @property (nonatomic ,strong) NSArray *contentArray;
 @property (nonatomic ,strong) UINib *nib;
 @end
 
 @implementation JHUserTableViewController
 - (void)viewWillAppear:(BOOL)animated {
-    NSArray *filePathArray = [[JHFileManger new] showAllFile];
-    NSLog(@"%@",filePathArray);
-    self.contentArray = [NSArray arrayWithArray:filePathArray];
+    
     [self.tableView reloadData];
 }
+static  int nowIndexTableView = 0;
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
+    /**
+     *  index == 1 我的订阅
+     *  index == 2 我的邮件
+     *  index == 3 我的流程
+     *  index == nil 通知公告
+     *  index == 4 已下载文件
+     */
+    nowIndexTableView++;
+    if (nowIndexTableView == 4) {
+        NSArray *filePathArray = [[JHFileManger new] showAllFile];
+        NSLog(@"%@",filePathArray);
+        self.contentArray = [NSArray arrayWithArray:filePathArray];
+    }
+    
+    //自适应高度
+    self.tableView.rowHeight = UITableViewAutomaticDimension;
+    //预估值
+    self.tableView.estimatedRowHeight = 200;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -54,70 +71,22 @@
         [tableView registerNib:_nib forCellReuseIdentifier: cellIdentifier];
     }
     JHUserTableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    cell.textLabel.text = self.contentArray[indexPath.row];
-    
+    cell.textLabel.text = self.contentArray[indexPath.row][@"title"];
+    cell.detailTextLabel.text = self.contentArray[indexPath.row][@"subTitle"];
     return cell;
 }
 
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+#pragma Mark didselect
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (nowIndexTableView == 5 ) {
+        NSLog(@"openFile");
+        NSURL *url = [NSURL fileURLWithPath:self.contentArray[indexPath.row][@"filePath"]];
+        _documentInteractionController = [UIDocumentInteractionController
+                                          interactionControllerWithURL:url];
+        [_documentInteractionController setDelegate:self];
+        
+        [_documentInteractionController presentOpenInMenuFromRect:CGRectZero inView:self.view animated:YES];
+    }
 }
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Table view delegate
-
-// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here, for example:
-    // Create the next view controller.
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:<#@"Nib name"#> bundle:nil];
-    
-    // Pass the selected object to the new view controller.
-    
-    // Push the view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface JHUserTableViewController : UITableViewController
-
+@property (nonatomic ,strong)NSArray *dataArray;
 @end

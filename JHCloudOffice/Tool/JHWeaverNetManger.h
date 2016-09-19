@@ -8,6 +8,15 @@
 
 #import <Foundation/Foundation.h>
 /**
+ * 获取  邮件列表  邮件内容
+ */
+@protocol JHDownMailDelegate <NSObject>
+
+- (void)downMailSuccess;
+- (void)downMailFaild;
+
+@end
+/**
  *下载附件代理
  */
 @protocol JHDownFileDelegate <NSObject>
@@ -52,6 +61,7 @@
 
 @end
 @interface JHWeaverNetManger : NSObject
+@property (nonatomic, weak) id<JHDownMailDelegate> downMailDelegate;
 @property (nonatomic, weak) id<JHDownFileDelegate> downFileDelegate;
 @property (nonatomic ,weak) id<JHFileContentDelegate> getFileContentDelegate;
 /**
@@ -85,7 +95,7 @@
 /**
  *  未收邮件列表 邮件列表
  */
-- (void)mailObjectsGetMailInBoxWithNewOnly:(BOOL *)iNewOnly andFolderId:(NSString *)folderId andKey:(NSString *)key andPage:(NSString *)page andPageSize:(NSString *)pageSize;
+- (void)mailObjectsGetMailInBoxWithNewOnly:(BOOL )iNewOnly andFolderId:(NSString *)folderId andPage:(NSString *)page andPageSize:(NSString *)pageSize;
 /**
  *  邮件内容
  */

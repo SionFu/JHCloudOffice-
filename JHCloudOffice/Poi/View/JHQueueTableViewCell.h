@@ -25,5 +25,9 @@
  *  查看全文
  */
 @property (weak, nonatomic) IBOutlet UILabel *publicUrlLabel;
+/**
+ *  文件类型图片
+ */
+@property (weak, nonatomic) IBOutlet UIImageView *fileImage;
 
 @end

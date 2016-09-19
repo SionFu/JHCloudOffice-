@@ -23,6 +23,13 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ccr-4T-hRc">
+                                <rect key="frame" x="216" y="118" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="K2G-pw-GwU"/>
+                                    <constraint firstAttribute="width" constant="60" id="yMQ-rx-FIp"/>
+                                </constraints>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="08月01日 13点" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kOz-GQ-3Nz">
                                 <rect key="frame" x="8" y="40" width="93.5" height="21"/>
                                 <constraints>
@@ -48,10 +55,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Ccr-4T-hRc" firstAttribute="centerY" secondItem="v0Y-WA-Nzg" secondAttribute="centerY" id="05s-Gz-AIb"/>
                             <constraint firstItem="kOz-GQ-3Nz" firstAttribute="top" secondItem="zjG-b7-E60" secondAttribute="bottom" constant="7.5" id="CNz-Hj-82S"/>
                             <constraint firstAttribute="trailing" secondItem="nsP-O4-pxZ" secondAttribute="trailing" constant="12" id="HUB-iD-Ws0"/>
                             <constraint firstAttribute="bottom" secondItem="cSE-Em-Ad1" secondAttribute="bottom" constant="5" id="IBp-EO-FFo"/>
                             <constraint firstItem="zjG-b7-E60" firstAttribute="top" secondItem="v0Y-WA-Nzg" secondAttribute="top" constant="12" id="JU0-zl-zeS"/>
+                            <constraint firstAttribute="trailing" secondItem="Ccr-4T-hRc" secondAttribute="trailing" constant="18" id="QwH-fg-iP9"/>
                             <constraint firstItem="kOz-GQ-3Nz" firstAttribute="leading" secondItem="v0Y-WA-Nzg" secondAttribute="leading" constant="8" id="Sff-bF-uky"/>
                             <constraint firstItem="nsP-O4-pxZ" firstAttribute="leading" secondItem="v0Y-WA-Nzg" secondAttribute="leading" constant="12" id="YPm-V0-1wT"/>
                             <constraint firstAttribute="bottom" secondItem="nsP-O4-pxZ" secondAttribute="bottom" constant="21" id="fIM-jd-hRC"/>
@@ -71,6 +80,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
+                <outlet property="fileImage" destination="Ccr-4T-hRc" id="ksp-IG-ulh"/>
                 <outlet property="publicDescLabel" destination="nsP-O4-pxZ" id="jJE-oW-bvm"/>
                 <outlet property="publicTimeLabel" destination="kOz-GQ-3Nz" id="2Vh-Xm-ag3"/>
                 <outlet property="publicTitleLabel" destination="zjG-b7-E60" id="NdG-CC-N1I"/>

@@ -9,5 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface JHFileListTableViewController : UITableViewController
-@property (nonatomic, assign) NSInteger cellForRowInFirDoc;
+/**
+ *  文件夹编号文件  二级类目名称
+ */
+@property (nonatomic, strong)NSString *seccategory;
 @end

@@ -28,7 +28,7 @@
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithTitle:@"退出" style:UIBarButtonItemStylePlain target:self action:@selector(closeScanVC)];
     [self.navigationItem setRightBarButtonItem:rightButton];
     self.manger = [JHWeaverNetManger new];
-    [self.manger docInfoObjectsgetNoticesWithMainid:@"" andSubid:@"" andSeccategory:[JHDocModel sharedJHDocModel].thiDicArray[self.cellForRowInFirDoc][@"categoryid"] andnewOnly:@"" andPage:@"" andPageSize:@""];
+    [self.manger docInfoObjectsgetNoticesWithMainid:@"" andSubid:@"" andSeccategory:self.seccategory andnewOnly:@"" andPage:@"" andPageSize:@""];
     self.manger.getFileListDelegate = self;
     [MBProgressHUD showMessage:@"正在载入..."];
 }

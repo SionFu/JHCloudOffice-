@@ -9,10 +9,10 @@
 #import "JHUserViewController.h"
 #import "YSLContainerViewController.h"
 #import "JHUserTableViewController.h"
+#import "JHFileListTableViewController.h"
 @interface JHUserViewController ()<YSLContainerViewControllerDelegate>
 @property (nonatomic, strong)NSArray *portalArray;
 @property (nonatomic, strong)NSMutableArray  *muPVC;
-
 @end
 
 @implementation JHUserViewController
@@ -37,7 +37,14 @@
     for (NSString *poral in self.portalArray) {
         JHUserTableViewController *pvc = [[JHUserTableViewController alloc]init];
         pvc.title = poral;
+        if ([poral isEqualToString:@"通知公告"]) {
+            JHFileListTableViewController *fileView = [JHFileListTableViewController new];
+            fileView.seccategory = @"541";
+            fileView.title = @"通知公告";
+            [muPVC addObject:fileView];
+        }else {
         [muPVC addObject:pvc];
+        }
     }
     float statusHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     float navigationHeight = self.navigationController.navigationBar.frame.size.height;

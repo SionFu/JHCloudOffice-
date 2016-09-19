@@ -10,6 +10,7 @@
 #import "JHNetworkManager.h"
 #import "JHDocModel.h"
 #import "NSString+JHChangeStringToBase.h"
+#import "JHMailDataModel.h"
 #define WEAVURL @"http://188.1.10.5/service/common/"
 @interface JHWeaverNetManger ()//<NSURLSessionDownloadDelegate>
 
@@ -41,11 +42,11 @@
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *urlStr = [NSString stringWithFormat:@"%@getDocDir?sessionKey=%@&publishType=0&mainid=%@&subid=%@&seccategory=%@",WEAVURL,[JHUserInfo sharedJHUserInfo].sessionKey,mainid,subid,seccategory];
     urlStr = [self proxyUrlWithUrl:urlStr andisPost:false andisAttachment:false];
-//    NSLog(@"%@",urlStr);
+    NSLog(@"%@",urlStr);
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         [[JHDocModel sharedJHDocModel].allDataArray addObject:responseObject];
         [self.getDocDelegate getDocSuccess];
-//        NSLog(@"%@",responseObject);
+        NSLog(@"%@",responseObject);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [self.getDocDelegate getDocFaild];
     }];
@@ -56,7 +57,7 @@
     NSString *urlStr = [NSString stringWithFormat:@"%@getDocDir?sessionKey=%@&publishType=0&subid=%@&seccategory=%@&newOnly=%@&page=%@&pageSize=%@",WEAVURL,[JHUserInfo sharedJHUserInfo].sessionKey,subid,seccategory,newOnly,page,pageSize];
     urlStr = [self proxyUrlWithUrl:urlStr andisPost:false andisAttachment:false];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-//        NSLog(@"URL:%@%@",urlStr ,responseObject);
+        NSLog(@"URL:%@%@",urlStr ,responseObject);
         [JHDocModel sharedJHDocModel].fileListData = responseObject;
         [self.getFileListDelegate getFileListSuccess];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -76,7 +77,7 @@
     }];
 }
 
-- (void)mailObjectsGetMailInBoxWithNewOnly:(BOOL *)iNewOnly andFolderId:(NSString *)folderId andKey:(NSString *)key andPage:(NSString *)page andPageSize:(NSString *)pageSize {
+- (void)mailObjectsGetMailInBoxWithNewOnly:(BOOL )iNewOnly andFolderId:(NSString *)folderId andPage:(NSString *)page andPageSize:(NSString *)pageSize {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *urlStr = [NSString stringWithFormat:@"%@getMailInBox?sessionKey=%@&index=%@&perpage=%@&folderid=%@&sortColumn=&sortType=DESC",WEAVURL,[JHUserInfo sharedJHUserInfo].sessionKey,page,pageSize,folderId];
     if (iNewOnly) {
@@ -84,22 +85,22 @@
     }
     urlStr = [self proxyUrlWithUrl:urlStr andisPost:false andisAttachment:false];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"%@",responseObject);
+        NSLog(@"URL:%@%@",urlStr,responseObject);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         
     }];
 }
 - (void)mailContentObjectsGetMailContent:(NSString *)mailId {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    NSString *urlStr = [NSString stringWithFormat:@"%@getDocDir?sessionKey=%@&mailid=%@",WEAVURL,[JHUserInfo sharedJHUserInfo].sessionKey,mailId];
+    NSString *urlStr = [NSString stringWithFormat:@"%@mailView?sessionKey=%@&mailid=%@",WEAVURL,[JHUserInfo sharedJHUserInfo].sessionKey,mailId];
     urlStr = [self proxyUrlWithUrl:urlStr andisPost:false andisAttachment:false];
     NSLog(@"GetMailContentURL:%@",urlStr);
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        [JHDocModel sharedJHDocModel].docData = responseObject;
-        [self.getDocDelegate getDocSuccess];
+        [JHMailDataModel sharedJHMailDataModel].mailData = responseObject;
+        [self.downMailDelegate downMailSuccess];
         NSLog(@"%@",responseObject);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [self.getDocDelegate getDocFaild];
+        [self.downMailDelegate downMailFaild];
     }];
 }
 - (void)mailResultSendMailWithPriority:(NSString *)priority andReceiver:(NSString *)receiver andSendToId:(NSString *)sendToId andMailSubject:(NSString *)mailSubject andMouldText:(NSString *)mouldText andFileURL:(NSURL *)fileURL andFileName:(NSString *)fileName {
