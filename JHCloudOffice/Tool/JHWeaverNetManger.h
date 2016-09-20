@@ -79,7 +79,7 @@
  */
 @property (nonatomic, weak) id<JHGetMailDelegate> getMailDelegate;
 @property (nonatomic, weak) id<JHDownFileDelegate> downFileDelegate;
-@property (nonatomic ,weak) id<JHFileContentDelegate> getFileContentDelegate;
+@property (nonatomic, weak) id<JHFileContentDelegate> getFileContentDelegate;
 /**
  *  成功获取文件列表 通知 代理
  */

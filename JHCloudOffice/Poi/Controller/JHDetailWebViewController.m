@@ -8,7 +8,7 @@
 
 #import "JHDetailWebViewController.h"
 
-@interface JHDetailWebViewController ()
+@interface JHDetailWebViewController ()//<UIWebViewDelegate>
 @property (weak, nonatomic) IBOutlet UIWebView *detalWebView;
 
 @end
@@ -25,10 +25,11 @@
     [self loadWebView];
 }
 - (void)loadWebView {
-    self.detalWebView.delegate = self;
+//    self.detalWebView.delegate = self;
     NSURL *url = [NSURL URLWithString:self.urlStr];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [self.detalWebView loadRequest:request];
+    self.detalWebView.scrollView.bounces = NO;
 }
 
 - (void)didReceiveMemoryWarning {

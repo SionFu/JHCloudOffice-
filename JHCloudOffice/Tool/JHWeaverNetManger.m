@@ -85,6 +85,7 @@
     }
     urlStr = [self proxyUrlWithUrl:urlStr andisPost:false andisAttachment:false];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"%@",responseObject[@"data"]);
         [JHMailDataModel sharedJHMailDataModel].mailListData = responseObject;
         [self.getMailObjectsDelegate getMailObjectsSuccess];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {

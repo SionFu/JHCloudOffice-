@@ -26,15 +26,17 @@
     }
     return _mailListArray;
 }
+-(void)viewWillAppear:(BOOL)animated {
+
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [MBProgressHUD showMessage:@"正在加载..." toView:self.view];
     self.manger = [JHWeaverNetManger new];
-    //未读邮件
-    self.manger.getMailObjectsDelegate = self;
     [self.manger mailObjectsGetMailInBoxWithNewOnly:self.unReadMail andFolderId:@"0" andPage:@"" andPageSize:@""];
+    self.manger.getMailObjectsDelegate = self;
     // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
+     self.clearsSelectionOnViewWillAppear = YES;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
@@ -59,7 +61,9 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSLog(@"%lu",(unsigned long)self.mailListArray.count);
     return self.mailListArray.count;
+    
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -74,8 +78,9 @@
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     NSNumber *isNew = self.mailListArray[indexPath.row][@"status"];
     int inew = [isNew intValue];
+    cell.imageView.frame = CGRectMake(0, 0, 10, 10);
     if (inew == 1) {
-        cell.imageView.image = [UIImage imageNamed:@"ic_remindernull"];
+//        cell.imageView.image = [UIImage imageNamed:@"ic_remindernull"];
     }else {
         cell.imageView.image = [UIImage imageNamed:@"ic_reminder"];
         cell.textLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:16];

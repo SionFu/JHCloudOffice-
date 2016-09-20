@@ -66,7 +66,7 @@
     //    [JHModulesData sharedJHModulesData].curreatVCIndex = index;
     if (index == 1) {
         JHReadEmailTableViewController *readView = (JHReadEmailTableViewController*)controller;
-        [readView.tableView reloadData];
+//        [readView.tableView reloadData];
     }
     
     NSLog(@"%ld%@",(long)index,controller);
