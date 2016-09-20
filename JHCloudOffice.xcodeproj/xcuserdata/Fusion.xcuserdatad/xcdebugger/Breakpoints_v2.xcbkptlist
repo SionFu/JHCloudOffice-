@@ -304,11 +304,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/Tool/JHWeaverNetManger.m"
-            timestampString = "495968874.853247"
+            timestampString = "496035144.513796"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
+            startingLineNumber = "124"
+            endingLineNumber = "124"
             landmarkName = "-mailResultSendMailWithPriority:andReceiver:andSendToId:andMailSubject:andMouldText:andFileURL:andFileName:"
             landmarkType = "5">
             <Locations>
@@ -320,11 +320,11 @@
                   moduleName = "JHCloudOffice"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Fusion/Desktop/%E5%B7%A8%E5%8C%96%E9%9B%86%E5%9B%A2/JHCloudOffice%E5%89%AF%E6%9C%AC/JHCloudOffice/Tool/JHWeaverNetManger.m"
-                  timestampString = "495969906.07778"
+                  timestampString = "496047549.426865"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "123"
-                  endingLineNumber = "123"
+                  startingLineNumber = "124"
+                  endingLineNumber = "124"
                   offsetFromSymbolStart = "1725">
                </Location>
                <Location
@@ -335,11 +335,11 @@
                   moduleName = "JHCloudOffice"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Fusion/Desktop/%E5%B7%A8%E5%8C%96%E9%9B%86%E5%9B%A2/JHCloudOffice%E5%89%AF%E6%9C%AC/JHCloudOffice/Tool/JHWeaverNetManger.m"
-                  timestampString = "495969906.078098"
+                  timestampString = "496047549.427768"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "123"
-                  endingLineNumber = "123"
+                  startingLineNumber = "124"
+                  endingLineNumber = "124"
                   offsetFromSymbolStart = "68">
                </Location>
             </Locations>
@@ -400,11 +400,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/User/Controller/JHUserViewController.m"
-            timestampString = "495960034.593909"
+            timestampString = "496045671.015338"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "42"
-            endingLineNumber = "42"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
             landmarkName = "-setupPortalTableViewController"
             landmarkType = "5">
          </BreakpointContent>
@@ -423,6 +423,38 @@
             endingLineNumber = "45"
             landmarkName = "-weaverCategoryObjectsgetDocContentWithMainid:andSubid:andSeccategory:"
             landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "-[JHWeaverNetManger weaverCategoryObjectsgetDocContentWithMainid:andSubid:andSeccategory:]"
+                  moduleName = "JHCloudOffice"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Fusion/Desktop/%E5%B7%A8%E5%8C%96%E9%9B%86%E5%9B%A2/JHCloudOffice%E5%89%AF%E6%9C%AC/JHCloudOffice/Tool/JHWeaverNetManger.m"
+                  timestampString = "496047549.436626"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "46"
+                  endingLineNumber = "46"
+                  offsetFromSymbolStart = "475">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "__90-[JHWeaverNetManger weaverCategoryObjectsgetDocContentWithMainid:andSubid:andSeccategory:]_block_invoke"
+                  moduleName = "JHCloudOffice"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Fusion/Desktop/%E5%B7%A8%E5%8C%96%E9%9B%86%E5%9B%A2/JHCloudOffice%E5%89%AF%E6%9C%AC/JHCloudOffice/Tool/JHWeaverNetManger.m"
+                  timestampString = "496047549.436967"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "46"
+                  endingLineNumber = "46"
+                  offsetFromSymbolStart = "61">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -432,11 +464,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/User/Controller/JHUserViewController.m"
-            timestampString = "495959954.619285"
+            timestampString = "496045671.015338"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
             landmarkName = "-setupPortalTableViewController"
             landmarkType = "5">
          </BreakpointContent>
@@ -470,6 +502,70 @@
             startingLineNumber = "12"
             endingLineNumber = "12"
             landmarkName = "-docData"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JHCloudOffice/User/Controller/JHUserViewController.m"
+            timestampString = "496046362.775837"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
+            landmarkName = "-containerViewItemIndex:currentController:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JHCloudOffice/Deal/EmailRead/Controller/JHReadEmailTableViewController.m"
+            timestampString = "496047471.502772"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "-getMailObjectsSuccess"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JHCloudOffice/Tool/JHWeaverNetManger.m"
+            timestampString = "496047479.174172"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "88"
+            endingLineNumber = "88"
+            landmarkName = "-mailObjectsGetMailInBoxWithNewOnly:andFolderId:andPage:andPageSize:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JHCloudOffice/Tool/JHWeaverNetManger.m"
+            timestampString = "496047479.860358"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "89"
+            endingLineNumber = "89"
+            landmarkName = "-mailObjectsGetMailInBoxWithNewOnly:andFolderId:andPage:andPageSize:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

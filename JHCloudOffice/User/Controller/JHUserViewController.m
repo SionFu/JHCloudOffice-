@@ -10,6 +10,7 @@
 #import "YSLContainerViewController.h"
 #import "JHUserTableViewController.h"
 #import "JHFileListTableViewController.h"
+#import "JHReadEmailTableViewController.h"
 @interface JHUserViewController ()<YSLContainerViewControllerDelegate>
 @property (nonatomic, strong)NSArray *portalArray;
 @property (nonatomic, strong)NSMutableArray  *muPVC;
@@ -23,7 +24,7 @@
 - (NSArray *)portalArray{
     if (_portalArray == nil) {
         //测试代码
-        _portalArray = [NSArray arrayWithObjects:@"我的订阅",@"我的邮件",@"我的流程",@"通知公告",@"已下载文件", nil];
+        _portalArray = [NSArray arrayWithObjects:@"我的阅办",@"我的邮件",@"我的流程",@"通知公告",@"已下载文件", nil];
     }return _portalArray;
 }
 - (void)viewDidLoad {
@@ -42,7 +43,14 @@
             fileView.seccategory = @"541";
             fileView.title = @"通知公告";
             [muPVC addObject:fileView];
-        }else {
+        }
+        else if ([poral isEqualToString:@"我的邮件"]) {
+            JHReadEmailTableViewController *readView = [JHReadEmailTableViewController new];
+            readView.unReadMail = false;
+            readView.title = @"我的邮件";
+            [muPVC addObject:readView];
+        }
+        else {
         [muPVC addObject:pvc];
         }
     }
@@ -56,10 +64,12 @@
 
 -(void)containerViewItemIndex:(NSInteger)index currentController:(UIViewController *)controller{
     //    [JHModulesData sharedJHModulesData].curreatVCIndex = index;
-    if (index == 4) {
-        
+    if (index == 1) {
+        JHReadEmailTableViewController *readView = (JHReadEmailTableViewController*)controller;
+        [readView.tableView reloadData];
     }
-    NSLog(@"%ld",(long)index);
+    
+    NSLog(@"%ld%@",(long)index,controller);
 }
 
 - (void)didReceiveMemoryWarning {

@@ -65,7 +65,6 @@
 - (void)getFileContentSuccess {
     [MBProgressHUD hideHUD];
     self.fileContentWebView.delegate = self;
-    NSLog(@"\n文件列表:%@",self.fileSubArray);
     [self.fileContentWebView loadHTMLString:self.fileContentDetailStr baseURL:nil];
     [self addFileArrayToButton];
 }

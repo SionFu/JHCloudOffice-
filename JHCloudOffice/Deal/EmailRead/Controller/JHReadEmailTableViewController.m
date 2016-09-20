@@ -8,27 +8,45 @@
 
 #import "JHReadEmailTableViewController.h"
 #import "JHWeaverNetManger.h"
-@interface JHReadEmailTableViewController ()
+#import "JHMailDataModel.h"
+#import "JHEmailContentViewController.h"
+#import "MBProgressHUD+KR.h"
+@interface JHReadEmailTableViewController ()<JHGetMailObjectsDelegate>
 @property (nonatomic, strong)JHWeaverNetManger *manger;
+/**
+ *  邮件列表数组
+ */
+@property (nonatomic, strong)NSArray *mailListArray;
 @end
 
 @implementation JHReadEmailTableViewController
-
+-(NSArray *)mailListArray {
+    if (_mailListArray == nil) {
+        _mailListArray = [NSArray arrayWithArray:[JHMailDataModel sharedJHMailDataModel].mailListArray];
+    }
+    return _mailListArray;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [MBProgressHUD showMessage:@"正在加载..." toView:self.view];
     self.manger = [JHWeaverNetManger new];
-    //全部收件箱
-//    [self.manger mailObjectsGetMailInBoxWithNewOnly:false andFolderId:@"0" andPage:@"" andPageSize:@""];
     //未读邮件
+    self.manger.getMailObjectsDelegate = self;
     [self.manger mailObjectsGetMailInBoxWithNewOnly:self.unReadMail andFolderId:@"0" andPage:@"" andPageSize:@""];
-    [self.manger mailContentObjectsGetMailContent:@"706942"];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
-
+-(void)getMailObjectsSuccess {
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [self.tableView reloadData];
+}
+- (void)getMailObjectFaild {
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    [MBProgressHUD showError:@"网络错误"];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -41,77 +59,42 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 0;
+    return self.mailListArray.count;
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+     UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+    cell.textLabel.text = self.mailListArray[indexPath.row][@"subject"];
+    NSDateFormatter *dateFormatter = [NSDateFormatter new];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    NSDate *date = [dateFormatter dateFromString:self.mailListArray[indexPath.row][@"senddate"]];
+    [dateFormatter setDateFormat:@"yyyy年MM月dd日 HH点mm分"];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ %@",self.mailListArray[indexPath.row][@"sendfrom"],[dateFormatter stringFromDate:date]];
+    [cell.detailTextLabel setTextColor:[UIColor grayColor]];
+    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    NSNumber *isNew = self.mailListArray[indexPath.row][@"status"];
+    int inew = [isNew intValue];
+    if (inew == 1) {
+        cell.imageView.image = [UIImage imageNamed:@"ic_remindernull"];
+    }else {
+        cell.imageView.image = [UIImage imageNamed:@"ic_reminder"];
+        cell.textLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:16];
+        //[UIFont fontWithName:@ "Arial" size:14.0]]; //非加粗
+    }
     return cell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Table view delegate
-
-// In a xib-based application, navigation from a table can be handled in -tableView:didSelectRowAtIndexPath:
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Navigation logic may go here, for example:
-    // Create the next view controller.
-    <#DetailViewController#> *detailViewController = [[<#DetailViewController#> alloc] initWithNibName:<#@"Nib name"#> bundle:nil];
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    //消去左边的小红点
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.imageView.image = [UIImage imageNamed:@"ic_remindernull"];
+    cell.textLabel.font = [UIFont fontWithName:@"Arial" size:16];
+    [cell reloadInputViews];
     
-    // Pass the selected object to the new view controller.
-    
-    // Push the view controller.
-    [self.navigationController pushViewController:detailViewController animated:YES];
+    JHEmailContentViewController *emailContemtVC = [JHEmailContentViewController new];
+    emailContemtVC.mailContentDic = self.mailListArray[indexPath.row];
+    [self.navigationController pushViewController:emailContemtVC animated:YES];
 }
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

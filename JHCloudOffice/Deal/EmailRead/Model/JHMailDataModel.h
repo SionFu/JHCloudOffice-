@@ -10,5 +10,20 @@
 #import "Singleton.h"
 @interface JHMailDataModel : NSObject
 singleton_interface(JHMailDataModel)
-@property (nonatomic, strong) NSDictionary *mailData;
+/**
+ *  获取邮件列表内容数据
+ */
+@property (nonatomic, strong) NSDictionary *mailListData;
+/**
+ *  邮件列表数组
+ */
+@property (nonatomic, strong) NSArray *mailListArray;
+/**
+ *  获取邮件列表内容数据
+ */
+@property (nonatomic, strong) NSDictionary *mailContentDataDic;
+/**
+ *  邮件附件数组
+ */
+@property (nonatomic, strong) NSArray *mailDocsArray;
 @end

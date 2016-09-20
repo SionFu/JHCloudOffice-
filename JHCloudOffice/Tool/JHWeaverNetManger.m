@@ -42,11 +42,11 @@
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *urlStr = [NSString stringWithFormat:@"%@getDocDir?sessionKey=%@&publishType=0&mainid=%@&subid=%@&seccategory=%@",WEAVURL,[JHUserInfo sharedJHUserInfo].sessionKey,mainid,subid,seccategory];
     urlStr = [self proxyUrlWithUrl:urlStr andisPost:false andisAttachment:false];
-    NSLog(@"%@",urlStr);
+//    NSLog(@"%@",urlStr);
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         [[JHDocModel sharedJHDocModel].allDataArray addObject:responseObject];
         [self.getDocDelegate getDocSuccess];
-        NSLog(@"%@",responseObject);
+//        NSLog(@"%@",responseObject);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
         [self.getDocDelegate getDocFaild];
     }];
@@ -57,7 +57,7 @@
     NSString *urlStr = [NSString stringWithFormat:@"%@getDocDir?sessionKey=%@&publishType=0&subid=%@&seccategory=%@&newOnly=%@&page=%@&pageSize=%@",WEAVURL,[JHUserInfo sharedJHUserInfo].sessionKey,subid,seccategory,newOnly,page,pageSize];
     urlStr = [self proxyUrlWithUrl:urlStr andisPost:false andisAttachment:false];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"URL:%@%@",urlStr ,responseObject);
+//        NSLog(@"URL:%@%@",urlStr ,responseObject);
         [JHDocModel sharedJHDocModel].fileListData = responseObject;
         [self.getFileListDelegate getFileListSuccess];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
@@ -68,7 +68,7 @@
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *urlStr = [NSString stringWithFormat:@"%@viewGw?sessionKey=%@&docid=%@",WEAVURL,[JHUserInfo sharedJHUserInfo].sessionKey,docId];
     urlStr = [self proxyUrlWithUrl:urlStr andisPost:false andisAttachment:false];
-    NSLog(@"%@",urlStr);
+//    NSLog(@"%@",urlStr);
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
         [JHDocModel sharedJHDocModel].fileContentData = responseObject;
         [self.getFileContentDelegate getFileContentSuccess];
@@ -85,22 +85,23 @@
     }
     urlStr = [self proxyUrlWithUrl:urlStr andisPost:false andisAttachment:false];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"URL:%@%@",urlStr,responseObject);
+        [JHMailDataModel sharedJHMailDataModel].mailListData = responseObject;
+        [self.getMailObjectsDelegate getMailObjectsSuccess];
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
+        [self.getMailObjectsDelegate getMailObjectFaild];
     }];
 }
-- (void)mailContentObjectsGetMailContent:(NSString *)mailId {
+- (void)mailContentObjectsGetMailContentWithMailId:(NSString *)mailId {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
     NSString *urlStr = [NSString stringWithFormat:@"%@mailView?sessionKey=%@&mailid=%@",WEAVURL,[JHUserInfo sharedJHUserInfo].sessionKey,mailId];
     urlStr = [self proxyUrlWithUrl:urlStr andisPost:false andisAttachment:false];
     NSLog(@"GetMailContentURL:%@",urlStr);
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        [JHMailDataModel sharedJHMailDataModel].mailData = responseObject;
-        [self.downMailDelegate downMailSuccess];
+        [JHMailDataModel sharedJHMailDataModel].mailContentDataDic = responseObject;
+        [self.getMailDelegate getMailSuccess];
         NSLog(@"%@",responseObject);
     } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        [self.downMailDelegate downMailFaild];
+        [self.getMailDelegate getMailFaild];
     }];
 }
 - (void)mailResultSendMailWithPriority:(NSString *)priority andReceiver:(NSString *)receiver andSendToId:(NSString *)sendToId andMailSubject:(NSString *)mailSubject andMouldText:(NSString *)mouldText andFileURL:(NSURL *)fileURL andFileName:(NSString *)fileName {

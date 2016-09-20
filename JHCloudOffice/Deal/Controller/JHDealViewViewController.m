@@ -262,6 +262,7 @@
         NSLog(@"email");
     JHReadEmailTableViewController *mailView = [JHReadEmailTableViewController new];
     mailView.title = @"查看邮件";
+    mailView.unReadMail = true;
     [self.navigationController pushViewController:mailView animated:YES];
 }
 - (IBAction)unReadNotiBtnClick:(UIButton *)sender {

@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface JHEmailContentViewController : UIViewController
-@property (nonatomic, strong) NSString *mailContent;
+@property (nonatomic, strong) NSDictionary *mailContentDic;
+
 @end

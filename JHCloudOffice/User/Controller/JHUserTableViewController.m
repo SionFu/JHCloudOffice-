@@ -17,7 +17,7 @@
 
 @implementation JHUserTableViewController
 - (void)viewWillAppear:(BOOL)animated {
-    
+    NSLog(@"已下载视图:%@",self.tableView);
     [self.tableView reloadData];
 }
 static  int nowIndexTableView = 0;
@@ -25,13 +25,13 @@ static  int nowIndexTableView = 0;
     [super viewDidLoad];
     /**
      *  index == 1 我的订阅
-     *  index == 2 我的邮件
-     *  index == 3 我的流程
+     *  index == nil 我的邮件
+     *  index == 2 我的流程
      *  index == nil 通知公告
-     *  index == 4 已下载文件
+     *  index == 3 已下载文件
      */
     nowIndexTableView++;
-    if (nowIndexTableView == 4) {
+    if (nowIndexTableView == 3) {
         NSArray *filePathArray = [[JHFileManger new] showAllFile];
         NSLog(@"%@",filePathArray);
         self.contentArray = [NSArray arrayWithArray:filePathArray];
