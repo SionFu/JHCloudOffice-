@@ -271,6 +271,7 @@
         NSLog(@"noti");
     JHFileListTableViewController *fileView = [JHFileListTableViewController new];
     fileView.seccategory = @"541";
+    fileView.isNewOnl = @"true";
     fileView.title = @"查看通知";
     [self.navigationController pushViewController:fileView animated:YES];
 }

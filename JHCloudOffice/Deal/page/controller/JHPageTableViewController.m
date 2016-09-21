@@ -81,6 +81,14 @@
     
    
 }
+#pragma  mark 提交流程代理
+-(void)uploadSuccess {
+    [MBProgressHUD showSuccess:@"提交成功"];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+-(void)uploadFaild {
+    NSLog(@"提交失败");
+}
 -(NSArray *)uploadData{
     if (_uploadData == nil) {
         _uploadData = [NSArray array];

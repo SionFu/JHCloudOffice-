@@ -84,7 +84,7 @@ static  int nowIndexTableView = 0;
 
 #pragma Mark didselect
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (nowIndexTableView == 5 ) {
+    if (nowIndexTableView == 3 ) {
         NSLog(@"openFile");
         NSURL *url = [NSURL fileURLWithPath:self.contentArray[indexPath.row][@"filePath"]];
         _documentInteractionController = [UIDocumentInteractionController
@@ -92,6 +92,7 @@ static  int nowIndexTableView = 0;
         [_documentInteractionController setDelegate:self];
         
         [_documentInteractionController presentOpenInMenuFromRect:CGRectZero inView:self.view animated:YES];
+        
     }
 }
 

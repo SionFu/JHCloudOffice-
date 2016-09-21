@@ -52,6 +52,10 @@
  *  当前文件的路径
  */
 @property (nonatomic, strong) NSString *filePath;
+/**
+ *  添加 navigation 按钮
+ */
+@property (nonatomic, strong)UIView *button;
 @end
 
 @implementation JHEmailContentViewController
@@ -63,15 +67,41 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self addObject];
+    self.manger = [JHWeaverNetManger new];
+    self.manger.getMailDelegate = self;
+    [self.manger mailContentObjectsGetMailContentWithMailId:self.mailIdStr];
+    
+}
+- (void)addObject {
     self.subjectLabel.text = self.mailContentDic[@"subject"];
     self.sendFromLabel.text = self.mailContentDic[@"sendfrom"];
     self.sendDateLbel.text = self.mailContentDic[@"senddate"];
     [MBProgressHUD showMessage:@"正在加载..." toView:self.view];
-    self.manger = [JHWeaverNetManger new];
-    self.manger.getMailDelegate = self;
-    [self.manger mailContentObjectsGetMailContentWithMailId:self.mailIdStr];
+}
+- (void)addNavigationBtn{
+    self.button = [[UIView alloc]initWithFrame:CGRectMake(SCREENWIDTH / 2 + 20, 25, SCREENWIDTH / 2 - 25, 30)];
+    NSArray *titleArray = [NSArray arrayWithObjects:@"转发邮件",@"回复邮件", nil];
+    for (int i = 0; i < titleArray.count; i ++) {
+        UIButton *statusbutton = [[UIButton alloc]initWithFrame:CGRectMake(i * ((SCREENWIDTH / 2 - 25 ) / 2), 0, (SCREENWIDTH / 2 - 25 ) / 2, 30)];
+        [statusbutton setTitle:titleArray[i] forState:UIControlStateNormal];
+        [statusbutton setBackgroundImage:[UIImage imageNamed:@"tab_unselected_pressed.9"] forState:UIControlStateHighlighted];
+        [statusbutton addTarget:self action:@selector(rightBarButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        [statusbutton setTag:10 + i];
+        [self.button addSubview:statusbutton];
+    }
+    [self.navigationController.view addSubview:self.button];
+}
+- (void)viewWillDisappear:(BOOL)animated {
+    [self.button removeFromSuperview];
+}
+-(void)dealloc {
+    
+
 }
 -(void)getMailSuccess {
+    //添加导航按钮 获取邮件内容后才可以出现转发按钮
+     [self addNavigationBtn];
     //显示相关控件内容
     [self.mailContentWebView loadHTMLString:[JHMailDataModel sharedJHMailDataModel].mailContentDataDic[@"content"] baseURL:nil];
     //成功下载邮件 刷新视图

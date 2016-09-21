@@ -13,4 +13,8 @@
  *  文件夹编号文件  二级类目名称
  */
 @property (nonatomic, strong)NSString *seccategory;
+/**
+ *  是不是没有阅读的文件内容
+ */
+@property (nonatomic, strong) NSString *isNewOnl;
 @end
