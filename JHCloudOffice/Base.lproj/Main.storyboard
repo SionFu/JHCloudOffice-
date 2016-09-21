@@ -492,7 +492,7 @@
                                     <constraint firstAttribute="height" constant="64" id="SiQ-LJ-SZx"/>
                                 </constraints>
                                 <items>
-                                    <navigationItem title="巨化云办公test" id="Lfh-fb-W2q"/>
+                                    <navigationItem title="巨化云办公" id="Lfh-fb-W2q"/>
                                 </items>
                             </navigationBar>
                         </subviews>

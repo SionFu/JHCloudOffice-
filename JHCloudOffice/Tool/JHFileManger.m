@@ -42,7 +42,6 @@
         [information setObject:filePath forKey:@"filePath"];
         [muArray addObject:information];
     }
-    
     return muArray;
 }
 @end

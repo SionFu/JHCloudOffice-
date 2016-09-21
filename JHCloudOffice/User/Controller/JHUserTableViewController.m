@@ -11,7 +11,7 @@
 #import "JHUserTableViewCell.h"
 @interface JHUserTableViewController ()<UIDocumentInteractionControllerDelegate>
 @property (nonatomic, strong) UIDocumentInteractionController *documentInteractionController;
-@property (nonatomic ,strong) NSArray *contentArray;
+@property (nonatomic ,strong) NSMutableArray *contentArray;
 @property (nonatomic ,strong) UINib *nib;
 @end
 
@@ -33,8 +33,7 @@ static  int nowIndexTableView = 0;
     nowIndexTableView++;
     if (nowIndexTableView == 3) {
         NSArray *filePathArray = [[JHFileManger new] showAllFile];
-        NSLog(@"%@",filePathArray);
-        self.contentArray = [NSArray arrayWithArray:filePathArray];
+        self.contentArray = [NSMutableArray arrayWithArray:filePathArray];
     }
     
     //自适应高度
@@ -60,7 +59,7 @@ static  int nowIndexTableView = 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.contentArray.count;
+    return self.contentArray.count + 1;
 }
 
 
@@ -70,10 +69,17 @@ static  int nowIndexTableView = 0;
         _nib = [UINib nibWithNibName:@"JHUserTableViewCell" bundle:nil];
         [tableView registerNib:_nib forCellReuseIdentifier: cellIdentifier];
     }
+    
+    if (indexPath.row >= self.contentArray.count) {
+        UITableViewCell *cell = [[UITableViewCell alloc]init];
+        return cell;
+    }else {
     JHUserTableViewCell *cell =  [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
-    cell.textLabel.text = self.contentArray[indexPath.row][@"title"];
-    cell.detailTextLabel.text = self.contentArray[indexPath.row][@"subTitle"];
-    return cell;
+        cell.textLabel.text = self.contentArray[indexPath.row][@"title"];
+        cell.detailTextLabel.text = self.contentArray[indexPath.row][@"subTitle"];
+        return cell;
+    }
+    
 }
 
 #pragma Mark didselect

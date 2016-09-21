@@ -11,7 +11,8 @@
 #import "JHUserTableViewController.h"
 #import "JHFileListTableViewController.h"
 #import "JHReadEmailTableViewController.h"
-@interface JHUserViewController ()<YSLContainerViewControllerDelegate>
+#import "JHWeaverNetManger.h"
+@interface JHUserViewController ()<YSLContainerViewControllerDelegate,JHGetMailObjectsDelegate>
 @property (nonatomic, strong)NSArray *portalArray;
 @property (nonatomic, strong)NSMutableArray  *muPVC;
 @end
@@ -57,7 +58,18 @@
     float statusHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     float navigationHeight = self.navigationController.navigationBar.frame.size.height;
     YSLContainerViewController *containerVC = [[YSLContainerViewController alloc]initWithControllers:muPVC topBarHeight:statusHeight + navigationHeight parentViewController:self];
+   
+    for (int i = 0; i < containerVC.childControllers.count; i++) {
+        id obj = [containerVC.childControllers objectAtIndex:i];
+        if ([obj isKindOfClass:[UIViewController class]]) {
+           UIViewController *controller = (UIViewController*)obj;
+            CGRect controFrame = controller.view.frame;
+            controller.view.frame = CGRectMake(controFrame.origin.x, controFrame.origin.y, controFrame.size.width, controFrame.size.height - 49);
+        }
+    }
     containerVC.delegate = self;
+//    CGRect controFrame = containerVC.view.frame;
+//    containerVC.view.frame = CGRectMake(0, 0, 414, 600);
     [self.view addSubview:containerVC.view];
     self.view.backgroundColor = [UIColor colorWithRed:0.7332 green:0.7332 blue:0.7332 alpha:1.0];
 }
@@ -66,7 +78,10 @@
     //    [JHModulesData sharedJHModulesData].curreatVCIndex = index;
     if (index == 1) {
         JHReadEmailTableViewController *readView = (JHReadEmailTableViewController*)controller;
-//        [readView.tableView reloadData];
+        JHWeaverNetManger *manger = [JHWeaverNetManger new];
+        manger.getMailObjectsDelegate = (id)readView;
+        [manger mailObjectsGetMailInBoxWithNewOnly:false andFolderId:@"0" andPage:@"" andPageSize:@""];
+        [readView.tableView reloadData];
     }
     
     NSLog(@"%ld%@",(long)index,controller);

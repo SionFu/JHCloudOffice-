@@ -54,7 +54,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"文件查看";
-    [MBProgressHUD showMessage:@"正在载入..."];
+//    [MBProgressHUD showMessage:@"正在载入..." toView:self.view];
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithTitle:@"退出" style:UIBarButtonItemStylePlain target:self action:@selector(closeScanVC)];
     [self.navigationItem setRightBarButtonItem:rightButton];
     self.manger = [JHWeaverNetManger new];
@@ -66,6 +66,8 @@
     [MBProgressHUD hideHUD];
     self.fileContentWebView.delegate = self;
     [self.fileContentWebView loadHTMLString:self.fileContentDetailStr baseURL:nil];
+    self.fileContentWebView.scrollView.bouncesZoom = YES;
+    self.fileContentWebView.scrollView.bounces = NO;
     [self addFileArrayToButton];
 }
 - (void)addFileArrayToButton {
@@ -125,7 +127,7 @@
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"下载文件!" message:[NSString stringWithFormat:@"确定下载文件:%@?",fileName] preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"确定" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             //下载文件
-            [MBProgressHUD showMessage:@"正在下载" toView:self.nowView];
+//            [MBProgressHUD showMessage:@"正在下载" toView:self.nowView];
             [self.manger downloadFileWithDocId:docid AndFileName:fileName];
             
         }];
@@ -138,7 +140,7 @@
 
 #pragma mark downloadFileDelegate
 -(void)downFileSuccess {
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+//    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"下载成功!" message:@"" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *actionYes = [UIAlertAction actionWithTitle:@"打开文件" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         //打开文件
