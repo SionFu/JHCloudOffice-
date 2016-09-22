@@ -19,6 +19,7 @@
 #import "UIImage+FDChangeStringToCRCode.h"
 #import "JHFileListTableViewController.h"
 #import "JHReadEmailTableViewController.h"
+#import "JHTaskTableViewController.h"
 @interface JHDealViewViewController ()<JHHomeMenuButtonDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,UIActionSheetDelegate,JHGetNotificationObjectDelegate>
 /**
  *  用户姓名
@@ -60,23 +61,20 @@
 
 @implementation JHDealViewViewController
 
-- (void)unReadTaskTouchUpInside:(id)sender {
-    NSLog(@"unReader");
-}
 - (void)viewWillAppear:(BOOL)animated {
+    [self timerAction];
     UINavigationBar *navBar = self.navigationController.navigationBar;
     navBar.hidden = NO;
-    //刷新通知数
-    JHRestApi *apiManger = [JHRestApi new];
-    [apiManger notificationObjectGetNotificationWithTime:[JHUserInfo sharedJHUserInfo].notificationTime];
-    apiManger.getNotificationDelegate = self;
 }
-
+static int unReadTask;
+static int unReadNoti;
 -(void)getNoticationSuccess {
     NSDictionary *responseObject = [JHUserInfo sharedJHUserInfo].notificationDic;
-    self.unReadTaskLabel.text = [NSString stringWithFormat:@"%@",responseObject[@"taskCount"]];
+    unReadTask += [responseObject[@"taskCount"] intValue];
+    unReadNoti += [responseObject[@"noticeCount"] intValue];
+    self.unReadTaskLabel.text = [NSString stringWithFormat:@"%d",unReadTask];
     self.unReadEmailLabel.text = [NSString stringWithFormat:@"%@",responseObject[@"emailCount"]];
-    self.unReadNotiLabel.text = [NSString stringWithFormat:@"%@",responseObject[@"noticeCount"]];
+    self.unReadNotiLabel.text = [NSString stringWithFormat:@"%d",unReadNoti];
     NSString *timeStr= [NSString stringWithFormat:@"%@",responseObject[@"time"]];
     NSRange range = [timeStr rangeOfString:@" "];
     timeStr = [timeStr substringToIndex:(range.location)];
@@ -85,6 +83,9 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //加入计时器
+    NSTimer *timer = [NSTimer timerWithTimeInterval:10 target:self selector:@selector(timerAction) userInfo:nil repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
     //设置滚动选择视图
     [self setUpHomeHeadView];
     //显示用户登陆信息
@@ -93,6 +94,12 @@
     //获取形成用户的二维码字符串
     [self getuserCIQRCodeStr];
 
+}
+- (void) timerAction {
+    //刷新通知数
+    JHRestApi *apiManger = [JHRestApi new];
+    [apiManger notificationObjectGetNotificationWithTime:[JHUserInfo sharedJHUserInfo].notificationTime];
+    apiManger.getNotificationDelegate = self;
 }
 -(void)headImageViewTep{
     //只能选择相册
@@ -257,7 +264,10 @@
 
 - (IBAction)unReadTaskBtnClick:(UIButton *)sender {
     NSLog(@"task");
-   
+    JHTaskTableViewController *taskView = [JHTaskTableViewController new];
+    taskView.title = @"待办任务";
+    taskView.taskStates = @"0;1";
+    [self.navigationController pushViewController:taskView animated:YES];
     
 }
 - (IBAction)unReadEmailBtnClick:(UIButton *)sender {

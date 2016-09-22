@@ -69,6 +69,18 @@
 		318E13421D7FF4E500FC8C6E /* JHPoiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 318E13411D7FF4E500FC8C6E /* JHPoiViewController.m */; };
 		319637EF1D87D38B000C745C /* NSString+FDGetTopUrl.m in Sources */ = {isa = PBXBuildFile; fileRef = 319637EE1D87D38B000C745C /* NSString+FDGetTopUrl.m */; };
 		319637F21D87D71D000C745C /* JHSubscribeWebViewActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 319637F11D87D71D000C745C /* JHSubscribeWebViewActivity.m */; };
+		3196E6491D936A6900BD6381 /* JHTaskTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3196E6471D936A6900BD6381 /* JHTaskTableViewController.m */; };
+		3196E64A1D936A6900BD6381 /* JHTaskTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3196E6481D936A6900BD6381 /* JHTaskTableViewController.xib */; };
+		3196E64D1D936BC100BD6381 /* JHTaskModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3196E64C1D936BC100BD6381 /* JHTaskModel.m */; };
+		3196E6511D936E0400BD6381 /* JHTaskTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3196E64F1D936E0400BD6381 /* JHTaskTableViewCell.m */; };
+		3196E6521D936E0400BD6381 /* JHTaskTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3196E6501D936E0400BD6381 /* JHTaskTableViewCell.xib */; };
+		3196E65A1D939B6F00BD6381 /* JHInstancesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3196E6581D939B6F00BD6381 /* JHInstancesTableViewController.m */; };
+		3196E65B1D939B6F00BD6381 /* JHInstancesTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3196E6591D939B6F00BD6381 /* JHInstancesTableViewController.xib */; };
+		3196E65E1D939E2000BD6381 /* JHInstancesModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3196E65D1D939E2000BD6381 /* JHInstancesModel.m */; };
+		3196E6621D93BD7200BD6381 /* JHFileTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3196E6601D93BD7200BD6381 /* JHFileTableViewCell.m */; };
+		3196E6631D93BD7200BD6381 /* JHFileTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3196E6611D93BD7200BD6381 /* JHFileTableViewCell.xib */; };
+		3196E6671D93C1E200BD6381 /* JHEmailContentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3196E6651D93C1E200BD6381 /* JHEmailContentTableViewCell.m */; };
+		3196E6681D93C1E200BD6381 /* JHEmailContentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3196E6661D93C1E200BD6381 /* JHEmailContentTableViewCell.xib */; };
 		31A358B21D20DD6C00D4C0DA /* JHModulesData.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A358B11D20DD6C00D4C0DA /* JHModulesData.m */; };
 		31A358B91D20F1B100D4C0DA /* NSObject+YYModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A358B51D20F1B100D4C0DA /* NSObject+YYModel.m */; };
 		31A358BA1D20F1B100D4C0DA /* YYClassInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 31A358B71D20F1B100D4C0DA /* YYClassInfo.m */; };
@@ -265,6 +277,25 @@
 		319637EE1D87D38B000C745C /* NSString+FDGetTopUrl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+FDGetTopUrl.m"; sourceTree = "<group>"; };
 		319637F01D87D71D000C745C /* JHSubscribeWebViewActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHSubscribeWebViewActivity.h; sourceTree = "<group>"; };
 		319637F11D87D71D000C745C /* JHSubscribeWebViewActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHSubscribeWebViewActivity.m; sourceTree = "<group>"; };
+		3196E6461D936A6900BD6381 /* JHTaskTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHTaskTableViewController.h; sourceTree = "<group>"; };
+		3196E6471D936A6900BD6381 /* JHTaskTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHTaskTableViewController.m; sourceTree = "<group>"; };
+		3196E6481D936A6900BD6381 /* JHTaskTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHTaskTableViewController.xib; sourceTree = "<group>"; };
+		3196E64B1D936BC100BD6381 /* JHTaskModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHTaskModel.h; sourceTree = "<group>"; };
+		3196E64C1D936BC100BD6381 /* JHTaskModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHTaskModel.m; sourceTree = "<group>"; };
+		3196E64E1D936E0400BD6381 /* JHTaskTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHTaskTableViewCell.h; sourceTree = "<group>"; };
+		3196E64F1D936E0400BD6381 /* JHTaskTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHTaskTableViewCell.m; sourceTree = "<group>"; };
+		3196E6501D936E0400BD6381 /* JHTaskTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHTaskTableViewCell.xib; sourceTree = "<group>"; };
+		3196E6571D939B6F00BD6381 /* JHInstancesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHInstancesTableViewController.h; sourceTree = "<group>"; };
+		3196E6581D939B6F00BD6381 /* JHInstancesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHInstancesTableViewController.m; sourceTree = "<group>"; };
+		3196E6591D939B6F00BD6381 /* JHInstancesTableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHInstancesTableViewController.xib; sourceTree = "<group>"; };
+		3196E65C1D939E2000BD6381 /* JHInstancesModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHInstancesModel.h; sourceTree = "<group>"; };
+		3196E65D1D939E2000BD6381 /* JHInstancesModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHInstancesModel.m; sourceTree = "<group>"; };
+		3196E65F1D93BD7200BD6381 /* JHFileTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHFileTableViewCell.h; sourceTree = "<group>"; };
+		3196E6601D93BD7200BD6381 /* JHFileTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHFileTableViewCell.m; sourceTree = "<group>"; };
+		3196E6611D93BD7200BD6381 /* JHFileTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHFileTableViewCell.xib; sourceTree = "<group>"; };
+		3196E6641D93C1E200BD6381 /* JHEmailContentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHEmailContentTableViewCell.h; sourceTree = "<group>"; };
+		3196E6651D93C1E200BD6381 /* JHEmailContentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHEmailContentTableViewCell.m; sourceTree = "<group>"; };
+		3196E6661D93C1E200BD6381 /* JHEmailContentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JHEmailContentTableViewCell.xib; sourceTree = "<group>"; };
 		31A358B01D20DD6C00D4C0DA /* JHModulesData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHModulesData.h; sourceTree = "<group>"; };
 		31A358B11D20DD6C00D4C0DA /* JHModulesData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHModulesData.m; sourceTree = "<group>"; };
 		31A358B41D20F1B100D4C0DA /* NSObject+YYModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+YYModel.h"; sourceTree = "<group>"; };
@@ -678,6 +709,9 @@
 				31B985DC1D750A3C007F5059 /* JHDocTableViewCell.h */,
 				31B985DD1D750A3C007F5059 /* JHDocTableViewCell.m */,
 				31B985DE1D750A3C007F5059 /* JHDocTableViewCell.xib */,
+				3196E65F1D93BD7200BD6381 /* JHFileTableViewCell.h */,
+				3196E6601D93BD7200BD6381 /* JHFileTableViewCell.m */,
+				3196E6611D93BD7200BD6381 /* JHFileTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -790,6 +824,83 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		3196E6421D936A0100BD6381 /* task 待办流程 阅办 */ = {
+			isa = PBXGroup;
+			children = (
+				3196E6431D936A0100BD6381 /* Controller */,
+				3196E6441D936A0100BD6381 /* Model */,
+				3196E6451D936A0100BD6381 /* View */,
+			);
+			name = "task 待办流程 阅办";
+			path = task;
+			sourceTree = "<group>";
+		};
+		3196E6431D936A0100BD6381 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3196E6461D936A6900BD6381 /* JHTaskTableViewController.h */,
+				3196E6471D936A6900BD6381 /* JHTaskTableViewController.m */,
+				3196E6481D936A6900BD6381 /* JHTaskTableViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		3196E6441D936A0100BD6381 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3196E64B1D936BC100BD6381 /* JHTaskModel.h */,
+				3196E64C1D936BC100BD6381 /* JHTaskModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3196E6451D936A0100BD6381 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				3196E64E1D936E0400BD6381 /* JHTaskTableViewCell.h */,
+				3196E64F1D936E0400BD6381 /* JHTaskTableViewCell.m */,
+				3196E6501D936E0400BD6381 /* JHTaskTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		3196E6531D93997600BD6381 /* Instances我的流程 */ = {
+			isa = PBXGroup;
+			children = (
+				3196E6541D93997600BD6381 /* Controller */,
+				3196E6551D93997600BD6381 /* Model */,
+				3196E6561D93997600BD6381 /* View */,
+			);
+			name = "Instances我的流程";
+			path = Instances;
+			sourceTree = "<group>";
+		};
+		3196E6541D93997600BD6381 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3196E6571D939B6F00BD6381 /* JHInstancesTableViewController.h */,
+				3196E6581D939B6F00BD6381 /* JHInstancesTableViewController.m */,
+				3196E6591D939B6F00BD6381 /* JHInstancesTableViewController.xib */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		3196E6551D93997600BD6381 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				3196E65C1D939E2000BD6381 /* JHInstancesModel.h */,
+				3196E65D1D939E2000BD6381 /* JHInstancesModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		3196E6561D93997600BD6381 /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		31A358B31D20F1B100D4C0DA /* YYModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -889,6 +1000,9 @@
 		31B9A2131D8FC7BB00BFEC81 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				3196E6641D93C1E200BD6381 /* JHEmailContentTableViewCell.h */,
+				3196E6651D93C1E200BD6381 /* JHEmailContentTableViewCell.m */,
+				3196E6661D93C1E200BD6381 /* JHEmailContentTableViewCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1049,6 +1163,8 @@
 				318A0D201D587EB500032F6D /* BizObject采购明细表 */,
 				31F875721D3DC2EB00BEE76D /* ChosePeople组织选择 */,
 				310D52CA1D236ED2003C09E9 /* page流程配置 */,
+				3196E6531D93997600BD6381 /* Instances我的流程 */,
+				3196E6421D936A0100BD6381 /* task 待办流程 阅办 */,
 				312BAFC91D6FBFAC0037D656 /* sendEmal发送邮件 */,
 				31B9A2101D8FC7BB00BFEC81 /* EmailRead 查看邮件 */,
 				312BAFD21D6FCC390037D656 /* FileRead查看文件 */,
@@ -1351,6 +1467,7 @@
 				31E2F5341D1A2DB200FC212B /* MBProgressHUD.bundle in Resources */,
 				31CBA2D91D89368700AE023E /* JHQueueTableViewCell.xib in Resources */,
 				31B985E01D750A3C007F5059 /* JHDocTableViewCell.xib in Resources */,
+				3196E65B1D939B6F00BD6381 /* JHInstancesTableViewController.xib in Resources */,
 				31FB4EF71D86846800A07882 /* JHWebContentViewController.xib in Resources */,
 				315A81EA1D4B95DE00D8EF62 /* JHScanCRCodeViewController.xib in Resources */,
 				311FC1E51D800FDE000C35D0 /* JHUserTableViewController.xib in Resources */,
@@ -1359,14 +1476,18 @@
 				316EA3881D78FA3600B8CE81 /* JHFileContentViewController.xib in Resources */,
 				3126A8BE1D191D1A00ADC960 /* Assets.xcassets in Resources */,
 				31B9A21D1D8FCB9E00BFEC81 /* JHReadEmailTableViewController.xib in Resources */,
+				3196E6521D936E0400BD6381 /* JHTaskTableViewCell.xib in Resources */,
 				317249E21D221ED600B2E48A /* JHCategoryTableViewCell.xib in Resources */,
 				310D52D21D236F1F003C09E9 /* JHPageTableViewController.xib in Resources */,
+				3196E64A1D936A6900BD6381 /* JHTaskTableViewController.xib in Resources */,
 				3155DEB61D8E21B900AC6FBD /* JHDetailWebViewController.xib in Resources */,
+				3196E6681D93C1E200BD6381 /* JHEmailContentTableViewCell.xib in Resources */,
 				3142C6E01D3F4F170043C293 /* JHOrguserTableViewCell.xib in Resources */,
 				3126A8961D1908DD00ADC960 /* Main.storyboard in Resources */,
 				31CBA2CF1D88F6AB00AE023E /* JHQueueContentTableViewController.xib in Resources */,
 				312BAFD11D6FC03F0037D656 /* JHSendMailViewController.xib in Resources */,
 				310D52D71D236F68003C09E9 /* JHPageTableViewCell.xib in Resources */,
+				3196E6631D93BD7200BD6381 /* JHFileTableViewCell.xib in Resources */,
 				312694961D65592A00046999 /* JHEditTableViewController.xib in Resources */,
 				3142C6DB1D3F4EF70043C293 /* JHOrguserTableViewController.xib in Resources */,
 				3155DEBF1D8E83C700AC6FBD /* JHUserTableViewCell.xib in Resources */,
@@ -1402,6 +1523,7 @@
 				319637EF1D87D38B000C745C /* NSString+FDGetTopUrl.m in Sources */,
 				31B744E11D82497F006D5ACA /* SDWebImagePrefetcher.m in Sources */,
 				3105D9F31D1BA7690098EA73 /* JHHoneHeadView.m in Sources */,
+				3196E65E1D939E2000BD6381 /* JHInstancesModel.m in Sources */,
 				316EA3871D78FA3600B8CE81 /* JHFileContentViewController.m in Sources */,
 				31B69D9D1D51C3B900EA2250 /* JHChoseTableViewController.m in Sources */,
 				31E2F5291D1A2D9500FC212B /* AFURLConnectionOperation.m in Sources */,
@@ -1419,6 +1541,7 @@
 				31E2C7DB1D6E837900E5D367 /* TSTableViewExpandControlPanel.m in Sources */,
 				31E2F5271D1A2D9500FC212B /* AFNetworkReachabilityManager.m in Sources */,
 				310D52DA1D237146003C09E9 /* JHPageDataItem.m in Sources */,
+				3196E6671D93C1E200BD6381 /* JHEmailContentTableViewCell.m in Sources */,
 				31B6F46B1D1FACDE00A2670B /* YSLContainerViewController.m in Sources */,
 				317249E11D221ED600B2E48A /* JHCategoryTableViewCell.m in Sources */,
 				31E2C7DC1D6E837900E5D367 /* TSTableViewExpandSection.m in Sources */,
@@ -1428,6 +1551,7 @@
 				3155DEBA1D8E80E700AC6FBD /* JHFileManger.m in Sources */,
 				31E2F52C1D1A2D9500FC212B /* AFURLSessionManager.m in Sources */,
 				312BAFD01D6FC03F0037D656 /* JHSendMailViewController.m in Sources */,
+				3196E6621D93BD7200BD6381 /* JHFileTableViewCell.m in Sources */,
 				3105D9F61D1BAE1A0098EA73 /* JHMenuData.m in Sources */,
 				31B744EC1D825917006D5ACA /* JHPoiAllListTableViewController.m in Sources */,
 				31E2F52A1D1A2D9500FC212B /* AFURLRequestSerialization.m in Sources */,
@@ -1446,6 +1570,7 @@
 				31B985DF1D750A3C007F5059 /* JHDocTableViewCell.m in Sources */,
 				31B9A2211D8FD39400BFEC81 /* JHEmailContentViewController.m in Sources */,
 				311FC1E41D800FDE000C35D0 /* JHUserTableViewController.m in Sources */,
+				3196E64D1D936BC100BD6381 /* JHTaskModel.m in Sources */,
 				31E2C7D91D6E837900E5D367 /* TSUtils.m in Sources */,
 				31B744DC1D82497F006D5ACA /* SDWebImageCompat.m in Sources */,
 				31B744DE1D82497F006D5ACA /* SDWebImageDownloader.m in Sources */,
@@ -1469,6 +1594,7 @@
 				31E84F0D1D8143E10036069E /* JHRestApi.m in Sources */,
 				31B744FE1D82A1A1006D5ACA /* UIImage+FDChangeStringToCRCode.m in Sources */,
 				31B744D91D82497F006D5ACA /* MKAnnotationView+WebCache.m in Sources */,
+				3196E6491D936A6900BD6381 /* JHTaskTableViewController.m in Sources */,
 				31E2F5281D1A2D9500FC212B /* AFSecurityPolicy.m in Sources */,
 				31E2F5331D1A2DB200FC212B /* MBProgressHUD+KR.m in Sources */,
 				31F8757C1D3DCBDF00BEE76D /* JHOrguser.m in Sources */,
@@ -1496,12 +1622,14 @@
 				31CBA2D81D89368700AE023E /* JHQueueTableViewCell.m in Sources */,
 				31B6F4761D1FB02000A2670B /* JHPortalTableViewController.m in Sources */,
 				31798F2B1D77E9DD008368CB /* JHFileListTableViewController.m in Sources */,
+				3196E65A1D939B6F00BD6381 /* JHInstancesTableViewController.m in Sources */,
 				31B985E41D751B80007F5059 /* JHSubDirTableViewController.m in Sources */,
 				3142C6DA1D3F4EF70043C293 /* JHOrguserTableViewController.m in Sources */,
 				3142C6DF1D3F4F170043C293 /* JHOrguserTableViewCell.m in Sources */,
 				31A358BA1D20F1B100D4C0DA /* YYClassInfo.m in Sources */,
 				312BAFD81D6FDFF80037D656 /* JHWeaverNetManger.m in Sources */,
 				31E2F5351D1A2DB200FC212B /* MBProgressHUD.m in Sources */,
+				3196E6511D936E0400BD6381 /* JHTaskTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

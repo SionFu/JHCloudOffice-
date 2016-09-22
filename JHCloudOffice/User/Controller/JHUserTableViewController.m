@@ -17,24 +17,21 @@
 
 @implementation JHUserTableViewController
 - (void)viewWillAppear:(BOOL)animated {
-    NSLog(@"已下载视图:%@",self.tableView);
     [self.tableView reloadData];
 }
-static  int nowIndexTableView = 0;
 - (void)viewDidLoad {
     [super viewDidLoad];
     /**
-     *  index == 1 我的订阅
+     *  index == nil 我的阅办
      *  index == nil 我的邮件
-     *  index == 2 我的流程
+     *  index == nil 我的流程
      *  index == nil 通知公告
-     *  index == 3 已下载文件
+     *  index == 1 已下载文件
      */
-    nowIndexTableView++;
-    if (nowIndexTableView == 3) {
+
         NSArray *filePathArray = [[JHFileManger new] showAllFile];
         self.contentArray = [NSMutableArray arrayWithArray:filePathArray];
-    }
+
     
     //自适应高度
     self.tableView.rowHeight = UITableViewAutomaticDimension;
@@ -84,7 +81,6 @@ static  int nowIndexTableView = 0;
 
 #pragma Mark didselect
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (nowIndexTableView == 3 ) {
         NSLog(@"openFile");
         NSURL *url = [NSURL fileURLWithPath:self.contentArray[indexPath.row][@"filePath"]];
         _documentInteractionController = [UIDocumentInteractionController
@@ -92,8 +88,6 @@ static  int nowIndexTableView = 0;
         [_documentInteractionController setDelegate:self];
         
         [_documentInteractionController presentOpenInMenuFromRect:CGRectZero inView:self.view animated:YES];
-        
-    }
 }
 
 @end

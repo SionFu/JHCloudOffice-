@@ -7,6 +7,25 @@
 //
 
 #import <Foundation/Foundation.h>
+//Instances
+/**
+ *  获取 流程
+ */
+@protocol JHGetInstancesDelegate <NSObject>
+
+- (void)getInstancesSuccess;
+- (void)getInstancesFaild;
+
+@end
+/**
+ *  获取待办 阅办
+ */
+@protocol JHGetTaskDelegate <NSObject>
+
+- (void)getTaskSuccess;
+- (void)getTaskFaild;
+
+@end
 /**
  *下载附件(巨化报)代理
  */
@@ -50,6 +69,9 @@
 - (void)getNoticationSuccess;
 @end
 @interface JHRestApi : NSObject
+
+@property (nonatomic, weak) id<JHGetInstancesDelegate>getInstancesDelegate;
+@property (nonatomic, weak) id<JHGetTaskDelegate>getTaskDelegate;
 @property (nonatomic, weak) id<JHDownPFileDelegate>downFileDelegate;
 @property (nonatomic ,weak) id<JHQueueObjectsDelegate>getQueueObjectsDelegate;
 @property (nonatomic, weak) id<JHFollowAndCancelSubscribeDelegate>subscribeDelegate;
@@ -87,4 +109,12 @@
  *  downloadFile
  */
 - (void)downloadFileWithPURL:(NSString *)pUrl AndFileName:(NSString *)fileName;
+/**
+ *  获取待办 
+ */
+- (void)moduleTaskItemsGetTasksWithSheet:(NSString *)sheet andCode:(NSString *)code andStates:(NSString *)states andKey:(NSString *)key andStartTime:(NSString *)startTime andEndTime:(NSString *)endTime andSort:(NSString *)sort  andDescOrAsc:(NSString *)descOrAsc andPageSize:(int)pageSize andPageIndex:(int)pageIndex;
+/**
+ *  我的流程
+ */
+- (void)moduleInstancesGetInstancesWithCode:(NSString *)code andVersion:(NSString *)version andStates:(NSString *)states andStartTime:(NSString *)startTime andEndTime:(NSString *)endTime andKey:(NSString *)key andSort:(NSString *)sort andisasc:(NSString *)isasc andPageSize:(int)pageSize andPageIndex:(int)pageIndex;
 @end

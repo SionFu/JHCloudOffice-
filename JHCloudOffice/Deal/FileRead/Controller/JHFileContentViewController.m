@@ -54,7 +54,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"文件查看";
-//    [MBProgressHUD showMessage:@"正在载入..." toView:self.view];
+    [MBProgressHUD showMessage:@"正在载入..." toView:self.view];
     UIBarButtonItem *rightButton = [[UIBarButtonItem alloc]initWithTitle:@"退出" style:UIBarButtonItemStylePlain target:self action:@selector(closeScanVC)];
     [self.navigationItem setRightBarButtonItem:rightButton];
     self.manger = [JHWeaverNetManger new];
@@ -63,7 +63,7 @@
     self.nowView = self.view;
 }
 - (void)getFileContentSuccess {
-    [MBProgressHUD hideHUD];
+    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     self.fileContentWebView.delegate = self;
     [self.fileContentWebView loadHTMLString:self.fileContentDetailStr baseURL:nil];
     self.fileContentWebView.scrollView.bouncesZoom = YES;

@@ -11,12 +11,14 @@
 #import "JHWeaverNetManger.h"
 #import "JHDocModel.h"
 #import "MBProgressHUD+KR.h"
+#import "JHFileTableViewCell.h"
 @interface JHFileListTableViewController ()<JHFileListDelegate>
 /**
  *  文件列表数组
  */
 @property (nonatomic, strong)NSArray *fileListArray;
 @property (nonatomic, strong)JHWeaverNetManger *manger;
+@property (nonatomic, strong)UINib *nib;
 @end
 
 @implementation JHFileListTableViewController
@@ -30,7 +32,7 @@
     self.manger = [JHWeaverNetManger new];
     [self.manger docInfoObjectsgetNoticesWithMainid:@"" andSubid:@"" andSeccategory:self.seccategory andnewOnly:self.isNewOnl andPage:@"1" andPageSize:@"20"];
     self.manger.getFileListDelegate = self;
-    [MBProgressHUD showMessage:@"正在载入..."];
+//    [MBProgressHUD showMessage:@"正在载入..."];
 }
 -(void)closeScanVC {
     [self.navigationController popToRootViewControllerAnimated:YES];
@@ -59,30 +61,35 @@
 }
 
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"cell"];
+- (UITableView*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    static NSString * cellIdentifier = @"FileCell";
+    if (_nib == nil) {
+        _nib = [UINib nibWithNibName:@"JHFileTableViewCell" bundle:nil];
+        [tableView registerNib:_nib forCellReuseIdentifier: cellIdentifier];
+    }
+    JHFileTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     
-    cell.textLabel.text = self.fileListArray[indexPath.row][@"docsubject"];
+    cell.fileTitleTextLabel.text = self.fileListArray[indexPath.row][@"docsubject"];
     NSDateFormatter *dateFormatter = [NSDateFormatter new];
     [dateFormatter setDateFormat:@"yyyy-MM-ddHH:mm:ss"];
     NSString *dateTimeStr = [NSString stringWithFormat:@"%@%@",self.fileListArray[indexPath.row][@"doccreatedate"],self.fileListArray[indexPath.row][@"doccreatetime"]];
     NSDate *date = [dateFormatter dateFromString:dateTimeStr];
     [dateFormatter setDateFormat:@"yyyy年MM月dd日 HH点mm分"];
-    cell.detailTextLabel.text = [dateFormatter stringFromDate:date];
-    [cell.detailTextLabel setTextColor:[UIColor grayColor]];
+    cell.timeDetailTextLabel.text = [dateFormatter stringFromDate:date];
+    [cell.timeDetailTextLabel setTextColor:[UIColor grayColor]];
     cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     NSNumber *isNew = self.fileListArray[indexPath.row][@"isNew"];
     int inew = [isNew intValue];
     if (inew == 0) {
-       cell.imageView.image = [UIImage imageNamed:@"ic_remindernull"];
+       cell.readImageView.image = [UIImage imageNamed:@"ic_remindernull"];
     }else {
-    cell.imageView.image = [UIImage imageNamed:@"ic_reminder"];
+    cell.readImageView.image = [UIImage imageNamed:@"ic_reminder"];
     }
     return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-    cell.imageView.image = [UIImage imageNamed:@"ic_remindernull"];
+    JHFileTableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    cell.readImageView.image = [UIImage imageNamed:@"ic_remindernull"];
     [cell reloadInputViews];
     //显示文件内容
     JHFileContentViewController *fileVC = [JHFileContentViewController new];

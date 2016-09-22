@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="FileCell" id="KGk-i7-Jjw" customClass="JHFileTableViewCell">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="287" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ic_reminder" translatesAutoresizingMaskIntoConstraints="NO" id="AhU-wp-iN8">
+                        <rect key="frame" x="14" y="17" width="10" height="10"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="10" id="EaK-LG-lMw"/>
+                            <constraint firstAttribute="height" constant="10" id="T90-vj-Fbv"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="文件名" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Az-aG-cbj">
+                        <rect key="frame" x="32" y="6" width="255" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="4lq-am-Egq"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2016年09月07" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDo-HK-lvm">
+                        <rect key="frame" x="32" y="22" width="81.5" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="iMt-AK-re9"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="2Az-aG-cbj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="6" id="F1e-lG-X2t"/>
+                    <constraint firstItem="2Az-aG-cbj" firstAttribute="leading" secondItem="AhU-wp-iN8" secondAttribute="trailing" constant="8" id="GAO-I6-Xou"/>
+                    <constraint firstItem="AhU-wp-iN8" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="IoZ-K8-Ms7"/>
+                    <constraint firstItem="AhU-wp-iN8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="14" id="Jz9-O6-Yez"/>
+                    <constraint firstItem="eDo-HK-lvm" firstAttribute="leading" secondItem="AhU-wp-iN8" secondAttribute="trailing" constant="8" id="QhW-8n-1dJ"/>
+                    <constraint firstAttribute="bottom" secondItem="eDo-HK-lvm" secondAttribute="bottom" constant="1" id="Z5i-yY-pWW"/>
+                    <constraint firstAttribute="trailing" secondItem="2Az-aG-cbj" secondAttribute="trailing" id="uOP-3R-V7P"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="fileTitleTextLabel" destination="2Az-aG-cbj" id="dRC-vG-Lb4"/>
+                <outlet property="readImageView" destination="AhU-wp-iN8" id="ams-fC-FIn"/>
+                <outlet property="timeDetailTextLabel" destination="eDo-HK-lvm" id="hld-zS-77V"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="ic_reminder" width="14" height="14"/>
+    </resources>
+</document>

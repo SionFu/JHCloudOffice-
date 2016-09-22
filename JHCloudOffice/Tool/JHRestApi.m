@@ -10,18 +10,9 @@
 #import "JHNetworkManager.h"
 #import "JHUserInfo.h"
 #import "JHPoiModel.h"
+#import "JHTaskModel.h"
+#import "JHInstancesModel.h"
 @implementation JHRestApi
-- (void)notificationObjectGetNotificationWithUserId:(NSString *)UserId andUserCode:(NSString *)userCode andUser:(NSString *)user andTime:(NSString *)time andToken:(NSString *)token andPassword:(NSString *)password {
-    //userId,"", "", notifiTime, sessionKey,user.getToken(), new NotificationInfoPojoCallback
-    //userId,userCode,user,time,token, password
-    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/Notification.ashx?appKey=%@&token=%@&action=get&userCode=%@&user=%@&userId=%@&time=%@&password=%@",SITEURL,APPKEY,[JHUserInfo sharedJHUserInfo].sSOKey,[JHUserInfo sharedJHUserInfo].code,[JHUserInfo sharedJHUserInfo].code,[JHUserInfo sharedJHUserInfo].objectId,time,[[NSUserDefaults standardUserDefaults] objectForKey:@"userPwd"]];
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
-        NSLog(@"%@",responseObject);
-    } failure:^(NSURLSessionDataTask *task, NSError *error) {
-        
-    }];
-}
 - (void)notificationObjectGetNotificationWithTime:(NSString *)lastTime {
     NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/Notification.ashx?appKey=%@&token=%@&action=get&userCode=%@&user=%@&userId=%@&time=%@&password=%@",SITEURL,APPKEY,[JHUserInfo sharedJHUserInfo].sessionKey,[JHUserInfo sharedJHUserInfo].code,[JHUserInfo sharedJHUserInfo].code,[JHUserInfo sharedJHUserInfo].objectId,lastTime,[[NSUserDefaults standardUserDefaults] objectForKey:@"userPwd"]];
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -105,4 +96,28 @@
     }
 
 }
+-(void)moduleTaskItemsGetTasksWithSheet:(NSString *)sheet andCode:(NSString *)code andStates:(NSString *)states andKey:(NSString *)key andStartTime:(NSString *)startTime andEndTime:(NSString *)endTime andSort:(NSString *)sort andDescOrAsc:(NSString *)descOrAsc andPageSize:(int)pageSize andPageIndex:(int)pageIndex {
+    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/%@.ashx?appKey=%@&token=%@&code=%@&action=task&userId=%@&states=%@&key=%@&sort=%@&isasc=%@&startTime=%@&endTime=%@&pageSize=%d&pageIndex=%d",SITEURL,sheet,APPKEY,[JHUserInfo sharedJHUserInfo].sessionKey,code,[JHUserInfo sharedJHUserInfo].objectId,states,key,sort,descOrAsc,startTime,endTime,pageSize,pageIndex];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"\nTask:%@,url:%@",responseObject,urlStr);
+        [JHTaskModel sharedJHTaskModel].taskDataDic = responseObject;
+        [self.getTaskDelegate getTaskSuccess];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self.getTaskDelegate getTaskFaild];
+    }];
+}
+- (void)moduleInstancesGetInstancesWithCode:(NSString *)code andVersion:(NSString *)version andStates:(NSString *)states andStartTime:(NSString *)startTime andEndTime:(NSString *)endTime andKey:(NSString *)key andSort:(NSString *)sort andisasc:(NSString *)isasc andPageSize:(int)pageSize andPageIndex:(int)pageIndex {
+    NSString *urlStr = [NSString stringWithFormat:@"%@Sheets/DefaultSheet.ashx?appKey=%@&token=%@&action=instance&code=%@&version=%@&userId=%@&states=%@&key=%@&sort=%@&isasc=%@&startTime=%@&endTime=%@&pageSize=%d&pageIndex=%d",SITEURL,APPKEY,[JHUserInfo sharedJHUserInfo].sessionKey,code,version,[JHUserInfo sharedJHUserInfo].objectId,states,key,sort,isasc,startTime,endTime,pageSize,pageIndex];
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
+        NSLog(@"%@",responseObject);
+        [JHInstancesModel sharedJHInstancesModel].instancesDataDic = responseObject;
+        [JHTaskModel sharedJHTaskModel].taskDataDic = responseObject;
+        [self.getInstancesDelegate getInstancesSuccess];
+    } failure:^(NSURLSessionDataTask *task, NSError *error) {
+        [self.getInstancesDelegate getInstancesFaild];
+    }];
+}
+
 @end
