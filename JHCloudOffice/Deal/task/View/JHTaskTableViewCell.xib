@@ -21,16 +21,16 @@
                             <constraint firstAttribute="height" constant="10" id="vwu-Si-sgE"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(发起)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q9B-Qn-Khe">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="(发起)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q9B-Qn-Khe">
                         <rect key="frame" x="32" y="8" width="47" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="eMm-OG-XZl"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="用印审批" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G1b-uh-1v1">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="用印审批" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G1b-uh-1v1">
                         <rect key="frame" x="32" y="33" width="56" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="ifg-Ty-7KM"/>
@@ -40,7 +40,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2010年09月07日 16点09分" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lB0-Ae-7hi">
-                        <rect key="frame" x="32" y="58.5" width="172.5" height="21"/>
+                        <rect key="frame" x="32" y="58" width="172.5" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="38Z-A8-8lR"/>
                         </constraints>
@@ -48,10 +48,11 @@
                         <color key="textColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="测试" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E4f-aE-WQf">
-                        <rect key="frame" x="255" y="34" width="32" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="和坚强" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E4f-aE-WQf">
+                        <rect key="frame" x="239" y="33.5" width="48" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="BnQ-Uc-mnV"/>
+                            <constraint firstAttribute="width" constant="48" id="jpn-sc-Cgd"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                         <color key="textColor" red="0.7019608021" green="0.7019608021" blue="0.7019608021" alpha="1" colorSpace="calibratedRGB"/>
@@ -63,13 +64,21 @@
                     <constraint firstItem="Q9B-Qn-Khe" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="8" id="90E-5E-RXl"/>
                     <constraint firstItem="pVd-da-bgl" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="14" id="BiG-Y5-TkP"/>
                     <constraint firstItem="G1b-uh-1v1" firstAttribute="leading" secondItem="pVd-da-bgl" secondAttribute="trailing" constant="8" id="MWe-xs-rcG"/>
+                    <constraint firstItem="E4f-aE-WQf" firstAttribute="leading" secondItem="G1b-uh-1v1" secondAttribute="trailing" constant="3" id="NSv-R5-Bj6"/>
+                    <constraint firstItem="E4f-aE-WQf" firstAttribute="leading" secondItem="Q9B-Qn-Khe" secondAttribute="trailing" constant="3" id="UBU-69-757"/>
                     <constraint firstItem="G1b-uh-1v1" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="VPI-Uy-Shr"/>
                     <constraint firstAttribute="bottom" secondItem="lB0-Ae-7hi" secondAttribute="bottom" constant="8" id="ZXB-cZ-0oF"/>
                     <constraint firstItem="E4f-aE-WQf" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="afG-pg-Z1a"/>
                     <constraint firstAttribute="trailing" secondItem="E4f-aE-WQf" secondAttribute="trailing" id="jHQ-1q-FaS"/>
                     <constraint firstItem="Q9B-Qn-Khe" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="32" id="lTW-4p-mKi"/>
+                    <constraint firstItem="E4f-aE-WQf" firstAttribute="leading" secondItem="Q9B-Qn-Khe" secondAttribute="trailing" constant="3" id="q6T-wC-4FS"/>
                     <constraint firstItem="lB0-Ae-7hi" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="32" id="qL9-c2-j98"/>
                 </constraints>
+                <variation key="default">
+                    <mask key="constraints">
+                        <exclude reference="UBU-69-757"/>
+                    </mask>
+                </variation>
             </tableViewCellContentView>
             <connections>
                 <outlet property="createUserNamelabel" destination="E4f-aE-WQf" id="vLt-lA-6Qk"/>

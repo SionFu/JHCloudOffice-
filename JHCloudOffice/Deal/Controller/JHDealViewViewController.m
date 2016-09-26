@@ -20,6 +20,7 @@
 #import "JHFileListTableViewController.h"
 #import "JHReadEmailTableViewController.h"
 #import "JHTaskTableViewController.h"
+#import "JHGlobalModel.h"
 @interface JHDealViewViewController ()<JHHomeMenuButtonDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate,UIActionSheetDelegate,JHGetNotificationObjectDelegate>
 /**
  *  用户姓名
@@ -57,14 +58,20 @@
  * 未读通知数 点击
  */
 - (IBAction)unReadNotiBtnClick:(UIButton *)sender;
+
+
+@property (nonatomic, strong)UINavigationItem *rootNavigatioItem;
+
 @end
 
 @implementation JHDealViewViewController
-
+-(UINavigationItem *)rootNavigatioItem {
+    return [JHGlobalModel sharedJHGlobalModel].rootNavigationItem;
+}
 - (void)viewWillAppear:(BOOL)animated {
     [self timerAction];
-    UINavigationBar *navBar = self.navigationController.navigationBar;
-    navBar.hidden = NO;
+    //添加navigation 扫描二维码 和 查找按钮内容  按钮
+    [self addNavigationButton];
 }
 static int unReadTask;
 static int unReadNoti;
@@ -94,6 +101,14 @@ static int unReadNoti;
     //获取形成用户的二维码字符串
     [self getuserCIQRCodeStr];
 
+}
+- (void)addNavigationButton {
+    UIBarButtonItem *searchButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_scan"] style:UIBarButtonItemStylePlain target:self action:@selector(addObject:)];
+    //打开扫描二维码
+    UIBarButtonItem *scanButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_search"] style:UIBarButtonItemStylePlain target:self action:@selector(scanCRCodeViewController)];
+    //打开查找视图
+    NSArray *buttonArray = [NSArray arrayWithObjects:scanButton,searchButton, nil];
+    self.rootNavigatioItem.rightBarButtonItems = buttonArray;
 }
 - (void) timerAction {
     //刷新通知数
@@ -174,6 +189,7 @@ static int unReadNoti;
     headView.delegate = self;
     [self.headView addSubview: headView];
 }
+
 -(void)clickHomeMenuButton:(long)sender{
     NSLog(@"%ld",sender - 100);
     switch (sender - 100) {

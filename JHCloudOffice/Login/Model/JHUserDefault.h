@@ -34,4 +34,6 @@
  *  返回密码
  */
 +(NSString *)getPwd;
+
+
 @end

@@ -320,7 +320,7 @@
                   moduleName = "JHCloudOffice"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Fusion/Desktop/%E5%B7%A8%E5%8C%96%E9%9B%86%E5%9B%A2/JHCloudOffice%E5%89%AF%E6%9C%AC/JHCloudOffice/Tool/JHWeaverNetManger.m"
-                  timestampString = "496214834.024363"
+                  timestampString = "496554718.668788"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "125"
@@ -335,7 +335,7 @@
                   moduleName = "JHCloudOffice"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Fusion/Desktop/%E5%B7%A8%E5%8C%96%E9%9B%86%E5%9B%A2/JHCloudOffice%E5%89%AF%E6%9C%AC/JHCloudOffice/Tool/JHWeaverNetManger.m"
-                  timestampString = "496214834.024691"
+                  timestampString = "496554718.668929"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "125"
@@ -352,11 +352,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/Deal/Controller/JHDealViewViewController.m"
-            timestampString = "496226811.5511"
+            timestampString = "496559634.500229"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "256"
-            endingLineNumber = "256"
+            startingLineNumber = "272"
+            endingLineNumber = "272"
             landmarkName = "-cIQRCodeButton:"
             landmarkType = "5">
          </BreakpointContent>
@@ -400,11 +400,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/User/Controller/JHUserViewController.m"
-            timestampString = "496213214.125966"
+            timestampString = "496559774.929133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "46"
-            endingLineNumber = "46"
+            startingLineNumber = "52"
+            endingLineNumber = "52"
             landmarkName = "-setupPortalTableViewController"
             landmarkType = "5">
          </BreakpointContent>
@@ -432,7 +432,7 @@
                   moduleName = "JHCloudOffice"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Fusion/Desktop/%E5%B7%A8%E5%8C%96%E9%9B%86%E5%9B%A2/JHCloudOffice%E5%89%AF%E6%9C%AC/JHCloudOffice/Tool/JHWeaverNetManger.m"
-                  timestampString = "496214834.029659"
+                  timestampString = "496554718.671379"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "46"
@@ -447,7 +447,7 @@
                   moduleName = "JHCloudOffice"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/Fusion/Desktop/%E5%B7%A8%E5%8C%96%E9%9B%86%E5%9B%A2/JHCloudOffice%E5%89%AF%E6%9C%AC/JHCloudOffice/Tool/JHWeaverNetManger.m"
-                  timestampString = "496214834.029853"
+                  timestampString = "496554718.671526"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "46"
@@ -464,11 +464,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "JHCloudOffice/User/Controller/JHUserViewController.m"
-            timestampString = "496213214.125966"
+            timestampString = "496559774.929133"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
             landmarkName = "-setupPortalTableViewController"
             landmarkType = "5">
          </BreakpointContent>
@@ -533,6 +533,86 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "27"
             endingLineNumber = "27"
+            landmarkName = "-viewWillAppear:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JHCloudOffice/Deal/task/Controller/JHTaskTableViewController.m"
+            timestampString = "496293130.765365"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "76"
+            endingLineNumber = "76"
+            landmarkName = "-getTaskSuccess"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JHCloudOffice/Deal/task/Controller/JHTaskTableViewController.m"
+            timestampString = "496293373.721723"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "-getTaskSuccess"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JHCloudOffice/User/Controller/JHUserViewController.m"
+            timestampString = "496559774.929133"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "-addNavigationButton"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JHCloudOffice/Poi/Controller/JHPoiViewController.m"
+            timestampString = "496552492.310622"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "69"
+            endingLineNumber = "69"
+            landmarkName = "-viewWillDisappear:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "JHCloudOffice/Poi/Controller/JHPoiViewController.m"
+            timestampString = "496552506.828622"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
             landmarkName = "-viewWillAppear:"
             landmarkType = "5">
          </BreakpointContent>

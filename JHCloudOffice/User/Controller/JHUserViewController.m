@@ -14,15 +14,22 @@
 #import "JHWeaverNetManger.h"
 #import "JHTaskTableViewController.h"
 #import "JHInstancesTableViewController.h"
+#import "JHGlobalModel.h"
+#define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
+#define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
 @interface JHUserViewController ()<YSLContainerViewControllerDelegate>
 @property (nonatomic, strong)NSArray *portalArray;
 @property (nonatomic, strong)NSMutableArray  *muPVC;
+@property (nonatomic, assign)NSInteger nowIndex;
+@property (nonatomic, strong)UINavigationItem *rootNavigatioItem;
 @end
 
 @implementation JHUserViewController
+-(UINavigationItem *)rootNavigatioItem {
+    return [JHGlobalModel sharedJHGlobalModel].rootNavigationItem;
+}
 - (void)viewWillAppear:(BOOL)animated {
-    UINavigationBar *navBar = self.navigationController.navigationBar;
-    navBar.hidden = NO;
+    [self addNavigationBtnWithIndex:self.nowIndex];
 }
 - (NSArray *)portalArray{
     if (_portalArray == nil) {
@@ -32,7 +39,6 @@
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
     [self setupPortalTableViewController];
 }
 - (void)setupPortalTableViewController{
@@ -54,7 +60,7 @@
             [muPVC addObject:readView];
         }else if ([poral isEqualToString:@"我的阅办"]) {
             JHTaskTableViewController *taskView = [JHTaskTableViewController new];
-            taskView.taskStates = @"0;1";
+            taskView.taskStates = @"0;1;2;3;4;5";
             taskView.title = @"我的阅办";
             [muPVC addObject:taskView];
         }else if ([poral isEqualToString:@"我的流程"]) {
@@ -69,41 +75,47 @@
     float statusHeight = [[UIApplication sharedApplication] statusBarFrame].size.height;
     float navigationHeight = self.navigationController.navigationBar.frame.size.height;
     YSLContainerViewController *containerVC = [[YSLContainerViewController alloc]initWithControllers:muPVC topBarHeight:statusHeight + navigationHeight parentViewController:self];
-   
-//    for (int i = 0; i < containerVC.childControllers.count; i++) {
-//        id obj = [containerVC.childControllers objectAtIndex:i];
-//        if ([obj isKindOfClass:[UIViewController class]]) {
-//           UIViewController *controller = (UIViewController*)obj;
-//            CGRect controFrame = controller.view.frame;
-//            controller.view.frame = CGRectMake(controFrame.origin.x, controFrame.origin.y, controFrame.size.width, controFrame.size.height);
-//        }
-//    }
     containerVC.delegate = self;
-//    CGRect controFrame = containerVC.view.frame;
-//    containerVC.view.frame = CGRectMake(0, 0, 414, 600);
     [self.view addSubview:containerVC.view];
     self.view.backgroundColor = [UIColor colorWithRed:0.7332 green:0.7332 blue:0.7332 alpha:1.0];
 }
-#pragma mark getMailDelegate
-//-(void)getMailObjectsSuccess {
-//    NSLog(@"获取邮件成功");
-//}
-//-(void)getMailObjectFaild {
-//    NSLog(@"获取邮件网络错误");
-//}
--(void)containerViewItemIndex:(NSInteger)index currentController:(UIViewController *)controller{
-    //    [JHModulesData sharedJHModulesData].curreatVCIndex = index;
-//    if (index == 1) {
-//        JHReadEmailTableViewController *readView = (JHReadEmailTableViewController*)controller;
-//        JHWeaverNetManger *manger = [JHWeaverNetManger new];
-//        manger.getMailObjectsDelegate = (id)readView;
-//        [manger mailObjectsGetMailInBoxWithNewOnly:false andFolderId:@"0" andPage:@"" andPageSize:@""];
-//        [readView.tableView reloadData];
-//    }
-//    
-//    NSLog(@"%ld%@",(long)index,controller);
-}
 
+
+-(void)containerViewItemIndex:(NSInteger)index currentController:(UIViewController *)controller{
+    self.nowIndex = index;
+    [self addNavigationBtnWithIndex:index];
+    
+
+}
+- (void)addNavigationBtnWithIndex:(NSInteger)index {
+    if (index == 0) {
+        [self addNavigationButton];
+    }
+    if (index == 1) {
+        //修改为发送邮件 按钮
+        self.rootNavigatioItem.rightBarButtonItems = nil;
+        self.rootNavigatioItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(sendEmailButtonItemClick)];
+    }
+    if (index == 2) {
+        [self addNavigationButton];
+        
+    }
+    if (index == 3) {
+        [self addNavigationButton];
+        
+    }
+}
+- (void)addNavigationButton {
+    UIBarButtonItem *searchButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_scan"] style:UIBarButtonItemStylePlain target:self action:@selector(addObject:)];
+    //打开扫描二维码
+    UIBarButtonItem *scanButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_search"] style:UIBarButtonItemStylePlain target:self action:@selector(scanCRCodeViewController)];
+    //打开查找视图
+    NSArray *buttonArray = [NSArray arrayWithObjects:scanButton,searchButton, nil];
+    self.rootNavigatioItem.rightBarButtonItems = buttonArray;
+}
+- (void)rightBarButtonClick {
+    NSLog(@"编写邮件");
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

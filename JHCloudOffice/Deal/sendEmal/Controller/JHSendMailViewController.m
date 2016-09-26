@@ -84,7 +84,7 @@
     JHWeaverNetManger *manger = [JHWeaverNetManger new];
     manger.sendEamilDelegate = self;
     NSString *sendToId = [JHOrguserManger sharedJHOrguserManger].saveAllListDic[@"0"][@"Other1"];
-    NSLog(@"%@",sendToId);
+    NSLog(@"%@",[JHOrguserManger sharedJHOrguserManger].saveAllListDic);
     if ([sendToId isEqualToString:@""]) {
         [MBProgressHUD showError:@"选择收件人"];
         return;

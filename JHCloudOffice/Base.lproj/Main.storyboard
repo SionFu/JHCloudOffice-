@@ -486,7 +486,7 @@
                                 <rect key="frame" x="0.0" y="364" width="375" height="254"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hNP-O7-zqu">
+                            <navigationBar hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hNP-O7-zqu">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="SiQ-LJ-SZx"/>
@@ -538,7 +538,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FWF-K8-reP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2528.5" y="282.5"/>
+            <point key="canvasLocation" x="2556.5" y="273.5"/>
         </scene>
         <!--发现-->
         <scene sceneID="bcf-bm-WbK">
@@ -552,7 +552,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tPe-Jk-gUA">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wgD-0T-j1p">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="R4F-Sg-B57" id="tWY-xM-1zJ"/>
+                                    <outlet property="delegate" destination="R4F-Sg-B57" id="CXL-Ca-SlI"/>
+                                </connections>
+                            </tableView>
+                            <navigationBar hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tPe-Jk-gUA">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                 <color key="backgroundColor" red="0.16470588235294117" green="0.46274509803921571" blue="0.87450980392156863" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -568,14 +576,6 @@
                                     </navigationItem>
                                 </items>
                             </navigationBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="wgD-0T-j1p">
-                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="R4F-Sg-B57" id="tWY-xM-1zJ"/>
-                                    <outlet property="delegate" destination="R4F-Sg-B57" id="CXL-Ca-SlI"/>
-                                </connections>
-                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -588,7 +588,7 @@
                             <constraint firstAttribute="trailing" secondItem="wgD-0T-j1p" secondAttribute="trailing" id="y2R-fP-uZK"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="发现" image="ic_menu_poi_off" badgeValue="1" id="Esg-tR-6mf"/>
+                    <tabBarItem key="tabBarItem" tag="1" title="发现" image="ic_menu_poi_off" badgeValue="1" id="Esg-tR-6mf"/>
                     <connections>
                         <outlet property="poiListTableView" destination="wgD-0T-j1p" id="RhK-91-sw8"/>
                     </connections>
@@ -610,7 +610,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="我的" image="ic_menu_user_off" badgeValue="2" id="Ibf-9O-Cpw"/>
+                    <tabBarItem key="tabBarItem" tag="2" title="我的" image="ic_menu_user_off" badgeValue="2" id="Ibf-9O-Cpw"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aZ2-lX-TM3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -950,7 +950,7 @@
                             <outlet property="delegate" destination="uYj-fZ-dT4" id="Bmb-4G-Jhj"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="更多" image="ic_menu_more_off" id="2t7-WM-IbE"/>
+                    <tabBarItem key="tabBarItem" tag="3" title="更多" image="ic_menu_more_off" id="2t7-WM-IbE"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MgE-g4-g2F" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -980,12 +980,12 @@
             </objects>
             <point key="canvasLocation" x="1114" y="292"/>
         </scene>
-        <!--巨化云办公-->
+        <!--Tab Bar View Controller-->
         <scene sceneID="GRI-oW-ETU">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="OWl-Yl-zzc" sceneMemberID="viewController">
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="OWl-Yl-zzc" customClass="JHTabBarViewController" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="巨化云办公" id="V89-9D-F0p"/>
+                    <navigationItem key="navigationItem" id="V89-9D-F0p"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="GGO-6b-dl9">
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

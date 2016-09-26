@@ -9,15 +9,29 @@
 #import "JHMoreTableViewController.h"
 #import "JHUserDefault.h"
 #import "MBProgressHUD+KR.h"
+#import "JHGlobalModel.h"
+
 @interface JHMoreTableViewController ()
+@property (nonatomic, strong)UINavigationItem *rootNavigatioItem;
 
 @end
 
 @implementation JHMoreTableViewController
-- (void)viewWillAppear:(BOOL)animated {
-    UINavigationBar *navBar = self.navigationController.navigationBar;
-    navBar.hidden = NO;
+-(UINavigationItem *)rootNavigatioItem {
+    return [JHGlobalModel sharedJHGlobalModel].rootNavigationItem;
 }
+- (void)viewWillAppear:(BOOL)animated {
+    [self addNavigationButton];
+}
+- (void)addNavigationButton {
+    UIBarButtonItem *searchButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_scan"] style:UIBarButtonItemStylePlain target:self action:@selector(addObject:)];
+    //打开扫描二维码
+    UIBarButtonItem *scanButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_search"] style:UIBarButtonItemStylePlain target:self action:@selector(scanCRCodeViewController)];
+    //打开查找视图
+    NSArray *buttonArray = [NSArray arrayWithObjects:scanButton,searchButton, nil];
+    self.rootNavigatioItem.rightBarButtonItems = buttonArray;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     

@@ -11,35 +11,93 @@
 #import "JHTaskModel.h"
 #import "JHTaskTableViewCell.h"
 #import "MBProgressHUD+KR.h"
+#import "MJRefresh.h"
 @interface JHTaskTableViewController ()<JHGetTaskDelegate>
 @property (nonatomic, strong)UINib *nib;
-@property (nonatomic, strong)NSArray *taskArray;
+@property (nonatomic, strong)NSMutableArray *taskArray;
+@property (nonatomic,assign)int page;
+@property (nonatomic, strong)NSArray *lastRequest;
 @end
 
 @implementation JHTaskTableViewController
--(NSArray *)taskArray {
-    return [JHTaskModel sharedJHTaskModel].taskArry;
+- (NSArray *)lastRequest {
+    if (_lastRequest == nil) {
+        _lastRequest = [NSArray array];
+    }return _lastRequest;
+}
+-(NSMutableArray *)taskArray {
+    if (_taskArray == nil) {
+        _taskArray = [NSMutableArray array];
+    }
+    return _taskArray;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    //创建上拉下拉两个控件
+    [self AddRefreshControl];
     [MBProgressHUD showMessage:@"正在加载" toView:self.view];
-    JHRestApi *apiManger = [JHRestApi new];
-    apiManger.getTaskDelegate = self;
-    int pageSize = 30;
-    int pageIndex = 1;
-    [apiManger moduleTaskItemsGetTasksWithSheet:@"DefaultSheet" andCode:@"" andStates:self.taskStates andKey:@"" andStartTime:@"" andEndTime:@"" andSort:@"" andDescOrAsc:@"" andPageSize:pageSize andPageIndex:pageIndex];
+    [self sendRequestToServer];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+#pragma mark -- 和网络相关
+
+//下拉刷新
+- (void)loadNewDeal{
+    //page = 1
+    self.page = 1;
+    [self sendRequestToServer];
+}
+- (void)loadMoreDeal {
+    self.page ++;
+    [self sendRequestToServer];
+}
+//获取数据
+-(void)sendRequestToServer{
+    JHRestApi *apiManger = [JHRestApi new];
+    apiManger.getTaskDelegate = self;
+    int pageSize = 8;
+    [apiManger moduleTaskItemsGetTasksWithSheet:@"DefaultSheet" andCode:@"" andStates:self.taskStates andKey:@"" andStartTime:@"" andEndTime:@"" andSort:@"" andDescOrAsc:@"" andPageSize:pageSize andPageIndex:self.page];
+}
+#pragma mark -- 和界面相关的方法
+-(void)AddRefreshControl{
+    //下拉刷新
+    self.tableView.mj_header = [MJRefreshGifHeader headerWithRefreshingTarget:self refreshingAction:@selector(loadNewDeal)];
+    //执行刷新的动作
+    [self.tableView.mj_header beginRefreshing];
+    //上拉加载
+    self.tableView.mj_footer = [MJRefreshAutoNormalFooter footerWithRefreshingTarget:self refreshingAction:@selector(loadMoreDeal)];
+    
+}
 -(void)getTaskSuccess {
+    //停止下拉刷新
+    [self.tableView.mj_header endRefreshing];
+    //停止上拉刷新
+    [self.tableView.mj_footer endRefreshing];
+        if ([self.lastRequest isEqualToArray: [JHTaskModel sharedJHTaskModel].taskArry]) {
+            return;
+        }
+    self.lastRequest = [JHTaskModel sharedJHTaskModel].taskArry;
+    //每次页面数为1时清除所有数据
+    if (self.page == 1) {
+        [self.taskArray removeAllObjects];
+    }
+    [self.taskArray addObjectsFromArray:[JHTaskModel sharedJHTaskModel].taskArry];
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
     [self.tableView reloadData];
+    
 }
 -(void)getTaskFaild {
     NSLog(@"网络错误");
+    //获取数据失败停止刷新
+    
+    //停止下拉刷新
+    [self.tableView.mj_header endRefreshing];
+    //停止上拉刷新
+    [self.tableView.mj_footer endRefreshing];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -79,9 +137,9 @@
     cell.timeLabel.text = timeStr;
     
     cell.createUserNamelabel.text = taskDic[@"CreateUserName"];
-    NSNumber *isNew = taskDic[@"InstanceState"];
+    NSNumber *isNew = taskDic[@"ItemState"];
     int inew = [isNew intValue];
-    if (inew == 4) {
+    if (inew == 2) {
         cell.stateImageView.image = [UIImage imageNamed:@"ic_remindernull"];
     }else {
         cell.stateImageView.image = [UIImage imageNamed:@"ic_reminder"];

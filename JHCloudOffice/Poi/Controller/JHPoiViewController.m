@@ -15,6 +15,9 @@
 #import "JHPoiAllListTableViewController.h"
 #import "JHWebContentViewController.h"
 #import "JHQueueContentTableViewController.h"
+#import "JHGlobalModel.h"
+#define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
+#define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
 @interface JHPoiViewController ()<UITableViewDataSource,UITableViewDelegate,JHGetPoiListDelegate>
 /**
  *  显示已订阅列表视图
@@ -27,6 +30,7 @@
  *  本人的订阅项目
  */
 @property (nonatomic ,strong) NSArray *listArray;
+@property (nonatomic, strong) UIView *button;
 @end
 
 @implementation JHPoiViewController
@@ -35,14 +39,34 @@
     return [JHPoiModel sharedJHPoiModel].listArray;
 }
 - (void)viewWillAppear:(BOOL)animated {
-    UINavigationBar *navBar = self.navigationController.navigationBar;
-    navBar.hidden = YES;
-   
+//    UINavigationBar *navBar = self.navigationController.navigationBar;
+//    navBar.hidden = YES;
+UINavigationItem *rootNavigatioItem = [JHGlobalModel sharedJHGlobalModel].rootNavigationItem;
+    rootNavigatioItem.rightBarButtonItems = nil;
+    rootNavigatioItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(rSSButtonClick:)];
         //开始获取订阅的消息
     self.apiManger = [JHRestApi new];
     self.apiManger.getPoiListdDelegate = self;
     [self.apiManger subscribeObjectsGetSubscribeObjectsWithAction:@"list"];
+    
 
+}
+- (void)addNavigationBtn{
+    self.navigationController.title = @"我的";
+    self.button = [[UIView alloc]initWithFrame:CGRectMake(SCREENWIDTH / 2 + 20, 25, SCREENWIDTH / 2 - 25, 30)];
+    NSArray *titleArray = [NSArray arrayWithObjects:@"扫一扫",@"搜索", nil];
+    for (int i = 0; i < titleArray.count; i ++) {
+        UIButton *statusbutton = [[UIButton alloc]initWithFrame:CGRectMake(i * ((SCREENWIDTH / 2 - 25 ) / 2), 0, (SCREENWIDTH / 2 - 25 ) / 2, 30)];
+        [statusbutton setTitle:titleArray[i] forState:UIControlStateNormal];
+        [statusbutton setBackgroundImage:[UIImage imageNamed:@"tab_unselected_pressed.9"] forState:UIControlStateHighlighted];
+        [statusbutton addTarget:self action:@selector(rightBarButtonClick:) forControlEvents:UIControlEventTouchUpInside];
+        [statusbutton setTag:10 + i];
+        [self.button addSubview:statusbutton];
+    }
+    [self.navigationController.view addSubview:self.button];
+}
+-(void)viewWillDisappear:(BOOL)animated {
+    [self.button removeFromSuperview];
 }
 -(void)getPoiListSuccess {
     [MBProgressHUD hideAllHUDsForView:self.view animated:YES];

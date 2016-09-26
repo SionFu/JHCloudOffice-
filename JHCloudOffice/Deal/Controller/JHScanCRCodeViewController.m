@@ -23,7 +23,7 @@
     [self.navigationItem setLeftBarButtonItem:liftButton];
     self.title = @"二维码扫描";
     //模拟器不能打开摄像头
-    [self starScanCIQRCode];
+//    [self starScanCIQRCode];
 }
 - (void)starScanCIQRCode {
     AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
