@@ -14,4 +14,12 @@ singleton_interface(JHGlobalModel);
  *  导航的额标题
  */
 @property (nonatomic, strong) id rootNavigationItem;
+/**
+ *  未读通知数目
+ */
+@property (nonatomic, assign) int unReadNoti;
+/**
+ *  待办流程数
+ */
+@property (nonatomic, assign) int unReadTask;
 @end

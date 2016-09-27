@@ -57,7 +57,7 @@
  */
 @protocol JHGetPoiListDelegate <NSObject>
 
-//获取通知后返回通知结果
+//获取订阅列表后返回通知结果
 - (void)getPoiListSuccess;
 @end
 /**

@@ -57,7 +57,6 @@
     NSDictionary *insdtancesDic = self.instancesArray[indexPath.row];
     cell.textLabel.text = insdtancesDic[@"InstanceName"];
     
-    
     NSString *timeStr = insdtancesDic[@"CreatedTime"];
     NSDateFormatter *formart = [[NSDateFormatter alloc]init];
     [formart setDateFormat:@"YYYY/MM/dd HH:mm:ss"];

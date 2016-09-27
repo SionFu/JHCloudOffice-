@@ -17,6 +17,8 @@
 
 @implementation JHUserTableViewController
 - (void)viewWillAppear:(BOOL)animated {
+    NSArray *filePathArray = [[JHFileManger new] showAllFile];
+    self.contentArray = [NSMutableArray arrayWithArray:filePathArray];
     [self.tableView reloadData];
 }
 - (void)viewDidLoad {
@@ -29,9 +31,9 @@
      *  index == 1 已下载文件
      */
 
-        NSArray *filePathArray = [[JHFileManger new] showAllFile];
-        self.contentArray = [NSMutableArray arrayWithArray:filePathArray];
-
+    
+    NSArray *filePathArray = [[JHFileManger new] showAllFile];
+    self.contentArray = [NSMutableArray arrayWithArray:filePathArray];
     
     //自适应高度
     self.tableView.rowHeight = UITableViewAutomaticDimension;
@@ -66,7 +68,7 @@
         _nib = [UINib nibWithNibName:@"JHUserTableViewCell" bundle:nil];
         [tableView registerNib:_nib forCellReuseIdentifier: cellIdentifier];
     }
-    
+    //处理视图不够长的bug(最后一行不能显示)
     if (indexPath.row >= self.contentArray.count) {
         UITableViewCell *cell = [[UITableViewCell alloc]init];
         return cell;
@@ -81,7 +83,9 @@
 
 #pragma Mark didselect
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-        NSLog(@"openFile");
+    if (self.contentArray.count == 0) {
+        return;
+    }
         NSURL *url = [NSURL fileURLWithPath:self.contentArray[indexPath.row][@"filePath"]];
         _documentInteractionController = [UIDocumentInteractionController
                                           interactionControllerWithURL:url];

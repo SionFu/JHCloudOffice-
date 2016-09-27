@@ -51,20 +51,7 @@ UINavigationItem *rootNavigatioItem = [JHGlobalModel sharedJHGlobalModel].rootNa
     
 
 }
-- (void)addNavigationBtn{
-    self.navigationController.title = @"我的";
-    self.button = [[UIView alloc]initWithFrame:CGRectMake(SCREENWIDTH / 2 + 20, 25, SCREENWIDTH / 2 - 25, 30)];
-    NSArray *titleArray = [NSArray arrayWithObjects:@"扫一扫",@"搜索", nil];
-    for (int i = 0; i < titleArray.count; i ++) {
-        UIButton *statusbutton = [[UIButton alloc]initWithFrame:CGRectMake(i * ((SCREENWIDTH / 2 - 25 ) / 2), 0, (SCREENWIDTH / 2 - 25 ) / 2, 30)];
-        [statusbutton setTitle:titleArray[i] forState:UIControlStateNormal];
-        [statusbutton setBackgroundImage:[UIImage imageNamed:@"tab_unselected_pressed.9"] forState:UIControlStateHighlighted];
-        [statusbutton addTarget:self action:@selector(rightBarButtonClick:) forControlEvents:UIControlEventTouchUpInside];
-        [statusbutton setTag:10 + i];
-        [self.button addSubview:statusbutton];
-    }
-    [self.navigationController.view addSubview:self.button];
-}
+
 -(void)viewWillDisappear:(BOOL)animated {
     [self.button removeFromSuperview];
 }
@@ -98,8 +85,6 @@ UINavigationItem *rootNavigatioItem = [JHGlobalModel sharedJHGlobalModel].rootNa
     cell.poiContentLabel.text = self.listArray[indexPath.row][@"PUBLICDESC"];
     cell.poiRSSLabel.text = @"";
     [cell.poiHandImaageView sd_setImageWithURL:[NSURL URLWithString:self.listArray[indexPath.row][@"PUSHICON"]] placeholderImage:[UIImage imageNamed:@"ic_dyh"]];
-    
-    
     return cell;
 }
 

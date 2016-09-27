@@ -75,10 +75,32 @@
 }
 static int unReadTask;
 static int unReadNoti;
+static int lastUnReadNoti;
+static int lastUnReadTask;
 -(void)getNoticationSuccess {
     NSDictionary *responseObject = [JHUserInfo sharedJHUserInfo].notificationDic;
-    unReadTask += [responseObject[@"taskCount"] intValue];
-    unReadNoti += [responseObject[@"noticeCount"] intValue];
+    unReadTask = [responseObject[@"taskCount"] intValue];
+    unReadNoti = [responseObject[@"noticeCount"] intValue];
+    //处理通知逻辑
+    if (unReadTask > 10) {
+        [JHGlobalModel sharedJHGlobalModel].unReadTask = unReadTask;
+    }else {
+        //如果获取的通知数与上次获取的相同 则不加通知数量
+        if (unReadTask == lastUnReadTask) {
+        }
+        unReadTask = [JHGlobalModel sharedJHGlobalModel].unReadTask + unReadTask;
+    }
+    
+    if (unReadNoti > 10) {
+        [JHGlobalModel sharedJHGlobalModel].unReadNoti = unReadNoti;
+    }else {
+        //如果获取的通知数与上次获取的相同 则不加通知数量
+        if (unReadNoti == lastUnReadNoti) {
+        }
+        unReadNoti = [JHGlobalModel sharedJHGlobalModel].unReadNoti + unReadNoti;
+    }
+    lastUnReadNoti = [responseObject[@"noticeCount"] intValue];
+    lastUnReadTask = [responseObject[@"taskCount"] intValue];
     self.unReadTaskLabel.text = [NSString stringWithFormat:@"%d",unReadTask];
     self.unReadEmailLabel.text = [NSString stringWithFormat:@"%@",responseObject[@"emailCount"]];
     self.unReadNotiLabel.text = [NSString stringWithFormat:@"%d",unReadNoti];
@@ -86,7 +108,6 @@ static int unReadNoti;
     NSRange range = [timeStr rangeOfString:@" "];
     timeStr = [timeStr substringToIndex:(range.location)];
     [JHUserInfo sharedJHUserInfo].notificationTime = timeStr;
-    [self loadViewIfNeeded];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -103,7 +124,7 @@ static int unReadNoti;
 
 }
 - (void)addNavigationButton {
-    UIBarButtonItem *searchButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_scan"] style:UIBarButtonItemStylePlain target:self action:@selector(addObject:)];
+    UIBarButtonItem *searchButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_scan"] style:UIBarButtonItemStylePlain target:self action:@selector(scanCRCodeViewController)];
     //打开扫描二维码
     UIBarButtonItem *scanButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_search"] style:UIBarButtonItemStylePlain target:self action:@selector(scanCRCodeViewController)];
     //打开查找视图
@@ -115,6 +136,11 @@ static int unReadNoti;
     JHRestApi *apiManger = [JHRestApi new];
     [apiManger notificationObjectGetNotificationWithTime:[JHUserInfo sharedJHUserInfo].notificationTime];
     apiManger.getNotificationDelegate = self;
+}
+- (void)scanCRCodeViewController {
+    JHScanCRCodeViewController *sVC = [JHScanCRCodeViewController new];
+    UINavigationController *uVC = [[UINavigationController alloc]initWithRootViewController:sVC];
+    [self.navigationController presentViewController:uVC animated:YES completion:nil];
 }
 -(void)headImageViewTep{
     //只能选择相册
@@ -224,9 +250,7 @@ static int unReadNoti;
             break;
         case 3:{
             //扫描二维码
-            JHScanCRCodeViewController *sVC = [JHScanCRCodeViewController new];
-            UINavigationController *uVC = [[UINavigationController alloc]initWithRootViewController:sVC];
-            [self.navigationController presentViewController:uVC animated:YES completion:nil];
+            [self scanCRCodeViewController];
         }
             break;
         case 4:{

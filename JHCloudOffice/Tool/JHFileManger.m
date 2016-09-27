@@ -7,7 +7,7 @@
 //
 
 #import "JHFileManger.h"
-
+#import "JHUserInfo.h"
 @implementation JHFileManger
 - (NSArray *)showAllFile {
     //1.获取目标文件夹的路径
@@ -15,6 +15,8 @@
 //    NSString *path = [NSString stringWithFormat:@"%@%@",NSHomeDirectory(),@"/Library/Caches/"];
     NSString *path = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 //    NSString *filePath = [documentPath stringByAppendingPathComponent:fileName];
+    path = [path stringByAppendingPathComponent:[JHUserInfo sharedJHUserInfo].loginid];
+    [[NSFileManager defaultManager] createDirectoryAtPath:path withIntermediateDirectories:YES attributes:nil error:nil];
     //2.创建文件管理者
     
     NSFileManager *manager = [NSFileManager defaultManager];

@@ -12,6 +12,8 @@
 #import "JHTaskTableViewCell.h"
 #import "MBProgressHUD+KR.h"
 #import "MJRefresh.h"
+#import "JHGlobalModel.h"
+#import "JHPageTableViewController.h"
 @interface JHTaskTableViewController ()<JHGetTaskDelegate>
 @property (nonatomic, strong)UINib *nib;
 @property (nonatomic, strong)NSMutableArray *taskArray;
@@ -35,7 +37,7 @@
     [super viewDidLoad];
     //创建上拉下拉两个控件
     [self AddRefreshControl];
-    [MBProgressHUD showMessage:@"正在加载" toView:self.view];
+//    [MBProgressHUD showMessage:@"正在加载" toView:self.view];
     [self sendRequestToServer];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -47,7 +49,6 @@
 
 //下拉刷新
 - (void)loadNewDeal{
-    //page = 1
     self.page = 1;
     [self sendRequestToServer];
 }
@@ -77,6 +78,7 @@
     [self.tableView.mj_header endRefreshing];
     //停止上拉刷新
     [self.tableView.mj_footer endRefreshing];
+//    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
         if ([self.lastRequest isEqualToArray: [JHTaskModel sharedJHTaskModel].taskArry]) {
             return;
         }
@@ -86,7 +88,7 @@
         [self.taskArray removeAllObjects];
     }
     [self.taskArray addObjectsFromArray:[JHTaskModel sharedJHTaskModel].taskArry];
-    [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
+    
     [self.tableView reloadData];
     
 }
@@ -153,6 +155,12 @@
     return 80;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+//    [JHGlobalModel sharedJHGlobalModel].unReadTask --;
+    JHPageTableViewController *pageView = [JHPageTableViewController new];
+    NSDictionary *taskDic = [JHTaskModel sharedJHTaskModel].taskArry[indexPath.row];
+    pageView.pageName = taskDic[@"ActivityDisplayName"];
+    UINavigationController *nvpageVC = [[UINavigationController alloc]initWithRootViewController:pageView];
+    [self.navigationController presentViewController:nvpageVC animated:YES completion:nil];
     
 }
 @end

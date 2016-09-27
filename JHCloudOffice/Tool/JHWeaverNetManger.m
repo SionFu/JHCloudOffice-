@@ -52,9 +52,9 @@
     }];
 
 }
-- (void)docInfoObjectsgetNoticesWithMainid:(NSString *)mainid andSubid:(NSString *)subid andSeccategory:(NSString *)seccategory andnewOnly:(NSString *)newOnly andPage:(NSString *)page andPageSize:(NSString *)pageSize {
+- (void)docInfoObjectsgetNoticesWithMainid:(NSString *)mainid andSubid:(NSString *)subid andSeccategory:(NSString *)seccategory andnewOnly:(NSString *)newOnly andPage:(int)page andPageSize:(NSString *)pageSize {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    NSString *urlStr = [NSString stringWithFormat:@"%@getDocDir?sessionKey=%@&publishType=0&subid=%@&seccategory=%@&newOnly=%@&page=%@&pageSize=%@",WEAVURL,[JHUserInfo sharedJHUserInfo].sessionKey,subid,seccategory,newOnly,page,pageSize];
+    NSString *urlStr = [NSString stringWithFormat:@"%@getDocDir?sessionKey=%@&publishType=0&subid=%@&seccategory=%@&newOnly=%@&page=%d&pageSize=%@",WEAVURL,[JHUserInfo sharedJHUserInfo].sessionKey,subid,seccategory,newOnly,page,pageSize];
     urlStr = [self proxyUrlWithUrl:urlStr andisPost:false andisAttachment:false];
     [manager GET:urlStr parameters:nil success:^(NSURLSessionDataTask *task, id responseObject) {
 //        NSLog(@"URL:%@%@",urlStr ,responseObject);
@@ -156,6 +156,8 @@
     NSString *fileurl = [NSString stringWithFormat:@"%@viewDoc?docType=1&docid=%@&sessionKey=%@",WEAVURL,docId,[JHUserInfo sharedJHUserInfo].sessionKey];
     fileurl = [self proxyUrlWithUrl:fileurl andisPost:false andisAttachment:true];
     NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    documentPath = [documentPath stringByAppendingPathComponent:[JHUserInfo sharedJHUserInfo].loginid];
+    [[NSFileManager defaultManager] createDirectoryAtPath:documentPath withIntermediateDirectories:YES attributes:nil error:nil];
     NSString *filePath = [documentPath stringByAppendingPathComponent:fileName];
         //下载文件
 //    NSLog(@"%@",filePath);

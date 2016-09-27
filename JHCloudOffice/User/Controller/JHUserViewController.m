@@ -15,6 +15,9 @@
 #import "JHTaskTableViewController.h"
 #import "JHInstancesTableViewController.h"
 #import "JHGlobalModel.h"
+#import "JHScanCRCodeViewController.h"
+#import "JHSendMailViewController.h"
+#import "JHUserTableViewController.h"
 #define SCREENWIDTH [UIScreen mainScreen].bounds.size.width
 #define SCREENHEIGHT [UIScreen mainScreen].bounds.size.height
 @interface JHUserViewController ()<YSLContainerViewControllerDelegate>
@@ -84,6 +87,10 @@
 -(void)containerViewItemIndex:(NSInteger)index currentController:(UIViewController *)controller{
     self.nowIndex = index;
     [self addNavigationBtnWithIndex:index];
+    //刷新已下载文件列表
+    JHUserTableViewController *user = (JHUserTableViewController *)controller;
+    [user viewDidLoad];
+    [user.tableView reloadData];
     
 
 }
@@ -94,7 +101,7 @@
     if (index == 1) {
         //修改为发送邮件 按钮
         self.rootNavigatioItem.rightBarButtonItems = nil;
-        self.rootNavigatioItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(sendEmailButtonItemClick)];
+        self.rootNavigatioItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemCompose target:self action:@selector(rightBarButtonClick)];
     }
     if (index == 2) {
         [self addNavigationButton];
@@ -106,15 +113,27 @@
     }
 }
 - (void)addNavigationButton {
-    UIBarButtonItem *searchButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_scan"] style:UIBarButtonItemStylePlain target:self action:@selector(addObject:)];
     //打开扫描二维码
-    UIBarButtonItem *scanButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_search"] style:UIBarButtonItemStylePlain target:self action:@selector(scanCRCodeViewController)];
+    UIBarButtonItem *searchButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_scan"] style:UIBarButtonItemStylePlain target:self action:@selector(scanCRCodeViewController)];
     //打开查找视图
+    UIBarButtonItem *scanButton = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"icon_search"] style:UIBarButtonItemStylePlain target:self action:@selector(scanCRCodeViewController)];
+    
     NSArray *buttonArray = [NSArray arrayWithObjects:scanButton,searchButton, nil];
     self.rootNavigatioItem.rightBarButtonItems = buttonArray;
 }
+- (void)scanCRCodeViewController {
+    JHScanCRCodeViewController *sVC = [JHScanCRCodeViewController new];
+    UINavigationController *uVC = [[UINavigationController alloc]initWithRootViewController:sVC];
+    [self.navigationController presentViewController:uVC animated:YES completion:nil];
+}
 - (void)rightBarButtonClick {
-    NSLog(@"编写邮件");
+    //发送邮件
+    JHSendMailViewController *sMailVC  = [JHSendMailViewController new];
+    sMailVC.title = @"发送邮件";
+    UINavigationController *nVC = [[UINavigationController alloc]initWithRootViewController:sMailVC];
+    [self.navigationController presentViewController:nVC animated:YES completion:^{
+        
+    }];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

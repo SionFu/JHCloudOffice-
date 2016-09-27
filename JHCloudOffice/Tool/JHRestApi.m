@@ -84,6 +84,8 @@
 }
 -(void)downloadFileWithPURL:(NSString *)pUrl AndFileName:(NSString *)fileName {
     NSString *documentPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    documentPath = [documentPath stringByAppendingPathComponent:[JHUserInfo sharedJHUserInfo].loginid];
+    [[NSFileManager defaultManager] createDirectoryAtPath:documentPath withIntermediateDirectories:YES attributes:nil error:nil];
     NSString *filePath = [documentPath stringByAppendingPathComponent:fileName];
     //下载文件
     //    NSLog(@"%@",filePath);

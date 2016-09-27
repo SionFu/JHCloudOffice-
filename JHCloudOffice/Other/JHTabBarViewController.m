@@ -14,7 +14,6 @@
 @end
 
 @implementation JHTabBarViewController
-
 - (void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item {
     if (item.tag == 0) {
        self.title = @"巨化云办公";
@@ -31,17 +30,12 @@
 }
 
 
-- (void)scanCRCodeViewController {
-    JHScanCRCodeViewController *scanView = [JHScanCRCodeViewController new];
-    [self.navigationController pushViewController:scanView animated:YES];
-}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.title = @"巨化云办公";
     [JHGlobalModel sharedJHGlobalModel].rootNavigationItem = self.navigationItem;
-
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

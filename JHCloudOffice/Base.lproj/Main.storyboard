@@ -677,10 +677,19 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前登录: XXX" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CdV-Tq-AWF">
-                                                    <rect key="frame" x="14" y="36" width="79.5" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="当前登录账号: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CdV-Tq-AWF">
+                                                    <rect key="frame" x="14" y="36" width="79" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="pvl-Cf-cIy"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="XXX" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fm7-09-ihJ">
+                                                    <rect key="frame" x="94" y="36" width="24.5" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="pyu-Rk-4s7"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -689,11 +698,13 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="XUl-Da-PJe" firstAttribute="top" secondItem="33r-0U-d16" secondAttribute="top" constant="8" id="7fi-FB-p13"/>
+                                                <constraint firstItem="fm7-09-ihJ" firstAttribute="leading" secondItem="CdV-Tq-AWF" secondAttribute="trailing" constant="1" id="CvX-qA-YuY"/>
                                                 <constraint firstItem="XUl-Da-PJe" firstAttribute="leading" secondItem="33r-0U-d16" secondAttribute="leading" constant="14" id="ME6-G3-1QZ"/>
                                                 <constraint firstItem="CdV-Tq-AWF" firstAttribute="leading" secondItem="33r-0U-d16" secondAttribute="leading" constant="14" id="RUO-nJ-OMQ"/>
                                                 <constraint firstItem="XUl-Da-PJe" firstAttribute="leading" secondItem="33r-0U-d16" secondAttribute="leading" constant="14" id="T5t-T3-haB"/>
                                                 <constraint firstItem="XUl-Da-PJe" firstAttribute="top" secondItem="33r-0U-d16" secondAttribute="top" constant="8" id="Z0w-38-Ehg"/>
                                                 <constraint firstItem="CdV-Tq-AWF" firstAttribute="top" secondItem="XUl-Da-PJe" secondAttribute="bottom" constant="7" id="gt6-Kd-V1v"/>
+                                                <constraint firstItem="fm7-09-ihJ" firstAttribute="baseline" secondItem="CdV-Tq-AWF" secondAttribute="baseline" id="nwK-5f-I9a"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -952,6 +963,9 @@
                     </tableView>
                     <tabBarItem key="tabBarItem" tag="3" title="更多" image="ic_menu_more_off" id="2t7-WM-IbE"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
+                    <connections>
+                        <outlet property="userNameLabel" destination="fm7-09-ihJ" id="cFE-QG-7mu"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MgE-g4-g2F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
